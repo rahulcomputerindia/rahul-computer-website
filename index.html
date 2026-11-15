@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAHUL COMPUTER'S</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f1f5f9;
+ color:#172554;
+}
+header{
+ background:linear-gradient(135deg,#073b75,#087ac2);
+ color:white;text-align:center;padding:30px 12px;
+}
+header h1{margin:0;font-size:27px}
+.container{padding:20px 15px}
+h2{text-align:center;color:#073b75}
+.services{
+ display:grid;grid-template-columns:1fr 1fr;gap:12px;
+}
+.service{
+ background:white;padding:19px 6px;text-align:center;
+ border-radius:12px;font-weight:bold;
+ box-shadow:0 3px 10px #0001;
+}
+.form-box,.contact{
+ background:white;padding:22px 16px;
+ background:white;padding:22px 16px;
+ border-radius:15px;margin:20px 0;
+}
+label{display:block;font-weight:bold;margin:14px 0 7px}
+input,select,textarea{
+ width:100%;padding:13px;border:1px solid #ccd5e0;
+ border-radius:8px;font-size:16px;background:white;
+}
+textarea{min-height:85px;resize:vertical}
+button,.btn{
+ display:block;width:100%;padding:14px;
+ border:0;border-radius:9px;color:white;
+ font-size:17px;font-weight:bold;text-align:center;
+ text-decoration:none;margin-top:16px;
+}
+.submit,.whatsapp{background:#159b52}
+.call{background:#0755a0}
+.phone{font-size:23px;font-weight:bold}
+footer{
+ background:#073b75;color:white;text-align:center;
+ padding:24px;margin-top:25px;
+}
+
+  /* Service Charges Section */
+.charges{
+ background:white;
+ padding:22px 16px;
+ border-radius:15px;
+ margin:22px 0;
+ box-shadow:0 3px 12px #0001;
+}
+.charge-item{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px;
+ padding:14px 5px;
+ border-bottom:1px solid #e5e7eb;
+ font-weight:bold;
+}
+.charge-item:last-child{
+ border-bottom:none;
+}
+.charge-btn{
+ background:#0755a0;
+ color:white;
+ padding:8px 12px;
+ border-radius:7px;
+ text-decoration:none;
+ font-size:13px;
+ white-space:nowrap;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>RAHUL COMPUTER'S</h1>
+<p>आपकी अपनी डिजिटल सेवा केंद्र</p>
+<p>अमिलिया, मध्य प्रदेश</p>
+</header>
+
+<div class="container">
+
+<h2>हमारी ऑनलाइन सेवाएँ</h2>
+
+<div class="services">
+<div class="service">PAN Card</div>
+<div class="service">Ayushman Card</div>
+<div class="service">E-Shram Card</div>
+<div class="service">ABHA Card</div>
+<div class="service">Voter ID</div>
+<div class="service">Farmer Registry</div>
+<div class="service">आय प्रमाण पत्र</div>
+<div class="service">जाति प्रमाण पत्र</div>
+<div class="service">निवास प्रमाण पत्र</div>
+<div class="service">जन्म प्रमाण पत्र</div>
+<div class="service">EPFO Services</div>
+<div class="service">Online Form</div>
+</div>
+
+  <div class="charges">
+
+<h2>हमारी सेवा शुल्क सूची</h2>
+
+<div class="charge-item">
+PAN Card
+<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020&text=PAN%20Card%20ka%20charge%20batayein">शुल्क पूछें</a>
+</div>
+
+<div class="charge-item">
+Ayushman Card
+<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
+</div>
+
+<div class="charge-item">
+E-Shram Card
+<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
+</div>
+
+<div class="charge-item">
+ABHA Card
+<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
+</div>
+
+<div class="charge-item">
+Voter ID
+<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
+</div>
+
+<div class="charge-item">
+Farmer Registry
+<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
+</div>
+
+<div class="charge-item">
+आय / जाति / निवास प्रमाण पत्र
+<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
+</div>
+
+<div class="charge-item">
+EPFO Services
+<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
+</div>
+
+<p style="font-size:13px;text-align:center;color:#64748b">
+सरकारी शुल्क और सेवा केंद्र का शुल्क अलग-अलग हो सकता है।
+</p>
+
+  </div>
+<div class="form-box">
+<h2>ऑनलाइन आवेदन करें</h2>
+<p style="text-align:center">
+अपनी जानकारी भरें और WhatsApp पर भेजें।
+</p>
+
+<form id="applicationForm">
+
+<label>ग्राहक का पूरा नाम *</label>
+<input id="name" type="text"
+placeholder="अपना नाम लिखें" required>
+
+<label>मोबाइल नंबर *</label>
+<input id="mobile" type="tel"
+inputmode="numeric" maxlength="10"
+pattern="[0-9]{10}"
+placeholder="10 अंकों का मोबाइल नंबर" required>
+
+<label>अपना गाँव *</label>
+<input id="village" type="text"
+placeholder="गाँव का नाम लिखें" required>
+
+<label>कौन-सी सर्विस चाहिए? *</label>
+<select id="service" required>
+<option value="">सर्विस चुनें</option>
+<option>PAN Card</option>
+<option>Ayushman Card</option>
+<option>E-Shram Card</option>
+<option>ABHA Card</option>
+<option>Voter ID</option>
+<option>Farmer Registry</option>
+<option>आय प्रमाण पत्र</option>
+<option>जाति प्रमाण पत्र</option>
+<option>निवास प्रमाण पत्र</option>
+<option>जन्म प्रमाण पत्र</option>
+<option>EPFO Services</option>
+<option>Online Form</option>
+<option>अन्य सेवा</option>
+</select>
+
+<label>अतिरिक्त जानकारी</label>
+<textarea id="details"
+placeholder="यदि कुछ बताना चाहते हैं तो लिखें"></textarea>
+
+<button type="submit" class="submit">
+WhatsApp पर आवेदन भेजें
+</button>
+
+</form>
+</div>
+
+<div class="contact">
+<h2>हमसे संपर्क करें</h2>
+<p>9752039020</p>
+
+<a class="btn call" href="tel:9752039020">
+अभी कॉल करें
+</a>
+
+<a class="btn whatsapp"
+href="https://api.whatsapp.com/send?phone=919752039020"
+target="_blank">
+WhatsApp संपर्क
+</a>
+
+<p>पता: अमिलिया, मध्य प्रदेश</p>
+</div>
+
+</div>
+
+<footer>
+<h3>RAHUL COMPUTER'S</h3>
+<p>आपकी सेवा, हमारा उद्देश्य।</p>
+<p>धन्यवाद! 🙏</p>
+</footer>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+  authDomain: "rahul-computer-s.firebaseapp.com",
+  projectId: "rahul-computer-s",
+  storageBucket: "rahul-computer-s.firebasestorage.app",
+  messagingSenderId: "969449083821",
+  appId: "1:969449083821:web:4696bc1253fa97ea304724"
+};
+
+// Firebase शुरू करें
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Application Form
+document.getElementById("applicationForm")
+.addEventListener("submit", async function(e) {
+
+  e.preventDefault();
+
+  let name = document.getElementById("name").value.trim();
+  let mobile = document.getElementById("mobile").value.trim();
+  let village = document.getElementById("village").value.trim();
+  let service = document.getElementById("service").value;
+  let details = document.getElementById("details").value.trim();
+
+  if (!/^[0-9]{10}$/.test(mobile)) {
+    alert("सही 10 अंकों का मोबाइल नंबर लिखें।");
+    return;
+  }
+
+  let message =
+    "नमस्ते RAHUL COMPUTER'S!\n\n" +
+    "मुझे ऑनलाइन सेवा चाहिए।\n\n" +
+    "नाम: " + name + "\n" +
+    "मोबाइल: " + mobile + "\n" +
+    "गाँव: " + village + "\n" +
+    "सर्विस: " + service + "\n" +
+    "जानकारी: " + details;
+
+  let url = "https://api.whatsapp.com/send?phone=919752039020&text=" +
+    encodeURIComponent(message);
+
+  try {
+
+    // Firebase में आवेदन सेव करें
+    await addDoc(collection(db, "applications"), {
+      customerName: name,
+      mobile: mobile,
+      village: village,
+      service: service,
+      details: details,
+      status: "Pending",
+      createdAt: serverTimestamp()
+    });
+
+    alert("आपका आवेदन सफलतापूर्वक सेव हो गया है।");
+
+    // WhatsApp खोलें
+    window.location.href = url;
+
+  } catch (error) {
+
+    console.error("Firebase Error:", error);
+    alert("आवेदन सेव नहीं हुआ। कृपया इंटरनेट और Firebase Rules जाँचें।");
+
+  }
+
+});
+</script>
+
+</body>
+</html>
