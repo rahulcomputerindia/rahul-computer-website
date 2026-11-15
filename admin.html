@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAHUL COMPUTER'S - Admin Panel</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}
+header{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:20px;text-align:center}
+.container{max-width:900px;margin:20px auto;padding:15px}
+.card{background:white;padding:18px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 9px #0001}
+input,button,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px}
+button{background:#087ac2;color:white;border:0;font-weight:bold;cursor:pointer}
+.logout{background:#b42318}
+.stats{display:flex;gap:10px}
+.stat{flex:1;text-align:center;background:#e6f2ff;padding:15px;border-radius:9px}
+.stat strong{display:block;font-size:25px;color:#07569a}
+.application{border:1px solid #dce3eb;padding:13px;border-radius:9px;margin:12px 0}
+.small{font-size:13px;color:#64748b}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<header>
+<h2>RAHUL COMPUTER'S</h2>
+<p>Admin Dashboard</p>
+</header>
+
+<div class="container">
+
+<div class="card" id="loginBox">
+<h3>Admin Login</h3>
+<input type="email" id="email" placeholder="Admin Email">
+<input type="password" id="password" placeholder="Password">
+<button id="loginBtn">Login करें</button>
+<p id="loginMessage"></p>
+</div>
+
+<div id="dashboard" class="hidden">
+<div class="card">
+<h3>नमस्ते Admin जी!</h3>
+<button class="logout" id="logoutBtn">Logout</button>
+</div>
+
+<div class="stats">
+<div class="stat">कुल आवेदन<strong id="total">0</strong></div>
+<div class="stat">Pending<strong id="pending">0</strong></div>
+<div class="stat">Completed<strong id="completed">0</strong></div>
+</div>
+
+<div class="card">
+<h3>ग्राहकों के आवेदन</h3>
+<p id="loading">आवेदन लोड हो रहे हैं...</p>
+<div id="applications"></div>
+</div>
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+import {
+ getAuth, signInWithEmailAndPassword,
+ onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+import {
+ getFirestore, collection, getDocs, doc, updateDoc
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain: "rahul-computer-s.firebaseapp.com",
+ projectId: "rahul-computer-s",
+ storageBucket: "rahul-computer-s.firebasestorage.app",
+ messagingSenderId: "969449083821",
+ appId: "1:969449083821:web:4696bc1253fa97ea304724"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const ADMIN_UID = "Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3";
+
+const loginBox = document.getElementById("loginBox");
+const dashboard = document.getElementById("dashboard");
+const loginMessage = document.getElementById("loginMessage");
+const applicationsBox = document.getElementById("applications");
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+ const email = document.getElementById("email").value.trim();
+ const password = document.getElementById("password").value;
+
+ if (!email || !password) {
+  loginMessage.textContent = "Email और Password भरें।";
+  return;
+ }
+
+ loginMessage.textContent = "Login हो रहा है...";
+ try {
+  await signInWithEmailAndPassword(auth, email, password);
+ } catch (error) {
+  loginMessage.textContent = "Login नहीं हुआ। Email और Password जाँचें।";
+ }
+});
+
+onAuthStateChanged(auth, async (user) => {
+ if (user && user.uid === ADMIN_UID) {
+  loginBox.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  await loadApplications();
+ } else {
+  dashboard.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+  if (user) await signOut(auth);
+ }
+});
+
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+ await signOut(auth);
+});
+
+async function loadApplications() {
+ applicationsBox.textContent = "";
+ document.getElementById("loading").textContent = "आवेदन लोड हो रहे हैं...";
+
+ try {
+  const snapshot = await getDocs(collection(db, "applications"));
+  let pendingCount = 0;
+  let completedCount = 0;
+
+  document.getElementById("total").textContent = snapshot.size;
+
+  if (snapshot.empty) {
+   document.getElementById("loading").textContent = "अभी कोई आवेदन नहीं है।";
+   return;
+  }
+
+  document.getElementById("loading").textContent = "";
+
+  snapshot.forEach((item) => {
+   const data = item.data();
+   if (data.status === "Completed") completedCount++;
+   else pendingCount++;
+
+   const card = document.createElement("div");
+   card.className = "application";
+
+   const heading = document.createElement("h3");
+   heading.textContent = data.customerName || "नाम उपलब्ध नहीं";
+   card.appendChild(heading);
+
+   const fields = [
+    ["मोबाइल", data.mobile],
+    ["गाँव", data.village],
+    ["सेवा", data.service],
+    ["जानकारी", data.details],
+    ["स्थिति", data.status]
+   ];
+
+   fields.forEach(([label, value]) => {
+    const p = document.createElement("p");
+    p.textContent = label + ": " + (value || "-");
+    card.appendChild(p);
+   });
+
+   const select = document.createElement("select");
+   ["Pending", "Completed"].forEach(status => {
+    const option = document.createElement("option");
+    option.value = status;
+    option.textContent = status;
+    if ((data.status || "Pending") === status) option.selected = true;
+    select.appendChild(option);
+   });
+
+   const save = document.createElement("button");
+   save.textContent = "Status अपडेट करें";
+   save.addEventListener("click", async () => {
+    try {
+     await updateDoc(doc(db, "applications", item.id), {
+      status: select.value
+     });
+     alert("Status अपडेट हो गया!");
+     await loadApplications();
+    } catch (error) {
+     alert("अपडेट नहीं हुआ। कृपया दोबारा प्रयास करें।");
+    }
+   });
+
+   card.appendChild(select);
+   card.appendChild(save);
+   applicationsBox.appendChild(card);
+  });
+
+  document.getElementById("pending").textContent = pendingCount;
+  document.getElementById("completed").textContent = completedCount;
+
+ } catch (error) {
+  document.getElementById("loading").textContent =
+   "आवेदन लोड नहीं हुए। इंटरनेट और Firebase Rules जाँचें।";
+ }
+}
+</script>
+</body>
+</html>
