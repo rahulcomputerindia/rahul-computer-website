@@ -288,15 +288,23 @@ async function loadApplications() {
     data.customerName || "नाम उपलब्ध नहीं";
 
    card.appendChild(heading);
+const applicationDate = data.createdAt
+  ? new Intl.DateTimeFormat("hi-IN", {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: "Asia/Kolkata"
+    }).format(data.createdAt.toDate())
+  : "उपलब्ध नहीं";
 
-   const fields = [
-    ["मोबाइल", data.mobile],
-    ["गाँव", data.village],
-    ["सेवा", data.service],
-    ["जानकारी", data.details],
-    ["Tracking ID", data.trackingId],
-    ["स्थिति", data.status]
-   ];
+const fields = [
+  ["मोबाइल", data.mobile],
+  ["गाँव", data.village],
+  ["सेवा", data.service],
+  ["जानकारी", data.details],
+  ["Tracking ID", data.trackingId],
+  ["आवेदन की तारीख और समय", applicationDate],
+  ["स्थिति", data.status]
+];
 
    fields.forEach(([label, value]) => {
 
