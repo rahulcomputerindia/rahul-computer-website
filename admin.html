@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RAHUL COMPUTER'S - Admin Panel</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}
@@ -13,6 +14,7 @@ header{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:20
 input,button,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px}
 button{background:#087ac2;color:white;border:0;font-weight:bold;cursor:pointer}
 .logout{background:#b42318}
+.delete-btn{background:#b42318}
 .stats{display:flex;gap:10px}
 .stat{flex:1;text-align:center;background:#e6f2ff;padding:15px;border-radius:9px}
 .stat strong{display:block;font-size:25px;color:#07569a}
@@ -25,6 +27,7 @@ button{background:#087ac2;color:white;border:0;font-weight:bold;cursor:pointer}
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -263,7 +266,7 @@ const fields = [
 ["जानकारी", data.details],
 ["Tracking ID", data.trackingId],
 ["आवेदन की तारीख और समय", applicationDate],
-["स्थिति", data.status]
+["स्थिति", data.status || "Pending"]
 ];
 
 fields.forEach(([label, value]) => {
@@ -334,6 +337,65 @@ alert("अपडेट नहीं हुआ। कृपया दोबार
 
 card.appendChild(select);
 card.appendChild(save);
+
+// Delete Button
+const deleteButton = document.createElement("button");
+deleteButton.textContent = "आवेदन Delete करें";
+deleteButton.className = "delete-btn";
+
+deleteButton.addEventListener("click", async () => {
+
+const confirmDelete = confirm(
+"क्या आप सचमुच यह आवेदन Delete करना चाहते हैं?\n\n" +
+"इससे आवेदन और उसका Tracking ID दोनों हट जाएँगे।\n" +
+"यह कार्रवाई वापस नहीं की जा सकती।"
+);
+
+if (!confirmDelete) {
+return;
+}
+
+deleteButton.disabled = true;
+deleteButton.textContent = "Delete हो रहा है...";
+
+try {
+
+const batch = writeBatch(db);
+
+// आवेदन Delete
+batch.delete(
+doc(db, "applications", item.id)
+);
+
+// Tracking रिकॉर्ड Delete
+if (data.trackingId) {
+
+batch.delete(
+doc(db, "tracking", data.trackingId)
+);
+
+}
+
+await batch.commit();
+
+alert("आवेदन सफलतापूर्वक Delete हो गया!");
+
+await loadApplications();
+
+} catch (error) {
+
+console.error(error);
+
+deleteButton.disabled = false;
+deleteButton.textContent = "आवेदन Delete करें";
+
+alert("आवेदन Delete नहीं हुआ। कृपया दोबारा प्रयास करें।");
+
+}
+
+});
+
+card.appendChild(deleteButton);
 applicationsBox.appendChild(card);
 
 });
