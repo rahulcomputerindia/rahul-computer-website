@@ -134,6 +134,12 @@ Completed
 
 <div class="card">
 <h3>ग्राहकों के आवेदन</h3>
+  <input
+  type="text"
+  id="searchApplication"
+  placeholder="नाम, मोबाइल या Tracking ID से खोजें..."
+  style="width:100%;padding:12px;margin:12px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px;"
+>
 
 <p id="loading">आवेदन लोड हो रहे हैं...</p>
 
@@ -184,6 +190,17 @@ const loginBox = document.getElementById("loginBox");
 const dashboard = document.getElementById("dashboard");
 const loginMessage = document.getElementById("loginMessage");
 const applicationsBox = document.getElementById("applications");
+  const searchInput = document.getElementById("searchApplication");
+
+searchInput.addEventListener("input", function() {
+  const query = searchInput.value.trim().toLowerCase();
+
+  document.querySelectorAll(".application").forEach(card => {
+    card.style.display = card.textContent.toLowerCase().includes(query)
+      ? ""
+      : "none";
+  });
+});
 
 // Admin Login
 document.getElementById("loginBtn")
