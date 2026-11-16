@@ -4,85 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RAHUL COMPUTER'S - Admin Panel</title>
-
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f5f9;
- color:#172033;
-}
-header{
- background:linear-gradient(120deg,#073b75,#087ac2);
- color:white;
- padding:20px;
- text-align:center;
-}
-.container{
- max-width:900px;
- margin:20px auto;
- padding:15px;
-}
-.card{
- background:white;
- padding:18px;
- border-radius:12px;
- margin-bottom:15px;
- box-shadow:0 2px 9px #0001;
-}
-input,button,select{
- width:100%;
- padding:12px;
- margin:8px 0;
- border:1px solid #ccd5df;
- border-radius:7px;
- font-size:16px;
-}
-button{
- background:#087ac2;
- color:white;
- border:0;
- font-weight:bold;
- cursor:pointer;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}
+header{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:20px;text-align:center}
+.container{max-width:900px;margin:20px auto;padding:15px}
+.card{background:white;padding:18px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 9px #0001}
+input,button,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px}
+button{background:#087ac2;color:white;border:0;font-weight:bold;cursor:pointer}
 .logout{background:#b42318}
-.stats{
- display:flex;
- gap:10px;
-}
-.stat{
- flex:1;
- text-align:center;
- background:#e6f2ff;
- padding:15px;
- border-radius:9px;
-}
-.stat strong{
- display:block;
- font-size:25px;
- color:#07569a;
-}
-.application{
- border:1px solid #dce3eb;
- padding:13px;
- border-radius:9px;
- margin:12px 0;
-}
-.small{
- font-size:13px;
- color:#64748b;
-}
+.stats{display:flex;gap:10px}
+.stat{flex:1;text-align:center;background:#e6f2ff;padding:15px;border-radius:9px}
+.stat strong{display:block;font-size:25px;color:#07569a}
+.application{border:1px solid #dce3eb;padding:13px;border-radius:9px;margin:12px 0}
 .hidden{display:none}
-
 @media(max-width:450px){
- .stats{gap:5px}
- .stat{padding:10px 4px;font-size:13px}
- .stat strong{font-size:21px}
+.stats{gap:5px}
+.stat{padding:10px 4px;font-size:13px}
+.stat strong{font-size:21px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -94,15 +36,9 @@ button{
 
 <div class="card" id="loginBox">
 <h3>Admin Login</h3>
-
-<input type="email" id="email"
-placeholder="Admin Email">
-
-<input type="password" id="password"
-placeholder="Password">
-
+<input type="email" id="email" placeholder="Admin Email">
+<input type="password" id="password" placeholder="Password">
 <button id="loginBtn">Login करें</button>
-
 <p id="loginMessage"></p>
 </div>
 
@@ -114,35 +50,24 @@ placeholder="Password">
 </div>
 
 <div class="stats">
-
-<div class="stat">
-कुल आवेदन
-<strong id="total">0</strong>
-</div>
-
-<div class="stat">
-Pending
-<strong id="pending">0</strong>
-</div>
-
-<div class="stat">
-Completed
-<strong id="completed">0</strong>
-</div>
-
+<div class="stat">कुल आवेदन<strong id="total">0</strong></div>
+<div class="stat">Pending<strong id="pending">0</strong></div>
+<div class="stat">Completed<strong id="completed">0</strong></div>
 </div>
 
 <div class="card">
 <h3>ग्राहकों के आवेदन</h3>
-  <input
-  type="text"
-  id="searchApplication"
-  placeholder="नाम, मोबाइल या Tracking ID से खोजें..."
-  style="width:100%;padding:12px;margin:12px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px;"
->
+
+<input type="text" id="searchApplication"
+placeholder="नाम, मोबाइल या Tracking ID से खोजें...">
+
+<select id="statusFilter">
+<option value="All">सभी आवेदन</option>
+<option value="Pending">केवल Pending आवेदन</option>
+<option value="Completed">केवल Completed आवेदन</option>
+</select>
 
 <p id="loading">आवेदन लोड हो रहे हैं...</p>
-
 <div id="applications"></div>
 </div>
 
@@ -155,29 +80,29 @@ import { initializeApp } from
 "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
 
 import {
- getAuth,
- signInWithEmailAndPassword,
- onAuthStateChanged,
- signOut
+getAuth,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
 } from
 "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
 import {
- getFirestore,
- collection,
- getDocs,
- doc,
- writeBatch
+getFirestore,
+collection,
+getDocs,
+doc,
+writeBatch
 } from
 "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
 const firebaseConfig = {
- apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
- authDomain: "rahul-computer-s.firebaseapp.com",
- projectId: "rahul-computer-s",
- storageBucket: "rahul-computer-s.firebasestorage.app",
- messagingSenderId: "969449083821",
- appId: "1:969449083821:web:4696bc1253fa97ea304724"
+apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+authDomain: "rahul-computer-s.firebaseapp.com",
+projectId: "rahul-computer-s",
+storageBucket: "rahul-computer-s.firebasestorage.app",
+messagingSenderId: "969449083821",
+appId: "1:969449083821:web:4696bc1253fa97ea304724"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -190,241 +115,250 @@ const loginBox = document.getElementById("loginBox");
 const dashboard = document.getElementById("dashboard");
 const loginMessage = document.getElementById("loginMessage");
 const applicationsBox = document.getElementById("applications");
-  const searchInput = document.getElementById("searchApplication");
+const searchInput = document.getElementById("searchApplication");
+const statusFilter = document.getElementById("statusFilter");
 
-searchInput.addEventListener("input", function() {
-  const query = searchInput.value.trim().toLowerCase();
+// Search और Status Filter
+function applyFilters() {
 
-  document.querySelectorAll(".application").forEach(card => {
-    card.style.display = card.textContent.toLowerCase().includes(query)
-      ? ""
-      : "none";
-  });
+const query = searchInput.value.trim().toLowerCase();
+const selectedStatus = statusFilter.value;
+
+document.querySelectorAll(".application").forEach(card => {
+
+const matchesText =
+card.textContent.toLowerCase().includes(query);
+
+const matchesStatus =
+selectedStatus === "All" ||
+card.dataset.status === selectedStatus;
+
+card.style.display =
+matchesText && matchesStatus ? "" : "none";
+
 });
+
+}
+
+searchInput.addEventListener("input", applyFilters);
+statusFilter.addEventListener("change", applyFilters);
 
 // Admin Login
 document.getElementById("loginBtn")
 .addEventListener("click", async () => {
 
- const email = document.getElementById("email").value.trim();
- const password = document.getElementById("password").value;
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value;
 
- if (!email || !password) {
-  loginMessage.textContent = "Email और Password भरें।";
-  return;
- }
+if (!email || !password) {
+loginMessage.textContent = "Email और Password भरें।";
+return;
+}
 
- loginMessage.textContent = "Login हो रहा है...";
+loginMessage.textContent = "Login हो रहा है...";
 
- try {
-  await signInWithEmailAndPassword(auth, email, password);
- } catch (error) {
-  console.error(error);
-  loginMessage.textContent =
-   "Login नहीं हुआ। Email और Password जाँचें।";
- }
+try {
+await signInWithEmailAndPassword(auth, email, password);
+} catch (error) {
+console.error(error);
+loginMessage.textContent =
+"Login नहीं हुआ। Email और Password जाँचें।";
+}
 
 });
 
 // Login Check
 onAuthStateChanged(auth, async (user) => {
 
- if (user && user.uid === ADMIN_UID) {
+if (user && user.uid === ADMIN_UID) {
 
-  loginBox.classList.add("hidden");
-  dashboard.classList.remove("hidden");
+loginBox.classList.add("hidden");
+dashboard.classList.remove("hidden");
 
-  await loadApplications();
+await loadApplications();
 
- } else {
+} else {
 
-  dashboard.classList.add("hidden");
-  loginBox.classList.remove("hidden");
+dashboard.classList.add("hidden");
+loginBox.classList.remove("hidden");
 
-  if (user) {
-   await signOut(auth);
-   loginMessage.textContent = "आपको Admin की अनुमति नहीं है।";
-  }
- }
+if (user) {
+await signOut(auth);
+loginMessage.textContent = "आपको Admin की अनुमति नहीं है।";
+}
+
+}
 
 });
 
 // Logout
 document.getElementById("logoutBtn")
 .addEventListener("click", async () => {
- await signOut(auth);
+await signOut(auth);
 });
 
 // सभी आवेदन लोड करना
 async function loadApplications() {
 
- applicationsBox.textContent = "";
+applicationsBox.textContent = "";
 
- document.getElementById("loading").textContent =
-  "आवेदन लोड हो रहे हैं...";
+document.getElementById("loading").textContent =
+"आवेदन लोड हो रहे हैं...";
 
- try {
+try {
 
-  const snapshot =
-   await getDocs(collection(db, "applications"));
+const snapshot =
+await getDocs(collection(db, "applications"));
 
-  let pendingCount = 0;
-  let completedCount = 0;
+let pendingCount = 0;
+let completedCount = 0;
 
-  document.getElementById("total").textContent =
-   snapshot.size;
+document.getElementById("total").textContent =
+snapshot.size;
 
-  if (snapshot.empty) {
+if (snapshot.empty) {
 
-   document.getElementById("loading").textContent =
-    "अभी कोई आवेदन नहीं है।";
+document.getElementById("loading").textContent =
+"अभी कोई आवेदन नहीं है।";
 
-   document.getElementById("pending").textContent = "0";
-   document.getElementById("completed").textContent = "0";
+document.getElementById("pending").textContent = "0";
+document.getElementById("completed").textContent = "0";
 
-   return;
-  }
+return;
+}
 
-  document.getElementById("loading").textContent = "";
+document.getElementById("loading").textContent = "";
 
-  snapshot.forEach((item) => {
+snapshot.forEach((item) => {
 
-   const data = item.data();
+const data = item.data();
 
-   if (data.status === "Completed") {
-    completedCount++;
-   } else {
-    pendingCount++;
-   }
+if (data.status === "Completed") {
+completedCount++;
+} else {
+pendingCount++;
+}
 
-   const card = document.createElement("div");
-   card.className = "application";
+const card = document.createElement("div");
+card.className = "application";
+card.dataset.status = data.status || "Pending";
 
-   const heading = document.createElement("h3");
-   heading.textContent =
-    data.customerName || "नाम उपलब्ध नहीं";
+const heading = document.createElement("h3");
+heading.textContent = data.customerName || "नाम उपलब्ध नहीं";
+card.appendChild(heading);
 
-   card.appendChild(heading);
+// आवेदन की तारीख और समय
 const applicationDate = data.createdAt
-  ? new Intl.DateTimeFormat("hi-IN", {
-      dateStyle: "medium",
-      timeStyle: "short",
-      timeZone: "Asia/Kolkata"
-    }).format(data.createdAt.toDate())
-  : "उपलब्ध नहीं";
+? new Intl.DateTimeFormat("hi-IN", {
+dateStyle: "medium",
+timeStyle: "short",
+timeZone: "Asia/Kolkata"
+}).format(data.createdAt.toDate())
+: "उपलब्ध नहीं";
 
 const fields = [
-  ["मोबाइल", data.mobile],
-  ["गाँव", data.village],
-  ["सेवा", data.service],
-  ["जानकारी", data.details],
-  ["Tracking ID", data.trackingId],
-  ["आवेदन की तारीख और समय", applicationDate],
-  ["स्थिति", data.status]
+["मोबाइल", data.mobile],
+["गाँव", data.village],
+["सेवा", data.service],
+["जानकारी", data.details],
+["Tracking ID", data.trackingId],
+["आवेदन की तारीख और समय", applicationDate],
+["स्थिति", data.status]
 ];
 
-   fields.forEach(([label, value]) => {
+fields.forEach(([label, value]) => {
 
-    if (value) {
-     const p = document.createElement("p");
-     p.textContent = label + ": " + value;
-     card.appendChild(p);
-    }
+if (value) {
+const p = document.createElement("p");
+p.textContent = label + ": " + value;
+card.appendChild(p);
+}
 
-   });
+});
 
-   // Status Select
-   const select = document.createElement("select");
+// Status Select
+const select = document.createElement("select");
 
-   ["Pending", "Completed"].forEach(status => {
+["Pending", "Completed"].forEach(status => {
 
-    const option = document.createElement("option");
+const option = document.createElement("option");
+option.value = status;
+option.textContent = status;
 
-    option.value = status;
-    option.textContent = status;
+if ((data.status || "Pending") === status) {
+option.selected = true;
+}
 
-    if ((data.status || "Pending") === status) {
-     option.selected = true;
-    }
+select.appendChild(option);
 
-    select.appendChild(option);
+});
 
-   });
+// Status Update Button
+const save = document.createElement("button");
+save.textContent = "Status अपडेट करें";
 
-   // Status Update Button
-   const save = document.createElement("button");
+save.addEventListener("click", async () => {
 
-   save.textContent = "Status अपडेट करें";
+try {
 
-   save.addEventListener("click", async () => {
+const batch = writeBatch(db);
 
-    try {
+batch.update(
+doc(db, "applications", item.id),
+{status: select.value}
+);
 
-     const batch = writeBatch(db);
+if (data.trackingId) {
 
-     // Application का Status Update
-     batch.update(
-      doc(db, "applications", item.id),
-      {
-       status: select.value
-      }
-     );
+batch.update(
+doc(db, "tracking", data.trackingId),
+{status: select.value}
+);
 
-     // Tracking का Status Update
-     if (data.trackingId) {
+}
 
-      batch.update(
-       doc(db, "tracking", data.trackingId),
-       {
-        status: select.value
-       }
-      );
+await batch.commit();
 
-     }
+alert("Status अपडेट हो गया!");
 
-     await batch.commit();
+await loadApplications();
 
-     alert("Status अपडेट हो गया!");
+} catch (error) {
 
-     await loadApplications();
+console.error(error);
+alert("अपडेट नहीं हुआ। कृपया दोबारा प्रयास करें।");
 
-    } catch (error) {
+}
 
-     console.error(error);
+});
 
-     alert(
-      "अपडेट नहीं हुआ। कृपया दोबारा प्रयास करें।"
-     );
+card.appendChild(select);
+card.appendChild(save);
+applicationsBox.appendChild(card);
 
-    }
+});
 
-   });
+// आवेदन संख्या
+document.getElementById("pending").textContent =
+pendingCount;
 
-   card.appendChild(select);
-   card.appendChild(save);
+document.getElementById("completed").textContent =
+completedCount;
 
-   applicationsBox.appendChild(card);
+// नया डेटा आने के बाद Search और Filter लागू करें
+applyFilters();
 
-  });
+} catch (error) {
 
-  document.getElementById("pending").textContent =
-   pendingCount;
+console.error(error);
 
-  document.getElementById("completed").textContent =
-   completedCount;
+document.getElementById("loading").textContent =
+"आवेदन लोड नहीं हुए। इंटरनेट और Firebase Rules जाँचें।";
 
- } catch (error) {
-
-  console.error(error);
-
-  document.getElementById("loading").textContent =
-   "आवेदन लोड नहीं हुए। इंटरनेट और Firebase Rules जाँचें।";
-
- }
+}
 
 }
 
 </script>
-
 </body>
 </html>
