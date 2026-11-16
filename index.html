@@ -242,11 +242,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebas
 import {
   getFirestore,
   collection,
-  addDoc,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  getDoc,
+  writeBatch
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-// Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
   authDomain: "rahul-computer-s.firebaseapp.com",
@@ -256,66 +257,133 @@ const firebaseConfig = {
   appId: "1:969449083821:web:4696bc1253fa97ea304724"
 };
 
-// Firebase शुरू करें
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Application Form
+function makeTrackingId() {
+  const bytes = new Uint8Array(12);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, b =>
+    b.toString(16).padStart(2, "0")
+  ).join("").toUpperCase();
+}
+
+// ग्राहक का आवेदन सेव करना
 document.getElementById("applicationForm")
 .addEventListener("submit", async function(e) {
-
   e.preventDefault();
 
-  let name = document.getElementById("name").value.trim();
-  let mobile = document.getElementById("mobile").value.trim();
-  let village = document.getElementById("village").value.trim();
-  let service = document.getElementById("service").value;
-  let details = document.getElementById("details").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const village = document.getElementById("village").value.trim();
+  const service = document.getElementById("service").value;
+  const details = document.getElementById("details").value.trim();
 
   if (!/^[0-9]{10}$/.test(mobile)) {
     alert("सही 10 अंकों का मोबाइल नंबर लिखें।");
     return;
   }
 
-  let message =
-    "नमस्ते RAHUL COMPUTER'S!\n\n" +
-    "मुझे ऑनलाइन सेवा चाहिए।\n\n" +
-    "नाम: " + name + "\n" +
-    "मोबाइल: " + mobile + "\n" +
-    "गाँव: " + village + "\n" +
-    "सर्विस: " + service + "\n" +
-    "जानकारी: " + details;
-
-  let url = "https://api.whatsapp.com/send?phone=919752039020&text=" +
-    encodeURIComponent(message);
+  const trackingId = makeTrackingId();
 
   try {
+    const batch = writeBatch(db);
 
-    // Firebase में आवेदन सेव करें
-    await addDoc(collection(db, "applications"), {
+    const applicationRef = doc(collection(db, "applications"));
+    const trackingRef = doc(db, "tracking", trackingId);
+
+    batch.set(applicationRef, {
       customerName: name,
       mobile: mobile,
       village: village,
       service: service,
       details: details,
       status: "Pending",
+      trackingId: trackingId,
       createdAt: serverTimestamp()
     });
 
-    alert("आपका आवेदन सफलतापूर्वक सेव हो गया है।");
+    batch.set(trackingRef, {
+      status: "Pending"
+    });
 
-    // WhatsApp खोलें
+    await batch.commit();
+
+    const message =
+      "नमस्ते RAHUL COMPUTER'S!\n\n" +
+      "मुझे ऑनलाइन सेवा चाहिए।\n" +
+      "नाम: " + name + "\n" +
+      "मोबाइल: " + mobile + "\n" +
+      "गाँव: " + village + "\n" +
+      "सर्विस: " + service + "\n" +
+      "जानकारी: " + details + "\n\n" +
+      "मेरी Tracking ID: " + trackingId;
+
+    const url =
+      "https://api.whatsapp.com/send?phone=919752039020&text=" +
+      encodeURIComponent(message);
+
+    alert(
+      "आपका आवेदन सफलतापूर्वक सेव हो गया है।\n\n" +
+      "आपकी Tracking ID:\n" + trackingId +
+      "\n\nइसे संभालकर रखें।"
+    );
+
     window.location.href = url;
 
   } catch (error) {
-
     console.error("Firebase Error:", error);
-    alert("आवेदन सेव नहीं हुआ। कृपया इंटरनेट और Firebase Rules जाँचें।");
+    alert("आवेदन सेव नहीं हुआ। कृपया दोबारा प्रयास करें।");
+  }
+});
 
+// Tracking ID से स्थिति देखना
+document.getElementById("trackingBtn")
+.addEventListener("click", async function() {
+  const trackingId = document.getElementById("trackingInput")
+    .value.trim().toUpperCase();
+
+  const result = document.getElementById("trackingResult");
+
+  if (!/^[A-F0-9]{24}$/.test(trackingId)) {
+    result.textContent = "कृपया सही Tracking ID डालें।";
+    return;
   }
 
+  result.textContent = "स्थिति जाँची जा रही है...";
+
+  try {
+    const trackingRef = doc(db, "tracking", trackingId);
+    const trackingSnap = await getDoc(trackingRef);
+
+    if (trackingSnap.exists()) {
+      const status = trackingSnap.data().status;
+
+      result.textContent =
+        status === "Completed"
+          ? "आपका आवेदन पूरा हो गया है।"
+          : "आपका आवेदन अभी Pending है।";
+    } else {
+      result.textContent = "यह Tracking ID नहीं मिली। कृपया जाँचें।";
+    }
+
+  } catch (error) {
+    console.error(error);
+    result.textContent = "अभी स्थिति नहीं मिल सकी। कृपया बाद में प्रयास करें।";
+  }
 });
 </script>
 
+  <section style="background:white;padding:20px;margin:20px 0;border-radius:12px;text-align:center;">
+  <h2>आवेदन की स्थिति देखें</h2>
+  <p>अपनी Tracking ID यहाँ डालें</p>
+  <input type="text" id="trackingInput" placeholder="अपनी Tracking ID डालें"
+  style="width:90%;padding:12px;margin:10px 0;border:1px solid #ccc;border-radius:6px;">
+<button type="button" id="trackingBtn" 
+  style="background:#087ac2;color:white;padding:12px 20px;border:0;border-radius:6px;">
+    स्थिति देखें
+  </button>
+  <p id="trackingResult"></p>
+  </section>
 </body>
 </html>
