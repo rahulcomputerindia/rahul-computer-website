@@ -11,15 +11,20 @@ body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}
 header{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:20px;text-align:center}
 .container{max-width:900px;margin:20px auto;padding:15px}
 .card{background:white;padding:18px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 9px #0001}
-input,button,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px}
+input,button,select,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px}
 button{background:#087ac2;color:white;border:0;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6}
 .logout,.delete-btn{background:#b42318}
 .excel-btn{background:#16803c}
+.edit-btn{background:#e18a00}
 .stats{display:flex;gap:10px}
 .stat{flex:1;text-align:center;background:#e6f2ff;padding:15px;border-radius:9px}
 .stat strong{display:block;font-size:25px;color:#07569a}
-.application{border:1px solid #dce3eb;padding:13px;border-radius:9px;margin:12px 0}
+.application{border:1px solid #dce3eb;padding:13px;border-radius:9px;margin:12px 0;background:white}
 .hidden{display:none}
+.application button{margin-top:6px}
+.edit-form{background:#f1f5f9;padding:12px;border-radius:8px;margin-top:10px}
+.edit-form h4{margin-top:0}
 @media(max-width:450px){
 .stats{gap:5px}
 .stat{padding:10px 4px;font-size:13px}
@@ -99,7 +104,8 @@ getFirestore,
 collection,
 getDocs,
 doc,
-writeBatch
+writeBatch,
+updateDoc
 } from
 "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
@@ -142,7 +148,6 @@ function formatDate(timestamp) {
 function csvCell(value) {
   let text = String(value ?? "");
 
-  // Excel Formula Injection से बचाव
   if (/^[\s]*[=+\-@]/.test(text)) {
     text = "'" + text;
   }
@@ -159,18 +164,16 @@ document.getElementById("excelBtn")
     return;
   }
 
-  const rows = [
-    [
-      "ग्राहक का नाम",
-      "मोबाइल नंबर",
-      "गाँव",
-      "सेवा",
-      "जानकारी",
-      "Tracking ID",
-      "आवेदन की तारीख और समय",
-      "स्थिति"
-    ]
-  ];
+  const rows = [[
+    "ग्राहक का नाम",
+    "मोबाइल नंबर",
+    "गाँव",
+    "सेवा",
+    "जानकारी",
+    "Tracking ID",
+    "आवेदन की तारीख और समय",
+    "स्थिति"
+  ]];
 
   currentApplications.forEach(item => {
 
@@ -201,8 +204,8 @@ document.getElementById("excelBtn")
   );
 
   const url = URL.createObjectURL(blob);
-
   const link = document.createElement("a");
+
   link.href = url;
 
   const today = new Date().toISOString().slice(0,10);
@@ -297,6 +300,119 @@ document.getElementById("logoutBtn")
 .addEventListener("click", async () => {
   await signOut(auth);
 });
+
+// आवेदन Edit Form
+function createEditForm(item, card) {
+
+  const data = item.data;
+
+  const form = document.createElement("div");
+  form.className = "edit-form";
+
+  const heading = document.createElement("h4");
+  heading.textContent = "आवेदन में सुधार करें";
+  form.appendChild(heading);
+
+  function addField(label, value, name) {
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = label;
+    input.value = value || "";
+    input.dataset.field = name;
+
+    form.appendChild(input);
+    return input;
+  }
+
+  const nameInput = addField(
+    "ग्राहक का नाम", data.customerName, "customerName"
+  );
+
+  const mobileInput = addField(
+    "मोबाइल नंबर", data.mobile, "mobile"
+  );
+
+  const villageInput = addField(
+    "गाँव", data.village, "village"
+  );
+
+  const serviceInput = addField(
+    "सेवा", data.service, "service"
+  );
+
+  const detailsInput = document.createElement("textarea");
+  detailsInput.placeholder = "आवेदन की जानकारी";
+  detailsInput.value = data.details || "";
+  detailsInput.rows = 4;
+  form.appendChild(detailsInput);
+
+  const saveButton = document.createElement("button");
+  saveButton.textContent = "बदलाव Save करें";
+  form.appendChild(saveButton);
+
+  const cancelButton = document.createElement("button");
+  cancelButton.textContent = "रद्द करें";
+  cancelButton.style.background = "#64748b";
+  form.appendChild(cancelButton);
+
+  cancelButton.addEventListener("click", () => {
+    form.remove();
+  });
+
+  saveButton.addEventListener("click", async () => {
+
+    const customerName = nameInput.value.trim();
+    const mobile = mobileInput.value.trim();
+    const village = villageInput.value.trim();
+    const service = serviceInput.value.trim();
+    const details = detailsInput.value.trim();
+
+    if (!customerName || !mobile || !village || !service) {
+      alert("नाम, मोबाइल, गाँव और सेवा भरना जरूरी है।");
+      return;
+    }
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+      alert("कृपया सही 10 अंकों का मोबाइल नंबर भरें।");
+      return;
+    }
+
+    saveButton.disabled = true;
+    saveButton.textContent = "Save हो रहा है...";
+
+    try {
+
+      await updateDoc(
+        doc(db, "applications", item.id),
+        {
+          customerName,
+          mobile,
+          village,
+          service,
+          details
+        }
+      );
+
+      alert("आवेदन की जानकारी सफलतापूर्वक अपडेट हो गई!");
+
+      await loadApplications();
+
+    } catch (error) {
+
+      console.error(error);
+
+      saveButton.disabled = false;
+      saveButton.textContent = "बदलाव Save करें";
+
+      alert("जानकारी अपडेट नहीं हुई। Firebase Rules जाँचें।");
+
+    }
+
+  });
+
+  card.appendChild(form);
+}
 
 // सभी आवेदन लोड करना
 async function loadApplications() {
@@ -434,6 +550,29 @@ async function loadApplications() {
 
       card.appendChild(select);
       card.appendChild(save);
+
+      // Edit Button
+      const editButton = document.createElement("button");
+      editButton.textContent = "आवेदन Edit करें";
+      editButton.className = "edit-btn";
+
+      editButton.addEventListener("click", () => {
+
+        const existingForm = card.querySelector(".edit-form");
+
+        if (existingForm) {
+          existingForm.remove();
+          return;
+        }
+
+        createEditForm({
+          id: item.id,
+          data: data
+        }, card);
+
+      });
+
+      card.appendChild(editButton);
 
       // Delete Button
       const deleteButton = document.createElement("button");
