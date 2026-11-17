@@ -49,7 +49,7 @@ footer p{line-height:1.6}
 .payment-card{background:#edf5ff;padding:15px;border-radius:10px;margin-top:15px;text-align:center}
 .payment-card img{width:100%;max-width:260px;height:auto;display:block;margin:15px auto;border:1px solid #ddd;border-radius:8px}
 .payment-amount{font-size:27px;color:#087a42;font-weight:bold}
-.payment-status{font-weight:bold;padding:10px;border-radius:8px;background:#edf5ff;text-align:center}
+.payment-status{font-weight:bold;padding:10px;border-radius:8px;background:#edf5ff;text-align:center;line-height:1.5}
 .paid{color:#16803c;background:#e9f8ef}
 .rejected{color:#b42318;background:#fff0f0}
 .pending-payment{color:#9a6700;background:#fff8e5}
@@ -61,6 +61,12 @@ footer p{line-height:1.6}
  .nav-links{display:none;flex-direction:column;align-items:flex-start;width:100%;gap:0;padding-top:10px}
  .nav-links.show{display:flex}
  .nav-links a{width:100%;padding:13px 4px;border-top:1px solid #ffffff44}
+}
+@media print{
+ body *{visibility:hidden}
+ #customerReceipt,#customerReceipt *{visibility:visible}
+ #customerReceipt{position:absolute;left:0;top:0;width:100%;box-shadow:none}
+ #printReceipt{display:none}
 }
 </style>
 </head>
@@ -295,13 +301,11 @@ footer p{line-height:1.6}
 <h2>ऑनलाइन भुगतान</h2>
 <p id="customerApplicationStatus" class="payment-status"></p>
 
-<div class="payment-card">
+<div id="paymentQrCard" class="payment-card">
 <p>आपकी निर्धारित फीस</p>
 <p class="payment-amount" id="customerAmount">₹0</p>
 <p class="note">नीचे दिए गए UPI QR Code को स्कैन करके भुगतान करें।</p>
-
 <img src="./rahul-upi-qr.png" alt="RAHUL COMPUTER'S UPI QR Code">
-
 <p class="note">
 अपने UPI ऐप में ऊपर दिखाई गई सही राशि स्वयं भरें।
 भुगतान करने से पहले प्राप्तकर्ता का नाम और राशि जाँच लें।
@@ -310,15 +314,9 @@ footer p{line-height:1.6}
 
 <div id="paymentSubmitBox" class="hidden">
 <label>UPI Transaction ID / UTR नंबर *</label>
-<input type="text" id="transactionId" maxlength="35"
-placeholder="अपना Transaction ID लिखें">
-
-<button type="button" id="paymentSubmitBtn" class="submit">
-भुगतान विवरण जमा करें
-</button>
-<p class="note">
-Transaction ID जमा करने के बाद Admin आपके भुगतान की जाँच करेगा।
-</p>
+<input type="text" id="transactionId" maxlength="35" placeholder="अपना Transaction ID लिखें">
+<button type="button" id="paymentSubmitBtn" class="submit">भुगतान विवरण जमा करें</button>
+<p class="note">Transaction ID जमा करने के बाद Admin आपके भुगतान की जाँच करेगा। केवल वास्तविक भुगतान करने के बाद ही Transaction ID जमा करें।</p>
 </div>
 
 <p id="customerPaymentMessage" class="payment-status hidden"></p>
@@ -329,7 +327,7 @@ Transaction ID जमा करने के बाद Admin आपके भु
 <p>भुगतान सफलतापूर्वक सत्यापित हुआ है।</p>
 <p>Tracking ID: <strong id="receiptTracking"></strong></p>
 <p>भुगतान राशि: <strong id="receiptAmount"></strong></p>
-<p>भुगतान स्थिति: <strong class="paid-text">PAID</strong></p>
+<p>भुगतान स्थिति: <strong style="color:#16803c">PAID</strong></p>
 <p id="receiptDate"></p>
 <p class="note">यह भुगतान पुष्टि रसीद है, GST Tax Invoice नहीं।</p>
 <button type="button" id="printReceipt" class="call">रसीद Print / Save करें</button>
@@ -369,35 +367,30 @@ Transaction ID जमा करने के बाद Admin आपके भु
 </footer>
 
 <script type="module">
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
 
 import {
-getFirestore,collection,serverTimestamp,doc,getDoc,
-writeBatch,setDoc
-} from
-"https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+ getFirestore,collection,serverTimestamp,doc,getDoc,
+ writeBatch,setDoc
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-import {
-getAuth,signInWithEmailAndPassword
-} from
-"https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+import {getAuth,signInWithEmailAndPassword}
+from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
-const firebaseConfig = {
-apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
-authDomain: "rahul-computer-s.firebaseapp.com",
-projectId: "rahul-computer-s",
-storageBucket: "rahul-computer-s.firebasestorage.app",
-messagingSenderId: "969449083821",
-appId: "1:969449083821:web:4696bc1253fa97ea304724"
+const firebaseConfig={
+ apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain:"rahul-computer-s.firebaseapp.com",
+ projectId:"rahul-computer-s",
+ storageBucket:"rahul-computer-s.firebasestorage.app",
+ messagingSenderId:"969449083821",
+ appId:"1:969449083821:web:4696bc1253fa97ea304724"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const auth=getAuth(app);
 
-let activeTrackingId = "";
+let activeTrackingId="";
 
 function makeTrackingId(){
  const bytes=new Uint8Array(12);
@@ -406,8 +399,7 @@ function makeTrackingId(){
 }
 
 function formatPaymentDate(timestamp){
- if(!timestamp) return "तारीख उपलब्ध नहीं";
-
+ if(!timestamp || typeof timestamp.toDate!=="function") return "तारीख उपलब्ध नहीं";
  return new Intl.DateTimeFormat("hi-IN",{
   dateStyle:"medium",
   timeStyle:"short",
@@ -415,7 +407,6 @@ function formatPaymentDate(timestamp){
  }).format(timestamp.toDate());
 }
 
-// सेवा पर क्लिक करने से फॉर्म में सेवा चुनना
 document.querySelectorAll(".service-option").forEach(button=>{
  button.addEventListener("click",()=>{
   document.getElementById("service").value=button.dataset.service;
@@ -425,7 +416,6 @@ document.querySelectorAll(".service-option").forEach(button=>{
 
 // आवेदन सेव करना
 document.getElementById("applicationForm").addEventListener("submit",async function(e){
-
  e.preventDefault();
 
  const name=document.getElementById("name").value.trim();
@@ -441,28 +431,20 @@ document.getElementById("applicationForm").addEventListener("submit",async funct
 
  const submitButton=this.querySelector('button[type="submit"]');
  submitButton.disabled=true;
-
  const trackingId=makeTrackingId();
 
  try{
-
   const batch=writeBatch(db);
   const applicationRef=doc(collection(db,"applications"));
   const trackingRef=doc(db,"tracking",trackingId);
 
   batch.set(applicationRef,{
-   customerName:name,
-   mobile:mobile,
-   village:village,
-   service:service,
-   details:details,
-   status:"Pending",
-   trackingId:trackingId,
-   createdAt:serverTimestamp()
+   customerName:name,mobile:mobile,village:village,
+   service:service,details:details,status:"Pending",
+   trackingId:trackingId,createdAt:serverTimestamp()
   });
 
   batch.set(trackingRef,{status:"Pending"});
-
   await batch.commit();
 
   const message="नमस्ते RAHUL COMPUTER'S!\n\nमुझे ऑनलाइन सेवा चाहिए।\n"+
@@ -473,15 +455,12 @@ document.getElementById("applicationForm").addEventListener("submit",async funct
   const url="https://api.whatsapp.com/send?phone=919752039020&text="+encodeURIComponent(message);
 
   alert("आपका आवेदन सफलतापूर्वक सेव हो गया है।\n\nआपकी Tracking ID:\n"+trackingId+"\n\nइसे संभालकर रखें।");
-
   window.location.href=url;
 
  }catch(error){
-
   console.error("Firebase Error:",error);
   alert("आवेदन सेव नहीं हुआ। कृपया दोबारा प्रयास करें।");
   submitButton.disabled=false;
-
  }
 });
 
@@ -491,14 +470,16 @@ function hidePayment(){
  document.getElementById("customerPaymentMessage").classList.add("hidden");
  document.getElementById("customerReceipt").classList.add("hidden");
  document.getElementById("paymentSubmitBox").classList.add("hidden");
+ document.getElementById("paymentQrCard").classList.remove("hidden");
+ document.getElementById("transactionId").value="";
+ document.getElementById("paymentSubmitBtn").disabled=false;
+ document.getElementById("paymentSubmitBtn").textContent="भुगतान विवरण जमा करें";
 }
 
 // Tracking और Payment जानकारी
 document.getElementById("trackingBtn").addEventListener("click",async function(){
-
  const trackingId=document.getElementById("trackingInput").value.trim().toUpperCase();
  const result=document.getElementById("trackingResult");
- const paymentBox=document.getElementById("customerPayment");
 
  hidePayment();
  activeTrackingId="";
@@ -509,9 +490,9 @@ document.getElementById("trackingBtn").addEventListener("click",async function()
  }
 
  result.textContent="जानकारी जाँची जा रही है...";
+ this.disabled=true;
 
  try{
-
   const trackingSnap=await getDoc(doc(db,"tracking",trackingId));
 
   if(!trackingSnap.exists()){
@@ -520,11 +501,9 @@ document.getElementById("trackingBtn").addEventListener("click",async function()
   }
 
   activeTrackingId=trackingId;
-
   const applicationStatus=trackingSnap.data().status;
 
-  result.textContent=
-   applicationStatus==="Completed"
+  result.textContent=applicationStatus==="Completed"
    ?"आपका आवेदन पूरा हो गया है।"
    :"आपका आवेदन अभी Pending है।";
 
@@ -540,88 +519,73 @@ document.getElementById("trackingBtn").addEventListener("click",async function()
 
   const paymentData=paymentSnap.data();
   const amount=Number(paymentData.amount);
-  const paymentStatus=paymentData.paymentStatus || "Unpaid";
+  const paymentStatus=paymentData.paymentStatus||"Unpaid";
 
-  if(!Number.isFinite(amount) || amount<=0){
-   result.textContent+=" भुगतान राशि उपलब्ध नहीं है।";
+  if(!Number.isFinite(amount)||amount<=0){
+   result.textContent+=" भुगतान राशि उपलब्ध नहीं है। कृपया दुकान से संपर्क करें।";
    return;
   }
 
-  document.getElementById("customerAmount").textContent=
-   "₹"+amount.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+  const formattedAmount="₹"+amount.toLocaleString("en-IN",{
+   minimumFractionDigits:2,maximumFractionDigits:2
+  });
 
-  paymentBox.classList.remove("hidden");
+  document.getElementById("customerAmount").textContent=formattedAmount;
+  document.getElementById("customerPayment").classList.remove("hidden");
 
   const message=document.getElementById("customerPaymentMessage");
   const receipt=document.getElementById("customerReceipt");
   const submitBox=document.getElementById("paymentSubmitBox");
+  const qrCard=document.getElementById("paymentQrCard");
 
   if(paymentStatus==="Paid"){
+   qrCard.classList.add("hidden");
+   submitBox.classList.add("hidden");
 
    message.textContent="आपका भुगतान सफलतापूर्वक सत्यापित हो गया है।";
    message.className="payment-status paid";
    message.classList.remove("hidden");
 
    receipt.classList.remove("hidden");
-
    document.getElementById("receiptTracking").textContent=trackingId;
-   document.getElementById("receiptAmount").textContent=
-    "₹"+amount.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
-
+   document.getElementById("receiptAmount").textContent=formattedAmount;
    document.getElementById("receiptDate").textContent=
     "भुगतान पुष्टि: "+formatPaymentDate(paymentData.updatedAt);
 
    return;
   }
 
-  const submissionSnap=await getDoc(
-   doc(db,"paymentSubmissions",trackingId)
-  );
+  // ग्राहक paymentSubmissions को पढ़ नहीं सकता।
+  // इसलिए Unpaid / Rejected दोनों में फॉर्म दिखाएँ।
+  // यदि पहले से submission मौजूद होगा तो Firestore Rules
+  // दूसरी बार जमा करने से रोक देंगे।
 
-  if(submissionSnap.exists()){
+  qrCard.classList.remove("hidden");
+  submitBox.classList.remove("hidden");
 
+  if(paymentStatus==="Rejected"){
    message.textContent=
-    "आपका Transaction ID प्राप्त हो गया है। Admin भुगतान की जाँच कर रहा है।";
-
-   message.className="payment-status pending-payment";
-   message.classList.remove("hidden");
-
+    "आपका पिछला भुगतान विवरण Reject हुआ है। सही भुगतान करने के बाद Transaction ID जमा करें।";
+   message.className="payment-status rejected";
   }else{
-
-   if(paymentStatus==="Rejected"){
-
-    message.textContent=
-     "आपका पिछला भुगतान विवरण Reject हुआ है। कृपया सही Transaction ID दोबारा जमा करें।";
-
-    message.className="payment-status rejected";
-    message.classList.remove("hidden");
-
-   }else{
-
-    message.textContent="अभी भुगतान जमा नहीं हुआ है।";
-    message.className="payment-status pending-payment";
-    message.classList.remove("hidden");
-
-   }
-
-   submitBox.classList.remove("hidden");
+   message.textContent=
+    "भुगतान अभी सत्यापित नहीं हुआ है। भुगतान करने के बाद Transaction ID जमा करें।";
+   message.className="payment-status pending-payment";
   }
 
+  message.classList.remove("hidden");
+
  }catch(error){
-
-  console.error(error);
+  console.error("Tracking / Payment Error:",error);
   result.textContent="जानकारी नहीं मिल सकी। कृपया बाद में प्रयास करें।";
-
+ }finally{
+  this.disabled=false;
  }
-
 });
 
 // ग्राहक Transaction ID जमा करे
 document.getElementById("paymentSubmitBtn").addEventListener("click",async function(){
-
- const transactionId=
-  document.getElementById("transactionId").value.trim();
-
+ const transactionId=document.getElementById("transactionId").value.trim();
  const button=this;
 
  if(!activeTrackingId){
@@ -630,7 +594,7 @@ document.getElementById("paymentSubmitBtn").addEventListener("click",async funct
  }
 
  if(!/^[A-Za-z0-9]{8,35}$/.test(transactionId)){
-  alert("कृपया सही Transaction ID / UTR नंबर लिखें।");
+  alert("कृपया सही Transaction ID / UTR नंबर लिखें। (8 से 35 अक्षर)");
   return;
  }
 
@@ -638,36 +602,29 @@ document.getElementById("paymentSubmitBtn").addEventListener("click",async funct
  button.textContent="जमा हो रहा है...";
 
  try{
-
-  await setDoc(
-   doc(db,"paymentSubmissions",activeTrackingId),
-   {
-    transactionId:transactionId,
-    submittedAt:serverTimestamp()
-   }
-  );
+  await setDoc(doc(db,"paymentSubmissions",activeTrackingId),{
+   transactionId:transactionId,
+   submittedAt:serverTimestamp()
+  });
 
   document.getElementById("paymentSubmitBox").classList.add("hidden");
 
   const message=document.getElementById("customerPaymentMessage");
   message.textContent=
-   "आपका Transaction ID सफलतापूर्वक जमा हो गया है। Admin भुगतान की जाँच करेगा।";
+   "आपका भुगतान विवरण Admin को भेज दिया गया है। वास्तविक भुगतान सत्यापित होने के बाद ही स्थिति Paid होगी।";
 
   message.className="payment-status pending-payment";
   message.classList.remove("hidden");
-
   document.getElementById("transactionId").value="";
 
  }catch(error){
+  console.error("Payment Submission Error:",error);
 
-  console.error(error);
-  alert("Transaction ID जमा नहीं हुआ। कृपया Tracking ID और जानकारी जाँचें।");
+  alert("भुगतान विवरण जमा नहीं हुआ। संभव है कि विवरण पहले ही भेजा जा चुका हो या सेवा में समस्या हो। कृपया दुकान से संपर्क करें।");
 
   button.disabled=false;
   button.textContent="भुगतान विवरण जमा करें";
-
  }
-
 });
 
 // रसीद Print
@@ -677,7 +634,6 @@ document.getElementById("printReceipt").addEventListener("click",()=>{
 
 // Admin Login
 document.getElementById("adminLoginForm").addEventListener("submit",async function(e){
-
  e.preventDefault();
 
  const email=document.getElementById("adminEmail").value.trim();
@@ -689,23 +645,15 @@ document.getElementById("adminLoginForm").addEventListener("submit",async functi
  button.disabled=true;
 
  try{
-
   await signInWithEmailAndPassword(auth,email,password);
-
   message.textContent="Login सफल! Admin Panel खोला जा रहा है...";
   window.location.href="admin.html";
-
  }catch(error){
-
   console.error("Login Error:",error);
-
   message.textContent="Email या Password गलत है, अथवा लॉगिन में समस्या है।";
   button.disabled=false;
-
  }
-
 });
-
 </script>
 
 <script>
