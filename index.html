@@ -7,157 +7,48 @@
 
 <style>
 *{box-sizing:border-box;scroll-behavior:smooth}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f1f5f9;
- color:#172554;
-}
-header{
- background:linear-gradient(135deg,#073b75,#087ac2);
- color:white;
- text-align:center;
- padding:30px 12px;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172554}
+header{background:linear-gradient(135deg,#073b75,#087ac2);color:white;text-align:center;padding:30px 12px}
 header h1{margin:0;font-size:27px}
 header p{margin:8px 0 0}
-
-.main-nav{
- background:linear-gradient(120deg,#073b75,#087ac2);
- color:white;
- padding:12px 18px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- flex-wrap:wrap;
- position:sticky;
- top:0;
- z-index:999;
- box-shadow:0 3px 10px #0003;
-}
+.main-nav{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;position:sticky;top:0;z-index:999;box-shadow:0 3px 10px #0003}
 .nav-brand{font-size:17px;font-weight:bold}
-.nav-links{
- display:flex;
- align-items:center;
- gap:17px;
-}
-.nav-links a{
- color:white;
- text-decoration:none;
- font-size:14px;
- font-weight:bold;
-}
+.nav-links{display:flex;align-items:center;gap:17px}
+.nav-links a{color:white;text-decoration:none;font-size:14px;font-weight:bold}
 .nav-links a:hover{color:#ffd166}
-.menu-toggle{
- display:none;
- background:transparent;
- color:white;
- border:0;
- font-size:27px;
- cursor:pointer;
-}
-
+.menu-toggle{display:none;background:transparent;color:white;border:0;font-size:27px;cursor:pointer}
 .container{padding:20px 15px}
 h2{text-align:center;color:#073b75}
-
-.about,.form-box,.contact,.charges,.tracking-box{
- background:white;
- padding:22px 16px;
- border-radius:15px;
- margin:20px 0;
- box-shadow:0 3px 12px #0001;
-}
+.about,.form-box,.contact,.tracking-box,.admin-box{background:white;padding:22px 16px;border-radius:15px;margin:20px 0;box-shadow:0 3px 12px #0001}
 .about p{line-height:1.7;text-align:center}
-
-.services{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
-}
-.service{
- background:white;
- padding:19px 6px;
- text-align:center;
- border-radius:12px;
- font-weight:bold;
- box-shadow:0 3px 10px #0001;
-}
-
-.charge-item{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:8px;
- padding:14px 5px;
- border-bottom:1px solid #e5e7eb;
- font-weight:bold;
-}
-.charge-item:last-child{border-bottom:none}
-.charge-btn{
- background:#0755a0;
- color:white;
- padding:8px 12px;
- border-radius:7px;
- text-decoration:none;
- font-size:13px;
- white-space:nowrap;
-}
-
+.category-list{display:grid;grid-template-columns:1fr;gap:13px}
+.category{background:white;border-radius:12px;box-shadow:0 3px 10px #0001;overflow:hidden}
+.category summary{padding:17px 15px;font-weight:bold;color:#0755a0;cursor:pointer;font-size:16px;list-style:none}
+.category summary:after{content:"＋";float:right;color:#087ac2}
+.category[open] summary:after{content:"−"}
+.category-items{padding:0 12px 13px;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.service-option{background:#edf5ff;border:1px solid #d4e6fa;color:#073b75;border-radius:8px;padding:12px 8px;text-align:center;font-size:13px;font-weight:bold;cursor:pointer}
+.service-option:hover{background:#d8eaff}
+.note{text-align:center;color:#64748b;font-size:13px;line-height:1.5}
 label{display:block;font-weight:bold;margin:14px 0 7px}
-input,select,textarea{
- width:100%;
- padding:13px;
- border:1px solid #ccd5e0;
- border-radius:8px;
- font-size:16px;
- background:white;
-}
+input,select,textarea{width:100%;padding:13px;border:1px solid #ccd5e0;border-radius:8px;font-size:16px;background:white}
 textarea{min-height:85px;resize:vertical}
-
-button,.btn{
- display:block;
- width:100%;
- padding:14px;
- border:0;
- border-radius:9px;
- color:white;
- font-size:16px;
- font-weight:bold;
- text-align:center;
- text-decoration:none;
- margin-top:16px;
- cursor:pointer;
-}
+button,.btn{display:block;width:100%;padding:14px;border:0;border-radius:9px;color:white;font-size:16px;font-weight:bold;text-align:center;text-decoration:none;margin-top:16px;cursor:pointer}
 .submit,.whatsapp{background:#159b52}
 .call{background:#0755a0}
+.login-btn{background:#0755a0}
 .phone{font-size:23px;font-weight:bold}
-
-footer{
- background:#073b75;
- color:white;
- text-align:center;
- padding:24px;
- margin-top:25px;
-}
+.admin-box{display:none}
+.admin-box.show{display:block}
+.login-message{text-align:center;font-weight:bold;margin-top:12px}
+footer{background:#073b75;color:white;text-align:center;padding:24px;margin-top:25px}
 footer a{color:white;text-decoration:underline}
 footer p{line-height:1.6}
-
 @media(max-width:768px){
  .menu-toggle{display:block;width:auto;margin:0;padding:3px 8px}
- .nav-links{
-  display:none;
-  flex-direction:column;
-  align-items:flex-start;
-  width:100%;
-  gap:0;
-  padding-top:10px;
- }
+ .nav-links{display:none;flex-direction:column;align-items:flex-start;width:100%;gap:0;padding-top:10px}
  .nav-links.show{display:flex}
- .nav-links a{
-  width:100%;
-  padding:13px 4px;
-  border-top:1px solid #ffffff44;
- }
+ .nav-links a{width:100%;padding:13px 4px;border-top:1px solid #ffffff44}
 }
 </style>
 </head>
@@ -172,11 +63,7 @@ footer p{line-height:1.6}
 
 <nav class="main-nav">
  <div class="nav-brand">RAHUL COMPUTER'S</div>
-
- <button class="menu-toggle" onclick="toggleMenu()" aria-label="मेनू खोलें">
-  ☰
- </button>
-
+ <button class="menu-toggle" onclick="toggleMenu()" aria-label="मेनू खोलें">☰</button>
  <div class="nav-links" id="navLinks">
   <a href="#home" onclick="closeMenu()">Home</a>
   <a href="#about" onclick="closeMenu()">About Us</a>
@@ -184,187 +71,234 @@ footer p{line-height:1.6}
   <a href="#apply" onclick="closeMenu()">Apply Online</a>
   <a href="#track" onclick="closeMenu()">Track Application</a>
   <a href="#contact" onclick="closeMenu()">Contact Us</a>
+  <a href="#adminLogin" onclick="showAdminLogin()">Admin Login</a>
  </div>
 </nav>
 
 <div class="container">
 
-<!-- ABOUT US -->
 <section class="about" id="about">
 <h2>हमारे बारे में</h2>
-<p>
-<strong>RAHUL COMPUTER'S</strong> आपका अपना डिजिटल सेवा केंद्र है।
-हमारा उद्देश्य ग्राहकों को विभिन्न ऑनलाइन सेवाओं,
-सरकारी योजनाओं और दस्तावेज़ संबंधी कार्यों में
-सरल एवं सुविधाजनक सहायता प्रदान करना है।
-</p>
-<p>
-हम PAN Card, Ayushman Card, E-Shram Card,
-ABHA Card, Voter ID, Farmer Registry,
-प्रमाण पत्र, EPFO Services और Online Form
-जैसी सेवाओं के लिए सहायता प्रदान करते हैं।
-</p>
-<p>
-<strong>स्थान:</strong> अमिलिया, मध्य प्रदेश
-</p>
+<p><strong>RAHUL COMPUTER'S</strong> आपका अपना डिजिटल सेवा केंद्र है। हमारा उद्देश्य ग्राहकों को विभिन्न ऑनलाइन सेवाओं, सरकारी योजनाओं और दस्तावेज़ संबंधी कार्यों में सरल एवं सुविधाजनक सहायता प्रदान करना है।</p>
+<p>हम PAN Card, Aadhaar, Samagra ID, Voter ID, Sambal, Farmer Services और विभिन्न प्रमाण पत्रों के लिए सहायता प्रदान करते हैं।</p>
+<p><strong>स्थान:</strong> अमिलिया, मध्य प्रदेश</p>
 </section>
 
-<!-- SERVICES -->
 <section id="services">
 <h2>हमारी ऑनलाइन सेवाएँ</h2>
+<p class="note">अपनी श्रेणी खोलें और जिस सेवा की जरूरत है उस पर क्लिक करें।</p>
 
-<div class="services">
-<div class="service">PAN Card</div>
-<div class="service">Ayushman Card</div>
-<div class="service">E-Shram Card</div>
-<div class="service">ABHA Card</div>
-<div class="service">Voter ID</div>
-<div class="service">Farmer Registry</div>
-<div class="service">आय प्रमाण पत्र</div>
-<div class="service">जाति प्रमाण पत्र</div>
-<div class="service">निवास प्रमाण पत्र</div>
-<div class="service">जन्म प्रमाण पत्र</div>
-<div class="service">EPFO Services</div>
-<div class="service">Online Form</div>
+<div class="category-list">
+
+<details class="category">
+<summary>PAN CARD</summary>
+<div class="category-items">
+<button class="service-option" data-service="नया पैन कार्ड बनवाएं">नया पैन कार्ड बनवाएं</button>
+<button class="service-option" data-service="पैन कार्ड में संशोधन करें">पैन कार्ड में संशोधन करें</button>
+<button class="service-option" data-service="आधार नंबर से पैन नंबर प्राप्त करें">आधार नंबर से पैन नंबर प्राप्त करें</button>
+<button class="service-option" data-service="पैन कार्ड PVC कार्ड ऑर्डर करें">पैन कार्ड PVC कार्ड ऑर्डर करें</button>
+<button class="service-option" data-service="पैन कार्ड PDF फाइल डाउनलोड करें">पैन कार्ड PDF फाइल डाउनलोड करें</button>
+<button class="service-option" data-service="18 वर्ष से कम उम्र के बच्चों का पैन कार्ड बनवाएं">18 वर्ष से कम उम्र के बच्चों का पैन कार्ड बनवाएं</button>
+</div>
+</details>
+
+<details class="category">
+<summary>AADHAAR</summary>
+<div class="category-items">
+<button class="service-option" data-service="आधार में पिता के नाम की जगह पति का नाम जोड़ें">आधार में पिता के नाम की जगह पति का नाम जोड़ें</button>
+<button class="service-option" data-service="मोबाइल नंबर से आधार नंबर पता करें">मोबाइल नंबर से आधार नंबर पता करें</button>
+</div>
+</details>
+
+<details class="category">
+<summary>SAMAGRA ID</summary>
+<div class="category-items">
+<button class="service-option" data-service="समग्र आईडी मायके से ससुराल ट्रांसफर">समग्र आईडी मायके से ससुराल ट्रांसफर</button>
+<button class="service-option" data-service="समग्र कार्ड प्रिंट">समग्र कार्ड प्रिंट</button>
+<button class="service-option" data-service="समग्र में जन्म तिथि अपडेट करें">समग्र में जन्म तिथि अपडेट करें</button>
+<button class="service-option" data-service="समग्र आईडी में मोबाइल नंबर जोड़ें">समग्र आईडी में मोबाइल नंबर जोड़ें</button>
+<button class="service-option" data-service="समग्र E-KYC">समग्र E-KYC</button>
+<button class="service-option" data-service="समग्र आईडी में नाम सुधारें">समग्र आईडी में नाम सुधारें</button>
+</div>
+</details>
+
+<details class="category">
+<summary>VOTER ID</summary>
+<div class="category-items">
+<button class="service-option" data-service="वोटर आईडी पता करें">वोटर आईडी पता करें</button>
+<button class="service-option" data-service="वोटर आईडी में संशोधन करें">वोटर आईडी में संशोधन करें</button>
+<button class="service-option" data-service="वोटर आईडी PVC कार्ड ऑर्डर करें">वोटर आईडी PVC कार्ड ऑर्डर करें</button>
+<button class="service-option" data-service="वोटर आईडी में मोबाइल नंबर लिंक करें">वोटर आईडी में मोबाइल नंबर लिंक करें</button>
+</div>
+</details>
+
+<details class="category">
+<summary>SAMBAL</summary>
+<div class="category-items">
+<button class="service-option" data-service="संबल कार्ड बनवाएं">संबल कार्ड बनवाएं</button>
+<button class="service-option" data-service="संबल कार्ड में सुधार करवाएं">संबल कार्ड में सुधार करवाएं</button>
+</div>
+</details>
+
+<details class="category">
+<summary>FARMER SERVICES</summary>
+<div class="category-items">
+<button class="service-option" data-service="फार्मर आईडी फाइंड करें">फार्मर आईडी फाइंड करें</button>
+<button class="service-option" data-service="फार्मर आईडी में सुधार करवाएं">फार्मर आईडी में सुधार करवाएं</button>
+<button class="service-option" data-service="खसरा प्रिंट">खसरा प्रिंट</button>
+<button class="service-option" data-service="खतौनी प्रिंट">खतौनी प्रिंट</button>
+</div>
+</details>
+
+<details class="category">
+<summary>CAST CERTIFICATE</summary>
+<div class="category-items">
+<button class="service-option" data-service="जाति प्रमाण पत्र बनवाएं">जाति प्रमाण पत्र बनवाएं</button>
+<button class="service-option" data-service="जाति प्रमाण पत्र प्रिंट">जाति प्रमाण पत्र प्रिंट</button>
+</div>
+</details>
+
+<details class="category">
+<summary>INCOME CERTIFICATE</summary>
+<div class="category-items">
+<button class="service-option" data-service="आय प्रमाण पत्र बनवाएं">आय प्रमाण पत्र बनवाएं</button>
+<button class="service-option" data-service="आय प्रमाण पत्र प्रिंट">आय प्रमाण पत्र प्रिंट</button>
+</div>
+</details>
+
+<details class="category">
+<summary>DOMICILE CERTIFICATE</summary>
+<div class="category-items">
+<button class="service-option" data-service="निवास प्रमाण पत्र बनवाएं">निवास प्रमाण पत्र बनवाएं</button>
+<button class="service-option" data-service="निवास प्रमाण पत्र प्रिंट">निवास प्रमाण पत्र प्रिंट</button>
+</div>
+</details>
+
+<details class="category">
+<summary>AYUSHMAN</summary>
+<div class="category-items">
+<button class="service-option" data-service="आयुष्मान कार्ड प्रिंट">आयुष्मान कार्ड प्रिंट</button>
+</div>
+</details>
+
+<details class="category">
+<summary>E-SHRAM</summary>
+<div class="category-items">
+<button class="service-option" data-service="ई-श्रम कार्ड प्रिंट">ई-श्रम कार्ड प्रिंट</button>
+</div>
+</details>
+
 </div>
 </section>
 
-<!-- SERVICE CHARGES -->
-<section class="charges">
-<h2>हमारी सेवा शुल्क सूची</h2>
-
-<div class="charge-item">
-PAN Card
-<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020&text=PAN%20Card%20ka%20charge%20batayein">शुल्क पूछें</a>
-</div>
-
-<div class="charge-item">
-Ayushman Card
-<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
-</div>
-
-<div class="charge-item">
-E-Shram Card
-<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
-</div>
-
-<div class="charge-item">
-ABHA Card
-<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
-</div>
-
-<div class="charge-item">
-Voter ID
-<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
-</div>
-
-<div class="charge-item">
-Farmer Registry
-<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
-</div>
-
-<div class="charge-item">
-आय / जाति / निवास प्रमाण पत्र
-<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
-</div>
-
-<div class="charge-item">
-EPFO Services
-<a class="charge-btn" href="https://api.whatsapp.com/send?phone=919752039020">शुल्क पूछें</a>
-</div>
-
-<p style="font-size:13px;text-align:center;color:#64748b">
-सरकारी शुल्क और सेवा केंद्र का शुल्क अलग-अलग हो सकता है।
-शुल्क की जानकारी WhatsApp पर प्राप्त करें।
-</p>
-</section>
-
-<!-- APPLY ONLINE -->
 <section class="form-box" id="apply">
 <h2>ऑनलाइन आवेदन करें</h2>
-<p style="text-align:center">
-अपनी जानकारी भरें और WhatsApp पर भेजें।
-</p>
+<p class="note">अपनी जानकारी भरें और WhatsApp पर भेजें।</p>
 
 <form id="applicationForm">
-
 <label>ग्राहक का पूरा नाम *</label>
-<input id="name" type="text"
-placeholder="अपना नाम लिखें" required>
+<input id="name" type="text" placeholder="अपना नाम लिखें" required>
 
 <label>मोबाइल नंबर *</label>
-<input id="mobile" type="tel"
-inputmode="numeric" maxlength="10"
-pattern="[0-9]{10}"
-placeholder="10 अंकों का मोबाइल नंबर" required>
+<input id="mobile" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर" required>
 
 <label>अपना गाँव *</label>
-<input id="village" type="text"
-placeholder="गाँव का नाम लिखें" required>
+<input id="village" type="text" placeholder="गाँव का नाम लिखें" required>
 
 <label>कौन-सी सर्विस चाहिए? *</label>
 <select id="service" required>
 <option value="">सर्विस चुनें</option>
-<option>PAN Card</option>
-<option>Ayushman Card</option>
-<option>E-Shram Card</option>
-<option>ABHA Card</option>
-<option>Voter ID</option>
-<option>Farmer Registry</option>
-<option>आय प्रमाण पत्र</option>
-<option>जाति प्रमाण पत्र</option>
-<option>निवास प्रमाण पत्र</option>
-<option>जन्म प्रमाण पत्र</option>
-<option>EPFO Services</option>
-<option>Online Form</option>
+<optgroup label="PAN CARD">
+<option>नया पैन कार्ड बनवाएं</option>
+<option>पैन कार्ड में संशोधन करें</option>
+<option>आधार नंबर से पैन नंबर प्राप्त करें</option>
+<option>पैन कार्ड PVC कार्ड ऑर्डर करें</option>
+<option>पैन कार्ड PDF फाइल डाउनलोड करें</option>
+<option>18 वर्ष से कम उम्र के बच्चों का पैन कार्ड बनवाएं</option>
+</optgroup>
+<optgroup label="AADHAAR">
+<option>आधार में पिता के नाम की जगह पति का नाम जोड़ें</option>
+<option>मोबाइल नंबर से आधार नंबर पता करें</option>
+</optgroup>
+<optgroup label="SAMAGRA ID">
+<option>समग्र आईडी मायके से ससुराल ट्रांसफर</option>
+<option>समग्र कार्ड प्रिंट</option>
+<option>समग्र में जन्म तिथि अपडेट करें</option>
+<option>समग्र आईडी में मोबाइल नंबर जोड़ें</option>
+<option>समग्र E-KYC</option>
+<option>समग्र आईडी में नाम सुधारें</option>
+</optgroup>
+<optgroup label="VOTER ID">
+<option>वोटर आईडी पता करें</option>
+<option>वोटर आईडी में संशोधन करें</option>
+<option>वोटर आईडी PVC कार्ड ऑर्डर करें</option>
+<option>वोटर आईडी में मोबाइल नंबर लिंक करें</option>
+</optgroup>
+<optgroup label="SAMBAL">
+<option>संबल कार्ड बनवाएं</option>
+<option>संबल कार्ड में सुधार करवाएं</option>
+</optgroup>
+<optgroup label="FARMER SERVICES">
+<option>फार्मर आईडी फाइंड करें</option>
+<option>फार्मर आईडी में सुधार करवाएं</option>
+<option>खसरा प्रिंट</option>
+<option>खतौनी प्रिंट</option>
+</optgroup>
+<optgroup label="CAST CERTIFICATE">
+<option>जाति प्रमाण पत्र बनवाएं</option>
+<option>जाति प्रमाण पत्र प्रिंट</option>
+</optgroup>
+<optgroup label="INCOME CERTIFICATE">
+<option>आय प्रमाण पत्र बनवाएं</option>
+<option>आय प्रमाण पत्र प्रिंट</option>
+</optgroup>
+<optgroup label="DOMICILE CERTIFICATE">
+<option>निवास प्रमाण पत्र बनवाएं</option>
+<option>निवास प्रमाण पत्र प्रिंट</option>
+</optgroup>
+<optgroup label="AYUSHMAN">
+<option>आयुष्मान कार्ड प्रिंट</option>
+</optgroup>
+<optgroup label="E-SHRAM">
+<option>ई-श्रम कार्ड प्रिंट</option>
+</optgroup>
 <option>अन्य सेवा</option>
 </select>
 
 <label>अतिरिक्त जानकारी</label>
-<textarea id="details"
-placeholder="यदि कुछ बताना चाहते हैं तो लिखें"></textarea>
+<textarea id="details" placeholder="यदि कुछ बताना चाहते हैं तो लिखें"></textarea>
 
-<button type="submit" class="submit">
-WhatsApp पर आवेदन भेजें
-</button>
-
+<button type="submit" class="submit">WhatsApp पर आवेदन भेजें</button>
 </form>
 </section>
 
-<!-- TRACK APPLICATION -->
 <section class="tracking-box" id="track">
 <h2>आवेदन की स्थिति देखें</h2>
-<p style="text-align:center">अपनी Tracking ID यहाँ डालें</p>
-
-<input type="text" id="trackingInput"
-placeholder="अपनी Tracking ID डालें">
-
-<button type="button" id="trackingBtn"
-style="background:#087ac2">
-स्थिति देखें
-</button>
-
+<p class="note">अपनी Tracking ID यहाँ डालें</p>
+<input type="text" id="trackingInput" placeholder="अपनी Tracking ID डालें">
+<button type="button" id="trackingBtn" style="background:#087ac2">स्थिति देखें</button>
 <p id="trackingResult" style="text-align:center;font-weight:bold"></p>
 </section>
 
-<!-- CONTACT US -->
 <section class="contact" id="contact">
 <h2>हमसे संपर्क करें</h2>
 <p class="phone" style="text-align:center">9752039020</p>
+<a class="btn call" href="tel:9752039020">अभी कॉल करें</a>
+<a class="btn whatsapp" href="https://api.whatsapp.com/send?phone=919752039020" target="_blank">WhatsApp संपर्क</a>
+<p style="text-align:center">पता: अमिलिया, मध्य प्रदेश</p>
+</section>
 
-<a class="btn call" href="tel:9752039020">
-अभी कॉल करें
-</a>
-
-<a class="btn whatsapp"
-href="https://api.whatsapp.com/send?phone=919752039020"
-target="_blank">
-WhatsApp संपर्क
-</a>
-
-<p style="text-align:center">
-पता: अमिलिया, मध्य प्रदेश
-</p>
+<section class="admin-box" id="adminLogin">
+<h2>Admin Login</h2>
+<p class="note">केवल अधिकृत Admin ही लॉगिन करें।</p>
+<form id="adminLoginForm">
+<label>Admin Email</label>
+<input type="email" id="adminEmail" placeholder="अपना Firebase Email लिखें" required>
+<label>Password</label>
+<input type="password" id="adminPassword" placeholder="अपना Password लिखें" required>
+<button type="submit" class="login-btn" id="adminLoginButton">Login करें</button>
+<p class="login-message" id="loginMessage"></p>
+</form>
 </section>
 
 </div>
@@ -373,27 +307,18 @@ WhatsApp संपर्क
 <h3>RAHUL COMPUTER'S</h3>
 <p>आपकी सेवा, हमारा उद्देश्य।</p>
 <p>धन्यवाद! 🙏</p>
-
-<p>
-<a href="privacy.html">Privacy Policy (गोपनीयता नीति)</a>
-</p>
-
-<p>
-<a href="terms.html">Terms & Conditions (नियम एवं शर्तें)</a>
-</p>
+<p><a href="privacy.html">Privacy Policy (गोपनीयता नीति)</a></p>
+<p><a href="terms.html">Terms & Conditions (नियम एवं शर्तें)</a></p>
 </footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-
 import {
- getFirestore,
- collection,
- serverTimestamp,
- doc,
- getDoc,
- writeBatch
+ getFirestore,collection,serverTimestamp,doc,getDoc,writeBatch
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import {
+ getAuth,signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
 const firebaseConfig = {
  apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
@@ -406,129 +331,126 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-function makeTrackingId() {
- const bytes = new Uint8Array(12);
+function makeTrackingId(){
+ const bytes=new Uint8Array(12);
  crypto.getRandomValues(bytes);
- return Array.from(bytes, b =>
-  b.toString(16).padStart(2, "0")
- ).join("").toUpperCase();
+ return Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("").toUpperCase();
 }
 
-// ग्राहक का आवेदन सेव करना
-document.getElementById("applicationForm")
-.addEventListener("submit", async function(e) {
+// सेवा पर क्लिक करने से फॉर्म में सेवा चुनना
+document.querySelectorAll(".service-option").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.getElementById("service").value=button.dataset.service;
+  document.getElementById("apply").scrollIntoView({behavior:"smooth"});
+ });
+});
+
+// आवेदन सेव करना
+document.getElementById("applicationForm").addEventListener("submit",async function(e){
  e.preventDefault();
+ const name=document.getElementById("name").value.trim();
+ const mobile=document.getElementById("mobile").value.trim();
+ const village=document.getElementById("village").value.trim();
+ const service=document.getElementById("service").value;
+ const details=document.getElementById("details").value.trim();
 
- const name = document.getElementById("name").value.trim();
- const mobile = document.getElementById("mobile").value.trim();
- const village = document.getElementById("village").value.trim();
- const service = document.getElementById("service").value;
- const details = document.getElementById("details").value.trim();
-
- if (!/^[0-9]{10}$/.test(mobile)) {
+ if(!/^[0-9]{10}$/.test(mobile)){
   alert("सही 10 अंकों का मोबाइल नंबर लिखें।");
   return;
  }
 
- const trackingId = makeTrackingId();
+ const trackingId=makeTrackingId();
 
- try {
-  const batch = writeBatch(db);
+ try{
+  const batch=writeBatch(db);
+  const applicationRef=doc(collection(db,"applications"));
+  const trackingRef=doc(db,"tracking",trackingId);
 
-  const applicationRef = doc(collection(db, "applications"));
-  const trackingRef = doc(db, "tracking", trackingId);
-
-  batch.set(applicationRef, {
-   customerName: name,
-   mobile: mobile,
-   village: village,
-   service: service,
-   details: details,
-   status: "Pending",
-   trackingId: trackingId,
-   createdAt: serverTimestamp()
+  batch.set(applicationRef,{
+   customerName:name,mobile:mobile,village:village,service:service,
+   details:details,status:"Pending",trackingId:trackingId,
+   createdAt:serverTimestamp()
   });
-
-  batch.set(trackingRef, {
-   status: "Pending"
-  });
-
+  batch.set(trackingRef,{status:"Pending"});
   await batch.commit();
 
-  const message =
-   "नमस्ते RAHUL COMPUTER'S!\n\n" +
-   "मुझे ऑनलाइन सेवा चाहिए।\n" +
-   "नाम: " + name + "\n" +
-   "मोबाइल: " + mobile + "\n" +
-   "गाँव: " + village + "\n" +
-   "सर्विस: " + service + "\n" +
-   "जानकारी: " + details + "\n\n" +
-   "मेरी Tracking ID: " + trackingId;
+  const message="नमस्ते RAHUL COMPUTER'S!\n\nमुझे ऑनलाइन सेवा चाहिए।\n"+
+   "नाम: "+name+"\nमोबाइल: "+mobile+"\nगाँव: "+village+
+   "\nसर्विस: "+service+"\nजानकारी: "+details+
+   "\n\nमेरी Tracking ID: "+trackingId;
 
-  const url =
-   "https://api.whatsapp.com/send?phone=919752039020&text=" +
-   encodeURIComponent(message);
-
-  alert(
-   "आपका आवेदन सफलतापूर्वक सेव हो गया है।\n\n" +
-   "आपकी Tracking ID:\n" + trackingId +
-   "\n\nइसे संभालकर रखें।"
-  );
-
-  window.location.href = url;
-
- } catch (error) {
-  console.error("Firebase Error:", error);
+  const url="https://api.whatsapp.com/send?phone=919752039020&text="+encodeURIComponent(message);
+  alert("आपका आवेदन सफलतापूर्वक सेव हो गया है।\n\nआपकी Tracking ID:\n"+trackingId+"\n\nइसे संभालकर रखें।");
+  window.location.href=url;
+ }catch(error){
+  console.error("Firebase Error:",error);
   alert("आवेदन सेव नहीं हुआ। कृपया दोबारा प्रयास करें।");
  }
 });
 
 // Tracking ID से स्थिति देखना
-document.getElementById("trackingBtn")
-.addEventListener("click", async function() {
+document.getElementById("trackingBtn").addEventListener("click",async function(){
+ const trackingId=document.getElementById("trackingInput").value.trim().toUpperCase();
+ const result=document.getElementById("trackingResult");
 
- const trackingId = document.getElementById("trackingInput")
-  .value.trim().toUpperCase();
-
- const result = document.getElementById("trackingResult");
-
- if (!/^[A-F0-9]{24}$/.test(trackingId)) {
-  result.textContent = "कृपया सही Tracking ID डालें।";
+ if(!/^[A-F0-9]{24}$/.test(trackingId)){
+  result.textContent="कृपया सही Tracking ID डालें।";
   return;
  }
+ result.textContent="स्थिति जाँची जा रही है...";
 
- result.textContent = "स्थिति जाँची जा रही है...";
-
- try {
-  const trackingRef = doc(db, "tracking", trackingId);
-  const trackingSnap = await getDoc(trackingRef);
-
-  if (trackingSnap.exists()) {
-   const status = trackingSnap.data().status;
-
-   result.textContent =
-    status === "Completed"
-     ? "आपका आवेदन पूरा हो गया है।"
-     : "आपका आवेदन अभी Pending है।";
-  } else {
-   result.textContent = "यह Tracking ID नहीं मिली। कृपया जाँचें।";
+ try{
+  const trackingRef=doc(db,"tracking",trackingId);
+  const trackingSnap=await getDoc(trackingRef);
+  if(trackingSnap.exists()){
+   const status=trackingSnap.data().status;
+   result.textContent=status==="Completed"?"आपका आवेदन पूरा हो गया है।":"आपका आवेदन अभी Pending है।";
+  }else{
+   result.textContent="यह Tracking ID नहीं मिली। कृपया जाँचें।";
   }
-
- } catch (error) {
+ }catch(error){
   console.error(error);
-  result.textContent = "अभी स्थिति नहीं मिल सकी। कृपया बाद में प्रयास करें।";
+  result.textContent="अभी स्थिति नहीं मिल सकी। कृपया बाद में प्रयास करें।";
+ }
+});
+
+// Admin Login
+document.getElementById("adminLoginForm").addEventListener("submit",async function(e){
+ e.preventDefault();
+ const email=document.getElementById("adminEmail").value.trim();
+ const password=document.getElementById("adminPassword").value;
+ const message=document.getElementById("loginMessage");
+ const button=document.getElementById("adminLoginButton");
+
+ message.textContent="लॉगिन जाँचा जा रहा है...";
+ button.disabled=true;
+
+ try{
+  await signInWithEmailAndPassword(auth,email,password);
+  message.textContent="Login सफल! Admin Panel खोला जा रहा है...";
+  window.location.href="admin.html";
+ }catch(error){
+  console.error("Login Error:",error);
+  message.textContent="Email या Password गलत है, अथवा लॉगिन में समस्या है।";
+  button.disabled=false;
  }
 });
 </script>
 
 <script>
-function toggleMenu() {
+function toggleMenu(){
  document.getElementById("navLinks").classList.toggle("show");
 }
-
-function closeMenu() {
+function closeMenu(){
  document.getElementById("navLinks").classList.remove("show");
+}
+function showAdminLogin(){
+ closeMenu();
+ const panel=document.getElementById("adminLogin");
+ panel.classList.add("show");
+ setTimeout(()=>panel.scrollIntoView({behavior:"smooth"}),100);
 }
 </script>
 
