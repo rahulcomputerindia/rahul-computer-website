@@ -407,8 +407,18 @@ function formatPaymentDate(timestamp){
  }).format(timestamp.toDate());
 }
 
+// PAN CARD को अलग पेज से जोड़ना
+// बाकी सभी सेवाएँ पहले की तरह आवेदन फॉर्म में जाएँगी।
 document.querySelectorAll(".service-option").forEach(button=>{
  button.addEventListener("click",()=>{
+  const categoryName=button.closest(".category")
+   ?.querySelector("summary")?.textContent.trim();
+
+  if(categoryName==="PAN CARD"){
+   window.location.href="pan.html";
+   return;
+  }
+
   document.getElementById("service").value=button.dataset.service;
   document.getElementById("apply").scrollIntoView({behavior:"smooth"});
  });
