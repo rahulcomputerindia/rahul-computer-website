@@ -24,7 +24,6 @@ button:disabled{opacity:.6}
 .hidden{display:none}
 .application button{margin-top:6px}
 .edit-form{background:#f1f5f9;padding:12px;border-radius:8px;margin-top:10px}
-.edit-form h4{margin-top:0}
 @media(max-width:450px){
 .stats{gap:5px}
 .stat{padding:10px 4px;font-size:13px}
@@ -176,7 +175,6 @@ document.getElementById("excelBtn")
   ]];
 
   currentApplications.forEach(item => {
-
     const data = item.data;
 
     rows.push([
@@ -189,7 +187,6 @@ document.getElementById("excelBtn")
       formatDate(data.createdAt),
       data.status || "Pending"
     ]);
-
   });
 
   const csvContent =
@@ -219,7 +216,6 @@ document.getElementById("excelBtn")
   URL.revokeObjectURL(url);
 
   alert("Excel रिपोर्ट डाउनलोड हो गई है।");
-
 });
 
 // Search और Status Filter
@@ -239,9 +235,7 @@ function applyFilters() {
 
     card.style.display =
       matchesText && matchesStatus ? "" : "none";
-
   });
-
 }
 
 searchInput.addEventListener("input", applyFilters);
@@ -268,10 +262,9 @@ document.getElementById("loginBtn")
     loginMessage.textContent =
       "Login नहीं हुआ। Email और Password जाँचें।";
   }
-
 });
 
-// Login Check
+// Admin की पहचान जाँचना
 onAuthStateChanged(auth, async (user) => {
 
   if (user && user.uid === ADMIN_UID) {
@@ -284,21 +277,22 @@ onAuthStateChanged(auth, async (user) => {
   } else {
 
     dashboard.classList.add("hidden");
-    loginBox.classList.remove("hidden");
+    loginBox.classList.add("hidden");
 
     if (user) {
       await signOut(auth);
-      loginMessage.textContent = "आपको Admin की अनुमति नहीं है।";
     }
 
+    // बिना Admin Login के मुख्य वेबसाइट पर वापस जाएँ
+    window.location.replace("./index.html#adminLogin");
   }
-
 });
 
 // Logout
 document.getElementById("logoutBtn")
 .addEventListener("click", async () => {
   await signOut(auth);
+  window.location.replace("./index.html");
 });
 
 // आवेदन Edit Form
@@ -406,9 +400,7 @@ function createEditForm(item, card) {
       saveButton.textContent = "बदलाव Save करें";
 
       alert("जानकारी अपडेट नहीं हुई। Firebase Rules जाँचें।");
-
     }
-
   });
 
   card.appendChild(form);
@@ -489,7 +481,6 @@ async function loadApplications() {
           p.textContent = label + ": " + value;
           card.appendChild(p);
         }
-
       });
 
       // Status Select
@@ -506,7 +497,6 @@ async function loadApplications() {
         }
 
         select.appendChild(option);
-
       });
 
       // Status Update Button
@@ -530,7 +520,6 @@ async function loadApplications() {
               doc(db, "tracking", data.trackingId),
               {status: select.value}
             );
-
           }
 
           await batch.commit();
@@ -543,9 +532,7 @@ async function loadApplications() {
 
           console.error(error);
           alert("अपडेट नहीं हुआ। कृपया दोबारा प्रयास करें।");
-
         }
-
       });
 
       card.appendChild(select);
@@ -569,7 +556,6 @@ async function loadApplications() {
           id: item.id,
           data: data
         }, card);
-
       });
 
       card.appendChild(editButton);
@@ -605,7 +591,6 @@ async function loadApplications() {
             batch.delete(
               doc(db, "tracking", data.trackingId)
             );
-
           }
 
           await batch.commit();
@@ -622,9 +607,7 @@ async function loadApplications() {
           deleteButton.textContent = "आवेदन Delete करें";
 
           alert("आवेदन Delete नहीं हुआ। कृपया दोबारा प्रयास करें।");
-
         }
-
       });
 
       card.appendChild(deleteButton);
@@ -646,9 +629,7 @@ async function loadApplications() {
 
     document.getElementById("loading").textContent =
       "आवेदन लोड नहीं हुए। इंटरनेट और Firebase Rules जाँचें।";
-
   }
-
 }
 
 </script>
