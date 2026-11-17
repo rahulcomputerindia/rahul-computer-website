@@ -14,8 +14,8 @@ header{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:20
 input,button,select,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px}
 button{background:#087ac2;color:white;border:0;font-weight:bold;cursor:pointer}
 button:disabled{opacity:.6}
-.logout,.delete-btn{background:#b42318}
-.excel-btn{background:#16803c}
+.logout,.delete-btn,.reject-btn{background:#b42318}
+.excel-btn,.paid-btn{background:#16803c}
 .edit-btn{background:#e18a00}
 .stats{display:flex;gap:10px}
 .stat{flex:1;text-align:center;background:#e6f2ff;padding:15px;border-radius:9px}
@@ -23,7 +23,11 @@ button:disabled{opacity:.6}
 .application{border:1px solid #dce3eb;padding:13px;border-radius:9px;margin:12px 0;background:white}
 .hidden{display:none}
 .application button{margin-top:6px}
-.edit-form{background:#f1f5f9;padding:12px;border-radius:8px;margin-top:10px}
+.edit-form,.payment-box{background:#f1f5f9;padding:12px;border-radius:8px;margin-top:12px}
+.payment-box h4{margin-top:0}
+.payment-status{font-weight:bold;color:#07569a}
+.paid-text{color:#16803c}
+.rejected-text{color:#b42318}
 @media(max-width:450px){
 .stats{gap:5px}
 .stat{padding:10px 4px;font-size:13px}
@@ -103,8 +107,12 @@ getFirestore,
 collection,
 getDocs,
 doc,
+getDoc,
 writeBatch,
-updateDoc
+updateDoc,
+setDoc,
+deleteDoc,
+serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
@@ -132,7 +140,6 @@ const statusFilter = document.getElementById("statusFilter");
 
 let currentApplications = [];
 
-// तारीख और समय
 function formatDate(timestamp) {
   if (!timestamp) return "उपलब्ध नहीं";
 
@@ -143,7 +150,6 @@ function formatDate(timestamp) {
   }).format(timestamp.toDate());
 }
 
-// CSV के लिए सुरक्षित टेक्स्ट
 function csvCell(value) {
   let text = String(value ?? "");
 
@@ -154,7 +160,7 @@ function csvCell(value) {
   return '"' + text.replace(/"/g, '""') + '"';
 }
 
-// Excel रिपोर्ट डाउनलोड
+// Excel रिपोर्ट
 document.getElementById("excelBtn")
 .addEventListener("click", () => {
 
@@ -206,7 +212,6 @@ document.getElementById("excelBtn")
   link.href = url;
 
   const today = new Date().toISOString().slice(0,10);
-
   link.download = "RAHUL_COMPUTERS_Report_" + today + ".csv";
 
   document.body.appendChild(link);
@@ -214,11 +219,10 @@ document.getElementById("excelBtn")
   document.body.removeChild(link);
 
   URL.revokeObjectURL(url);
-
   alert("Excel रिपोर्ट डाउनलोड हो गई है।");
 });
 
-// Search और Status Filter
+// Search और Filter
 function applyFilters() {
 
   const query = searchInput.value.trim().toLowerCase();
@@ -241,7 +245,7 @@ function applyFilters() {
 searchInput.addEventListener("input", applyFilters);
 statusFilter.addEventListener("change", applyFilters);
 
-// Admin Login
+// Login
 document.getElementById("loginBtn")
 .addEventListener("click", async () => {
 
@@ -264,7 +268,7 @@ document.getElementById("loginBtn")
   }
 });
 
-// Admin की पहचान जाँचना
+// Login Check
 onAuthStateChanged(auth, async (user) => {
 
   if (user && user.uid === ADMIN_UID) {
@@ -277,14 +281,12 @@ onAuthStateChanged(auth, async (user) => {
   } else {
 
     dashboard.classList.add("hidden");
-    loginBox.classList.add("hidden");
+    loginBox.classList.remove("hidden");
 
     if (user) {
       await signOut(auth);
+      loginMessage.textContent = "आपको Admin की अनुमति नहीं है।";
     }
-
-    // बिना Admin Login के मुख्य वेबसाइट पर वापस जाएँ
-    window.location.replace("./index.html#adminLogin");
   }
 });
 
@@ -292,10 +294,9 @@ onAuthStateChanged(auth, async (user) => {
 document.getElementById("logoutBtn")
 .addEventListener("click", async () => {
   await signOut(auth);
-  window.location.replace("./index.html");
 });
 
-// आवेदन Edit Form
+// Edit Form
 function createEditForm(item, card) {
 
   const data = item.data;
@@ -307,33 +308,19 @@ function createEditForm(item, card) {
   heading.textContent = "आवेदन में सुधार करें";
   form.appendChild(heading);
 
-  function addField(label, value, name) {
-
+  function addField(label, value) {
     const input = document.createElement("input");
     input.type = "text";
     input.placeholder = label;
     input.value = value || "";
-    input.dataset.field = name;
-
     form.appendChild(input);
     return input;
   }
 
-  const nameInput = addField(
-    "ग्राहक का नाम", data.customerName, "customerName"
-  );
-
-  const mobileInput = addField(
-    "मोबाइल नंबर", data.mobile, "mobile"
-  );
-
-  const villageInput = addField(
-    "गाँव", data.village, "village"
-  );
-
-  const serviceInput = addField(
-    "सेवा", data.service, "service"
-  );
+  const nameInput = addField("ग्राहक का नाम", data.customerName);
+  const mobileInput = addField("मोबाइल नंबर", data.mobile);
+  const villageInput = addField("गाँव", data.village);
+  const serviceInput = addField("सेवा", data.service);
 
   const detailsInput = document.createElement("textarea");
   detailsInput.placeholder = "आवेदन की जानकारी";
@@ -350,9 +337,7 @@ function createEditForm(item, card) {
   cancelButton.style.background = "#64748b";
   form.appendChild(cancelButton);
 
-  cancelButton.addEventListener("click", () => {
-    form.remove();
-  });
+  cancelButton.addEventListener("click", () => form.remove());
 
   saveButton.addEventListener("click", async () => {
 
@@ -379,23 +364,15 @@ function createEditForm(item, card) {
 
       await updateDoc(
         doc(db, "applications", item.id),
-        {
-          customerName,
-          mobile,
-          village,
-          service,
-          details
-        }
+        {customerName, mobile, village, service, details}
       );
 
       alert("आवेदन की जानकारी सफलतापूर्वक अपडेट हो गई!");
-
       await loadApplications();
 
     } catch (error) {
 
       console.error(error);
-
       saveButton.disabled = false;
       saveButton.textContent = "बदलाव Save करें";
 
@@ -404,6 +381,243 @@ function createEditForm(item, card) {
   });
 
   card.appendChild(form);
+}
+
+// Payment Management
+async function createPaymentBox(item, card) {
+
+  const trackingId = item.data.trackingId;
+
+  if (!trackingId) return;
+
+  const box = document.createElement("div");
+  box.className = "payment-box";
+
+  const heading = document.createElement("h4");
+  heading.textContent = "भुगतान / Payment Management";
+  box.appendChild(heading);
+
+  const amountInput = document.createElement("input");
+  amountInput.type = "number";
+  amountInput.min = "1";
+  amountInput.step = "0.01";
+  amountInput.placeholder = "इस आवेदन की फीस रुपये में";
+  box.appendChild(amountInput);
+
+  const saveAmountButton = document.createElement("button");
+  saveAmountButton.textContent = "फीस Save करें";
+  box.appendChild(saveAmountButton);
+
+  const statusText = document.createElement("p");
+  statusText.className = "payment-status";
+  statusText.textContent = "भुगतान जानकारी लोड हो रही है...";
+  box.appendChild(statusText);
+
+  const transactionText = document.createElement("p");
+  box.appendChild(transactionText);
+
+  const paidButton = document.createElement("button");
+  paidButton.textContent = "भुगतान Paid करें";
+  paidButton.className = "paid-btn";
+  paidButton.style.display = "none";
+  box.appendChild(paidButton);
+
+  const rejectButton = document.createElement("button");
+  rejectButton.textContent = "भुगतान Reject करें";
+  rejectButton.className = "reject-btn";
+  rejectButton.style.display = "none";
+  box.appendChild(rejectButton);
+
+  card.appendChild(box);
+
+  let paymentInfo = null;
+  let paymentSubmission = null;
+
+  async function refreshPayment() {
+
+    try {
+
+      const results = await Promise.all([
+        getDoc(doc(db, "paymentInfo", trackingId)),
+        getDoc(doc(db, "paymentSubmissions", trackingId))
+      ]);
+
+      paymentInfo = results[0].exists() ? results[0].data() : null;
+      paymentSubmission = results[1].exists() ? results[1].data() : null;
+
+      amountInput.value =
+        paymentInfo && paymentInfo.amount
+          ? paymentInfo.amount
+          : "";
+
+      const paymentStatus =
+        paymentInfo?.paymentStatus || "फीस तय नहीं हुई";
+
+      statusText.textContent =
+        "Payment Status: " + paymentStatus;
+
+      statusText.className = "payment-status";
+
+      if (paymentStatus === "Paid") {
+        statusText.classList.add("paid-text");
+      }
+
+      if (paymentStatus === "Rejected") {
+        statusText.classList.add("rejected-text");
+      }
+
+      if (paymentSubmission) {
+
+        transactionText.textContent =
+          "ग्राहक का Transaction ID: " +
+          paymentSubmission.transactionId;
+
+        if (paymentSubmission.submittedAt) {
+          transactionText.textContent +=
+            "\nजमा करने का समय: " +
+            formatDate(paymentSubmission.submittedAt);
+        }
+
+      } else {
+
+        transactionText.textContent =
+          "अभी ग्राहक ने Transaction ID जमा नहीं किया है।";
+      }
+
+      const canVerify =
+        paymentSubmission &&
+        paymentStatus !== "Paid";
+
+      paidButton.style.display =
+        canVerify ? "block" : "none";
+
+      rejectButton.style.display =
+        canVerify ? "block" : "none";
+
+    } catch (error) {
+
+      console.error(error);
+      statusText.textContent =
+        "Payment जानकारी लोड नहीं हुई।";
+    }
+  }
+
+  saveAmountButton.addEventListener("click", async () => {
+
+    const amount = Number(amountInput.value);
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      alert("कृपया सही फीस भरें।");
+      return;
+    }
+
+    saveAmountButton.disabled = true;
+
+    try {
+
+      await setDoc(
+        doc(db, "paymentInfo", trackingId),
+        {
+          amount: amount,
+          paymentStatus:
+            paymentInfo?.paymentStatus || "Unpaid",
+          updatedAt: serverTimestamp()
+        },
+        {merge: true}
+      );
+
+      alert("इस आवेदन की फीस सफलतापूर्वक Save हो गई!");
+      await refreshPayment();
+
+    } catch (error) {
+
+      console.error(error);
+      alert("फीस Save नहीं हुई। कृपया दोबारा प्रयास करें।");
+
+    } finally {
+      saveAmountButton.disabled = false;
+    }
+  });
+
+  paidButton.addEventListener("click", async () => {
+
+    if (!paymentSubmission) return;
+
+    const confirmPaid = confirm(
+      "क्या आपने बैंक/UPI ऐप में पैसा वास्तव में प्राप्त होने की पुष्टि कर ली है?\n\n" +
+      "केवल Transaction ID देखकर Paid न करें।"
+    );
+
+    if (!confirmPaid) return;
+
+    paidButton.disabled = true;
+
+    try {
+
+      await setDoc(
+        doc(db, "paymentInfo", trackingId),
+        {
+          paymentStatus: "Paid",
+          updatedAt: serverTimestamp()
+        },
+        {merge: true}
+      );
+
+      alert("भुगतान Paid कर दिया गया!");
+      await refreshPayment();
+
+    } catch (error) {
+
+      console.error(error);
+      alert("Payment Status अपडेट नहीं हुआ।");
+
+    } finally {
+      paidButton.disabled = false;
+    }
+  });
+
+  rejectButton.addEventListener("click", async () => {
+
+    if (!paymentSubmission) return;
+
+    const confirmReject = confirm(
+      "क्या आप इस Transaction ID को Reject करना चाहते हैं?\n\n" +
+      "Reject करने पर ग्राहक दोबारा Transaction ID जमा कर सकेगा।"
+    );
+
+    if (!confirmReject) return;
+
+    rejectButton.disabled = true;
+
+    try {
+
+      await setDoc(
+        doc(db, "paymentInfo", trackingId),
+        {
+          paymentStatus: "Rejected",
+          updatedAt: serverTimestamp()
+        },
+        {merge: true}
+      );
+
+      await deleteDoc(
+        doc(db, "paymentSubmissions", trackingId)
+      );
+
+      alert("भुगतान Reject हो गया। ग्राहक दोबारा विवरण जमा कर सकता है।");
+      await refreshPayment();
+
+    } catch (error) {
+
+      console.error(error);
+      alert("Payment Reject नहीं हुआ।");
+
+    } finally {
+      rejectButton.disabled = false;
+    }
+  });
+
+  await refreshPayment();
 }
 
 // सभी आवेदन लोड करना
@@ -439,7 +653,7 @@ async function loadApplications() {
 
     document.getElementById("loading").textContent = "";
 
-    snapshot.forEach((item) => {
+    for (const item of snapshot.docs) {
 
       const data = item.data();
 
@@ -462,15 +676,13 @@ async function loadApplications() {
       heading.textContent = data.customerName || "नाम उपलब्ध नहीं";
       card.appendChild(heading);
 
-      const applicationDate = formatDate(data.createdAt);
-
       const fields = [
         ["मोबाइल", data.mobile],
         ["गाँव", data.village],
         ["सेवा", data.service],
         ["जानकारी", data.details],
         ["Tracking ID", data.trackingId],
-        ["आवेदन की तारीख और समय", applicationDate],
+        ["आवेदन की तारीख और समय", formatDate(data.createdAt)],
         ["स्थिति", data.status || "Pending"]
       ];
 
@@ -499,7 +711,7 @@ async function loadApplications() {
         select.appendChild(option);
       });
 
-      // Status Update Button
+      // Status Update
       const save = document.createElement("button");
       save.textContent = "Status अपडेट करें";
 
@@ -515,7 +727,6 @@ async function loadApplications() {
           );
 
           if (data.trackingId) {
-
             batch.update(
               doc(db, "tracking", data.trackingId),
               {status: select.value}
@@ -525,7 +736,6 @@ async function loadApplications() {
           await batch.commit();
 
           alert("Status अपडेट हो गया!");
-
           await loadApplications();
 
         } catch (error) {
@@ -560,6 +770,14 @@ async function loadApplications() {
 
       card.appendChild(editButton);
 
+      // Payment Box
+      if (data.trackingId) {
+        await createPaymentBox({
+          id: item.id,
+          data: data
+        }, card);
+      }
+
       // Delete Button
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "आवेदन Delete करें";
@@ -569,7 +787,7 @@ async function loadApplications() {
 
         const confirmDelete = confirm(
           "क्या आप सचमुच यह आवेदन Delete करना चाहते हैं?\n\n" +
-          "इससे आवेदन और उसका Tracking ID दोनों हट जाएँगे।\n" +
+          "इससे आवेदन, Tracking ID और Payment जानकारी हट जाएगी।\n" +
           "यह कार्रवाई वापस नहीं की जा सकती।"
         );
 
@@ -591,12 +809,19 @@ async function loadApplications() {
             batch.delete(
               doc(db, "tracking", data.trackingId)
             );
+
+            batch.delete(
+              doc(db, "paymentInfo", data.trackingId)
+            );
+
+            batch.delete(
+              doc(db, "paymentSubmissions", data.trackingId)
+            );
           }
 
           await batch.commit();
 
           alert("आवेदन सफलतापूर्वक Delete हो गया!");
-
           await loadApplications();
 
         } catch (error) {
@@ -612,8 +837,7 @@ async function loadApplications() {
 
       card.appendChild(deleteButton);
       applicationsBox.appendChild(card);
-
-    });
+    }
 
     document.getElementById("pending").textContent =
       pendingCount;
