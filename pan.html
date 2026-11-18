@@ -30,6 +30,7 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .consent{display:flex;align-items:flex-start;gap:9px;font-size:14px;line-height:1.5;margin:15px 0}
 .consent input{margin-top:4px}
+.fee-box{background:#e8f5e9;border:1px solid #a5d6a7;padding:13px;border-radius:8px;margin:12px 0;font-weight:bold;color:#166534}
 @media(max-width:600px){
 .row,.two{grid-template-columns:1fr}
 }
@@ -88,7 +89,7 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 
 <div class="card" id="panForm">
 <h2>PAN CARD सहायता फॉर्म</h2>
-<p>नीचे अपनी सही जानकारी भरें। Submit करने पर WhatsApp खुलेगा और जानकारी आपके संदेश में दिखाई देगी। संदेश भेजने से पहले आप उसे जाँच सकते हैं।</p>
+<p>नीचे अपनी सही जानकारी भरें। Submit करने पर WhatsApp खुलेगा और जानकारी संदेश में दिखाई देगी। संदेश भेजने से पहले आप उसे जाँच सकते हैं।</p>
 
 <form id="assistanceForm">
 
@@ -96,11 +97,15 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 <label>PAN सेवा चुनें *</label>
 <select id="panService" required>
 <option value="">सेवा चुनें</option>
-<option>नया PAN Card</option>
-<option>PAN Card Correction</option>
-<option>PAN Card Reprint</option>
-<option>Instant e-PAN</option>
+<option value="नया PAN Card">नया PAN Card</option>
+<option value="PAN Card Correction">PAN Card Correction</option>
+<option value="PAN Card Reprint">PAN Card Reprint</option>
+<option value="Instant e-PAN">Instant e-PAN</option>
 </select>
+</div>
+
+<div class="fee-box" id="feeBox">
+सहायता फीस: सेवा चुनने पर दिखाई देगी।
 </div>
 
 <h3>आवेदक का नाम</h3>
@@ -228,14 +233,40 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 </footer>
 
 <script>
+const fees={
+ "नया PAN Card":50,
+ "PAN Card Correction":70,
+ "PAN Card Reprint":30,
+ "Instant e-PAN":20
+};
+
+const serviceSelect=document.getElementById("panService");
+const feeBox=document.getElementById("feeBox");
+
+serviceSelect.addEventListener("change",function(){
+ const fee=fees[this.value];
+ feeBox.textContent=fee!==undefined
+  ? "आपकी सहायता फीस: ₹"+fee
+  : "सहायता फीस: सेवा चुनने पर दिखाई देगी।";
+});
+
 document.getElementById("assistanceForm").addEventListener("submit",function(e){
  e.preventDefault();
 
  const value=id=>document.getElementById(id).value.trim();
+ const service=value("panService");
+ const fee=fees[service];
+
+ if(fee===undefined){
+  alert("कृपया PAN सेवा चुनें।");
+  return;
+ }
 
  const message=
  "RAHUL COMPUTER'S - PAN CARD सहायता अनुरोध\n\n"+
- "सेवा: "+value("panService")+"\n\n"+
+ "सेवा: "+service+"\n"+
+ "सहायता फीस: ₹"+fee+"\n"+
+ "नोट: सरकारी/पोर्टल शुल्क, यदि लागू हो, अलग है।\n\n"+
  "आवेदक का नाम: "+[value("firstName"),value("middleName"),value("lastName")].filter(Boolean).join(" ")+"\n"+
  "पिता का नाम: "+[value("fatherFirst"),value("fatherMiddle"),value("fatherLast")].filter(Boolean).join(" ")+"\n"+
  "माता का नाम: "+[value("motherFirst"),value("motherMiddle"),value("motherLast")].filter(Boolean).join(" ")+"\n"+
