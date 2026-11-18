@@ -26,10 +26,11 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 .form-group label{display:block;font-weight:bold;margin-bottom:6px;color:#073b75}
 .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:7px;font-size:15px;background:white}
 .form-group textarea{min-height:85px;resize:vertical}
+.form-group textarea:read-only{background:#f1f5f9}
 .row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .consent{display:flex;align-items:flex-start;gap:9px;font-size:14px;line-height:1.5;margin:15px 0}
-.consent input{margin-top:4px}
+.consent input{margin-top:4px;flex-shrink:0}
 .fee-box{background:#e8f5e9;border:1px solid #a5d6a7;padding:13px;border-radius:8px;margin:12px 0;font-weight:bold;color:#166534}
 @media(max-width:600px){
 .row,.two{grid-template-columns:1fr}
@@ -188,8 +189,13 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 <textarea id="resAddress" placeholder="मकान नंबर, गाँव, पोस्ट, तहसील, जिला, राज्य, पिन कोड" required></textarea>
 </div>
 
+<div class="consent">
+<input type="checkbox" id="sameAddress">
+<label for="sameAddress">पत्राचार का पता निवास के पते के समान है।</label>
+</div>
+
 <div class="form-group">
-<label>पत्राचार का पता *</label>
+<label>पत्राचार का पूरा पता *</label>
 <textarea id="commAddress" placeholder="पत्राचार का पूरा पता लिखें" required></textarea>
 </div>
 
@@ -250,6 +256,27 @@ serviceSelect.addEventListener("change",function(){
   : "सहायता फीस: सेवा चुनने पर दिखाई देगी।";
 });
 
+// समान पता चुनने की सुविधा
+const sameAddress=document.getElementById("sameAddress");
+const resAddress=document.getElementById("resAddress");
+const commAddress=document.getElementById("commAddress");
+
+sameAddress.addEventListener("change",function(){
+ if(this.checked){
+  commAddress.value=resAddress.value;
+  commAddress.readOnly=true;
+ }else{
+  commAddress.readOnly=false;
+ }
+});
+
+resAddress.addEventListener("input",function(){
+ if(sameAddress.checked){
+  commAddress.value=this.value;
+ }
+});
+
+// WhatsApp सहायता अनुरोध
 document.getElementById("assistanceForm").addEventListener("submit",function(e){
  e.preventDefault();
 
