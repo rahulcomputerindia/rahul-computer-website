@@ -17,11 +17,22 @@ h2{color:#0755a0;text-align:center}
 .service h3{margin:0 0 8px;color:#073b75}
 .price{font-size:22px;color:#16803c;font-weight:bold}
 p{line-height:1.6}
-.btn{display:block;text-align:center;text-decoration:none;color:white;background:#087ac2;padding:13px;border-radius:8px;font-weight:bold;margin-top:12px}
+.btn{display:block;text-align:center;text-decoration:none;color:white;background:#087ac2;padding:13px;border-radius:8px;font-weight:bold;margin-top:12px;border:0;width:100%;font-size:15px;cursor:pointer}
 .whatsapp{background:#159b52}
 .note{font-size:13px;color:#64748b}
 .back{background:#475569}
 footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:25px}
+.form-group{margin:13px 0}
+.form-group label{display:block;font-weight:bold;margin-bottom:6px;color:#073b75}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:7px;font-size:15px;background:white}
+.form-group textarea{min-height:85px;resize:vertical}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.consent{display:flex;align-items:flex-start;gap:9px;font-size:14px;line-height:1.5;margin:15px 0}
+.consent input{margin-top:4px}
+@media(max-width:600px){
+.row,.two{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -48,27 +59,21 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 <h3>1. नया PAN Card</h3>
 <p>नया PAN Card आवेदन भरने में सहायता।</p>
 <p class="price">सहायता फीस: ₹50</p>
-<p class="note">सरकारी/पोर्टल शुल्क अलग से लागू हो सकता है।</p>
 <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">नया PAN आवेदन पोर्टल खोलें</a>
-<a class="btn whatsapp" href="https://api.whatsapp.com/send?phone=919752039020&text=Naya%20PAN%20Card%20banwane%20ke%20liye%20sahayata%20chahiye" target="_blank" rel="noopener">PAN सहायता लें</a>
 </div>
 
 <div class="service">
 <h3>2. PAN Card में सुधार</h3>
 <p>नाम, पिता का नाम और अन्य विवरण में सुधार के लिए सहायता।</p>
 <p class="price">सहायता फीस: ₹70</p>
-<p class="note">सरकारी/पोर्टल शुल्क अलग से लागू हो सकता है।</p>
 <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">Correction पोर्टल खोलें</a>
-<a class="btn whatsapp" href="https://api.whatsapp.com/send?phone=919752039020&text=PAN%20Card%20Correction%20ke%20liye%20sahayata%20chahiye" target="_blank" rel="noopener">Correction सहायता लें</a>
 </div>
 
 <div class="service">
 <h3>3. PAN Card Reprint</h3>
 <p>पहले से बने PAN Card की दोबारा कॉपी प्राप्त करने में सहायता।</p>
 <p class="price">सहायता फीस: ₹30</p>
-<p class="note">Protean की Reprint सुविधा की पात्रता और आधिकारिक शुल्क पोर्टल पर जाँचें।</p>
 <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">Reprint पोर्टल खोलें</a>
-<a class="btn whatsapp" href="https://api.whatsapp.com/send?phone=919752039020&text=PAN%20Card%20Reprint%20ke%20liye%20sahayata%20chahiye" target="_blank" rel="noopener">Reprint सहायता लें</a>
 </div>
 
 <div class="service">
@@ -77,9 +82,124 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 <p class="price">सहायता फीस: ₹20</p>
 <p class="note">सरकारी Instant e-PAN सुविधा पात्र आवेदकों के लिए निःशुल्क है। ₹20 केवल हमारी वैकल्पिक सहायता फीस है।</p>
 <a class="btn" href="https://eportal.incometax.gov.in/iec/foservices/#/pre-login/instant-e-pan" target="_blank" rel="noopener">Instant e-PAN पोर्टल खोलें</a>
-<a class="btn whatsapp" href="https://api.whatsapp.com/send?phone=919752039020&text=Instant%20e-PAN%20ke%20liye%20sahayata%20chahiye" target="_blank" rel="noopener">e-PAN सहायता लें</a>
 </div>
 
+</div>
+
+<div class="card" id="panForm">
+<h2>PAN CARD सहायता फॉर्म</h2>
+<p>नीचे अपनी सही जानकारी भरें। Submit करने पर WhatsApp खुलेगा और जानकारी आपके संदेश में दिखाई देगी। संदेश भेजने से पहले आप उसे जाँच सकते हैं।</p>
+
+<form id="assistanceForm">
+
+<div class="form-group">
+<label>PAN सेवा चुनें *</label>
+<select id="panService" required>
+<option value="">सेवा चुनें</option>
+<option>नया PAN Card</option>
+<option>PAN Card Correction</option>
+<option>PAN Card Reprint</option>
+<option>Instant e-PAN</option>
+</select>
+</div>
+
+<h3>आवेदक का नाम</h3>
+<div class="row">
+<div class="form-group">
+<label>First Name *</label>
+<input id="firstName" type="text" required>
+</div>
+<div class="form-group">
+<label>Middle Name</label>
+<input id="middleName" type="text">
+</div>
+<div class="form-group">
+<label>Last Name *</label>
+<input id="lastName" type="text" required>
+</div>
+</div>
+
+<h3>पिता का नाम</h3>
+<div class="row">
+<div class="form-group">
+<label>First Name *</label>
+<input id="fatherFirst" type="text" required>
+</div>
+<div class="form-group">
+<label>Middle Name</label>
+<input id="fatherMiddle" type="text">
+</div>
+<div class="form-group">
+<label>Last Name *</label>
+<input id="fatherLast" type="text" required>
+</div>
+</div>
+
+<h3>माता का नाम</h3>
+<div class="row">
+<div class="form-group">
+<label>First Name *</label>
+<input id="motherFirst" type="text" required>
+</div>
+<div class="form-group">
+<label>Middle Name</label>
+<input id="motherMiddle" type="text">
+</div>
+<div class="form-group">
+<label>Last Name *</label>
+<input id="motherLast" type="text" required>
+</div>
+</div>
+
+<div class="two">
+<div class="form-group">
+<label>जन्मतिथि *</label>
+<input id="dob" type="date" required>
+</div>
+<div class="form-group">
+<label>लिंग *</label>
+<select id="gender" required>
+<option value="">चुनें</option>
+<option>पुरुष</option>
+<option>महिला</option>
+<option>अन्य</option>
+</select>
+</div>
+</div>
+
+<div class="two">
+<div class="form-group">
+<label>मोबाइल नंबर *</label>
+<input id="mobile" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर" required>
+</div>
+<div class="form-group">
+<label>Email ID</label>
+<input id="email" type="email" placeholder="example@gmail.com">
+</div>
+</div>
+
+<div class="form-group">
+<label>निवास का पूरा पता *</label>
+<textarea id="resAddress" placeholder="मकान नंबर, गाँव, पोस्ट, तहसील, जिला, राज्य, पिन कोड" required></textarea>
+</div>
+
+<div class="form-group">
+<label>पत्राचार का पता *</label>
+<textarea id="commAddress" placeholder="पत्राचार का पूरा पता लिखें" required></textarea>
+</div>
+
+<div class="consent">
+<input type="checkbox" id="consent" required>
+<label for="consent">मैं सहमत हूँ कि ऊपर दी गई जानकारी PAN आवेदन में सहायता के लिए RAHUL COMPUTER'S के WhatsApp नंबर पर भेजी जाएगी।</label>
+</div>
+
+<p class="note">
+ध्यान दें: यह सहायता अनुरोध फॉर्म है, सरकारी PAN आवेदन फॉर्म नहीं। Aadhaar नंबर, OTP, UPI PIN या Password यहाँ न भरें। जानकारी भेजने के बाद WhatsApp में संदेश की जाँच करके स्वयं Send करें।
+</p>
+
+<button class="btn whatsapp" type="submit">WhatsApp पर सहायता अनुरोध भेजें</button>
+
+</form>
 </div>
 
 <div class="card">
@@ -106,6 +226,31 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;margin-top:
 <p>RAHUL COMPUTER'S</p>
 <p>आपकी सेवा, हमारा उद्देश्य। 🙏</p>
 </footer>
+
+<script>
+document.getElementById("assistanceForm").addEventListener("submit",function(e){
+ e.preventDefault();
+
+ const value=id=>document.getElementById(id).value.trim();
+
+ const message=
+ "RAHUL COMPUTER'S - PAN CARD सहायता अनुरोध\n\n"+
+ "सेवा: "+value("panService")+"\n\n"+
+ "आवेदक का नाम: "+[value("firstName"),value("middleName"),value("lastName")].filter(Boolean).join(" ")+"\n"+
+ "पिता का नाम: "+[value("fatherFirst"),value("fatherMiddle"),value("fatherLast")].filter(Boolean).join(" ")+"\n"+
+ "माता का नाम: "+[value("motherFirst"),value("motherMiddle"),value("motherLast")].filter(Boolean).join(" ")+"\n"+
+ "जन्मतिथि: "+value("dob")+"\n"+
+ "लिंग: "+value("gender")+"\n"+
+ "मोबाइल: "+value("mobile")+"\n"+
+ "ईमेल: "+(value("email")||"नहीं दिया")+"\n\n"+
+ "निवास का पता:\n"+value("resAddress")+"\n\n"+
+ "पत्राचार का पता:\n"+value("commAddress")+"\n\n"+
+ "कृपया PAN सहायता के लिए संपर्क करें।";
+
+ const url="https://wa.me/919752039020?text="+encodeURIComponent(message);
+ window.open(url,"_blank");
+});
+</script>
 
 </body>
 </html>
