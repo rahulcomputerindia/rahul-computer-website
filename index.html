@@ -3,164 +3,221 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#073b75">
+<meta name="theme-color" content="#071d49">
 <title>RAHUL COMPUTER'S - Digital Services</title>
 
 <style>
+:root{
+ --navy:#071d49;
+ --blue:#073b75;
+ --royal:#087ac2;
+ --gold:#e9b949;
+ --light:#f3f7fc;
+ --white:#ffffff;
+ --text:#172554;
+ --muted:#64748b;
+ --green:#159b52;
+ --border:#dce6f1;
+ --shadow:0 8px 25px rgba(7,29,73,.09);
+}
 *{box-sizing:border-box;scroll-behavior:smooth}
-body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172554}
+body{
+ margin:0;font-family:Arial,sans-serif;
+ background:var(--light);color:var(--text);
+}
 button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
 
-/* PROFESSIONAL HEADER */
+/* HEADER */
 .main-header{
- background:linear-gradient(120deg,#fff,#e8f4ff);
- color:#073b75;padding:22px 12px;
- border-bottom:4px solid #087ac2;
+ background:linear-gradient(125deg,var(--navy),var(--blue),var(--royal));
+ color:white;padding:30px 15px;
+ border-bottom:5px solid var(--gold);
+ position:relative;overflow:hidden;
+}
+.main-header:after{
+ content:"";position:absolute;width:260px;height:260px;
+ border:1px solid #ffffff22;border-radius:50%;
+ right:-80px;top:-130px;
 }
 .brand-logo{
  display:flex;align-items:center;justify-content:center;
- gap:16px;max-width:1000px;margin:auto;
+ gap:18px;max-width:1100px;margin:auto;position:relative;z-index:1;
 }
 .rc-logo{
- width:86px;height:86px;min-width:86px;
- border:5px solid #087ac2;border-radius:50%;
- background:linear-gradient(135deg,#073b75,#087ac2);
- color:white;display:flex;align-items:center;
- justify-content:center;font-size:34px;font-weight:900;
- letter-spacing:-3px;box-shadow:0 4px 12px #073b7540;
+ width:90px;height:90px;min-width:90px;
+ border:4px solid var(--gold);border-radius:22px;
+ background:linear-gradient(135deg,#ffffff,#dceeff);
+ color:var(--navy);display:flex;align-items:center;
+ justify-content:center;font-size:35px;font-weight:900;
+ letter-spacing:-3px;box-shadow:0 7px 20px #0004;
 }
 .brand-info h1{
- font-size:clamp(22px,4vw,36px);
- margin:0;font-weight:900;letter-spacing:.5px;
+ font-size:clamp(23px,4vw,38px);
+ margin:0;font-weight:900;letter-spacing:.7px;
 }
 .brand-info .tagline{
- color:#087ac2;font-size:16px;font-weight:bold;
- margin:6px 0;
+ color:#ffda75;font-size:16px;font-weight:bold;margin:8px 0;
 }
 .brand-info .brand-location{
- font-size:13px;margin:0;color:#475569;
+ font-size:13px;margin:0;color:#e3efff;
 }
 
 /* NAVIGATION */
 .main-nav{
- background:linear-gradient(120deg,#052d60,#087ac2);
- color:white;padding:13px 20px;
+ background:var(--navy);color:white;padding:13px 22px;
  display:flex;align-items:center;justify-content:space-between;
  flex-wrap:wrap;position:sticky;top:0;z-index:999;
- box-shadow:0 4px 14px #0003;
+ box-shadow:0 5px 16px #071d4940;
+ border-bottom:2px solid var(--gold);
 }
-.nav-brand{font-size:17px;font-weight:900;letter-spacing:.4px}
-.nav-links{display:flex;align-items:center;gap:19px}
+.nav-brand{font-size:17px;font-weight:900;letter-spacing:.5px}
+.nav-links{display:flex;align-items:center;gap:18px}
 .nav-links a{
- color:white;text-decoration:none;font-size:14px;
+ color:white;text-decoration:none;font-size:13px;
  font-weight:bold;transition:.2s;
 }
-.nav-links a:hover{color:#ffd166}
+.nav-links a:hover{color:var(--gold)}
 .menu-toggle{
  display:none;background:transparent;color:white;
  border:0;font-size:27px;cursor:pointer;
 }
 
-/* MAIN LAYOUT */
-.container{max-width:1150px;margin:auto;padding:22px 16px}
-h2{text-align:center;color:#073b75;margin-top:8px}
-.about,.form-box,.contact,.tracking-box,.admin-box,.payment-section{
- background:white;padding:24px 20px;border-radius:15px;
- margin:22px 0;box-shadow:0 4px 15px #0000000c;
- border:1px solid #e5edf5;
+/* MAIN */
+.container{max-width:1180px;margin:auto;padding:25px 18px}
+h2{
+ text-align:center;color:var(--blue);margin:8px 0 18px;
+ font-size:clamp(21px,3vw,27px);
 }
-.about p{line-height:1.8;text-align:center;color:#475569}
-.note{text-align:center;color:#64748b;font-size:13px;line-height:1.6}
+.about,.form-box,.contact,.tracking-box,.admin-box,.payment-section{
+ background:white;padding:27px 24px;border-radius:17px;
+ margin:24px 0;box-shadow:var(--shadow);
+ border:1px solid var(--border);
+}
+.about{border-top:4px solid var(--gold)}
+.about p{
+ line-height:1.9;text-align:center;color:#475569;font-size:15px;
+}
+.note{text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
 
-/* SERVICE CATEGORIES */
-.category-list{display:grid;grid-template-columns:1fr;gap:14px}
+/* SERVICES */
+#services{padding-top:5px}
+.category-list{display:grid;grid-template-columns:1fr;gap:15px}
 .category{
- background:white;border-radius:12px;
- box-shadow:0 3px 12px #0000000c;
- overflow:hidden;border:1px solid #e0eaf5;
+ background:white;border-radius:14px;box-shadow:var(--shadow);
+ overflow:hidden;border:1px solid var(--border);
 }
 .category summary{
- padding:18px 16px;font-weight:bold;color:#0755a0;
+ padding:19px 18px;font-weight:900;color:var(--blue);
  cursor:pointer;font-size:16px;list-style:none;
- background:linear-gradient(90deg,#fff,#f0f7ff);
+ background:linear-gradient(100deg,#eaf3ff,#fff);
+ border-left:5px solid var(--royal);
 }
-.category summary:after{content:"＋";float:right;color:#087ac2}
+.category summary:after{
+ content:"＋";float:right;color:var(--royal);font-size:19px;
+}
 .category[open] summary:after{content:"−"}
 .category-items{
- padding:13px;display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+ padding:15px;display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
 }
 .service-option{
- background:#edf5ff;border:1px solid #d4e6fa;
- color:#073b75;border-radius:9px;padding:13px 9px;
+ background:linear-gradient(145deg,#f2f7ff,#e7f1ff);
+ border:1px solid #cbdff5;color:var(--blue);
+ border-radius:11px;padding:15px 10px;
  text-align:center;font-size:13px;font-weight:bold;
- cursor:pointer;transition:.2s;
+ cursor:pointer;transition:.2s;min-height:54px;
 }
 .service-option:hover{
- background:#d8eaff;transform:translateY(-2px);
+ background:var(--blue);color:white;
+ transform:translateY(-3px);
+ box-shadow:0 5px 13px #073b7530;
 }
 
-/* FORMS */
-label{display:block;font-weight:bold;margin:14px 0 7px;color:#243b5a}
+/* FORM */
+label{
+ display:block;font-weight:bold;margin:15px 0 7px;
+ color:#243b5a;font-size:14px;
+}
 input,select,textarea{
- width:100%;padding:13px;border:1px solid #ccd5e0;
- border-radius:8px;font-size:16px;background:white;
- color:#172554;
+ width:100%;padding:14px;border:1px solid #cbd5e1;
+ border-radius:10px;font-size:15px;background:white;color:var(--text);
+ transition:.2s;
 }
 input:focus,select:focus,textarea:focus{
- outline:2px solid #087ac2;border-color:#087ac2;
+ outline:2px solid #087ac233;border-color:var(--royal);
+ box-shadow:0 0 0 3px #087ac214;
 }
-textarea{min-height:85px;resize:vertical}
+textarea{min-height:95px;resize:vertical}
 button,.btn{
  display:block;width:100%;padding:14px;border:0;
- border-radius:9px;color:white;font-size:16px;
+ border-radius:10px;color:white;font-size:15px;
  font-weight:bold;text-align:center;text-decoration:none;
- margin-top:16px;cursor:pointer;transition:.2s;
+ margin-top:17px;cursor:pointer;transition:.2s;
 }
-button:hover,.btn:hover{filter:brightness(.94)}
-button:disabled{opacity:.6;cursor:not-allowed}
-.submit,.whatsapp{background:#159b52}
-.call,.login-btn{background:#0755a0}
+button:hover,.btn:hover{filter:brightness(.94);transform:translateY(-1px)}
+button:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.submit,.whatsapp{background:linear-gradient(110deg,#087b43,#19aa60)}
+.call,.login-btn{background:linear-gradient(110deg,var(--navy),var(--royal))}
 .admin-box{display:none}
-.admin-box.show{display:block}
+.admin-box.show{display:block;border-top:4px solid var(--gold)}
 .login-message{text-align:center;font-weight:bold;margin-top:12px}
-.phone{font-size:23px;font-weight:bold}
+.phone{font-size:25px;font-weight:900;color:var(--blue)}
 
 /* TRACKING AND PAYMENT */
-.payment-section{border:1px solid #d4e6fa}
+.payment-section{
+ border:1px solid #cbdff5;background:#fbfdff;
+}
 .payment-card{
- background:#edf5ff;padding:15px;border-radius:10px;
- margin-top:15px;text-align:center;
+ background:linear-gradient(145deg,#eff6ff,#fff);
+ padding:19px;border-radius:13px;margin-top:16px;
+ text-align:center;border:1px solid #d7e7f8;
 }
 .payment-card img{
  width:100%;max-width:260px;height:auto;
- display:block;margin:15px auto;
- border:1px solid #ddd;border-radius:8px;
+ display:block;margin:16px auto;
+ border:2px solid var(--gold);border-radius:10px;
+ padding:5px;background:white;
 }
-.payment-amount{font-size:27px;color:#087a42;font-weight:bold}
+.payment-amount{font-size:30px;color:#087a42;font-weight:900}
 .payment-status{
- font-weight:bold;padding:12px;border-radius:8px;
- background:#edf5ff;text-align:center;line-height:1.6;
+ font-weight:bold;padding:14px;border-radius:10px;
+ background:#edf5ff;text-align:center;line-height:1.7;
 }
 .paid{color:#16803c;background:#e9f8ef}
 .rejected{color:#b42318;background:#fff0f0}
 .pending-payment{color:#9a6700;background:#fff8e5}
 .receipt{
- border:2px dashed #16803c;padding:15px;
- border-radius:10px;margin-top:15px;
+ border:2px dashed #16803c;padding:18px;
+ border-radius:12px;margin-top:17px;
  background:#f0fff5;text-align:left;
 }
 .receipt h3{text-align:center;color:#16803c}
 .hidden{display:none!important}
 
+/* CONTACT */
+.contact{
+ text-align:center;border-top:4px solid var(--gold);
+}
+.contact .btn{max-width:420px;margin:14px auto}
+
 /* FOOTER */
 footer{
- background:linear-gradient(120deg,#052d60,#087ac2);
- color:white;text-align:center;padding:30px 16px;margin-top:30px;
+ background:linear-gradient(125deg,var(--navy),var(--blue));
+ color:white;text-align:center;padding:35px 16px;margin-top:35px;
+ border-top:5px solid var(--gold);
 }
-footer h3{font-size:22px;margin:0 0 10px}
-footer a{color:white;text-decoration:underline}
-footer p{line-height:1.7}
+footer h3{font-size:24px;margin:0 0 10px;color:#ffda75}
+footer a{color:#ffda75;text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer p{line-height:1.8;font-size:14px}
+
+/* TABLET */
+@media(max-width:900px){
+ .nav-links{gap:11px}
+ .nav-links a{font-size:12px}
+ .category-items{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 
 /* MOBILE */
 @media(max-width:768px){
@@ -173,33 +230,49 @@ footer p{line-height:1.7}
  }
  .nav-links.show{display:flex}
  .nav-links a{
-  width:100%;padding:13px 4px;
-  border-top:1px solid #ffffff44;
+  width:100%;padding:14px 5px;
+  border-top:1px solid #ffffff30;font-size:14px;
  }
- .container{padding:15px 11px}
- .about,.form-box,.contact,.tracking-box,.admin-box{
-  padding:19px 14px;
+ .container{padding:16px 11px}
+ .about,.form-box,.contact,.tracking-box,.admin-box,.payment-section{
+  padding:20px 15px;margin:17px 0;
  }
+ .category-items{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+/* SMALL MOBILE */
 @media(max-width:480px){
- .main-header{padding:17px 8px}
- .brand-logo{gap:10px}
+ .main-header{padding:19px 9px}
+ .brand-logo{gap:11px}
  .rc-logo{
   width:65px;height:65px;min-width:65px;
-  font-size:26px;border-width:4px;
+  font-size:26px;border-width:3px;border-radius:17px;
  }
  .brand-info h1{font-size:19px;letter-spacing:0}
  .brand-info .tagline{font-size:12px;margin:5px 0}
  .brand-info .brand-location{font-size:10px}
- .nav-brand{font-size:15px}
+ .nav-brand{font-size:14px}
  .category-items{grid-template-columns:1fr 1fr;gap:8px;padding:10px}
- .service-option{font-size:12px;padding:12px 5px}
+ .service-option{font-size:12px;padding:12px 5px;min-height:55px}
+ input,select,textarea{font-size:16px}
+ .phone{font-size:22px}
 }
+
+/* DESKTOP */
+@media(min-width:1000px){
+ .container{padding-top:32px}
+ .about,.form-box,.contact,.tracking-box,.admin-box{
+  padding:30px;
+ }
+}
+
+/* PRINT RECEIPT */
 @media print{
  body *{visibility:hidden}
  #customerReceipt,#customerReceipt *{visibility:visible}
  #customerReceipt{
-  position:absolute;left:0;top:0;width:100%;box-shadow:none;
+  position:absolute;left:0;top:0;width:100%;
+  box-shadow:none;background:white;
  }
  #printReceipt{display:none}
 }
@@ -208,7 +281,6 @@ footer p{line-height:1.7}
 
 <body>
 
-<!-- HEADER -->
 <header id="home" class="main-header">
  <div class="brand-logo">
   <div class="rc-logo">RC</div>
@@ -220,7 +292,6 @@ footer p{line-height:1.7}
  </div>
 </header>
 
-<!-- NAVIGATION -->
 <nav class="main-nav">
  <div class="nav-brand">RAHUL COMPUTER'S</div>
  <button class="menu-toggle" onclick="toggleMenu()" aria-label="मेनू खोलें">☰</button>
@@ -310,7 +381,7 @@ footer p{line-height:1.7}
 </details>
 
 <details class="category">
-<summary>CAST CERTIFICATE</summary>
+<summary>CASTE CERTIFICATE</summary>
 <div class="category-items">
 <button class="service-option" data-service="जाति प्रमाण पत्र बनवाएं">जाति प्रमाण पत्र बनवाएं</button>
 <button class="service-option" data-service="जाति प्रमाण पत्र प्रिंट">जाति प्रमाण पत्र प्रिंट</button>
@@ -402,7 +473,7 @@ footer p{line-height:1.7}
 <option>खसरा प्रिंट</option>
 <option>खतौनी प्रिंट</option>
 </optgroup>
-<optgroup label="CAST CERTIFICATE">
+<optgroup label="CASTE CERTIFICATE">
 <option>जाति प्रमाण पत्र बनवाएं</option>
 <option>जाति प्रमाण पत्र प्रिंट</option>
 </optgroup>
@@ -473,10 +544,10 @@ footer p{line-height:1.7}
 
 <section class="contact" id="contact">
 <h2>हमसे संपर्क करें</h2>
-<p class="phone" style="text-align:center">9752039020</p>
+<p class="phone">9752039020</p>
 <a class="btn call" href="tel:9752039020">अभी कॉल करें</a>
 <a class="btn whatsapp" href="https://api.whatsapp.com/send?phone=919752039020" target="_blank" rel="noopener">WhatsApp संपर्क</a>
-<p style="text-align:center">पता: अमिलिया, मध्य प्रदेश</p>
+<p>पता: अमिलिया, मध्य प्रदेश</p>
 </section>
 
 <section class="admin-box" id="adminLogin">
