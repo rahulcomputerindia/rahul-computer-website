@@ -8,83 +8,64 @@
 
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;font-family:Arial,sans-serif;background:#f1f5f9;
- color:#172033;line-height:1.6
-}
-header{
- background:linear-gradient(120deg,#071d49,#087ac2);
- color:white;padding:18px 5%;display:flex;
- justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap
-}
-.logo{font-size:21px;font-weight:900}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033;line-height:1.6}
+header{background:linear-gradient(120deg,#071d49,#087ac2);color:white;padding:17px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font-size:21px;font-weight:900;color:white;text-decoration:none}
 .logo span{color:#e9b949}
-header a{color:white;text-decoration:none;font-weight:bold}
-.container{width:min(950px,92%);margin:35px auto}
-.hero{
- background:linear-gradient(120deg,#071d49,#087ac2);
- color:white;text-align:center;padding:35px 15px;border-radius:15px;
- margin-bottom:25px
-}
-.hero h1{margin:0 0 8px;font-size:30px}
+header a:last-child{color:white;text-decoration:none;font-weight:bold}
+.container{width:min(1050px,94%);margin:25px auto}
+.hero{background:linear-gradient(120deg,#071d49,#087ac2);color:white;text-align:center;padding:30px 15px;border-radius:15px;margin-bottom:20px}
+.hero h1{margin:0 0 7px;font-size:28px}
 .hero p{margin:0;color:#e5efff}
-.card{
- background:white;padding:25px;border-radius:14px;
- box-shadow:0 5px 22px #0000000d;border:1px solid #e2e8f0;
- margin-bottom:20px
-}
-.tabs{display:flex;gap:10px;margin-bottom:20px}
-.tab{
- flex:1;padding:12px;border:1px solid #cbd5e1;
- background:#f1f5f9;border-radius:8px;font-weight:bold;cursor:pointer
-}
-.tab.active{background:#073b75;color:white;border-color:#073b75}
-h2{color:#073b75;margin-top:0}
-label{display:block;font-weight:bold;margin:12px 0 5px}
-input,select{
- width:100%;padding:12px;border:1px solid #cbd5e1;
- border-radius:8px;font-size:15px;background:white
-}
-button{font:inherit}
-.btn{
- width:100%;padding:13px;border:0;border-radius:8px;
- background:#073b75;color:white;font-weight:bold;
- margin-top:17px;cursor:pointer
-}
+.card{background:white;padding:20px;border-radius:13px;border:1px solid #e2e8f0;box-shadow:0 4px 18px #0000000a;margin-bottom:17px}
+h2{color:#073b75;margin:0 0 14px;font-size:20px}
+h3{color:#073b75;margin:0 0 9px;font-size:17px}
+label{display:block;font-weight:bold;margin:12px 0 5px;font-size:14px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;background:white;color:#172033}
+textarea{min-height:90px;resize:vertical}
+button{font:inherit;cursor:pointer}
+.btn{padding:12px 16px;border:0;border-radius:8px;background:#073b75;color:white;font-weight:bold}
 .btn.gold{background:#e9b949;color:#172033}
-.btn.red{background:#c62828}
-.btn:disabled{opacity:.6;cursor:not-allowed}
-.message{
- display:none;padding:12px;border-radius:8px;
- margin-top:15px;overflow-wrap:anywhere
-}
+.btn.red{background:#c62828;color:white}
+.btn.gray{background:#e2e8f0;color:#172033}
+.btn.green{background:#15803d;color:white}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn-full{width:100%;margin-top:16px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:3px 0 14px}
+.tab{white-space:nowrap;padding:10px 14px;border:0;border-radius:8px;background:#e2e8f0;color:#334155;font-weight:bold}
+.tab.active{background:#073b75;color:white}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.info-box,.stat-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:12px;overflow-wrap:anywhere}
+.info-box small,.stat-box small{display:block;color:#64748b;font-size:12px}
+.info-box strong{display:block;margin-top:4px;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:17px}
+.stat-box strong{display:block;color:#07569a;font-size:22px;margin-top:4px}
+.message{display:none;padding:12px;border-radius:8px;margin:12px 0;font-size:14px;overflow-wrap:anywhere}
 .message.success{display:block;background:#e8f7ee;color:#176b3a}
 .message.error{display:block;background:#fff0f0;color:#a51f1f}
 .message.info{display:block;background:#eaf3ff;color:#164a80}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.field-full{grid-column:1/-1}
-.profile-row{
- padding:12px 0;border-bottom:1px solid #e2e8f0;
- display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
-}
-.status{
- display:inline-block;padding:5px 12px;border-radius:20px;
- background:#fff3cd;color:#765500;font-weight:bold
-}
-.status.approved{background:#e8f7ee;color:#176b3a}
-.status.rejected,.status.blocked{background:#fff0f0;color:#a51f1f}
-.note{font-size:13px;color:#64748b}
+.status{display:inline-block;padding:4px 10px;border-radius:20px;background:#fff3cd;color:#765500;font-weight:bold;font-size:12px}
+.status.Approved,.status.Completed,.status.Paid{background:#e8f7ee;color:#176b3a}
+.status.Rejected,.status.Blocked{background:#fff0f0;color:#a51f1f}
+.status.Processing,.status.Pending,.status.Unpaid{background:#fff3cd;color:#765500}
+.item-card{border:1px solid #e2e8f0;border-radius:10px;padding:14px;background:white;min-width:0}
+.item-card p{margin:5px 0;font-size:13px;color:#475569;overflow-wrap:anywhere}
+.item-card h3{overflow-wrap:anywhere}
+.item-card .btn{margin-top:10px}
+.note,.small{font-size:12px;color:#64748b}
+.empty{padding:20px;text-align:center;color:#64748b;border:1px dashed #cbd5e1;border-radius:9px;grid-column:1/-1}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .hidden{display:none!important}
-footer{
- background:#071d49;color:white;text-align:center;
- padding:22px 12px;margin-top:40px
-}
+footer{text-align:center;background:#071d49;color:white;padding:22px 12px;margin-top:35px;font-size:13px}
 footer a{color:#e9b949;text-decoration:none}
-@media(max-width:600px){
- .grid{grid-template-columns:1fr}
- .field-full{grid-column:auto}
+@media(max-width:650px){
+ .grid,.profile-grid,.stats{grid-template-columns:1fr}
+ .container{margin:15px auto}
+ .card{padding:15px}
  .hero h1{font-size:24px}
- .card{padding:18px}
+ header{padding:14px 4%}
+ .logo{font-size:18px}
 }
 </style>
 </head>
@@ -101,14 +82,17 @@ footer a{color:#e9b949;text-decoration:none}
  <div class="hero">
   <h1>Partner Portal</h1>
   <p>RAHUL COMPUTER'S Digital Services Network</p>
-  <p style="margin-top:8px">मध्य प्रदेश में हमारे पार्टनर नेटवर्क से जुड़ें</p>
+  <p style="margin-top:7px">मध्य प्रदेश में हमारे पार्टनर नेटवर्क से जुड़ें</p>
  </div>
 
- <div class="card" id="authCard">
+ <!-- AUTH SECTION -->
+ <section class="card" id="authCard">
   <div class="tabs">
    <button class="tab active" id="registerTab" type="button">New Registration</button>
    <button class="tab" id="loginTab" type="button">Partner Login</button>
   </div>
+
+  <div id="authMessage" class="message" role="status"></div>
 
   <div id="registerPanel">
    <h2>Partner Registration</h2>
@@ -116,102 +100,195 @@ footer a{color:#e9b949;text-decoration:none}
 
    <form id="registerForm">
     <div class="grid">
-     <div class="field-full">
-      <label for="fullName">पूरा नाम *</label>
+     <div style="grid-column:1/-1">
+      <label>पूरा नाम *</label>
       <input id="fullName" required maxlength="80" placeholder="अपना पूरा नाम">
      </div>
 
-     <div class="field-full">
-      <label for="regEmail">Gmail / Email ID *</label>
+     <div style="grid-column:1/-1">
+      <label>Email ID *</label>
       <input id="regEmail" type="email" required maxlength="120" placeholder="अपना Email लिखें">
      </div>
 
      <div>
-      <label for="regMobile">मोबाइल नंबर *</label>
-      <input id="regMobile" inputmode="numeric" maxlength="10" required placeholder="10 अंकों का नंबर">
+      <label>मोबाइल नंबर *</label>
+      <input id="regMobile" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required placeholder="10 अंकों का नंबर">
      </div>
 
      <div>
-      <label for="regVillage">गाँव / शहर *</label>
+      <label>गाँव / शहर *</label>
       <input id="regVillage" required maxlength="80" placeholder="गाँव या शहर">
      </div>
 
      <div>
-      <label for="regDistrict">जिला *</label>
+      <label>जिला *</label>
       <input id="regDistrict" required maxlength="80" placeholder="जिला">
      </div>
 
      <div>
-      <label for="regTehsil">तहसील *</label>
+      <label>तहसील *</label>
       <input id="regTehsil" required maxlength="80" placeholder="तहसील">
      </div>
 
      <div>
-      <label for="regPassword">Password *</label>
+      <label>Password *</label>
       <input id="regPassword" type="password" minlength="6" required placeholder="कम से कम 6 अक्षर">
      </div>
 
      <div>
-      <label for="confirmPassword">Confirm Password *</label>
+      <label>Confirm Password *</label>
       <input id="confirmPassword" type="password" minlength="6" required placeholder="Password दोबारा लिखें">
      </div>
     </div>
 
-    <button class="btn gold" id="registerButton" type="submit">Submit Partner Registration</button>
-    <div id="registerMessage" class="message" role="status"></div>
+    <button class="btn gold btn-full" id="registerButton" type="submit">Submit Partner Registration</button>
    </form>
+   <p class="note">Registration के बाद Admin Approval जरूरी है।</p>
   </div>
 
   <div id="loginPanel" class="hidden">
    <h2>Partner Login</h2>
    <form id="loginForm">
-    <label for="loginEmail">Registered Email</label>
+    <label>Registered Email</label>
     <input id="loginEmail" type="email" required placeholder="अपना Registered Email">
 
-    <label for="loginPassword">Password</label>
+    <label>Password</label>
     <input id="loginPassword" type="password" required placeholder="अपना Password">
 
-    <button class="btn" id="loginButton" type="submit">Login</button>
-    <div id="loginMessage" class="message" role="status"></div>
+    <button class="btn btn-full" id="loginButton" type="submit">Login</button>
    </form>
   </div>
- </div>
+ </section>
 
- <div class="card hidden" id="dashboard">
-  <h2>Partner Dashboard</h2>
-  <p>आपका Partner Account विवरण:</p>
+ <!-- DASHBOARD -->
+ <section id="dashboard" class="hidden">
 
-  <div class="profile-row"><strong>नाम</strong><span id="pName"></span></div>
-  <div class="profile-row"><strong>Email</strong><span id="pEmail"></span></div>
-  <div class="profile-row"><strong>मोबाइल</strong><span id="pMobile"></span></div>
-  <div class="profile-row"><strong>गाँव / शहर</strong><span id="pVillage"></span></div>
-  <div class="profile-row"><strong>जिला</strong><span id="pDistrict"></span></div>
-  <div class="profile-row"><strong>तहसील</strong><span id="pTehsil"></span></div>
-  <div class="profile-row"><strong>Partner ID</strong><span id="pPartnerId">अभी जारी नहीं हुई</span></div>
-  <div class="profile-row"><strong>Account Status</strong><span id="pStatus" class="status">Pending</span></div>
+  <div class="card">
+   <div class="row">
+    <h2>Partner Dashboard</h2>
+    <button class="btn red" id="logoutButton" type="button">Logout</button>
+   </div>
 
-  <div id="partnerNotice" class="message info" style="display:block;margin-top:20px">
-   आपका आवेदन प्राप्त हो गया है। Admin द्वारा जाँच और Approval के बाद Partner ID जारी की जाएगी।
+   <div class="profile-grid">
+    <div class="info-box"><small>नाम</small><strong id="pName">-</strong></div>
+    <div class="info-box"><small>Email</small><strong id="pEmail">-</strong></div>
+    <div class="info-box"><small>मोबाइल</small><strong id="pMobile">-</strong></div>
+    <div class="info-box"><small>गाँव / शहर</small><strong id="pVillage">-</strong></div>
+    <div class="info-box"><small>जिला / तहसील</small><strong id="pLocation">-</strong></div>
+    <div class="info-box"><small>Partner ID</small><strong id="pPartnerId">अभी जारी नहीं हुई</strong></div>
+   </div>
+
+   <div style="margin-top:14px">
+    <strong>Account Status: </strong>
+    <span class="status" id="pStatus">Pending</span>
+   </div>
+
+   <div id="partnerNotice" class="message info" style="display:block"></div>
   </div>
 
-  <div class="card" style="margin-top:20px;background:#f8fafc">
-   <h3 style="color:#073b75;margin-top:0">Partner Services</h3>
-   <p id="serviceNotice" class="note">Partner Services अभी उपलब्ध नहीं हैं। Approval और अगले चरण में सुविधाएँ जोड़ी जाएँगी।</p>
+  <!-- NOT APPROVED -->
+  <div id="notApprovedBox" class="card hidden">
+   <h2>Account Approval Status</h2>
+   <p id="notApprovedText"></p>
   </div>
 
-  <button class="btn red" id="logoutButton" type="button">Logout</button>
- </div>
+  <!-- APPROVED DASHBOARD -->
+  <div id="approvedArea" class="hidden">
+
+   <div class="stats">
+    <div class="stat-box"><small>मेरे आवेदन</small><strong id="statApplications">0</strong></div>
+    <div class="stat-box"><small>Total Commission</small><strong id="statCommission">₹0</strong></div>
+    <div class="stat-box"><small>Unpaid Commission</small><strong id="statUnpaid">₹0</strong></div>
+   </div>
+
+   <div class="card">
+    <div class="tabs">
+     <button class="tab active" data-panel="servicesPanel" type="button">Services</button>
+     <button class="tab" data-panel="newApplicationPanel" type="button">New Application</button>
+     <button class="tab" data-panel="myApplicationsPanel" type="button">My Applications</button>
+     <button class="tab" data-panel="earningsPanel" type="button">Commission / Earnings</button>
+    </div>
+
+    <!-- SERVICES -->
+    <div id="servicesPanel" class="partnerPanel">
+     <div class="row">
+      <h2>Available Services</h2>
+      <button class="btn gray" id="refreshServices" type="button">Refresh</button>
+     </div>
+     <p class="note">Admin द्वारा Active की गई Services यहाँ दिखाई देंगी।</p>
+     <div id="servicesList" class="grid">
+      <div class="empty">Services load हो रही हैं...</div>
+     </div>
+    </div>
+
+    <!-- NEW APPLICATION -->
+    <div id="newApplicationPanel" class="partnerPanel hidden">
+     <h2>ग्राहक का नया आवेदन</h2>
+     <div id="applicationMessage" class="message"></div>
+
+     <form id="applicationForm">
+      <label>Service Select करें *</label>
+      <select id="serviceSelect" required>
+       <option value="">पहले Service चुनें</option>
+      </select>
+
+      <div id="serviceInfo" class="note" style="margin-top:8px"></div>
+
+      <label>ग्राहक का पूरा नाम *</label>
+      <input id="customerName" required maxlength="100" placeholder="Customer Name">
+
+      <label>ग्राहक का मोबाइल नंबर *</label>
+      <input id="customerMobile" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required placeholder="10 अंकों का मोबाइल नंबर">
+
+      <label>गाँव / शहर *</label>
+      <input id="customerVillage" required maxlength="100" placeholder="Customer Village">
+
+      <label>आवेदन से जुड़ी जानकारी</label>
+      <textarea id="customerDetails" maxlength="1000" placeholder="आवेदन की जरूरी जानकारी लिखें"></textarea>
+
+      <button class="btn btn-full" id="submitApplicationButton" type="submit">आवेदन जमा करें</button>
+     </form>
+
+     <p class="note">ग्राहक की अनुमति से ही जानकारी जमा करें। OTP, Password या Aadhaar की गोपनीय जानकारी यहाँ न लिखें।</p>
+    </div>
+
+    <!-- APPLICATION LIST -->
+    <div id="myApplicationsPanel" class="partnerPanel hidden">
+     <div class="row">
+      <h2>मेरे ग्राहक आवेदन</h2>
+      <button class="btn gray" id="refreshApplications" type="button">Refresh</button>
+     </div>
+     <div id="myApplicationsList" class="grid">
+      <div class="empty">Applications load हो रहे हैं...</div>
+     </div>
+    </div>
+
+    <!-- COMMISSION -->
+    <div id="earningsPanel" class="partnerPanel hidden">
+     <div class="row">
+      <h2>Commission / Earnings</h2>
+      <button class="btn gray" id="refreshLedger" type="button">Refresh</button>
+     </div>
+     <p class="note">Commission की Entry Admin द्वारा जोड़ी जाएगी।</p>
+     <div id="ledgerList" class="grid">
+      <div class="empty">Commission details load हो रही हैं...</div>
+     </div>
+    </div>
+
+   </div>
+  </div>
+ </section>
 
  <div class="card">
-  <h3 style="color:#073b75;margin-top:0">Important Information</h3>
+  <h3>Important Information</h3>
   <ul>
-   <li>Registration करने से Partner ID तुरंत जारी नहीं होती।</li>
-   <li>आपका आवेदन Admin द्वारा जाँचा जाएगा।</li>
-   <li>Approval के बाद Partner ID दी जाएगी।</li>
-   <li>यह RAHUL COMPUTER'S का निजी पार्टनर नेटवर्क है, सरकारी CSC ID या सरकारी अनुमति नहीं।</li>
-   <li>किसी को अपना Password या OTP न बताएं।</li>
+   <li>Registration के बाद Admin Approval जरूरी है।</li>
+   <li>Approval के बाद Partner ID जारी की जाएगी।</li>
+   <li>Partner Commission की Entry Admin द्वारा की जाएगी।</li>
+   <li>यह निजी पार्टनर नेटवर्क है, सरकारी CSC ID या सरकारी अनुमति नहीं।</li>
+   <li>सरकारी सेवाओं का उपयोग केवल अधिकृत अनुमति और संबंधित विभाग के नियमों के अनुसार करें।</li>
+   <li>अपना Password और OTP किसी को न बताएं।</li>
   </ul>
-  <p class="note">किसी भी सरकारी सेवा का उपयोग केवल संबंधित विभाग की अधिकृत अनुमति और नियमों के अनुसार किया जा सकेगा।</p>
  </div>
 
 </div>
@@ -225,14 +302,28 @@ footer a{color:#e9b949;text-decoration:none}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+
 import {
- getFirestore, doc, getDoc, setDoc, serverTimestamp
+ getFirestore,
+ doc,
+ getDoc,
+ getDocs,
+ collection,
+ query,
+ where,
+ setDoc,
+ serverTimestamp
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+
 import {
- getAuth, createUserWithEmailAndPassword,
- signInWithEmailAndPassword, signOut
+ getAuth,
+ createUserWithEmailAndPassword,
+ signInWithEmailAndPassword,
+ signOut,
+ onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
+/* FIREBASE CONFIGURATION */
 const firebaseConfig = {
  apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
  authDomain: "rahul-computer-s.firebaseapp.com",
@@ -247,72 +338,92 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 const $ = id => document.getElementById(id);
+
+let currentUser = null;
+let partnerProfile = null;
+let availableServices = [];
+let dashboardUid = null;
+let registrationInProgress = false;
+
 $("year").textContent = new Date().getFullYear();
 
-function showMessage(element,text,type="info"){
- element.textContent=text;
- element.className="message "+type;
+/* HELPERS */
+function message(id,text,type="info"){
+ const el=$(id);
+ el.textContent=text;
+ el.className="message "+type;
 }
-function setTab(tab){
+
+function clearMessage(id){
+ const el=$(id);
+ el.textContent="";
+ el.className="message";
+}
+
+function busy(id,value,normalText){
+ const button=$(id);
+ button.disabled=value;
+ button.textContent=value?"Please wait...":normalText;
+}
+
+function money(value){
+ return "₹"+Number(value||0).toLocaleString("en-IN",{maximumFractionDigits:2});
+}
+
+function dateText(timestamp){
+ if(timestamp && typeof timestamp.toDate==="function"){
+  return timestamp.toDate().toLocaleString("en-IN");
+ }
+ return "-";
+}
+
+function make(tag,className,text){
+ const el=document.createElement(tag);
+ if(className) el.className=className;
+ if(text!==undefined) el.textContent=text;
+ return el;
+}
+
+function showAuth(){
+ $("authCard").classList.remove("hidden");
+ $("dashboard").classList.add("hidden");
+ $("approvedArea").classList.add("hidden");
+ $("notApprovedBox").classList.add("hidden");
+}
+
+function showPanel(panelId){
+ document.querySelectorAll(".partnerPanel").forEach(panel=>{
+  panel.classList.toggle("hidden",panel.id!==panelId);
+ });
+
+ document.querySelectorAll("[data-panel]").forEach(button=>{
+  button.classList.toggle("active",button.dataset.panel===panelId);
+ });
+
+ if(panelId==="servicesPanel") loadServices();
+ if(panelId==="myApplicationsPanel") loadApplications();
+ if(panelId==="earningsPanel") loadLedger();
+}
+
+/* AUTH TABS */
+function setAuthTab(tab){
  const register=tab==="register";
  $("registerPanel").classList.toggle("hidden",!register);
  $("loginPanel").classList.toggle("hidden",register);
  $("registerTab").classList.toggle("active",register);
  $("loginTab").classList.toggle("active",!register);
-}
-$("registerTab").addEventListener("click",()=>setTab("register"));
-$("loginTab").addEventListener("click",()=>setTab("login"));
-
-function showDashboard(user,data){
- $("authCard").classList.add("hidden");
- $("dashboard").classList.remove("hidden");
-
- $("pName").textContent=data.fullName||"";
- $("pEmail").textContent=data.email||user.email||"";
- $("pMobile").textContent=data.mobile||"";
- $("pVillage").textContent=data.village||"";
- $("pDistrict").textContent=data.district||"";
- $("pTehsil").textContent=data.tehsil||"";
- $("pPartnerId").textContent=data.partnerId||"अभी जारी नहीं हुई";
-
- const status=data.status||"Pending";
- $("pStatus").textContent=status;
- $("pStatus").className="status";
- if(status==="Approved") $("pStatus").classList.add("approved");
- if(status==="Rejected") $("pStatus").classList.add("rejected");
- if(status==="Blocked") $("pStatus").classList.add("blocked");
-
- const notice=$("partnerNotice");
- if(status==="Approved"){
-  notice.className="message success";
-  notice.textContent="बधाई हो! आपका Partner Account Approved हो गया है। आपकी Partner ID: "+(data.partnerId||"Admin से संपर्क करें");
- }else if(status==="Rejected"){
-  notice.className="message error";
-  notice.textContent="आपका Partner आवेदन अस्वीकार किया गया है। अधिक जानकारी के लिए Admin से संपर्क करें।";
- }else if(status==="Blocked"){
-  notice.className="message error";
-  notice.textContent="आपका Partner Account फिलहाल Blocked है। कृपया Admin से संपर्क करें।";
- }else{
-  notice.className="message info";
-  notice.textContent="आपका आवेदन Pending है। Admin द्वारा जाँच और Approval के बाद Partner ID जारी की जाएगी।";
- }
+ clearMessage("authMessage");
 }
 
-async function loadProfile(user){
- const profileRef=doc(db,"partners",user.uid);
- const snap=await getDoc(profileRef);
- if(!snap.exists()){
-  throw new Error("आपकी Partner Profile नहीं मिली। Admin से संपर्क करें।");
- }
- showDashboard(user,snap.data());
-}
+$("registerTab").addEventListener("click",()=>setAuthTab("register"));
+$("loginTab").addEventListener("click",()=>setAuthTab("login"));
 
+/* REGISTRATION */
 $("registerForm").addEventListener("submit",async event=>{
  event.preventDefault();
- const button=$("registerButton");
- const message=$("registerMessage");
+ clearMessage("authMessage");
 
- const name=$("fullName").value.trim();
+ const fullName=$("fullName").value.trim();
  const email=$("regEmail").value.trim().toLowerCase();
  const mobile=$("regMobile").value.trim();
  const village=$("regVillage").value.trim();
@@ -322,30 +433,29 @@ $("registerForm").addEventListener("submit",async event=>{
  const confirm=$("confirmPassword").value;
 
  if(!/^[0-9]{10}$/.test(mobile)){
-  showMessage(message,"कृपया सही 10 अंकों का मोबाइल नंबर डालें।","error");
+  message("authMessage","सही 10 अंकों का Mobile Number डालें।","error");
   return;
  }
+
  if(password.length<6){
-  showMessage(message,"Password कम से कम 6 अक्षरों का होना चाहिए।","error");
+  message("authMessage","Password कम से कम 6 अक्षरों का होना चाहिए।","error");
   return;
  }
+
  if(password!==confirm){
-  showMessage(message,"दोनों Password एक जैसे नहीं हैं।","error");
+  message("authMessage","दोनों Password एक जैसे नहीं हैं।","error");
   return;
  }
 
- button.disabled=true;
- button.textContent="Registering...";
-
- let accountCreated=false;
+ busy("registerButton",true,"Submit Partner Registration");
+ registrationInProgress=true;
 
  try{
   const credential=await createUserWithEmailAndPassword(auth,email,password);
-  accountCreated=true;
   const user=credential.user;
 
   await setDoc(doc(db,"partners",user.uid),{
-   fullName:name,
+   fullName,
    email:user.email,
    mobile,
    village,
@@ -356,57 +466,404 @@ $("registerForm").addEventListener("submit",async event=>{
    createdAt:serverTimestamp()
   });
 
-  await loadProfile(user);
+  $("registerForm").reset();
+  message("authMessage","Registration सफल हुआ। आपका Account Admin Approval के लिए भेज दिया गया है।","success");
+
+  await loadDashboard(user);
+
  }catch(error){
   console.error(error);
-  if(accountCreated){
-   showMessage(
-    message,
-    "आपका Firebase Login Account बन गया है, लेकिन Partner Profile सेव नहीं हो पाई। अभी उसी Email से दोबारा Registration न करें। Admin से संपर्क करें। Error: "+error.message,
-    "error"
-   );
-  }else{
-   showMessage(message,"Registration असफल: "+error.message,"error");
-  }
+  message("authMessage","Registration Error: "+error.message,"error");
  }finally{
-  button.disabled=false;
-  button.textContent="Submit Partner Registration";
+  registrationInProgress=false;
+  busy("registerButton",false,"Submit Partner Registration");
  }
 });
 
+/* LOGIN */
 $("loginForm").addEventListener("submit",async event=>{
  event.preventDefault();
- const button=$("loginButton");
- const message=$("loginMessage");
- button.disabled=true;
- button.textContent="Logging in...";
+ clearMessage("authMessage");
+
+ busy("loginButton",true,"Login");
 
  try{
-  const email=$("loginEmail").value.trim();
-  const password=$("loginPassword").value;
-  const credential=await signInWithEmailAndPassword(auth,email,password);
-  await loadProfile(credential.user);
+  const credential=await signInWithEmailAndPassword(
+   auth,
+   $("loginEmail").value.trim().toLowerCase(),
+   $("loginPassword").value
+  );
+
+  await loadDashboard(credential.user);
+
  }catch(error){
   console.error(error);
-  showMessage(message,"Login असफल: "+error.message,"error");
+  message("authMessage","Login नहीं हो पाया: "+error.message,"error");
  }finally{
-  button.disabled=false;
-  button.textContent="Login";
+  busy("loginButton",false,"Login");
  }
 });
 
+/* AUTH SESSION */
+onAuthStateChanged(auth,async user=>{
+ if(registrationInProgress) return;
+
+ if(!user){
+  currentUser=null;
+  partnerProfile=null;
+  dashboardUid=null;
+  showAuth();
+  return;
+ }
+
+ if(dashboardUid===user.uid) return;
+
+ await loadDashboard(user);
+});
+
+/* LOAD DASHBOARD */
+async function loadDashboard(user){
+ try{
+  currentUser=user;
+  const snap=await getDoc(doc(db,"partners",user.uid));
+
+  if(!snap.exists()){
+   throw new Error("Partner Profile नहीं मिली। Admin से संपर्क करें।");
+  }
+
+  partnerProfile=snap.data();
+  dashboardUid=user.uid;
+
+  $("authCard").classList.add("hidden");
+  $("dashboard").classList.remove("hidden");
+
+  $("pName").textContent=partnerProfile.fullName||"-";
+  $("pEmail").textContent=partnerProfile.email||user.email||"-";
+  $("pMobile").textContent=partnerProfile.mobile||"-";
+  $("pVillage").textContent=partnerProfile.village||"-";
+  $("pLocation").textContent=(partnerProfile.district||"-")+" / "+(partnerProfile.tehsil||"-");
+  $("pPartnerId").textContent=partnerProfile.partnerId||"अभी जारी नहीं हुई";
+
+  const status=partnerProfile.status||"Pending";
+  $("pStatus").textContent=status;
+  $("pStatus").className="status "+status;
+
+  if(status==="Approved"){
+   $("partnerNotice").className="message success";
+   $("partnerNotice").textContent="बधाई हो! आपका Partner Account Approved है। आपकी Partner ID: "+(partnerProfile.partnerId||"Admin से संपर्क करें");
+
+   $("approvedArea").classList.remove("hidden");
+   $("notApprovedBox").classList.add("hidden");
+
+   showPanel("servicesPanel");
+   await Promise.all([
+    loadServices(),
+    loadApplications(),
+    loadLedger()
+   ]);
+
+  }else{
+   $("approvedArea").classList.add("hidden");
+   $("notApprovedBox").classList.remove("hidden");
+
+   if(status==="Rejected"){
+    $("partnerNotice").className="message error";
+    $("partnerNotice").textContent="आपका Partner आवेदन अस्वीकार किया गया है। Admin से संपर्क करें।";
+    $("notApprovedText").textContent="आपका आवेदन Rejected है।";
+   }else if(status==="Blocked"){
+    $("partnerNotice").className="message error";
+    $("partnerNotice").textContent="आपका Partner Account Blocked है। Admin से संपर्क करें।";
+    $("notApprovedText").textContent="आपका Account फिलहाल Blocked है।";
+   }else{
+    $("partnerNotice").className="message info";
+    $("partnerNotice").textContent="आपका आवेदन प्राप्त हो गया है। Admin Approval के बाद सेवाएँ उपलब्ध होंगी।";
+    $("notApprovedText").textContent="आपका Partner Registration Pending है। Approval होने तक Services उपलब्ध नहीं होंगी।";
+   }
+  }
+
+ }catch(error){
+  console.error(error);
+  message("authMessage","Dashboard Load Error: "+error.message,"error");
+  showAuth();
+ }
+}
+
+/* LOAD ACTIVE SERVICES */
+async function loadServices(){
+ if(!currentUser || !partnerProfile || partnerProfile.status!=="Approved") return;
+
+ const list=$("servicesList");
+ list.replaceChildren(make("div","empty","Services load हो रही हैं..."));
+
+ try{
+  const q=query(
+   collection(db,"services"),
+   where("active","==",true)
+  );
+
+  const snap=await getDocs(q);
+  availableServices=snap.docs.map(d=>({id:d.id,...d.data()}));
+
+  const select=$("serviceSelect");
+  select.replaceChildren(new Option("पहले Service चुनें",""));
+
+  availableServices.forEach(service=>{
+   select.add(new Option(service.serviceName||"Service",service.id));
+  });
+
+  list.replaceChildren();
+
+  if(!availableServices.length){
+   list.append(make("div","empty","अभी कोई Active Service उपलब्ध नहीं है। Admin Panel में Service Active करें।"));
+   return;
+  }
+
+  availableServices.forEach(service=>{
+   const card=make("div","item-card");
+   card.append(make("h3","",service.serviceName||"Service"));
+   card.append(make("p","", "Category: "+(service.category||"-")));
+   card.append(make("p","",service.description||""));
+   card.append(make("p","", "Customer Fee: "+money(service.customerFee)));
+   card.append(make("p","", "Partner Commission: "+money(service.partnerCommission)));
+
+   const button=make("button","btn","इस Service का आवेदन करें");
+   button.type="button";
+   button.addEventListener("click",()=>{
+    $("serviceSelect").value=service.id;
+    updateSelectedService();
+    showPanel("newApplicationPanel");
+   });
+   card.append(button);
+
+   list.append(card);
+  });
+
+  updateSelectedService();
+
+ }catch(error){
+  console.error(error);
+  list.replaceChildren(make("div","empty","Services Load Error: "+error.message));
+ }
+}
+
+/* SELECTED SERVICE INFO */
+function updateSelectedService(){
+ const service=availableServices.find(s=>s.id===$("serviceSelect").value);
+
+ if(!service){
+  $("serviceInfo").textContent="";
+  return;
+ }
+
+ $("serviceInfo").textContent=
+  "Customer Fee: "+money(service.customerFee)+
+  " | Partner Commission: "+money(service.partnerCommission);
+}
+
+$("serviceSelect").addEventListener("change",updateSelectedService);
+$("refreshServices").addEventListener("click",loadServices);
+
+/* CREATE PARTNER APPLICATION */
+$("applicationForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ clearMessage("applicationMessage");
+
+ if(!currentUser || !partnerProfile || partnerProfile.status!=="Approved"){
+  message("applicationMessage","आपका Partner Account Approved नहीं है।","error");
+  return;
+ }
+
+ const service=availableServices.find(s=>s.id===$("serviceSelect").value);
+ const customerName=$("customerName").value.trim();
+ const mobile=$("customerMobile").value.trim();
+ const village=$("customerVillage").value.trim();
+ const details=$("customerDetails").value.trim();
+
+ if(!service){
+  message("applicationMessage","कृपया एक Active Service चुनें।","error");
+  return;
+ }
+
+ if(!/^[0-9]{10}$/.test(mobile)){
+  message("applicationMessage","ग्राहक का सही 10 अंकों का Mobile Number डालें।","error");
+  return;
+ }
+
+ busy("submitApplicationButton",true,"आवेदन जमा करें");
+
+ try{
+  const applicationRef=doc(collection(db,"partnerApplications"));
+
+  await setDoc(applicationRef,{
+   customerName:customerName,
+   mobile:mobile,
+   village:village,
+   serviceId:service.id,
+   serviceName:service.serviceName||"",
+   details:details,
+   status:"Pending",
+   partnerUid:currentUser.uid,
+   partnerId:partnerProfile.partnerId||"",
+   createdAt:serverTimestamp()
+  });
+
+  $("applicationForm").reset();
+  $("serviceInfo").textContent="";
+  message("applicationMessage","ग्राहक का आवेदन सफलतापूर्वक जमा हो गया है। Application ID: "+applicationRef.id,"success");
+
+  await loadApplications();
+
+ }catch(error){
+  console.error(error);
+  message("applicationMessage","आवेदन जमा नहीं हुआ: "+error.message,"error");
+ }finally{
+  busy("submitApplicationButton",false,"आवेदन जमा करें");
+ }
+});
+
+/* LOAD OWN APPLICATIONS */
+async function loadApplications(){
+ if(!currentUser || !partnerProfile || partnerProfile.status!=="Approved") return;
+
+ const list=$("myApplicationsList");
+ list.replaceChildren(make("div","empty","Applications load हो रहे हैं..."));
+
+ try{
+  const q=query(
+   collection(db,"partnerApplications"),
+   where("partnerUid","==",currentUser.uid)
+  );
+
+  const snap=await getDocs(q);
+  const records=snap.docs.map(d=>({id:d.id,...d.data()}));
+
+  records.sort((a,b)=>{
+   const ta=a.createdAt?.toMillis?.()||0;
+   const tb=b.createdAt?.toMillis?.()||0;
+   return tb-ta;
+  });
+
+  $("statApplications").textContent=records.length;
+  list.replaceChildren();
+
+  if(!records.length){
+   list.append(make("div","empty","अभी आपने कोई ग्राहक आवेदन जमा नहीं किया है।"));
+   return;
+  }
+
+  records.forEach(record=>{
+   const card=make("div","item-card");
+   card.append(make("h3","",record.customerName||"Customer"));
+   card.append(make("p","","Application ID: "+record.id));
+   card.append(make("p","","Service: "+(record.serviceName||"-")));
+   card.append(make("p","","Mobile: "+(record.mobile||"-")));
+   card.append(make("p","","Village: "+(record.village||"-")));
+
+   const row=make("p");
+   row.append(make("strong","","Status: "));
+   row.append(make("span","status "+(record.status||"Pending"),record.status||"Pending"));
+   card.append(row);
+
+   card.append(make("p","small","Submitted: "+dateText(record.createdAt)));
+   if(record.details) card.append(make("p","","Details: "+record.details));
+
+   list.append(card);
+  });
+
+ }catch(error){
+  console.error(error);
+  list.replaceChildren(make("div","empty","Applications Load Error: "+error.message));
+ }
+}
+
+$("refreshApplications").addEventListener("click",loadApplications);
+
+/* LOAD PARTNER LEDGER */
+async function loadLedger(){
+ if(!currentUser || !partnerProfile || partnerProfile.status!=="Approved") return;
+
+ const list=$("ledgerList");
+ list.replaceChildren(make("div","empty","Commission details load हो रही हैं..."));
+
+ try{
+  const q=query(
+   collection(db,"partnerLedger"),
+   where("partnerUid","==",currentUser.uid)
+  );
+
+  const snap=await getDocs(q);
+  const records=snap.docs.map(d=>({id:d.id,...d.data()}));
+
+  records.sort((a,b)=>{
+   const ta=a.createdAt?.toMillis?.()||0;
+   const tb=b.createdAt?.toMillis?.()||0;
+   return tb-ta;
+  });
+
+  const total=records.reduce((sum,r)=>sum+Number(r.amount||0),0);
+  const unpaid=records
+   .filter(r=>r.status!=="Paid")
+   .reduce((sum,r)=>sum+Number(r.amount||0),0);
+
+  $("statCommission").textContent=money(total);
+  $("statUnpaid").textContent=money(unpaid);
+
+  list.replaceChildren();
+
+  if(!records.length){
+   list.append(make("div","empty","अभी कोई Commission Entry उपलब्ध नहीं है।"));
+   return;
+  }
+
+  records.forEach(record=>{
+   const card=make("div","item-card");
+   card.append(make("h3","","Commission: "+money(record.amount)));
+   card.append(make("p","","Description: "+(record.description||"-")));
+   card.append(make("p","","Application ID: "+(record.applicationId||"-")));
+
+   const row=make("p");
+   row.append(make("strong","","Payment Status: "));
+   row.append(make("span","status "+(record.status||"Unpaid"),record.status||"Unpaid"));
+   card.append(row);
+
+   card.append(make("p","small","Entry Date: "+dateText(record.createdAt)));
+   if(record.paidAt) card.append(make("p","small","Paid Date: "+dateText(record.paidAt)));
+
+   list.append(card);
+  });
+
+ }catch(error){
+  console.error(error);
+  list.replaceChildren(make("div","empty","Commission Load Error: "+error.message));
+ }
+}
+
+$("refreshLedger").addEventListener("click",loadLedger);
+
+/* DASHBOARD TABS */
+document.querySelectorAll("[data-panel]").forEach(button=>{
+ button.addEventListener("click",()=>{
+  showPanel(button.dataset.panel);
+ });
+});
+
+/* LOGOUT */
 $("logoutButton").addEventListener("click",async()=>{
  try{
   await signOut(auth);
-  $("dashboard").classList.add("hidden");
-  $("authCard").classList.remove("hidden");
+  currentUser=null;
+  partnerProfile=null;
+  dashboardUid=null;
   $("loginForm").reset();
-  setTab("login");
+  $("registerForm").reset();
+  setAuthTab("login");
+  showAuth();
+  clearMessage("authMessage");
  }catch(error){
-  alert("Logout नहीं हो पाया: "+error.message);
+  alert("Logout Error: "+error.message);
  }
 });
 </script>
 
 </body>
-  </html>
+ </html>
