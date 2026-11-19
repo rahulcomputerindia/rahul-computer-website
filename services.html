@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#073b75">
+<title>All Digital Services | RAHUL COMPUTER'S</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ font-family:Arial,sans-serif;
+ background:#f1f5f9;
+ color:#172033;
+ line-height:1.6
+}
+header{
+ background:linear-gradient(120deg,#062b52,#087ac2);
+ color:white;
+ padding:24px 16px;
+ text-align:center;
+ border-bottom:4px solid #d9ad50
+}
+.logo{
+ font-size:27px;
+ font-weight:800;
+ letter-spacing:1px
+}
+header p{margin-top:6px;color:#e7efff}
+nav{
+ background:#fff;
+ padding:12px;
+ text-align:center;
+ box-shadow:0 2px 8px #0001
+}
+nav a{
+ display:inline-block;
+ color:#073b75;
+ text-decoration:none;
+ font-weight:bold;
+ margin:5px 12px
+}
+.container{
+ max-width:1150px;
+ margin:auto;
+ padding:22px 15px
+}
+.hero{
+ background:linear-gradient(120deg,#fff,#e8f2ff);
+ border:1px solid #d6e5f5;
+ border-radius:16px;
+ padding:25px 18px;
+ text-align:center;
+ margin-bottom:22px
+}
+.hero h1{color:#073b75;font-size:25px}
+.hero p{margin:9px auto;color:#526174;max-width:650px}
+.search{
+ width:100%;
+ max-width:600px;
+ padding:14px;
+ border:1px solid #cbd5e1;
+ border-radius:10px;
+ font-size:16px;
+ margin-top:15px;
+ outline:none
+}
+.search:focus{border-color:#087ac2}
+.filters{
+ display:flex;
+ gap:9px;
+ flex-wrap:wrap;
+ justify-content:center;
+ margin:20px 0
+}
+.filter{
+ border:1px solid #0b5590;
+ background:white;
+ color:#073b75;
+ padding:9px 15px;
+ border-radius:25px;
+ font-weight:bold;
+ cursor:pointer
+}
+.filter.active,.filter:hover{
+ background:#073b75;
+ color:white
+}
+.section-title{
+ color:#073b75;
+ font-size:21px;
+ margin:25px 0 14px;
+ border-left:5px solid #d9ad50;
+ padding-left:11px
+}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:16px
+}
+.card{
+ background:white;
+ border:1px solid #e0e7ef;
+ border-radius:13px;
+ padding:18px;
+ box-shadow:0 4px 13px #00000009;
+ display:flex;
+ flex-direction:column;
+ transition:.2s
+}
+.card:hover{
+ transform:translateY(-3px);
+ box-shadow:0 8px 20px #073b7518
+}
+.card-icon{
+ width:48px;
+ height:48px;
+ border-radius:12px;
+ display:grid;
+ place-items:center;
+ background:#e8f2ff;
+ font-size:25px;
+ margin-bottom:12px
+}
+.card h3{color:#073b75;font-size:18px}
+.card p{
+ color:#64748b;
+ font-size:14px;
+ margin:7px 0 15px;
+ flex:1
+}
+.tag{
+ display:inline-block;
+ font-size:11px;
+ background:#fff4d9;
+ color:#805800;
+ padding:4px 8px;
+ border-radius:20px;
+ margin-bottom:9px;
+ width:max-content
+}
+.actions{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap
+}
+.btn{
+ display:inline-block;
+ text-decoration:none;
+ text-align:center;
+ padding:10px 12px;
+ border-radius:8px;
+ font-size:13px;
+ font-weight:bold;
+ flex:1
+}
+.primary{background:#073b75;color:white}
+.secondary{
+ background:#fff;
+ color:#073b75;
+ border:1px solid #073b75
+}
+.btn:hover{opacity:.86}
+.notice{
+ background:#fff8e8;
+ border:1px solid #f0d69a;
+ border-radius:12px;
+ padding:15px;
+ margin-top:25px;
+ color:#654d19;
+ font-size:14px
+}
+.contact{
+ background:linear-gradient(120deg,#062b52,#087ac2);
+ color:white;
+ text-align:center;
+ border-radius:15px;
+ padding:25px 15px;
+ margin-top:25px
+}
+.contact h2{margin-bottom:8px}
+.contact a{
+ display:inline-block;
+ margin-top:14px;
+ padding:11px 22px;
+ background:#d9ad50;
+ color:#172033;
+ text-decoration:none;
+ border-radius:8px;
+ font-weight:bold
+}
+footer{
+ text-align:center;
+ padding:20px;
+ color:#64748b;
+ font-size:13px
+}
+.empty{
+ display:none;
+ text-align:center;
+ padding:25px;
+ color:#64748b
+}
+@media(max-width:850px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:540px){
+ .grid{grid-template-columns:1fr}
+ .logo{font-size:23px}
+ .hero h1{font-size:21px}
+ nav a{margin:5px 7px;font-size:14px}
+ .container{padding:15px 12px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">RAHUL COMPUTER'S</div>
+ <p>आपकी डिजिटल सेवाओं का विश्वसनीय केंद्र</p>
+</header>
+
+<nav>
+ <a href="index.html">Home</a>
+ <a href="services.html">All Services</a>
+ <a href="pan.html">PAN Services</a>
+ <a href="admin.html">Admin</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+ <h1>सभी डिजिटल सेवाएँ एक ही जगह</h1>
+ <p>अपनी जरूरत की सेवा खोजें और आधिकारिक पोर्टल के माध्यम से आवेदन करें। सहायता के लिए हमसे संपर्क करें।</p>
+
+ <input
+  type="search"
+  id="searchBox"
+  class="search"
+  placeholder="🔍 सेवा का नाम लिखकर खोजें..."
+  oninput="filterServices()"
+ >
+</section>
+
+<div class="filters">
+ <button class="filter active" onclick="setCategory('all',this)">सभी सेवाएँ</button>
+ <button class="filter" onclick="setCategory('pan',this)">PAN Card</button>
+ <button class="filter" onclick="setCategory('identity',this)">ID Card</button>
+ <button class="filter" onclick="setCategory('government',this)">सरकारी सेवाएँ</button>
+ <button class="filter" onclick="setCategory('other',this)">अन्य सेवाएँ</button>
+</div>
+
+<h2 class="section-title">PAN Card Services</h2>
+<div class="grid">
+
+<div class="card" data-category="pan" data-search="new pan card नया पैन कार्ड">
+ <div class="card-icon">💳</div>
+ <span class="tag">PAN CARD</span>
+ <h3>New PAN Card</h3>
+ <p>नया PAN Card आवेदन करने के लिए आधिकारिक सेवा पोर्टल खोलें।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">Apply Now</a>
+  <a class="btn secondary" href="pan.html">जानकारी</a>
+ </div>
+</div>
+
+<div class="card" data-category="pan" data-search="pan correction सुधार संशोधन">
+ <div class="card-icon">📝</div>
+ <span class="tag">PAN CARD</span>
+ <h3>PAN Correction</h3>
+ <p>PAN कार्ड में नाम, जन्मतिथि या अन्य विवरण सुधारने की सेवा।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://onlineservices.proteantech.in/paam/endUserRegisterContact.html" target="_blank" rel="noopener">Open Portal</a>
+  <a class="btn secondary" href="pan.html">जानकारी</a>
+ </div>
+</div>
+
+<div class="card" data-category="pan" data-search="pan reprint duplicate print">
+ <div class="card-icon">🖨️</div>
+ <span class="tag">PAN CARD</span>
+ <h3>PAN Reprint</h3>
+ <p>पात्र PAN धारकों के लिए PAN कार्ड दोबारा प्रिंट कराने की सुविधा।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://onlineservices.proteantech.in/paam/ReprintEPan.html" target="_blank" rel="noopener">Open Portal</a>
+  <a class="btn secondary" href="pan.html">जानकारी</a>
+ </div>
+</div>
+
+<div class="card" data-category="pan" data-search="instant e pan income tax">
+ <div class="card-icon">⚡</div>
+ <span class="tag">INSTANT E-PAN</span>
+ <h3>Instant e-PAN</h3>
+ <p>पात्र आवेदकों के लिए Income Tax विभाग की Instant e-PAN सेवा।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://eportal.incometax.gov.in/iec/foservices/#/pre-login/instant-e-pan" target="_blank" rel="noopener">Open Portal</a>
+ </div>
+</div>
+
+</div>
+
+<h2 class="section-title">Identity Card Services</h2>
+<div class="grid">
+
+<div class="card" data-category="identity" data-search="voter id मतदाता पहचान पत्र">
+ <div class="card-icon">🗳️</div>
+ <span class="tag">VOTER ID</span>
+ <h3>Voter ID Services</h3>
+ <p>नया मतदाता पंजीकरण, विवरण सुधार और अन्य उपलब्ध सेवाएँ।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://voters.eci.gov.in/" target="_blank" rel="noopener">Official Portal</a>
+ </div>
+</div>
+
+<div class="card" data-category="identity" data-search="samagra id समग्र परिवार सदस्य">
+ <div class="card-icon">👨‍👩‍👧‍👦</div>
+ <span class="tag">MADHYA PRADESH</span>
+ <h3>Samagra ID</h3>
+ <p>समग्र परिवार एवं सदस्य ID से संबंधित आधिकारिक सेवाएँ।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://samagra.gov.in/" target="_blank" rel="noopener">Official Portal</a>
+ </div>
+</div>
+
+<div class="card" data-category="identity" data-search="ayushman card health card आयुष्मान">
+ <div class="card-icon">🏥</div>
+ <span class="tag">HEALTH CARD</span>
+ <h3>Ayushman Card</h3>
+ <p>पात्र लाभार्थियों के लिए आयुष्मान कार्ड की आधिकारिक सेवा।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://beneficiary.nha.gov.in/" target="_blank" rel="noopener">Official Portal</a>
+ </div>
+</div>
+
+</div>
+
+<h2 class="section-title">Government & Other Services</h2>
+<div class="grid">
+
+<div class="card" data-category="government" data-search="e shram card श्रम कार्ड">
+ <div class="card-icon">👷</div>
+ <span class="tag">GOVERNMENT</span>
+ <h3>e-Shram Card</h3>
+ <p>असंगठित श्रमिकों के लिए e-Shram की आधिकारिक सेवाएँ।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://eshram.gov.in/" target="_blank" rel="noopener">Official Portal</a>
+ </div>
+</div>
+
+<div class="card" data-category="government" data-search="farmer kisan किसान">
+ <div class="card-icon">🌾</div>
+ <span class="tag">FARMER SERVICES</span>
+ <h3>Farmer Services</h3>
+ <p>किसान से संबंधित सरकारी योजनाओं और सेवाओं की जानकारी।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://agristack.gov.in/" target="_blank" rel="noopener">Official Portal</a>
+ </div>
+</div>
+
+<div class="card" data-category="other" data-search="online form आवेदन फॉर्म">
+ <div class="card-icon">📄</div>
+ <span class="tag">ONLINE SERVICES</span>
+ <h3>Online Form Assistance</h3>
+ <p>ऑनलाइन फॉर्म भरने और आवेदन संबंधी सहायता के लिए संपर्क करें।</p>
+ <div class="actions">
+  <a class="btn primary" href="https://wa.me/919752039020?text=Namaste%2C%20mujhe%20online%20form%20bharwane%20mein%20sahayata%20chahiye." target="_blank" rel="noopener">WhatsApp Help</a>
+ </div>
+</div>
+
+</div>
+
+<div class="empty" id="emptyMessage">
+ कोई सेवा नहीं मिली। दूसरा नाम लिखकर खोजें।
+</div>
+
+<div class="notice">
+ <strong>महत्वपूर्ण सूचना:</strong><br>
+ यह वेबसाइट RAHUL COMPUTER'S की डिजिटल सेवा एवं सहायता वेबसाइट है। ऊपर दिए गए लिंक संबंधित आधिकारिक पोर्टल के हैं। सभी सेवाएँ API से जुड़ी हुई नहीं हैं। OTP, e-KYC, बायोमेट्रिक या अन्य सरकारी सत्यापन जहाँ आवश्यक हो, वहाँ आधिकारिक प्रक्रिया का पालन करना होगा। सरकारी शुल्क और हमारी सहायता फीस अलग-अलग हो सकती हैं।
+</div>
+
+<section class="contact">
+ <h2>सेवा के लिए सहायता चाहिए?</h2>
+ <p>हमसे WhatsApp पर संपर्क करें।</p>
+ <a href="https://wa.me/919752039020?text=Namaste%2C%20mujhe%20digital%20service%20ke%20liye%20sahayata%20chahiye." target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a>
+ <p style="margin-top:12px">मोबाइल: 9752039020</p>
+</section>
+
+</main>
+
+<footer>
+ © 2026 RAHUL COMPUTER'S | All Rights Reserved
+</footer>
+
+<script>
+let selectedCategory = "all";
+
+function setCategory(category, button){
+ selectedCategory = category;
+
+ document.querySelectorAll(".filter").forEach(btn=>{
+  btn.classList.remove("active");
+ });
+
+ button.classList.add("active");
+ filterServices();
+}
+
+function filterServices(){
+ const query = document.getElementById("searchBox").value.toLowerCase().trim();
+ const cards = document.querySelectorAll(".card");
+ let visible = 0;
+
+ cards.forEach(card=>{
+  const category = card.dataset.category;
+  const searchText = (
+   card.dataset.search + " " + card.innerText
+  ).toLowerCase();
+
+  const categoryMatch =
+   selectedCategory === "all" || category === selectedCategory;
+
+  const searchMatch = searchText.includes(query);
+
+  if(categoryMatch && searchMatch){
+   card.style.display = "flex";
+   visible++;
+  }else{
+   card.style.display = "none";
+  }
+ });
+
+ document.getElementById("emptyMessage").style.display =
+  visible === 0 ? "block" : "none";
+
+ document.querySelectorAll(".section-title").forEach(title=>{
+  const grid = title.nextElementSibling;
+  if(!grid || !grid.classList.contains("grid")) return;
+
+  const hasVisible = [...grid.querySelectorAll(".card")].some(card=>
+   card.style.display !== "none"
+  );
+
+  title.style.display = hasVisible ? "block" : "none";
+ });
+}
+</script>
+
+</body>
+  </html>
