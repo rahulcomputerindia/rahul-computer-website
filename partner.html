@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071d49">
+<title>Partner Portal | RAHUL COMPUTER'S</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;font-family:Arial,sans-serif;background:#f1f5f9;
+ color:#172033;line-height:1.6
+}
+header{
+ background:linear-gradient(120deg,#071d49,#087ac2);
+ color:white;padding:18px 5%;display:flex;
+ justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap
+}
+.logo{font-size:21px;font-weight:900}
+.logo span{color:#e9b949}
+header a{color:white;text-decoration:none;font-weight:bold}
+.container{width:min(950px,92%);margin:35px auto}
+.hero{
+ background:linear-gradient(120deg,#071d49,#087ac2);
+ color:white;text-align:center;padding:35px 15px;border-radius:15px;
+ margin-bottom:25px
+}
+.hero h1{margin:0 0 8px;font-size:30px}
+.hero p{margin:0;color:#e5efff}
+.card{
+ background:white;padding:25px;border-radius:14px;
+ box-shadow:0 5px 22px #0000000d;border:1px solid #e2e8f0;
+ margin-bottom:20px
+}
+.tabs{display:flex;gap:10px;margin-bottom:20px}
+.tab{
+ flex:1;padding:12px;border:1px solid #cbd5e1;
+ background:#f1f5f9;border-radius:8px;font-weight:bold;cursor:pointer
+}
+.tab.active{background:#073b75;color:white;border-color:#073b75}
+h2{color:#073b75;margin-top:0}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+input,select{
+ width:100%;padding:12px;border:1px solid #cbd5e1;
+ border-radius:8px;font-size:15px;background:white
+}
+button{font:inherit}
+.btn{
+ width:100%;padding:13px;border:0;border-radius:8px;
+ background:#073b75;color:white;font-weight:bold;
+ margin-top:17px;cursor:pointer
+}
+.btn.gold{background:#e9b949;color:#172033}
+.btn.red{background:#c62828}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.message{
+ display:none;padding:12px;border-radius:8px;
+ margin-top:15px;overflow-wrap:anywhere
+}
+.message.success{display:block;background:#e8f7ee;color:#176b3a}
+.message.error{display:block;background:#fff0f0;color:#a51f1f}
+.message.info{display:block;background:#eaf3ff;color:#164a80}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field-full{grid-column:1/-1}
+.profile-row{
+ padding:12px 0;border-bottom:1px solid #e2e8f0;
+ display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
+}
+.status{
+ display:inline-block;padding:5px 12px;border-radius:20px;
+ background:#fff3cd;color:#765500;font-weight:bold
+}
+.status.approved{background:#e8f7ee;color:#176b3a}
+.status.rejected,.status.blocked{background:#fff0f0;color:#a51f1f}
+.note{font-size:13px;color:#64748b}
+.hidden{display:none!important}
+footer{
+ background:#071d49;color:white;text-align:center;
+ padding:22px 12px;margin-top:40px
+}
+footer a{color:#e9b949;text-decoration:none}
+@media(max-width:600px){
+ .grid{grid-template-columns:1fr}
+ .field-full{grid-column:auto}
+ .hero h1{font-size:24px}
+ .card{padding:18px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <a class="logo" href="index.html">RAHUL <span>COMPUTER'S</span></a>
+ <a href="index.html">← Main Website</a>
+</header>
+
+<div class="container">
+
+ <div class="hero">
+  <h1>Partner Portal</h1>
+  <p>RAHUL COMPUTER'S Digital Services Network</p>
+  <p style="margin-top:8px">मध्य प्रदेश में हमारे पार्टनर नेटवर्क से जुड़ें</p>
+ </div>
+
+ <div class="card" id="authCard">
+  <div class="tabs">
+   <button class="tab active" id="registerTab" type="button">New Registration</button>
+   <button class="tab" id="loginTab" type="button">Partner Login</button>
+  </div>
+
+  <div id="registerPanel">
+   <h2>Partner Registration</h2>
+   <p class="note">अपनी सही जानकारी भरकर पार्टनर बनने के लिए आवेदन करें।</p>
+
+   <form id="registerForm">
+    <div class="grid">
+     <div class="field-full">
+      <label for="fullName">पूरा नाम *</label>
+      <input id="fullName" required maxlength="80" placeholder="अपना पूरा नाम">
+     </div>
+
+     <div class="field-full">
+      <label for="regEmail">Gmail / Email ID *</label>
+      <input id="regEmail" type="email" required maxlength="120" placeholder="अपना Email लिखें">
+     </div>
+
+     <div>
+      <label for="regMobile">मोबाइल नंबर *</label>
+      <input id="regMobile" inputmode="numeric" maxlength="10" required placeholder="10 अंकों का नंबर">
+     </div>
+
+     <div>
+      <label for="regVillage">गाँव / शहर *</label>
+      <input id="regVillage" required maxlength="80" placeholder="गाँव या शहर">
+     </div>
+
+     <div>
+      <label for="regDistrict">जिला *</label>
+      <input id="regDistrict" required maxlength="80" placeholder="जिला">
+     </div>
+
+     <div>
+      <label for="regTehsil">तहसील *</label>
+      <input id="regTehsil" required maxlength="80" placeholder="तहसील">
+     </div>
+
+     <div>
+      <label for="regPassword">Password *</label>
+      <input id="regPassword" type="password" minlength="6" required placeholder="कम से कम 6 अक्षर">
+     </div>
+
+     <div>
+      <label for="confirmPassword">Confirm Password *</label>
+      <input id="confirmPassword" type="password" minlength="6" required placeholder="Password दोबारा लिखें">
+     </div>
+    </div>
+
+    <button class="btn gold" id="registerButton" type="submit">Submit Partner Registration</button>
+    <div id="registerMessage" class="message" role="status"></div>
+   </form>
+  </div>
+
+  <div id="loginPanel" class="hidden">
+   <h2>Partner Login</h2>
+   <form id="loginForm">
+    <label for="loginEmail">Registered Email</label>
+    <input id="loginEmail" type="email" required placeholder="अपना Registered Email">
+
+    <label for="loginPassword">Password</label>
+    <input id="loginPassword" type="password" required placeholder="अपना Password">
+
+    <button class="btn" id="loginButton" type="submit">Login</button>
+    <div id="loginMessage" class="message" role="status"></div>
+   </form>
+  </div>
+ </div>
+
+ <div class="card hidden" id="dashboard">
+  <h2>Partner Dashboard</h2>
+  <p>आपका Partner Account विवरण:</p>
+
+  <div class="profile-row"><strong>नाम</strong><span id="pName"></span></div>
+  <div class="profile-row"><strong>Email</strong><span id="pEmail"></span></div>
+  <div class="profile-row"><strong>मोबाइल</strong><span id="pMobile"></span></div>
+  <div class="profile-row"><strong>गाँव / शहर</strong><span id="pVillage"></span></div>
+  <div class="profile-row"><strong>जिला</strong><span id="pDistrict"></span></div>
+  <div class="profile-row"><strong>तहसील</strong><span id="pTehsil"></span></div>
+  <div class="profile-row"><strong>Partner ID</strong><span id="pPartnerId">अभी जारी नहीं हुई</span></div>
+  <div class="profile-row"><strong>Account Status</strong><span id="pStatus" class="status">Pending</span></div>
+
+  <div id="partnerNotice" class="message info" style="display:block;margin-top:20px">
+   आपका आवेदन प्राप्त हो गया है। Admin द्वारा जाँच और Approval के बाद Partner ID जारी की जाएगी।
+  </div>
+
+  <div class="card" style="margin-top:20px;background:#f8fafc">
+   <h3 style="color:#073b75;margin-top:0">Partner Services</h3>
+   <p id="serviceNotice" class="note">Partner Services अभी उपलब्ध नहीं हैं। Approval और अगले चरण में सुविधाएँ जोड़ी जाएँगी।</p>
+  </div>
+
+  <button class="btn red" id="logoutButton" type="button">Logout</button>
+ </div>
+
+ <div class="card">
+  <h3 style="color:#073b75;margin-top:0">Important Information</h3>
+  <ul>
+   <li>Registration करने से Partner ID तुरंत जारी नहीं होती।</li>
+   <li>आपका आवेदन Admin द्वारा जाँचा जाएगा।</li>
+   <li>Approval के बाद Partner ID दी जाएगी।</li>
+   <li>यह RAHUL COMPUTER'S का निजी पार्टनर नेटवर्क है, सरकारी CSC ID या सरकारी अनुमति नहीं।</li>
+   <li>किसी को अपना Password या OTP न बताएं।</li>
+  </ul>
+  <p class="note">किसी भी सरकारी सेवा का उपयोग केवल संबंधित विभाग की अधिकृत अनुमति और नियमों के अनुसार किया जा सकेगा।</p>
+ </div>
+
+</div>
+
+<footer>
+ <strong>RAHUL COMPUTER'S</strong>
+ <p>Digital Services Partner Network</p>
+ <p><a href="index.html">Back to Main Website</a></p>
+ <p>© <span id="year"></span> RAHUL COMPUTER'S</p>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+import {
+ getFirestore, doc, getDoc, setDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import {
+ getAuth, createUserWithEmailAndPassword,
+ signInWithEmailAndPassword, signOut
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain: "rahul-computer-s.firebaseapp.com",
+ projectId: "rahul-computer-s",
+ storageBucket: "rahul-computer-s.firebasestorage.app",
+ messagingSenderId: "969449083821",
+ appId: "1:969449083821:web:4696bc1253fa97ea304724"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+const $ = id => document.getElementById(id);
+$("year").textContent = new Date().getFullYear();
+
+function showMessage(element,text,type="info"){
+ element.textContent=text;
+ element.className="message "+type;
+}
+function setTab(tab){
+ const register=tab==="register";
+ $("registerPanel").classList.toggle("hidden",!register);
+ $("loginPanel").classList.toggle("hidden",register);
+ $("registerTab").classList.toggle("active",register);
+ $("loginTab").classList.toggle("active",!register);
+}
+$("registerTab").addEventListener("click",()=>setTab("register"));
+$("loginTab").addEventListener("click",()=>setTab("login"));
+
+function showDashboard(user,data){
+ $("authCard").classList.add("hidden");
+ $("dashboard").classList.remove("hidden");
+
+ $("pName").textContent=data.fullName||"";
+ $("pEmail").textContent=data.email||user.email||"";
+ $("pMobile").textContent=data.mobile||"";
+ $("pVillage").textContent=data.village||"";
+ $("pDistrict").textContent=data.district||"";
+ $("pTehsil").textContent=data.tehsil||"";
+ $("pPartnerId").textContent=data.partnerId||"अभी जारी नहीं हुई";
+
+ const status=data.status||"Pending";
+ $("pStatus").textContent=status;
+ $("pStatus").className="status";
+ if(status==="Approved") $("pStatus").classList.add("approved");
+ if(status==="Rejected") $("pStatus").classList.add("rejected");
+ if(status==="Blocked") $("pStatus").classList.add("blocked");
+
+ const notice=$("partnerNotice");
+ if(status==="Approved"){
+  notice.className="message success";
+  notice.textContent="बधाई हो! आपका Partner Account Approved हो गया है। आपकी Partner ID: "+(data.partnerId||"Admin से संपर्क करें");
+ }else if(status==="Rejected"){
+  notice.className="message error";
+  notice.textContent="आपका Partner आवेदन अस्वीकार किया गया है। अधिक जानकारी के लिए Admin से संपर्क करें।";
+ }else if(status==="Blocked"){
+  notice.className="message error";
+  notice.textContent="आपका Partner Account फिलहाल Blocked है। कृपया Admin से संपर्क करें।";
+ }else{
+  notice.className="message info";
+  notice.textContent="आपका आवेदन Pending है। Admin द्वारा जाँच और Approval के बाद Partner ID जारी की जाएगी।";
+ }
+}
+
+async function loadProfile(user){
+ const profileRef=doc(db,"partners",user.uid);
+ const snap=await getDoc(profileRef);
+ if(!snap.exists()){
+  throw new Error("आपकी Partner Profile नहीं मिली। Admin से संपर्क करें।");
+ }
+ showDashboard(user,snap.data());
+}
+
+$("registerForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ const button=$("registerButton");
+ const message=$("registerMessage");
+
+ const name=$("fullName").value.trim();
+ const email=$("regEmail").value.trim().toLowerCase();
+ const mobile=$("regMobile").value.trim();
+ const village=$("regVillage").value.trim();
+ const district=$("regDistrict").value.trim();
+ const tehsil=$("regTehsil").value.trim();
+ const password=$("regPassword").value;
+ const confirm=$("confirmPassword").value;
+
+ if(!/^[0-9]{10}$/.test(mobile)){
+  showMessage(message,"कृपया सही 10 अंकों का मोबाइल नंबर डालें।","error");
+  return;
+ }
+ if(password.length<6){
+  showMessage(message,"Password कम से कम 6 अक्षरों का होना चाहिए।","error");
+  return;
+ }
+ if(password!==confirm){
+  showMessage(message,"दोनों Password एक जैसे नहीं हैं।","error");
+  return;
+ }
+
+ button.disabled=true;
+ button.textContent="Registering...";
+
+ let accountCreated=false;
+
+ try{
+  const credential=await createUserWithEmailAndPassword(auth,email,password);
+  accountCreated=true;
+  const user=credential.user;
+
+  await setDoc(doc(db,"partners",user.uid),{
+   fullName:name,
+   email:user.email,
+   mobile,
+   village,
+   district,
+   tehsil,
+   status:"Pending",
+   partnerId:"",
+   createdAt:serverTimestamp()
+  });
+
+  await loadProfile(user);
+ }catch(error){
+  console.error(error);
+  if(accountCreated){
+   showMessage(
+    message,
+    "आपका Firebase Login Account बन गया है, लेकिन Partner Profile सेव नहीं हो पाई। अभी उसी Email से दोबारा Registration न करें। Admin से संपर्क करें। Error: "+error.message,
+    "error"
+   );
+  }else{
+   showMessage(message,"Registration असफल: "+error.message,"error");
+  }
+ }finally{
+  button.disabled=false;
+  button.textContent="Submit Partner Registration";
+ }
+});
+
+$("loginForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ const button=$("loginButton");
+ const message=$("loginMessage");
+ button.disabled=true;
+ button.textContent="Logging in...";
+
+ try{
+  const email=$("loginEmail").value.trim();
+  const password=$("loginPassword").value;
+  const credential=await signInWithEmailAndPassword(auth,email,password);
+  await loadProfile(credential.user);
+ }catch(error){
+  console.error(error);
+  showMessage(message,"Login असफल: "+error.message,"error");
+ }finally{
+  button.disabled=false;
+  button.textContent="Login";
+ }
+});
+
+$("logoutButton").addEventListener("click",async()=>{
+ try{
+  await signOut(auth);
+  $("dashboard").classList.add("hidden");
+  $("authCard").classList.remove("hidden");
+  $("loginForm").reset();
+  setTab("login");
+ }catch(error){
+  alert("Logout नहीं हो पाया: "+error.message);
+ }
+});
+</script>
+
+</body>
+  </html>
