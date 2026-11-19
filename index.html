@@ -8,272 +8,136 @@
 
 <style>
 :root{
- --navy:#071d49;
- --blue:#073b75;
- --royal:#087ac2;
- --gold:#e9b949;
- --light:#f3f7fc;
- --white:#ffffff;
- --text:#172554;
- --muted:#64748b;
- --green:#159b52;
- --border:#dce6f1;
+ --navy:#071d49;--blue:#073b75;--royal:#087ac2;
+ --gold:#e9b949;--light:#f3f7fc;--white:#fff;
+ --text:#172554;--muted:#64748b;--border:#dce6f1;
  --shadow:0 8px 25px rgba(7,29,73,.09);
 }
 *{box-sizing:border-box;scroll-behavior:smooth}
-body{
- margin:0;font-family:Arial,sans-serif;
- background:var(--light);color:var(--text);
-}
+body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:var(--text)}
 button,input,select,textarea{font-family:inherit}
 button{cursor:pointer}
-
-/* HEADER */
 .main-header{
  background:linear-gradient(125deg,var(--navy),var(--blue),var(--royal));
- color:white;padding:30px 15px;
- border-bottom:5px solid var(--gold);
- position:relative;overflow:hidden;
+ color:white;padding:30px 15px;border-bottom:5px solid var(--gold);
 }
-.main-header:after{
- content:"";position:absolute;width:260px;height:260px;
- border:1px solid #ffffff22;border-radius:50%;
- right:-80px;top:-130px;
-}
-.brand-logo{
- display:flex;align-items:center;justify-content:center;
- gap:18px;max-width:1100px;margin:auto;position:relative;z-index:1;
-}
+.brand-logo{display:flex;align-items:center;justify-content:center;gap:18px;max-width:1100px;margin:auto}
 .rc-logo{
- width:90px;height:90px;min-width:90px;
- border:4px solid var(--gold);border-radius:22px;
- background:linear-gradient(135deg,#ffffff,#dceeff);
- color:var(--navy);display:flex;align-items:center;
- justify-content:center;font-size:35px;font-weight:900;
- letter-spacing:-3px;box-shadow:0 7px 20px #0004;
+ width:90px;height:90px;min-width:90px;border:4px solid var(--gold);
+ border-radius:22px;background:linear-gradient(135deg,#fff,#dceeff);
+ color:var(--navy);display:flex;align-items:center;justify-content:center;
+ font-size:35px;font-weight:900;letter-spacing:-3px;
 }
-.brand-info h1{
- font-size:clamp(23px,4vw,38px);
- margin:0;font-weight:900;letter-spacing:.7px;
-}
-.brand-info .tagline{
- color:#ffda75;font-size:16px;font-weight:bold;margin:8px 0;
-}
-.brand-info .brand-location{
- font-size:13px;margin:0;color:#e3efff;
-}
-
-/* NAVIGATION */
+.brand-info h1{font-size:clamp(23px,4vw,38px);margin:0;font-weight:900}
+.brand-info .tagline{color:#ffda75;font-size:16px;font-weight:bold;margin:8px 0}
+.brand-info .brand-location{font-size:13px;margin:0;color:#e3efff}
 .main-nav{
- background:var(--navy);color:white;padding:13px 22px;
- display:flex;align-items:center;justify-content:space-between;
- flex-wrap:wrap;position:sticky;top:0;z-index:999;
- box-shadow:0 5px 16px #071d4940;
- border-bottom:2px solid var(--gold);
+ background:var(--navy);color:white;padding:13px 22px;display:flex;
+ align-items:center;justify-content:space-between;flex-wrap:wrap;
+ position:sticky;top:0;z-index:999;border-bottom:2px solid var(--gold);
 }
-.nav-brand{font-size:17px;font-weight:900;letter-spacing:.5px}
-.nav-links{display:flex;align-items:center;gap:18px}
-.nav-links a{
- color:white;text-decoration:none;font-size:13px;
- font-weight:bold;transition:.2s;
-}
+.nav-brand{font-size:17px;font-weight:900}
+.nav-links{display:flex;align-items:center;gap:16px}
+.nav-links a{color:white;text-decoration:none;font-size:13px;font-weight:bold}
 .nav-links a:hover{color:var(--gold)}
-.menu-toggle{
- display:none;background:transparent;color:white;
- border:0;font-size:27px;cursor:pointer;
-}
-
-/* MAIN */
+.menu-toggle{display:none;background:transparent;color:white;border:0;font-size:27px;width:auto;margin:0;padding:3px 8px}
 .container{max-width:1180px;margin:auto;padding:25px 18px}
-h2{
- text-align:center;color:var(--blue);margin:8px 0 18px;
- font-size:clamp(21px,3vw,27px);
-}
-.about,.form-box,.contact,.tracking-box,.admin-box,.payment-section{
- background:white;padding:27px 24px;border-radius:17px;
- margin:24px 0;box-shadow:var(--shadow);
- border:1px solid var(--border);
+h2{text-align:center;color:var(--blue);margin:8px 0 18px;font-size:clamp(21px,3vw,27px)}
+.about,.form-box,.contact,.tracking-box,.admin-box,.payment-section,.partner-box{
+ background:white;padding:27px 24px;border-radius:17px;margin:24px 0;
+ box-shadow:var(--shadow);border:1px solid var(--border);
 }
 .about{border-top:4px solid var(--gold)}
-.about p{
- line-height:1.9;text-align:center;color:#475569;font-size:15px;
-}
+.about p{line-height:1.9;text-align:center;color:#475569;font-size:15px}
 .note{text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
-
-/* SERVICES */
-#services{padding-top:5px}
 .category-list{display:grid;grid-template-columns:1fr;gap:15px}
-.category{
- background:white;border-radius:14px;box-shadow:var(--shadow);
- overflow:hidden;border:1px solid var(--border);
-}
+.category{background:white;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border)}
 .category summary{
- padding:19px 18px;font-weight:900;color:var(--blue);
- cursor:pointer;font-size:16px;list-style:none;
- background:linear-gradient(100deg,#eaf3ff,#fff);
+ padding:19px 18px;font-weight:900;color:var(--blue);cursor:pointer;
+ font-size:16px;list-style:none;background:linear-gradient(100deg,#eaf3ff,#fff);
  border-left:5px solid var(--royal);
 }
-.category summary:after{
- content:"＋";float:right;color:var(--royal);font-size:19px;
-}
+.category summary:after{content:"＋";float:right;color:var(--royal);font-size:19px}
 .category[open] summary:after{content:"−"}
-.category-items{
- padding:15px;display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
-}
+.category-items{padding:15px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .service-option{
- background:linear-gradient(145deg,#f2f7ff,#e7f1ff);
- border:1px solid #cbdff5;color:var(--blue);
- border-radius:11px;padding:15px 10px;
- text-align:center;font-size:13px;font-weight:bold;
- cursor:pointer;transition:.2s;min-height:54px;
+ background:linear-gradient(145deg,#f2f7ff,#e7f1ff);border:1px solid #cbdff5;
+ color:var(--blue);border-radius:11px;padding:15px 10px;text-align:center;
+ font-size:13px;font-weight:bold;min-height:54px;transition:.2s;
 }
-.service-option:hover{
- background:var(--blue);color:white;
- transform:translateY(-3px);
- box-shadow:0 5px 13px #073b7530;
-}
-
-/* FORM */
-label{
- display:block;font-weight:bold;margin:15px 0 7px;
- color:#243b5a;font-size:14px;
-}
+.service-option:hover{background:var(--blue);color:white;transform:translateY(-2px)}
+label{display:block;font-weight:bold;margin:15px 0 7px;color:#243b5a;font-size:14px}
 input,select,textarea{
- width:100%;padding:14px;border:1px solid #cbd5e1;
- border-radius:10px;font-size:15px;background:white;color:var(--text);
- transition:.2s;
+ width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:10px;
+ font-size:15px;background:white;color:var(--text);
 }
-input:focus,select:focus,textarea:focus{
- outline:2px solid #087ac233;border-color:var(--royal);
- box-shadow:0 0 0 3px #087ac214;
-}
+input:focus,select:focus,textarea:focus{outline:2px solid #087ac233;border-color:var(--royal)}
 textarea{min-height:95px;resize:vertical}
 button,.btn{
- display:block;width:100%;padding:14px;border:0;
- border-radius:10px;color:white;font-size:15px;
- font-weight:bold;text-align:center;text-decoration:none;
- margin-top:17px;cursor:pointer;transition:.2s;
+ display:block;width:100%;padding:14px;border:0;border-radius:10px;
+ color:white;font-size:15px;font-weight:bold;text-align:center;
+ text-decoration:none;margin-top:17px;transition:.2s;
 }
-button:hover,.btn:hover{filter:brightness(.94);transform:translateY(-1px)}
-button:disabled{opacity:.6;cursor:not-allowed;transform:none}
+button:disabled{opacity:.6;cursor:not-allowed}
 .submit,.whatsapp{background:linear-gradient(110deg,#087b43,#19aa60)}
 .call,.login-btn{background:linear-gradient(110deg,var(--navy),var(--royal))}
 .admin-box{display:none}
 .admin-box.show{display:block;border-top:4px solid var(--gold)}
-.login-message{text-align:center;font-weight:bold;margin-top:12px}
+.login-message{text-align:center;font-weight:bold;margin-top:12px;line-height:1.6}
 .phone{font-size:25px;font-weight:900;color:var(--blue)}
-
-/* TRACKING AND PAYMENT */
-.payment-section{
- border:1px solid #cbdff5;background:#fbfdff;
-}
-.payment-card{
- background:linear-gradient(145deg,#eff6ff,#fff);
- padding:19px;border-radius:13px;margin-top:16px;
- text-align:center;border:1px solid #d7e7f8;
-}
-.payment-card img{
- width:100%;max-width:260px;height:auto;
- display:block;margin:16px auto;
- border:2px solid var(--gold);border-radius:10px;
- padding:5px;background:white;
-}
+.payment-section{border:1px solid #cbdff5;background:#fbfdff}
+.payment-card{background:linear-gradient(145deg,#eff6ff,#fff);padding:19px;border-radius:13px;margin-top:16px;text-align:center;border:1px solid #d7e7f8}
+.payment-card img{width:100%;max-width:260px;height:auto;display:block;margin:16px auto;border:2px solid var(--gold);border-radius:10px;padding:5px;background:white}
 .payment-amount{font-size:30px;color:#087a42;font-weight:900}
-.payment-status{
- font-weight:bold;padding:14px;border-radius:10px;
- background:#edf5ff;text-align:center;line-height:1.7;
-}
+.payment-status{font-weight:bold;padding:14px;border-radius:10px;background:#edf5ff;text-align:center;line-height:1.7}
 .paid{color:#16803c;background:#e9f8ef}
 .rejected{color:#b42318;background:#fff0f0}
 .pending-payment{color:#9a6700;background:#fff8e5}
-.receipt{
- border:2px dashed #16803c;padding:18px;
- border-radius:12px;margin-top:17px;
- background:#f0fff5;text-align:left;
-}
+.receipt{border:2px dashed #16803c;padding:18px;border-radius:12px;margin-top:17px;background:#f0fff5;text-align:left}
 .receipt h3{text-align:center;color:#16803c}
 .hidden{display:none!important}
-
-/* CONTACT */
-.contact{
- text-align:center;border-top:4px solid var(--gold);
-}
+.partner-box{border-top:4px solid var(--gold)}
+.partner-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.partner-tabs button{margin:0;background:#eaf3ff;color:var(--blue);border:1px solid #cbdff5}
+.partner-tabs button.active{background:var(--blue);color:white}
+.partner-panel{background:#f8fbff;border:1px solid var(--border);border-radius:13px;padding:18px;margin-top:15px}
+.partner-status{padding:15px;border-radius:10px;text-align:center;font-weight:bold;line-height:1.7;margin:14px 0}
+.status-pending{background:#fff8e5;color:#946200}
+.status-approved{background:#e9f8ef;color:#16803c}
+.status-rejected{background:#fff0f0;color:#b42318}
+.status-blocked{background:#f1f5f9;color:#475569}
+.partner-id{font-size:25px;font-weight:900;color:var(--blue);text-align:center;overflow-wrap:anywhere}
+.partner-info{background:white;padding:13px;border-radius:9px;margin:9px 0;line-height:1.8}
+.contact{text-align:center;border-top:4px solid var(--gold)}
 .contact .btn{max-width:420px;margin:14px auto}
-
-/* FOOTER */
-footer{
- background:linear-gradient(125deg,var(--navy),var(--blue));
- color:white;text-align:center;padding:35px 16px;margin-top:35px;
- border-top:5px solid var(--gold);
-}
+footer{background:linear-gradient(125deg,var(--navy),var(--blue));color:white;text-align:center;padding:35px 16px;margin-top:35px;border-top:5px solid var(--gold)}
 footer h3{font-size:24px;margin:0 0 10px;color:#ffda75}
 footer a{color:#ffda75;text-decoration:none}
-footer a:hover{text-decoration:underline}
 footer p{line-height:1.8;font-size:14px}
-
-/* TABLET */
-@media(max-width:900px){
- .nav-links{gap:11px}
- .nav-links a{font-size:12px}
- .category-items{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-
-/* MOBILE */
+@media(max-width:900px){.nav-links{gap:10px}.nav-links a{font-size:12px}.category-items{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:768px){
- .menu-toggle{
-  display:block;width:auto;margin:0;padding:3px 8px;
- }
- .nav-links{
-  display:none;flex-direction:column;align-items:flex-start;
-  width:100%;gap:0;padding-top:10px;
- }
+ .menu-toggle{display:block}
+ .nav-links{display:none;flex-direction:column;align-items:flex-start;width:100%;gap:0;padding-top:10px}
  .nav-links.show{display:flex}
- .nav-links a{
-  width:100%;padding:14px 5px;
-  border-top:1px solid #ffffff30;font-size:14px;
- }
+ .nav-links a{width:100%;padding:14px 5px;border-top:1px solid #ffffff30;font-size:14px}
  .container{padding:16px 11px}
- .about,.form-box,.contact,.tracking-box,.admin-box,.payment-section{
-  padding:20px 15px;margin:17px 0;
- }
+ .about,.form-box,.contact,.tracking-box,.admin-box,.payment-section,.partner-box{padding:20px 15px;margin:17px 0}
  .category-items{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-
-/* SMALL MOBILE */
 @media(max-width:480px){
- .main-header{padding:19px 9px}
- .brand-logo{gap:11px}
- .rc-logo{
-  width:65px;height:65px;min-width:65px;
-  font-size:26px;border-width:3px;border-radius:17px;
- }
- .brand-info h1{font-size:19px;letter-spacing:0}
- .brand-info .tagline{font-size:12px;margin:5px 0}
- .brand-info .brand-location{font-size:10px}
- .nav-brand{font-size:14px}
+ .main-header{padding:19px 9px}.brand-logo{gap:11px}
+ .rc-logo{width:65px;height:65px;min-width:65px;font-size:26px;border-width:3px;border-radius:17px}
+ .brand-info h1{font-size:19px}.brand-info .tagline{font-size:12px;margin:5px 0}
+ .brand-info .brand-location{font-size:10px}.nav-brand{font-size:14px}
  .category-items{grid-template-columns:1fr 1fr;gap:8px;padding:10px}
  .service-option{font-size:12px;padding:12px 5px;min-height:55px}
- input,select,textarea{font-size:16px}
- .phone{font-size:22px}
+ input,select,textarea{font-size:16px}.phone{font-size:22px}
+ .partner-panel{padding:12px}
 }
-
-/* DESKTOP */
-@media(min-width:1000px){
- .container{padding-top:32px}
- .about,.form-box,.contact,.tracking-box,.admin-box{
-  padding:30px;
- }
-}
-
-/* PRINT RECEIPT */
 @media print{
  body *{visibility:hidden}
  #customerReceipt,#customerReceipt *{visibility:visible}
- #customerReceipt{
-  position:absolute;left:0;top:0;width:100%;
-  box-shadow:none;background:white;
- }
+ #customerReceipt{position:absolute;left:0;top:0;width:100%;box-shadow:none;background:white}
  #printReceipt{display:none}
 }
 </style>
@@ -301,6 +165,7 @@ footer p{line-height:1.8;font-size:14px}
   <a href="#services" onclick="closeMenu()">Services</a>
   <a href="#apply" onclick="closeMenu()">Apply Online</a>
   <a href="#track" onclick="closeMenu()">Track Application</a>
+  <a href="#partner" onclick="closeMenu()">Partner Login</a>
   <a href="#contact" onclick="closeMenu()">Contact Us</a>
   <a href="#adminLogin" onclick="showAdminLogin()">Admin Login</a>
  </div>
@@ -320,103 +185,70 @@ footer p{line-height:1.8;font-size:14px}
 <p class="note">अपनी श्रेणी खोलें और जिस सेवा की जरूरत है उस पर क्लिक करें।</p>
 <div class="category-list">
 
-<details class="category">
-<summary>PAN CARD</summary>
-<div class="category-items">
+<details class="category"><summary>PAN CARD</summary><div class="category-items">
 <button class="service-option" data-service="नया पैन कार्ड बनवाएं">नया पैन कार्ड बनवाएं</button>
 <button class="service-option" data-service="पैन कार्ड में संशोधन करें">पैन कार्ड में संशोधन करें</button>
 <button class="service-option" data-service="आधार नंबर से पैन नंबर प्राप्त करें">आधार नंबर से पैन नंबर प्राप्त करें</button>
 <button class="service-option" data-service="पैन कार्ड PVC कार्ड ऑर्डर करें">पैन कार्ड PVC कार्ड ऑर्डर करें</button>
 <button class="service-option" data-service="पैन कार्ड PDF फाइल डाउनलोड करें">पैन कार्ड PDF फाइल डाउनलोड करें</button>
 <button class="service-option" data-service="18 वर्ष से कम उम्र के बच्चों का पैन कार्ड बनवाएं">18 वर्ष से कम उम्र के बच्चों का पैन कार्ड बनवाएं</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>AADHAAR</summary>
-<div class="category-items">
+<details class="category"><summary>AADHAAR</summary><div class="category-items">
 <button class="service-option" data-service="आधार में पिता के नाम की जगह पति का नाम जोड़ें">आधार में पिता के नाम की जगह पति का नाम जोड़ें</button>
 <button class="service-option" data-service="मोबाइल नंबर से आधार नंबर पता करें">मोबाइल नंबर से आधार नंबर पता करें</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>SAMAGRA ID</summary>
-<div class="category-items">
+<details class="category"><summary>SAMAGRA ID</summary><div class="category-items">
 <button class="service-option" data-service="समग्र आईडी मायके से ससुराल ट्रांसफर">समग्र आईडी मायके से ससुराल ट्रांसफर</button>
 <button class="service-option" data-service="समग्र कार्ड प्रिंट">समग्र कार्ड प्रिंट</button>
 <button class="service-option" data-service="समग्र में जन्म तिथि अपडेट करें">समग्र में जन्म तिथि अपडेट करें</button>
 <button class="service-option" data-service="समग्र आईडी में मोबाइल नंबर जोड़ें">समग्र आईडी में मोबाइल नंबर जोड़ें</button>
 <button class="service-option" data-service="समग्र E-KYC">समग्र E-KYC</button>
 <button class="service-option" data-service="समग्र आईडी में नाम सुधारें">समग्र आईडी में नाम सुधारें</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>VOTER ID</summary>
-<div class="category-items">
+<details class="category"><summary>VOTER ID</summary><div class="category-items">
 <button class="service-option" data-service="वोटर आईडी पता करें">वोटर आईडी पता करें</button>
 <button class="service-option" data-service="वोटर आईडी में संशोधन करें">वोटर आईडी में संशोधन करें</button>
 <button class="service-option" data-service="वोटर आईडी PVC कार्ड ऑर्डर करें">वोटर आईडी PVC कार्ड ऑर्डर करें</button>
 <button class="service-option" data-service="वोटर आईडी में मोबाइल नंबर लिंक करें">वोटर आईडी में मोबाइल नंबर लिंक करें</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>SAMBAL</summary>
-<div class="category-items">
+<details class="category"><summary>SAMBAL</summary><div class="category-items">
 <button class="service-option" data-service="संबल कार्ड बनवाएं">संबल कार्ड बनवाएं</button>
 <button class="service-option" data-service="संबल कार्ड में सुधार करवाएं">संबल कार्ड में सुधार करवाएं</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>FARMER SERVICES</summary>
-<div class="category-items">
+<details class="category"><summary>FARMER SERVICES</summary><div class="category-items">
 <button class="service-option" data-service="फार्मर आईडी फाइंड करें">फार्मर आईडी फाइंड करें</button>
 <button class="service-option" data-service="फार्मर आईडी में सुधार करवाएं">फार्मर आईडी में सुधार करवाएं</button>
 <button class="service-option" data-service="खसरा प्रिंट">खसरा प्रिंट</button>
 <button class="service-option" data-service="खतौनी प्रिंट">खतौनी प्रिंट</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>CASTE CERTIFICATE</summary>
-<div class="category-items">
+<details class="category"><summary>CASTE CERTIFICATE</summary><div class="category-items">
 <button class="service-option" data-service="जाति प्रमाण पत्र बनवाएं">जाति प्रमाण पत्र बनवाएं</button>
 <button class="service-option" data-service="जाति प्रमाण पत्र प्रिंट">जाति प्रमाण पत्र प्रिंट</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>INCOME CERTIFICATE</summary>
-<div class="category-items">
+<details class="category"><summary>INCOME CERTIFICATE</summary><div class="category-items">
 <button class="service-option" data-service="आय प्रमाण पत्र बनवाएं">आय प्रमाण पत्र बनवाएं</button>
 <button class="service-option" data-service="आय प्रमाण पत्र प्रिंट">आय प्रमाण पत्र प्रिंट</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>DOMICILE CERTIFICATE</summary>
-<div class="category-items">
+<details class="category"><summary>DOMICILE CERTIFICATE</summary><div class="category-items">
 <button class="service-option" data-service="निवास प्रमाण पत्र बनवाएं">निवास प्रमाण पत्र बनवाएं</button>
 <button class="service-option" data-service="निवास प्रमाण पत्र प्रिंट">निवास प्रमाण पत्र प्रिंट</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>AYUSHMAN</summary>
-<div class="category-items">
+<details class="category"><summary>AYUSHMAN</summary><div class="category-items">
 <button class="service-option" data-service="आयुष्मान कार्ड प्रिंट">आयुष्मान कार्ड प्रिंट</button>
-</div>
-</details>
+</div></details>
 
-<details class="category">
-<summary>E-SHRAM</summary>
-<div class="category-items">
+<details class="category"><summary>E-SHRAM</summary><div class="category-items">
 <button class="service-option" data-service="ई-श्रम कार्ड प्रिंट">ई-श्रम कार्ड प्रिंट</button>
-</div>
-</details>
+</div></details>
 
 </div>
 </section>
@@ -427,73 +259,43 @@ footer p{line-height:1.8;font-size:14px}
 <form id="applicationForm">
 <label>ग्राहक का पूरा नाम *</label>
 <input id="name" type="text" placeholder="अपना नाम लिखें" required>
-
 <label>मोबाइल नंबर *</label>
 <input id="mobile" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर" required>
-
 <label>अपना गाँव *</label>
 <input id="village" type="text" placeholder="गाँव का नाम लिखें" required>
-
 <label>कौन-सी सर्विस चाहिए? *</label>
 <select id="service" required>
 <option value="">सर्विस चुनें</option>
 <optgroup label="PAN CARD">
-<option>नया पैन कार्ड बनवाएं</option>
-<option>पैन कार्ड में संशोधन करें</option>
-<option>आधार नंबर से पैन नंबर प्राप्त करें</option>
-<option>पैन कार्ड PVC कार्ड ऑर्डर करें</option>
-<option>पैन कार्ड PDF फाइल डाउनलोड करें</option>
-<option>18 वर्ष से कम उम्र के बच्चों का पैन कार्ड बनवाएं</option>
+<option>नया पैन कार्ड बनवाएं</option><option>पैन कार्ड में संशोधन करें</option>
+<option>आधार नंबर से पैन नंबर प्राप्त करें</option><option>पैन कार्ड PVC कार्ड ऑर्डर करें</option>
+<option>पैन कार्ड PDF फाइल डाउनलोड करें</option><option>18 वर्ष से कम उम्र के बच्चों का पैन कार्ड बनवाएं</option>
 </optgroup>
 <optgroup label="AADHAAR">
-<option>आधार में पिता के नाम की जगह पति का नाम जोड़ें</option>
-<option>मोबाइल नंबर से आधार नंबर पता करें</option>
+<option>आधार में पिता के नाम की जगह पति का नाम जोड़ें</option><option>मोबाइल नंबर से आधार नंबर पता करें</option>
 </optgroup>
 <optgroup label="SAMAGRA ID">
-<option>समग्र आईडी मायके से ससुराल ट्रांसफर</option>
-<option>समग्र कार्ड प्रिंट</option>
-<option>समग्र में जन्म तिथि अपडेट करें</option>
-<option>समग्र आईडी में मोबाइल नंबर जोड़ें</option>
-<option>समग्र E-KYC</option>
-<option>समग्र आईडी में नाम सुधारें</option>
+<option>समग्र आईडी मायके से ससुराल ट्रांसफर</option><option>समग्र कार्ड प्रिंट</option>
+<option>समग्र में जन्म तिथि अपडेट करें</option><option>समग्र आईडी में मोबाइल नंबर जोड़ें</option>
+<option>समग्र E-KYC</option><option>समग्र आईडी में नाम सुधारें</option>
 </optgroup>
 <optgroup label="VOTER ID">
-<option>वोटर आईडी पता करें</option>
-<option>वोटर आईडी में संशोधन करें</option>
-<option>वोटर आईडी PVC कार्ड ऑर्डर करें</option>
-<option>वोटर आईडी में मोबाइल नंबर लिंक करें</option>
+<option>वोटर आईडी पता करें</option><option>वोटर आईडी में संशोधन करें</option>
+<option>वोटर आईडी PVC कार्ड ऑर्डर करें</option><option>वोटर आईडी में मोबाइल नंबर लिंक करें</option>
 </optgroup>
-<optgroup label="SAMBAL">
-<option>संबल कार्ड बनवाएं</option>
-<option>संबल कार्ड में सुधार करवाएं</option>
-</optgroup>
+<optgroup label="SAMBAL"><option>संबल कार्ड बनवाएं</option><option>संबल कार्ड में सुधार करवाएं</option></optgroup>
 <optgroup label="FARMER SERVICES">
-<option>फार्मर आईडी फाइंड करें</option>
-<option>फार्मर आईडी में सुधार करवाएं</option>
-<option>खसरा प्रिंट</option>
-<option>खतौनी प्रिंट</option>
+<option>फार्मर आईडी फाइंड करें</option><option>फार्मर आईडी में सुधार करवाएं</option>
+<option>खसरा प्रिंट</option><option>खतौनी प्रिंट</option>
 </optgroup>
-<optgroup label="CASTE CERTIFICATE">
-<option>जाति प्रमाण पत्र बनवाएं</option>
-<option>जाति प्रमाण पत्र प्रिंट</option>
+<optgroup label="CERTIFICATES">
+<option>जाति प्रमाण पत्र बनवाएं</option><option>जाति प्रमाण पत्र प्रिंट</option>
+<option>आय प्रमाण पत्र बनवाएं</option><option>आय प्रमाण पत्र प्रिंट</option>
+<option>निवास प्रमाण पत्र बनवाएं</option><option>निवास प्रमाण पत्र प्रिंट</option>
 </optgroup>
-<optgroup label="INCOME CERTIFICATE">
-<option>आय प्रमाण पत्र बनवाएं</option>
-<option>आय प्रमाण पत्र प्रिंट</option>
-</optgroup>
-<optgroup label="DOMICILE CERTIFICATE">
-<option>निवास प्रमाण पत्र बनवाएं</option>
-<option>निवास प्रमाण पत्र प्रिंट</option>
-</optgroup>
-<optgroup label="AYUSHMAN">
-<option>आयुष्मान कार्ड प्रिंट</option>
-</optgroup>
-<optgroup label="E-SHRAM">
-<option>ई-श्रम कार्ड प्रिंट</option>
-</optgroup>
+<optgroup label="OTHER"><option>आयुष्मान कार्ड प्रिंट</option><option>ई-श्रम कार्ड प्रिंट</option></optgroup>
 <option>अन्य सेवा</option>
 </select>
-
 <label>अतिरिक्त जानकारी</label>
 <textarea id="details" placeholder="यदि कुछ बताना चाहते हैं तो लिखें"></textarea>
 <button type="submit" class="submit">WhatsApp पर आवेदन भेजें</button>
@@ -510,7 +312,6 @@ footer p{line-height:1.8;font-size:14px}
 <div id="customerPayment" class="payment-section hidden">
 <h2>ऑनलाइन भुगतान</h2>
 <p id="customerApplicationStatus" class="payment-status"></p>
-
 <div id="paymentQrCard" class="payment-card">
 <p>आपकी निर्धारित फीस</p>
 <p class="payment-amount" id="customerAmount">₹0</p>
@@ -518,19 +319,15 @@ footer p{line-height:1.8;font-size:14px}
 <img src="./rahul-upi-qr.png" alt="RAHUL COMPUTER'S UPI QR Code">
 <p class="note">अपने UPI ऐप में ऊपर दिखाई गई सही राशि स्वयं भरें। भुगतान करने से पहले प्राप्तकर्ता का नाम और राशि जाँच लें।</p>
 </div>
-
 <div id="paymentSubmitBox" class="hidden">
 <label>UPI Transaction ID / UTR नंबर *</label>
 <input type="text" id="transactionId" maxlength="35" placeholder="अपना Transaction ID लिखें">
 <button type="button" id="paymentSubmitBtn" class="submit">भुगतान विवरण जमा करें</button>
-<p class="note">Transaction ID जमा करने के बाद Admin आपके भुगतान की जाँच करेगा। केवल वास्तविक भुगतान करने के बाद ही Transaction ID जमा करें।</p>
+<p class="note">केवल वास्तविक भुगतान करने के बाद ही Transaction ID जमा करें।</p>
 </div>
-
 <p id="customerPaymentMessage" class="payment-status hidden"></p>
-
 <div id="customerReceipt" class="receipt hidden">
-<h3>भुगतान रसीद</h3>
-<p><strong>RAHUL COMPUTER'S</strong></p>
+<h3>भुगतान रसीद</h3><p><strong>RAHUL COMPUTER'S</strong></p>
 <p>भुगतान सफलतापूर्वक सत्यापित हुआ है।</p>
 <p>Tracking ID: <strong id="receiptTracking"></strong></p>
 <p>भुगतान राशि: <strong id="receiptAmount"></strong></p>
@@ -539,6 +336,69 @@ footer p{line-height:1.8;font-size:14px}
 <p class="note">यह भुगतान पुष्टि रसीद है, GST Tax Invoice नहीं।</p>
 <button type="button" id="printReceipt" class="call">रसीद Print / Save करें</button>
 </div>
+</div>
+</section>
+
+<!-- PARTNER REGISTRATION AND LOGIN -->
+<section class="partner-box" id="partner">
+<h2>RAHUL COMPUTER'S Partner Network</h2>
+<p class="note">मध्य प्रदेश में हमारे डिजिटल सेवा नेटवर्क से जुड़ें। Registration के बाद Admin की Approval जरूरी होगी।</p>
+
+<div class="partner-tabs">
+ <button type="button" id="showRegisterTab" class="active">नया Partner Registration</button>
+ <button type="button" id="showLoginTab">Partner Login</button>
+</div>
+
+<div id="partnerRegisterPanel" class="partner-panel">
+<h3 style="text-align:center;color:#073b75">Partner Registration Form</h3>
+<form id="partnerRegisterForm">
+<label>पूरा नाम *</label>
+<input id="partnerName" type="text" maxlength="80" placeholder="अपना पूरा नाम" required>
+
+<label>Email Address *</label>
+<input id="partnerEmail" type="email" maxlength="120" placeholder="आपका Email" required>
+
+<label>मोबाइल नंबर *</label>
+<input id="partnerMobile" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर" required>
+
+<label>गाँव / शहर *</label>
+<input id="partnerVillage" type="text" maxlength="80" placeholder="गाँव या शहर" required>
+
+<label>जिला *</label>
+<input id="partnerDistrict" type="text" maxlength="80" placeholder="जिले का नाम" required>
+
+<label>तहसील *</label>
+<input id="partnerTehsil" type="text" maxlength="80" placeholder="तहसील का नाम" required>
+
+<label>Password बनाएँ *</label>
+<input id="partnerPassword" type="password" minlength="6" maxlength="64" placeholder="कम से कम 6 अक्षर" required>
+
+<label>Confirm Password *</label>
+<input id="partnerConfirmPassword" type="password" minlength="6" maxlength="64" placeholder="Password दोबारा लिखें" required>
+
+<button type="submit" class="submit" id="partnerRegisterButton">Partner Registration करें</button>
+<p class="login-message" id="partnerRegisterMessage"></p>
+</form>
+<p class="note">Registration करने पर आपका अकाउंट Pending Approval में रहेगा। Approval मिलने तक Partner सेवाएँ उपलब्ध नहीं होंगी।</p>
+</div>
+
+<div id="partnerLoginPanel" class="partner-panel hidden">
+<h3 style="text-align:center;color:#073b75">Partner Login</h3>
+<form id="partnerLoginForm">
+<label>Registered Email</label>
+<input id="partnerLoginEmail" type="email" placeholder="अपना Registered Email लिखें" required>
+<label>Password</label>
+<input id="partnerLoginPassword" type="password" placeholder="अपना Password लिखें" required>
+<button type="submit" class="login-btn" id="partnerLoginButton">Login करें</button>
+<p class="login-message" id="partnerLoginMessage"></p>
+</form>
+</div>
+
+<div id="partnerDashboard" class="partner-panel hidden">
+<h3 style="text-align:center;color:#073b75">Partner Dashboard</h3>
+<div id="partnerStatusBox" class="partner-status status-pending"></div>
+<div id="partnerDashboardInfo"></div>
+<button type="button" class="call" id="partnerLogoutButton">Logout करें</button>
 </div>
 </section>
 
@@ -583,8 +443,10 @@ import {
  writeBatch,setDoc
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-import {getAuth,signInWithEmailAndPassword}
-from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+import {
+ getAuth,signInWithEmailAndPassword,
+ createUserWithEmailAndPassword,signOut
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
@@ -617,33 +479,23 @@ function formatPaymentDate(timestamp){
 // PAN CARD को अलग पेज से जोड़ना
 document.querySelectorAll(".service-option").forEach(button=>{
  button.addEventListener("click",()=>{
-  const categoryName=button.closest(".category")
-   ?.querySelector("summary")?.textContent.trim();
-
-  if(categoryName==="PAN CARD"){
-   window.location.href="pan.html";
-   return;
-  }
-
+  const categoryName=button.closest(".category")?.querySelector("summary")?.textContent.trim();
+  if(categoryName==="PAN CARD"){window.location.href="pan.html";return;}
   document.getElementById("service").value=button.dataset.service;
   document.getElementById("apply").scrollIntoView({behavior:"smooth"});
  });
 });
 
-// आवेदन सेव करना
+// ग्राहक आवेदन सेव करना
 document.getElementById("applicationForm").addEventListener("submit",async function(e){
  e.preventDefault();
-
  const name=document.getElementById("name").value.trim();
  const mobile=document.getElementById("mobile").value.trim();
  const village=document.getElementById("village").value.trim();
  const service=document.getElementById("service").value;
  const details=document.getElementById("details").value.trim();
 
- if(!/^[0-9]{10}$/.test(mobile)){
-  alert("सही 10 अंकों का मोबाइल नंबर लिखें।");
-  return;
- }
+ if(!/^[0-9]{10}$/.test(mobile)){alert("सही 10 अंकों का मोबाइल नंबर लिखें।");return;}
 
  const submitButton=this.querySelector('button[type="submit"]');
  submitButton.disabled=true;
@@ -655,11 +507,9 @@ document.getElementById("applicationForm").addEventListener("submit",async funct
   const trackingRef=doc(db,"tracking",trackingId);
 
   batch.set(applicationRef,{
-   customerName:name,mobile:mobile,village:village,
-   service:service,details:details,status:"Pending",
-   trackingId:trackingId,createdAt:serverTimestamp()
+   customerName:name,mobile,village,service,details,
+   status:"Pending",trackingId,createdAt:serverTimestamp()
   });
-
   batch.set(trackingRef,{status:"Pending"});
   await batch.commit();
 
@@ -668,11 +518,8 @@ document.getElementById("applicationForm").addEventListener("submit",async funct
    "\nसर्विस: "+service+"\nजानकारी: "+details+
    "\n\nमेरी Tracking ID: "+trackingId;
 
-  const url="https://api.whatsapp.com/send?phone=919752039020&text="+encodeURIComponent(message);
-
   alert("आपका आवेदन सफलतापूर्वक सेव हो गया है।\n\nआपकी Tracking ID:\n"+trackingId+"\n\nइसे संभालकर रखें।");
-  window.location.href=url;
-
+  window.location.href="https://api.whatsapp.com/send?phone=919752039020&text="+encodeURIComponent(message);
  }catch(error){
   console.error("Firebase Error:",error);
   alert("आवेदन सेव नहीं हुआ। कृपया दोबारा प्रयास करें।");
@@ -696,56 +543,32 @@ function hidePayment(){
 document.getElementById("trackingBtn").addEventListener("click",async function(){
  const trackingId=document.getElementById("trackingInput").value.trim().toUpperCase();
  const result=document.getElementById("trackingResult");
+ hidePayment();activeTrackingId="";
 
- hidePayment();
- activeTrackingId="";
-
- if(!/^[A-F0-9]{24}$/.test(trackingId)){
-  result.textContent="कृपया सही Tracking ID डालें।";
-  return;
- }
+ if(!/^[A-F0-9]{24}$/.test(trackingId)){result.textContent="कृपया सही Tracking ID डालें।";return;}
 
  result.textContent="जानकारी जाँची जा रही है...";
  this.disabled=true;
 
  try{
   const trackingSnap=await getDoc(doc(db,"tracking",trackingId));
-
-  if(!trackingSnap.exists()){
-   result.textContent="यह Tracking ID नहीं मिली। कृपया जाँचें।";
-   return;
-  }
+  if(!trackingSnap.exists()){result.textContent="यह Tracking ID नहीं मिली। कृपया जाँचें।";return;}
 
   activeTrackingId=trackingId;
   const applicationStatus=trackingSnap.data().status;
-
-  result.textContent=applicationStatus==="Completed"
-   ?"आपका आवेदन पूरा हो गया है।"
-   :"आपका आवेदन अभी Pending है।";
-
-  document.getElementById("customerApplicationStatus").textContent=
-   "आवेदन की स्थिति: "+applicationStatus;
+  result.textContent=applicationStatus==="Completed"?"आपका आवेदन पूरा हो गया है।":"आपका आवेदन अभी Pending है।";
+  document.getElementById("customerApplicationStatus").textContent="आवेदन की स्थिति: "+applicationStatus;
 
   const paymentSnap=await getDoc(doc(db,"paymentInfo",trackingId));
-
-  if(!paymentSnap.exists()){
-   result.textContent+=" Admin ने अभी इस आवेदन की फीस तय नहीं की है।";
-   return;
-  }
+  if(!paymentSnap.exists()){result.textContent+=" Admin ने अभी इस आवेदन की फीस तय नहीं की है।";return;}
 
   const paymentData=paymentSnap.data();
   const amount=Number(paymentData.amount);
   const paymentStatus=paymentData.paymentStatus||"Unpaid";
 
-  if(!Number.isFinite(amount)||amount<=0){
-   result.textContent+=" भुगतान राशि उपलब्ध नहीं है। कृपया दुकान से संपर्क करें।";
-   return;
-  }
+  if(!Number.isFinite(amount)||amount<=0){result.textContent+=" भुगतान राशि उपलब्ध नहीं है। कृपया संपर्क करें।";return;}
 
-  const formattedAmount="₹"+amount.toLocaleString("en-IN",{
-   minimumFractionDigits:2,maximumFractionDigits:2
-  });
-
+  const formattedAmount="₹"+amount.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
   document.getElementById("customerAmount").textContent=formattedAmount;
   document.getElementById("customerPayment").classList.remove("hidden");
 
@@ -755,25 +578,17 @@ document.getElementById("trackingBtn").addEventListener("click",async function()
   const qrCard=document.getElementById("paymentQrCard");
 
   if(paymentStatus==="Paid"){
-   qrCard.classList.add("hidden");
-   submitBox.classList.add("hidden");
-
-   message.textContent="आपका भुगतान सफलतापूर्वक सत्यापित हो गया है।";
-   message.className="payment-status paid";
-   message.classList.remove("hidden");
-
+   qrCard.classList.add("hidden");submitBox.classList.add("hidden");
+   message.textContent="आपका भुगतान सफलतापूर्वक सत्यापित हो गया है.";
+   message.className="payment-status paid";message.classList.remove("hidden");
    receipt.classList.remove("hidden");
    document.getElementById("receiptTracking").textContent=trackingId;
    document.getElementById("receiptAmount").textContent=formattedAmount;
-   document.getElementById("receiptDate").textContent=
-    "भुगतान पुष्टि: "+formatPaymentDate(paymentData.updatedAt);
-
+   document.getElementById("receiptDate").textContent="भुगतान पुष्टि: "+formatPaymentDate(paymentData.updatedAt);
    return;
   }
 
-  qrCard.classList.remove("hidden");
-  submitBox.classList.remove("hidden");
-
+  qrCard.classList.remove("hidden");submitBox.classList.remove("hidden");
   if(paymentStatus==="Rejected"){
    message.textContent="आपका पिछला भुगतान विवरण Reject हुआ है। सही भुगतान करने के बाद Transaction ID जमा करें।";
    message.className="payment-status rejected";
@@ -781,66 +596,221 @@ document.getElementById("trackingBtn").addEventListener("click",async function()
    message.textContent="भुगतान अभी सत्यापित नहीं हुआ है। भुगतान करने के बाद Transaction ID जमा करें।";
    message.className="payment-status pending-payment";
   }
-
   message.classList.remove("hidden");
-
  }catch(error){
   console.error("Tracking / Payment Error:",error);
   result.textContent="जानकारी नहीं मिल सकी। कृपया बाद में प्रयास करें।";
- }finally{
-  this.disabled=false;
- }
+ }finally{this.disabled=false;}
 });
 
 // ग्राहक Transaction ID जमा करे
 document.getElementById("paymentSubmitBtn").addEventListener("click",async function(){
  const transactionId=document.getElementById("transactionId").value.trim();
  const button=this;
+ if(!activeTrackingId){alert("पहले सही Tracking ID से जानकारी देखें।");return;}
+ if(!/^[A-Za-z0-9]{8,35}$/.test(transactionId)){alert("कृपया सही Transaction ID / UTR नंबर लिखें।");return;}
 
- if(!activeTrackingId){
-  alert("पहले सही Tracking ID से जानकारी देखें।");
-  return;
- }
-
- if(!/^[A-Za-z0-9]{8,35}$/.test(transactionId)){
-  alert("कृपया सही Transaction ID / UTR नंबर लिखें। (8 से 35 अक्षर)");
-  return;
- }
-
- button.disabled=true;
- button.textContent="जमा हो रहा है...";
-
+ button.disabled=true;button.textContent="जमा हो रहा है...";
  try{
   await setDoc(doc(db,"paymentSubmissions",activeTrackingId),{
-   transactionId:transactionId,
-   submittedAt:serverTimestamp()
+   transactionId,submittedAt:serverTimestamp()
   });
-
   document.getElementById("paymentSubmitBox").classList.add("hidden");
-
   const message=document.getElementById("customerPaymentMessage");
   message.textContent="आपका भुगतान विवरण Admin को भेज दिया गया है। वास्तविक भुगतान सत्यापित होने के बाद ही स्थिति Paid होगी।";
-  message.className="payment-status pending-payment";
-  message.classList.remove("hidden");
+  message.className="payment-status pending-payment";message.classList.remove("hidden");
   document.getElementById("transactionId").value="";
-
  }catch(error){
   console.error("Payment Submission Error:",error);
-  alert("भुगतान विवरण जमा नहीं हुआ। संभव है कि विवरण पहले ही भेजा जा चुका हो या सेवा में समस्या हो। कृपया दुकान से संपर्क करें।");
-  button.disabled=false;
-  button.textContent="भुगतान विवरण जमा करें";
+  alert("भुगतान विवरण जमा नहीं हुआ। संभव है विवरण पहले ही भेजा जा चुका हो या सेवा में समस्या हो।");
+  button.disabled=false;button.textContent="भुगतान विवरण जमा करें";
  }
 });
 
-// रसीद Print
-document.getElementById("printReceipt").addEventListener("click",()=>{
- window.print();
-});
+document.getElementById("printReceipt").addEventListener("click",()=>window.print());
 
-// Admin Login
-document.getElementById("adminLoginForm").addEventListener("submit",async function(e){
+// PARTNER TAB SWITCH
+const registerPanel=document.getElementById("partnerRegisterPanel");
+const loginPanel=document.getElementById("partnerLoginPanel");
+const dashboard=document.getElementById("partnerDashboard");
+const registerTab=document.getElementById("showRegisterTab");
+const loginTab=document.getElementById("showLoginTab");
+
+function showPartnerRegister(){
+ registerPanel.classList.remove("hidden");
+ loginPanel.classList.add("hidden");
+ dashboard.classList.add("hidden");
+ registerTab.classList.add("active");
+ loginTab.classList.remove("active");
+}
+function showPartnerLogin(){
+ registerPanel.classList.add("hidden");
+ loginPanel.classList.remove("hidden");
+ dashboard.classList.add("hidden");
+ registerTab.classList.remove("active");
+ loginTab.classList.add("active");
+}
+registerTab.addEventListener("click",showPartnerRegister);
+loginTab.addEventListener("click",showPartnerLogin);
+
+// PARTNER PROFILE DISPLAY
+function showPartnerProfile(data,email){
+ registerPanel.classList.add("hidden");
+ loginPanel.classList.add("hidden");
+ dashboard.classList.remove("hidden");
+ registerTab.classList.remove("active");
+ loginTab.classList.remove("active");
+
+ const statusBox=document.getElementById("partnerStatusBox");
+ const info=document.getElementById("partnerDashboardInfo");
+
+ if(data.status==="Approved"){
+  statusBox.className="partner-status status-approved";
+  statusBox.textContent="बधाई हो! आपका Partner Account Approved है।";
+ }else if(data.status==="Rejected"){
+  statusBox.className="partner-status status-rejected";
+  statusBox.textContent="आपका Partner Registration Reject किया गया है। कृपया Admin से संपर्क करें।";
+ }else if(data.status==="Blocked"){
+  statusBox.className="partner-status status-blocked";
+  statusBox.textContent="आपका Partner Account फिलहाल Block है। कृपया Admin से संपर्क करें।";
+ }else{
+  statusBox.className="partner-status status-pending";
+  statusBox.textContent="आपका Registration प्राप्त हो गया है। Admin Approval का इंतजार करें।";
+ }
+
+ let html=
+  '<div class="partner-info"><strong>नाम:</strong> '+escapeHtml(data.fullName||"")+
+  '<br><strong>Email:</strong> '+escapeHtml(email||data.email||"")+
+  '<br><strong>मोबाइल:</strong> '+escapeHtml(data.mobile||"")+
+  '<br><strong>गाँव / शहर:</strong> '+escapeHtml(data.village||"")+
+  '<br><strong>जिला:</strong> '+escapeHtml(data.district||"")+
+  '<br><strong>तहसील:</strong> '+escapeHtml(data.tehsil||"")+'</div>';
+
+ if(data.status==="Approved"){
+  html+='<p style="text-align:center;font-weight:bold">आपकी Partner ID</p>'+
+   '<div class="partner-id">'+escapeHtml(data.partnerId||"अभी आवंटित नहीं")+'</div>'+
+   '<p class="note">आपका अकाउंट Approved है। अधिकृत Partner सुविधाएँ अगले चरण में जोड़ी जाएँगी।</p>';
+ }else{
+  html+='<p class="note">Approval और Partner ID मिलने तक इस अकाउंट से Partner सेवाएँ इस्तेमाल नहीं की जा सकतीं।</p>';
+ }
+ info.innerHTML=html;
+}
+
+function escapeHtml(value){
+ return String(value).replace(/[&<>"']/g,function(ch){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+ });
+}
+
+async function loadPartnerProfile(user){
+ const snap=await getDoc(doc(db,"partners",user.uid));
+ if(!snap.exists()){
+  throw new Error("आपका Partner Profile नहीं मिला। कृपया Registration के लिए Admin से संपर्क करें।");
+ }
+ showPartnerProfile(snap.data(),user.email);
+}
+
+// PARTNER REGISTRATION
+document.getElementById("partnerRegisterForm").addEventListener("submit",async function(e){
  e.preventDefault();
 
+ const name=document.getElementById("partnerName").value.trim();
+ const email=document.getElementById("partnerEmail").value.trim().toLowerCase();
+ const mobile=document.getElementById("partnerMobile").value.trim();
+ const village=document.getElementById("partnerVillage").value.trim();
+ const district=document.getElementById("partnerDistrict").value.trim();
+ const tehsil=document.getElementById("partnerTehsil").value.trim();
+ const password=document.getElementById("partnerPassword").value;
+ const confirmPassword=document.getElementById("partnerConfirmPassword").value;
+ const message=document.getElementById("partnerRegisterMessage");
+ const button=document.getElementById("partnerRegisterButton");
+
+ if(!/^[0-9]{10}$/.test(mobile)){message.textContent="सही 10 अंकों का मोबाइल नंबर लिखें।";return;}
+ if(password.length<6){message.textContent="Password कम से कम 6 अक्षर का होना चाहिए।";return;}
+ if(password!==confirmPassword){message.textContent="दोनों Password एक जैसे नहीं हैं।";return;}
+
+ button.disabled=true;message.textContent="Registration किया जा रहा है...";
+
+ try{
+  // Firebase Authentication में नया अकाउंट
+  const credential=await createUserWithEmailAndPassword(auth,email,password);
+  const user=credential.user;
+
+  // Firestore में Pending Partner Profile
+  await setDoc(doc(db,"partners",user.uid),{
+   fullName:name,
+   email:user.email,
+   mobile:mobile,
+   village:village,
+   district:district,
+   tehsil:tehsil,
+   status:"Pending",
+   partnerId:"",
+   createdAt:serverTimestamp()
+  });
+
+  await loadPartnerProfile(user);
+  message.textContent="Registration सफल! आपका अकाउंट Pending Approval में है।";
+  document.getElementById("partnerRegisterForm").reset();
+
+ }catch(error){
+  console.error("Partner Registration Error:",error);
+  let errorText="Registration नहीं हो पाया। कृपया दोबारा प्रयास करें।";
+  if(error.code==="auth/email-already-in-use") errorText="यह Email पहले से Registered है। Partner Login का उपयोग करें।";
+  else if(error.code==="auth/invalid-email") errorText="Email Address सही नहीं है।";
+  else if(error.code==="auth/weak-password") errorText="Password कमजोर है। कम से कम 6 अक्षर रखें।";
+  else if(error.code==="permission-denied") errorText="Firestore Permission Error। Firebase Rules जाँचें।";
+  else if(error.message) errorText=error.message;
+  message.textContent=errorText;
+ }finally{
+  button.disabled=false;
+ }
+});
+
+// PARTNER LOGIN
+document.getElementById("partnerLoginForm").addEventListener("submit",async function(e){
+ e.preventDefault();
+ const email=document.getElementById("partnerLoginEmail").value.trim().toLowerCase();
+ const password=document.getElementById("partnerLoginPassword").value;
+ const message=document.getElementById("partnerLoginMessage");
+ const button=document.getElementById("partnerLoginButton");
+
+ button.disabled=true;message.textContent="Login जाँचा जा रहा है...";
+
+ try{
+  const credential=await signInWithEmailAndPassword(auth,email,password);
+  await loadPartnerProfile(credential.user);
+  message.textContent="Login सफल!";
+ }catch(error){
+  console.error("Partner Login Error:",error);
+  if(error.code==="auth/invalid-credential"||error.code==="auth/wrong-password"||error.code==="auth/user-not-found"){
+   message.textContent="Email या Password गलत है।";
+  }else if(error.code==="permission-denied"){
+   message.textContent="Profile पढ़ने की अनुमति नहीं मिली। Firebase Rules जाँचें।";
+  }else{
+   message.textContent=error.message||"Login नहीं हो पाया।";
+  }
+ }finally{
+  button.disabled=false;
+ }
+});
+
+// PARTNER LOGOUT
+document.getElementById("partnerLogoutButton").addEventListener("click",async()=>{
+ try{
+  await signOut(auth);
+  dashboard.classList.add("hidden");
+  document.getElementById("partnerLoginForm").reset();
+  document.getElementById("partnerLoginMessage").textContent="आप Logout हो गए हैं।";
+  showPartnerLogin();
+ }catch(error){
+  alert("Logout नहीं हो पाया। कृपया दोबारा प्रयास करें।");
+ }
+});
+
+// ADMIN LOGIN
+document.getElementById("adminLoginForm").addEventListener("submit",async function(e){
+ e.preventDefault();
  const email=document.getElementById("adminEmail").value.trim();
  const password=document.getElementById("adminPassword").value;
  const message=document.getElementById("loginMessage");
@@ -862,12 +832,8 @@ document.getElementById("adminLoginForm").addEventListener("submit",async functi
 </script>
 
 <script>
-function toggleMenu(){
- document.getElementById("navLinks").classList.toggle("show");
-}
-function closeMenu(){
- document.getElementById("navLinks").classList.remove("show");
-}
+function toggleMenu(){document.getElementById("navLinks").classList.toggle("show")}
+function closeMenu(){document.getElementById("navLinks").classList.remove("show")}
 function showAdminLogin(){
  closeMenu();
  const panel=document.getElementById("adminLogin");
