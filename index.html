@@ -3,69 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#073b75">
 <title>RAHUL COMPUTER'S - Digital Services</title>
 
 <style>
 *{box-sizing:border-box;scroll-behavior:smooth}
 body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172554}
-header{background:linear-gradient(135deg,#073b75,#087ac2);color:white;text-align:center;padding:30px 12px}
-header h1{margin:0;font-size:27px}
-header p{margin:8px 0 0}
-.main-nav{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;position:sticky;top:0;z-index:999;box-shadow:0 3px 10px #0003}
-.nav-brand{font-size:17px;font-weight:bold}
-.nav-links{display:flex;align-items:center;gap:17px}
-.nav-links a{color:white;text-decoration:none;font-size:14px;font-weight:bold}
+button,input,select,textarea{font-family:inherit}
+
+/* PROFESSIONAL HEADER */
+.main-header{
+ background:linear-gradient(120deg,#fff,#e8f4ff);
+ color:#073b75;padding:22px 12px;
+ border-bottom:4px solid #087ac2;
+}
+.brand-logo{
+ display:flex;align-items:center;justify-content:center;
+ gap:16px;max-width:1000px;margin:auto;
+}
+.rc-logo{
+ width:86px;height:86px;min-width:86px;
+ border:5px solid #087ac2;border-radius:50%;
+ background:linear-gradient(135deg,#073b75,#087ac2);
+ color:white;display:flex;align-items:center;
+ justify-content:center;font-size:34px;font-weight:900;
+ letter-spacing:-3px;box-shadow:0 4px 12px #073b7540;
+}
+.brand-info h1{
+ font-size:clamp(22px,4vw,36px);
+ margin:0;font-weight:900;letter-spacing:.5px;
+}
+.brand-info .tagline{
+ color:#087ac2;font-size:16px;font-weight:bold;
+ margin:6px 0;
+}
+.brand-info .brand-location{
+ font-size:13px;margin:0;color:#475569;
+}
+
+/* NAVIGATION */
+.main-nav{
+ background:linear-gradient(120deg,#052d60,#087ac2);
+ color:white;padding:13px 20px;
+ display:flex;align-items:center;justify-content:space-between;
+ flex-wrap:wrap;position:sticky;top:0;z-index:999;
+ box-shadow:0 4px 14px #0003;
+}
+.nav-brand{font-size:17px;font-weight:900;letter-spacing:.4px}
+.nav-links{display:flex;align-items:center;gap:19px}
+.nav-links a{
+ color:white;text-decoration:none;font-size:14px;
+ font-weight:bold;transition:.2s;
+}
 .nav-links a:hover{color:#ffd166}
-.menu-toggle{display:none;background:transparent;color:white;border:0;font-size:27px;cursor:pointer}
-.container{padding:20px 15px}
-h2{text-align:center;color:#073b75}
-.about,.form-box,.contact,.tracking-box,.admin-box,.payment-section{background:white;padding:22px 16px;border-radius:15px;margin:20px 0;box-shadow:0 3px 12px #0001}
-.about p{line-height:1.7;text-align:center}
-.category-list{display:grid;grid-template-columns:1fr;gap:13px}
-.category{background:white;border-radius:12px;box-shadow:0 3px 10px #0001;overflow:hidden}
-.category summary{padding:17px 15px;font-weight:bold;color:#0755a0;cursor:pointer;font-size:16px;list-style:none}
+.menu-toggle{
+ display:none;background:transparent;color:white;
+ border:0;font-size:27px;cursor:pointer;
+}
+
+/* MAIN LAYOUT */
+.container{max-width:1150px;margin:auto;padding:22px 16px}
+h2{text-align:center;color:#073b75;margin-top:8px}
+.about,.form-box,.contact,.tracking-box,.admin-box,.payment-section{
+ background:white;padding:24px 20px;border-radius:15px;
+ margin:22px 0;box-shadow:0 4px 15px #0000000c;
+ border:1px solid #e5edf5;
+}
+.about p{line-height:1.8;text-align:center;color:#475569}
+.note{text-align:center;color:#64748b;font-size:13px;line-height:1.6}
+
+/* SERVICE CATEGORIES */
+.category-list{display:grid;grid-template-columns:1fr;gap:14px}
+.category{
+ background:white;border-radius:12px;
+ box-shadow:0 3px 12px #0000000c;
+ overflow:hidden;border:1px solid #e0eaf5;
+}
+.category summary{
+ padding:18px 16px;font-weight:bold;color:#0755a0;
+ cursor:pointer;font-size:16px;list-style:none;
+ background:linear-gradient(90deg,#fff,#f0f7ff);
+}
 .category summary:after{content:"＋";float:right;color:#087ac2}
 .category[open] summary:after{content:"−"}
-.category-items{padding:0 12px 13px;display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.service-option{background:#edf5ff;border:1px solid #d4e6fa;color:#073b75;border-radius:8px;padding:12px 8px;text-align:center;font-size:13px;font-weight:bold;cursor:pointer}
-.service-option:hover{background:#d8eaff}
-.note{text-align:center;color:#64748b;font-size:13px;line-height:1.5}
-label{display:block;font-weight:bold;margin:14px 0 7px}
-input,select,textarea{width:100%;padding:13px;border:1px solid #ccd5e0;border-radius:8px;font-size:16px;background:white}
+.category-items{
+ padding:13px;display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+}
+.service-option{
+ background:#edf5ff;border:1px solid #d4e6fa;
+ color:#073b75;border-radius:9px;padding:13px 9px;
+ text-align:center;font-size:13px;font-weight:bold;
+ cursor:pointer;transition:.2s;
+}
+.service-option:hover{
+ background:#d8eaff;transform:translateY(-2px);
+}
+
+/* FORMS */
+label{display:block;font-weight:bold;margin:14px 0 7px;color:#243b5a}
+input,select,textarea{
+ width:100%;padding:13px;border:1px solid #ccd5e0;
+ border-radius:8px;font-size:16px;background:white;
+ color:#172554;
+}
+input:focus,select:focus,textarea:focus{
+ outline:2px solid #087ac2;border-color:#087ac2;
+}
 textarea{min-height:85px;resize:vertical}
-button,.btn{display:block;width:100%;padding:14px;border:0;border-radius:9px;color:white;font-size:16px;font-weight:bold;text-align:center;text-decoration:none;margin-top:16px;cursor:pointer}
-button:disabled{opacity:.6}
+button,.btn{
+ display:block;width:100%;padding:14px;border:0;
+ border-radius:9px;color:white;font-size:16px;
+ font-weight:bold;text-align:center;text-decoration:none;
+ margin-top:16px;cursor:pointer;transition:.2s;
+}
+button:hover,.btn:hover{filter:brightness(.94)}
+button:disabled{opacity:.6;cursor:not-allowed}
 .submit,.whatsapp{background:#159b52}
-.call{background:#0755a0}
-.login-btn{background:#0755a0}
+.call,.login-btn{background:#0755a0}
 .admin-box{display:none}
 .admin-box.show{display:block}
 .login-message{text-align:center;font-weight:bold;margin-top:12px}
 .phone{font-size:23px;font-weight:bold}
-footer{background:#073b75;color:white;text-align:center;padding:24px;margin-top:25px}
-footer a{color:white;text-decoration:underline}
-footer p{line-height:1.6}
+
+/* TRACKING AND PAYMENT */
 .payment-section{border:1px solid #d4e6fa}
-.payment-card{background:#edf5ff;padding:15px;border-radius:10px;margin-top:15px;text-align:center}
-.payment-card img{width:100%;max-width:260px;height:auto;display:block;margin:15px auto;border:1px solid #ddd;border-radius:8px}
+.payment-card{
+ background:#edf5ff;padding:15px;border-radius:10px;
+ margin-top:15px;text-align:center;
+}
+.payment-card img{
+ width:100%;max-width:260px;height:auto;
+ display:block;margin:15px auto;
+ border:1px solid #ddd;border-radius:8px;
+}
 .payment-amount{font-size:27px;color:#087a42;font-weight:bold}
-.payment-status{font-weight:bold;padding:10px;border-radius:8px;background:#edf5ff;text-align:center;line-height:1.5}
+.payment-status{
+ font-weight:bold;padding:12px;border-radius:8px;
+ background:#edf5ff;text-align:center;line-height:1.6;
+}
 .paid{color:#16803c;background:#e9f8ef}
 .rejected{color:#b42318;background:#fff0f0}
 .pending-payment{color:#9a6700;background:#fff8e5}
-.receipt{border:2px dashed #16803c;padding:15px;border-radius:10px;margin-top:15px;background:#f0fff5;text-align:left}
+.receipt{
+ border:2px dashed #16803c;padding:15px;
+ border-radius:10px;margin-top:15px;
+ background:#f0fff5;text-align:left;
+}
 .receipt h3{text-align:center;color:#16803c}
 .hidden{display:none!important}
+
+/* FOOTER */
+footer{
+ background:linear-gradient(120deg,#052d60,#087ac2);
+ color:white;text-align:center;padding:30px 16px;margin-top:30px;
+}
+footer h3{font-size:22px;margin:0 0 10px}
+footer a{color:white;text-decoration:underline}
+footer p{line-height:1.7}
+
+/* MOBILE */
 @media(max-width:768px){
- .menu-toggle{display:block;width:auto;margin:0;padding:3px 8px}
- .nav-links{display:none;flex-direction:column;align-items:flex-start;width:100%;gap:0;padding-top:10px}
+ .menu-toggle{
+  display:block;width:auto;margin:0;padding:3px 8px;
+ }
+ .nav-links{
+  display:none;flex-direction:column;align-items:flex-start;
+  width:100%;gap:0;padding-top:10px;
+ }
  .nav-links.show{display:flex}
- .nav-links a{width:100%;padding:13px 4px;border-top:1px solid #ffffff44}
+ .nav-links a{
+  width:100%;padding:13px 4px;
+  border-top:1px solid #ffffff44;
+ }
+ .container{padding:15px 11px}
+ .about,.form-box,.contact,.tracking-box,.admin-box{
+  padding:19px 14px;
+ }
+}
+@media(max-width:480px){
+ .main-header{padding:17px 8px}
+ .brand-logo{gap:10px}
+ .rc-logo{
+  width:65px;height:65px;min-width:65px;
+  font-size:26px;border-width:4px;
+ }
+ .brand-info h1{font-size:19px;letter-spacing:0}
+ .brand-info .tagline{font-size:12px;margin:5px 0}
+ .brand-info .brand-location{font-size:10px}
+ .nav-brand{font-size:15px}
+ .category-items{grid-template-columns:1fr 1fr;gap:8px;padding:10px}
+ .service-option{font-size:12px;padding:12px 5px}
 }
 @media print{
  body *{visibility:hidden}
  #customerReceipt,#customerReceipt *{visibility:visible}
- #customerReceipt{position:absolute;left:0;top:0;width:100%;box-shadow:none}
+ #customerReceipt{
+  position:absolute;left:0;top:0;width:100%;box-shadow:none;
+ }
  #printReceipt{display:none}
 }
 </style>
@@ -73,12 +208,19 @@ footer p{line-height:1.6}
 
 <body>
 
-<header id="home">
-<h1>RAHUL COMPUTER'S</h1>
-<p>आपकी अपनी डिजिटल सेवा केंद्र</p>
-<p>अमिलिया, मध्य प्रदेश</p>
+<!-- HEADER -->
+<header id="home" class="main-header">
+ <div class="brand-logo">
+  <div class="rc-logo">RC</div>
+  <div class="brand-info">
+   <h1>RAHUL COMPUTER'S</h1>
+   <p class="tagline">Your Digital Service Partner</p>
+   <p class="brand-location">आपकी अपनी डिजिटल सेवा केंद्र | अमिलिया, मध्य प्रदेश</p>
+  </div>
+ </div>
 </header>
 
+<!-- NAVIGATION -->
 <nav class="main-nav">
  <div class="nav-brand">RAHUL COMPUTER'S</div>
  <button class="menu-toggle" onclick="toggleMenu()" aria-label="मेनू खोलें">☰</button>
@@ -105,7 +247,6 @@ footer p{line-height:1.6}
 <section id="services">
 <h2>हमारी ऑनलाइन सेवाएँ</h2>
 <p class="note">अपनी श्रेणी खोलें और जिस सेवा की जरूरत है उस पर क्लिक करें।</p>
-
 <div class="category-list">
 
 <details class="category">
@@ -212,7 +353,6 @@ footer p{line-height:1.6}
 <section class="form-box" id="apply">
 <h2>ऑनलाइन आवेदन करें</h2>
 <p class="note">अपनी जानकारी भरें और WhatsApp पर भेजें।</p>
-
 <form id="applicationForm">
 <label>ग्राहक का पूरा नाम *</label>
 <input id="name" type="text" placeholder="अपना नाम लिखें" required>
@@ -285,7 +425,6 @@ footer p{line-height:1.6}
 
 <label>अतिरिक्त जानकारी</label>
 <textarea id="details" placeholder="यदि कुछ बताना चाहते हैं तो लिखें"></textarea>
-
 <button type="submit" class="submit">WhatsApp पर आवेदन भेजें</button>
 </form>
 </section>
@@ -306,10 +445,7 @@ footer p{line-height:1.6}
 <p class="payment-amount" id="customerAmount">₹0</p>
 <p class="note">नीचे दिए गए UPI QR Code को स्कैन करके भुगतान करें।</p>
 <img src="./rahul-upi-qr.png" alt="RAHUL COMPUTER'S UPI QR Code">
-<p class="note">
-अपने UPI ऐप में ऊपर दिखाई गई सही राशि स्वयं भरें।
-भुगतान करने से पहले प्राप्तकर्ता का नाम और राशि जाँच लें।
-</p>
+<p class="note">अपने UPI ऐप में ऊपर दिखाई गई सही राशि स्वयं भरें। भुगतान करने से पहले प्राप्तकर्ता का नाम और राशि जाँच लें।</p>
 </div>
 
 <div id="paymentSubmitBox" class="hidden">
@@ -339,7 +475,7 @@ footer p{line-height:1.6}
 <h2>हमसे संपर्क करें</h2>
 <p class="phone" style="text-align:center">9752039020</p>
 <a class="btn call" href="tel:9752039020">अभी कॉल करें</a>
-<a class="btn whatsapp" href="https://api.whatsapp.com/send?phone=919752039020" target="_blank">WhatsApp संपर्क</a>
+<a class="btn whatsapp" href="https://api.whatsapp.com/send?phone=919752039020" target="_blank" rel="noopener">WhatsApp संपर्क</a>
 <p style="text-align:center">पता: अमिलिया, मध्य प्रदेश</p>
 </section>
 
@@ -360,10 +496,12 @@ footer p{line-height:1.6}
 
 <footer>
 <h3>RAHUL COMPUTER'S</h3>
+<p>Your Digital Service Partner</p>
 <p>आपकी सेवा, हमारा उद्देश्य।</p>
 <p>धन्यवाद! 🙏</p>
 <p><a href="privacy.html">Privacy Policy (गोपनीयता नीति)</a></p>
 <p><a href="terms.html">Terms & Conditions (नियम एवं शर्तें)</a></p>
+<p>अमिलिया, मध्य प्रदेश | संपर्क: 9752039020</p>
 </footer>
 
 <script type="module">
@@ -401,14 +539,11 @@ function makeTrackingId(){
 function formatPaymentDate(timestamp){
  if(!timestamp || typeof timestamp.toDate!=="function") return "तारीख उपलब्ध नहीं";
  return new Intl.DateTimeFormat("hi-IN",{
-  dateStyle:"medium",
-  timeStyle:"short",
-  timeZone:"Asia/Kolkata"
+  dateStyle:"medium",timeStyle:"short",timeZone:"Asia/Kolkata"
  }).format(timestamp.toDate());
 }
 
 // PAN CARD को अलग पेज से जोड़ना
-// बाकी सभी सेवाएँ पहले की तरह आवेदन फॉर्म में जाएँगी।
 document.querySelectorAll(".service-option").forEach(button=>{
  button.addEventListener("click",()=>{
   const categoryName=button.closest(".category")
@@ -565,21 +700,14 @@ document.getElementById("trackingBtn").addEventListener("click",async function()
    return;
   }
 
-  // ग्राहक paymentSubmissions को पढ़ नहीं सकता।
-  // इसलिए Unpaid / Rejected दोनों में फॉर्म दिखाएँ।
-  // यदि पहले से submission मौजूद होगा तो Firestore Rules
-  // दूसरी बार जमा करने से रोक देंगे।
-
   qrCard.classList.remove("hidden");
   submitBox.classList.remove("hidden");
 
   if(paymentStatus==="Rejected"){
-   message.textContent=
-    "आपका पिछला भुगतान विवरण Reject हुआ है। सही भुगतान करने के बाद Transaction ID जमा करें।";
+   message.textContent="आपका पिछला भुगतान विवरण Reject हुआ है। सही भुगतान करने के बाद Transaction ID जमा करें।";
    message.className="payment-status rejected";
   }else{
-   message.textContent=
-    "भुगतान अभी सत्यापित नहीं हुआ है। भुगतान करने के बाद Transaction ID जमा करें।";
+   message.textContent="भुगतान अभी सत्यापित नहीं हुआ है। भुगतान करने के बाद Transaction ID जमा करें।";
    message.className="payment-status pending-payment";
   }
 
@@ -620,18 +748,14 @@ document.getElementById("paymentSubmitBtn").addEventListener("click",async funct
   document.getElementById("paymentSubmitBox").classList.add("hidden");
 
   const message=document.getElementById("customerPaymentMessage");
-  message.textContent=
-   "आपका भुगतान विवरण Admin को भेज दिया गया है। वास्तविक भुगतान सत्यापित होने के बाद ही स्थिति Paid होगी।";
-
+  message.textContent="आपका भुगतान विवरण Admin को भेज दिया गया है। वास्तविक भुगतान सत्यापित होने के बाद ही स्थिति Paid होगी।";
   message.className="payment-status pending-payment";
   message.classList.remove("hidden");
   document.getElementById("transactionId").value="";
 
  }catch(error){
   console.error("Payment Submission Error:",error);
-
   alert("भुगतान विवरण जमा नहीं हुआ। संभव है कि विवरण पहले ही भेजा जा चुका हो या सेवा में समस्या हो। कृपया दुकान से संपर्क करें।");
-
   button.disabled=false;
   button.textContent="भुगतान विवरण जमा करें";
  }
@@ -682,4 +806,4 @@ function showAdminLogin(){
 </script>
 
 </body>
-</html>
+ </html>
