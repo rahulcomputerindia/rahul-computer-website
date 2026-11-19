@@ -3,56 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#073b75">
 <title>PAN Card Services | RAHUL COMPUTER'S</title>
 
 <style>
+:root{
+ --navy:#062b52;
+ --blue:#073b75;
+ --royal:#087ac2;
+ --gold:#d9ad50;
+ --light-gold:#fff8e7;
+ --bg:#f1f5f9;
+ --text:#172554;
+ --muted:#64748b;
+ --white:#fff;
+ --green:#16803c;
+}
 *{box-sizing:border-box;scroll-behavior:smooth}
-
 body{
  margin:0;
  font-family:Arial,sans-serif;
- background:#f1f5f9;
- color:#172554;
-}
-
-header{
- background:linear-gradient(135deg,#073b75,#087ac2);
- color:white;
- text-align:center;
- padding:35px 15px;
-}
-
-header h1{
- margin:0;
- font-size:30px;
- letter-spacing:1px;
-}
-
-header p{
- margin:9px 0;
+ background:var(--bg);
+ color:var(--text);
  line-height:1.6;
 }
-
+header{
+ background:linear-gradient(125deg,var(--navy),var(--blue),var(--royal));
+ color:white;
+ text-align:center;
+ padding:42px 15px 38px;
+ border-bottom:4px solid var(--gold);
+}
+.brand-mark{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ width:62px;
+ height:62px;
+ border:2px solid var(--gold);
+ border-radius:17px;
+ background:linear-gradient(145deg,#0b5799,#052b50);
+ color:#fff;
+ font-size:23px;
+ font-weight:bold;
+ margin-bottom:12px;
+ box-shadow:0 5px 18px #0003;
+}
+header h1{
+ margin:0;
+ font-size:clamp(25px,4vw,35px);
+ letter-spacing:1px;
+}
+header p{margin:8px 0;line-height:1.7}
 .hero-buttons{
  display:flex;
  justify-content:center;
  gap:12px;
  flex-wrap:wrap;
- margin-top:20px;
+ margin-top:22px;
 }
-
 .hero-buttons a{
  text-decoration:none;
  padding:12px 22px;
- border-radius:8px;
+ border-radius:9px;
  font-weight:bold;
+ transition:.2s;
 }
-
-.hero-primary{background:white;color:#0755a0}
+.hero-primary{background:var(--gold);color:var(--navy)}
 .hero-secondary{border:1px solid white;color:white}
-
+.hero-buttons a:hover{transform:translateY(-2px)}
 nav{
- background:#052e59;
+ background:var(--navy);
  display:flex;
  justify-content:center;
  flex-wrap:wrap;
@@ -61,82 +82,82 @@ nav{
  position:sticky;
  top:0;
  z-index:100;
+ box-shadow:0 3px 12px #0002;
 }
-
 nav a{
  color:white;
  text-decoration:none;
- padding:11px 17px;
- border-radius:6px;
+ padding:10px 16px;
+ border-radius:7px;
  font-size:14px;
  font-weight:bold;
+ transition:.2s;
 }
-
-nav a:hover{background:#087ac2}
-
+nav a:hover,nav a:focus{background:var(--royal)}
 .container{
- max-width:1100px;
+ max-width:1120px;
  margin:auto;
- padding:18px;
+ padding:20px;
 }
-
 .card{
  background:white;
- padding:22px;
- margin:18px 0;
- border-radius:13px;
- box-shadow:0 3px 12px #0001;
+ padding:25px;
+ margin:20px 0;
+ border-radius:15px;
+ border:1px solid #e2e8f0;
+ border-top:3px solid var(--gold);
+ box-shadow:0 5px 18px #0b254010;
 }
-
 h2{
- color:#0755a0;
+ color:var(--blue);
  text-align:center;
- margin-top:5px;
+ margin:4px 0 12px;
+ font-size:clamp(21px,3vw,27px);
 }
-
 .section-intro{
  text-align:center;
- line-height:1.7;
+ line-height:1.8;
  color:#475569;
 }
-
 .service-grid{
  display:grid;
  grid-template-columns:repeat(2,minmax(0,1fr));
  gap:18px;
 }
-
 .service{
- border:1px solid #d4e6fa;
- background:#f5f9ff;
- border-radius:12px;
- padding:20px;
+ border:1px solid #d9e6f4;
+ border-radius:13px;
+ padding:21px;
  display:flex;
  flex-direction:column;
+ background:linear-gradient(145deg,#fff,#f4f8ff);
+ transition:transform .2s,box-shadow .2s;
 }
-
+.service:hover{
+ transform:translateY(-3px);
+ box-shadow:0 8px 20px #073b7518;
+}
 .service h3{
  margin:0 0 10px;
- color:#073b75;
+ color:var(--blue);
+ font-size:18px;
 }
-
-.service p{line-height:1.6}
-
+.service p{line-height:1.7}
 .price{
- font-size:22px;
- color:#16803c;
+ font-size:25px;
+ color:var(--green);
  font-weight:bold;
  margin-top:auto;
+ margin-bottom:0;
 }
-
 .btn{
  display:block;
  text-align:center;
  text-decoration:none;
  color:white;
- background:#087ac2;
- padding:13px;
- border-radius:8px;
+ background:linear-gradient(110deg,var(--blue),var(--royal));
+ padding:13px 15px;
+ border-radius:9px;
  font-weight:bold;
  margin-top:12px;
  border:0;
@@ -144,124 +165,115 @@ h2{
  font-size:15px;
  cursor:pointer;
  line-height:1.5;
+ transition:.2s;
 }
-
-.btn:hover{opacity:.9}
-
-.whatsapp{background:#159b52}
+.btn:hover{
+ filter:brightness(1.08);
+ transform:translateY(-1px);
+}
+.whatsapp{background:linear-gradient(110deg,#087c43,#16a35b)}
 .back{background:#475569}
-
 .note{
  font-size:13px;
- color:#64748b;
+ color:var(--muted);
  line-height:1.7;
 }
-
 .form-group{margin:14px 0}
-
 .form-group label{
  display:block;
  font-weight:bold;
  margin-bottom:7px;
- color:#073b75;
+ color:var(--blue);
  line-height:1.5;
 }
-
 .form-group input,
 .form-group select,
 .form-group textarea{
  width:100%;
  padding:13px;
  border:1px solid #cbd5e1;
- border-radius:7px;
+ border-radius:8px;
  font-size:15px;
  background:white;
  font-family:Arial,sans-serif;
+ color:var(--text);
 }
-
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus{
- outline:2px solid #93c5fd;
- border-color:#087ac2;
+ outline:2px solid #bfdbfe;
+ border-color:var(--royal);
 }
-
-.form-group textarea{
- min-height:95px;
- resize:vertical;
-}
-
-.form-group textarea:read-only{
- background:#f1f5f9;
-}
-
+.form-group textarea{min-height:95px;resize:vertical}
+.form-group textarea:read-only{background:#f1f5f9}
 .row{
  display:grid;
  grid-template-columns:repeat(3,minmax(0,1fr));
  gap:12px;
 }
-
 .two{
  display:grid;
  grid-template-columns:repeat(2,minmax(0,1fr));
  gap:12px;
 }
-
 .consent{
  display:flex;
  align-items:flex-start;
  gap:10px;
  font-size:14px;
- line-height:1.6;
+ line-height:1.7;
  margin:17px 0;
 }
-
 .consent input{
  margin-top:5px;
  flex-shrink:0;
- width:17px;
- height:17px;
+ width:18px;
+ height:18px;
+ accent-color:var(--royal);
 }
-
 .fee-box{
- background:#e8f5e9;
- border:1px solid #a5d6a7;
- padding:14px;
- border-radius:8px;
- margin:15px 0;
+ background:var(--light-gold);
+ border:1px solid #e8ca83;
+ border-left:4px solid var(--gold);
+ padding:15px;
+ border-radius:9px;
+ margin:17px 0;
  font-weight:bold;
- color:#166534;
- line-height:1.6;
+ color:#805b12;
+ line-height:1.7;
 }
-
-.contact-card{
- text-align:center;
+.contact-card{text-align:center}
+.contact-card p{margin:9px 0}
+.important-list p{
+ padding:10px 12px;
+ background:#f7faff;
+ border-radius:8px;
+ border-left:3px solid var(--gold);
+ margin:10px 0;
 }
-
 footer{
- background:#073b75;
+ background:linear-gradient(120deg,var(--navy),var(--blue));
  color:white;
  text-align:center;
- padding:22px 12px;
- margin-top:25px;
- line-height:1.6;
+ padding:25px 12px;
+ margin-top:30px;
+ border-top:4px solid var(--gold);
+ line-height:1.7;
 }
-
+footer p{margin:5px}
 @media(max-width:700px){
  .container{padding:10px}
- header{padding:27px 12px}
- header h1{font-size:25px}
- nav{gap:2px}
- nav a{padding:10px 11px;font-size:13px}
+ header{padding:30px 12px}
+ nav{gap:3px}
+ nav a{padding:9px 10px;font-size:12px}
  .service-grid{grid-template-columns:1fr}
- .row,.two{grid-template-columns:1fr}
- .card{padding:16px}
- .service{padding:16px}
+ .row,.two{grid-template-columns:1fr;gap:0}
+ .card{padding:17px;margin:14px 0}
+ .service{padding:17px}
+ .hero-buttons a{padding:11px 15px;font-size:14px}
 }
-
 @media(min-width:701px){
  .container{padding:22px}
- .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 </style>
 </head>
@@ -269,8 +281,9 @@ footer{
 <body>
 
 <header id="home">
+<div class="brand-mark">RC</div>
 <h1>RAHUL COMPUTER'S</h1>
-<p>PAN CARD ONLINE ASSISTANCE</p>
+<p><strong>PAN CARD ONLINE ASSISTANCE</strong></p>
 <p>आपकी अपनी डिजिटल सेवा केंद्र | Your Own Digital Service Center</p>
 
 <div class="hero-buttons">
@@ -297,7 +310,6 @@ Choose a PAN Card service according to your requirement.
 </div>
 
 <div class="card" id="panServices">
-
 <div class="service-grid">
 
 <div class="service">
@@ -345,9 +357,7 @@ Government Instant e-PAN is free for eligible applicants. ₹20 is only our opti
 </div>
 
 <div class="card" id="panForm">
-
 <h2>PAN CARD सहायता फॉर्म | Assistance Form</h2>
-
 <p class="section-intro">
 नीचे अपनी सही जानकारी भरें। WhatsApp में संदेश जाँचकर स्वयं Send करें।
 <br>
@@ -372,7 +382,6 @@ Enter your correct details below. Review and send the WhatsApp message yourself.
 </div>
 
 <h3>आवेदक का नाम | Applicant Name</h3>
-
 <div class="row">
 <div class="form-group">
 <label>First Name | पहला नाम *</label>
@@ -389,7 +398,6 @@ Enter your correct details below. Review and send the WhatsApp message yourself.
 </div>
 
 <h3>पिता का नाम | Father's Name</h3>
-
 <div class="row">
 <div class="form-group">
 <label>First Name | पहला नाम *</label>
@@ -406,7 +414,6 @@ Enter your correct details below. Review and send the WhatsApp message yourself.
 </div>
 
 <h3>माता का नाम | Mother's Name</h3>
-
 <div class="row">
 <div class="form-group">
 <label>First Name | पहला नाम *</label>
@@ -427,7 +434,6 @@ Enter your correct details below. Review and send the WhatsApp message yourself.
 <label>जन्मतिथि | Date of Birth *</label>
 <input id="dob" type="date" required>
 </div>
-
 <div class="form-group">
 <label>लिंग | Gender *</label>
 <select id="gender" required>
@@ -444,7 +450,6 @@ Enter your correct details below. Review and send the WhatsApp message yourself.
 <label>मोबाइल नंबर | Mobile Number *</label>
 <input id="mobile" type="tel" inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर" required>
 </div>
-
 <div class="form-group">
 <label>Email ID | ईमेल</label>
 <input id="email" type="email" placeholder="example@gmail.com">
@@ -488,25 +493,19 @@ Note: This is an assistance request form, not an official PAN application form. 
 <button class="btn whatsapp" type="submit">
 WhatsApp पर सहायता अनुरोध भेजें | Send Request on WhatsApp
 </button>
-
 </form>
 </div>
 
-<div class="card">
+<div class="card important-list">
 <h2>महत्वपूर्ण जानकारी | Important Information</h2>
-
 <p>• सरकारी पोर्टल का शुल्क, यदि लागू हो, अलग से देय होगा।<br>
 Government portal charges, if applicable, are payable separately.</p>
-
 <p>• हमारी फीस केवल आवेदन संबंधी सहायता के लिए है।<br>
 Our fee is only for application assistance.</p>
-
 <p>• ग्राहक स्वयं आधिकारिक पोर्टल पर OTP और भुगतान प्रक्रिया पूरी करेगा।<br>
 The customer must complete OTP and payment steps personally on the official portal.</p>
-
 <p>• किसी भी व्यक्ति को अपना Aadhaar OTP, UPI PIN या Password न बताएँ।<br>
 Never share your Aadhaar OTP, UPI PIN or password with anyone.</p>
-
 <p>• PAN आवेदन अधिकृत प्रक्रिया के अनुसार ही पूरा होगा।<br>
 PAN applications must be completed through the authorized process.</p>
 </div>
@@ -539,7 +538,6 @@ const feeBox=document.getElementById("feeBox");
 
 serviceSelect.addEventListener("change",function(){
  const fee=fees[this.value];
-
  feeBox.textContent=fee!==undefined
  ? "सहायता फीस | Assistance Fee: ₹"+fee
  : "सहायता फीस | Assistance Fee: सेवा चुनने पर दिखाई देगी।";
@@ -600,4 +598,4 @@ document.getElementById("assistanceForm").addEventListener("submit",function(e){
 </script>
 
 </body>
-</html>
+ </html>
