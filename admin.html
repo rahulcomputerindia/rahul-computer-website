@@ -5,139 +5,64 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#082b55">
 <title>RAHUL COMPUTER'S - Admin Panel</title>
-
 <style>
 *{box-sizing:border-box}
-:root{
- --navy:#082b55;--blue:#07569a;--royal:#087ac2;
- --gold:#d8ad55;--bg:#f3f6fb;--text:#172b45;
- --muted:#64748b;--border:#dce5ef;
- --green:#16803c;--red:#b42318;
-}
+:root{--navy:#082b55;--blue:#07569a;--royal:#087ac2;--gold:#d8ad55;--bg:#f3f6fb;--text:#172b45;--muted:#64748b;--border:#dce5ef;--green:#16803c;--red:#b42318}
 body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{
- background:linear-gradient(125deg,#061e3e,#073b75,#087ac2);
- color:white;padding:25px 15px;text-align:center;
- border-bottom:4px solid var(--gold);box-shadow:0 4px 15px #082b5525
-}
-.brand-logo{
- width:55px;height:55px;display:flex;align-items:center;
- justify-content:center;margin:0 auto 10px;border:2px solid var(--gold);
- border-radius:14px;color:var(--gold);font-size:23px;font-weight:bold
-}
-header h2{margin:0;font-size:25px;letter-spacing:1px}
-header p{margin:8px 0 0;color:#e6efff;font-size:14px}
-.container{max-width:1150px;margin:25px auto;padding:0 16px 30px}
-.card{
- background:white;padding:20px;border-radius:14px;margin-bottom:18px;
- border:1px solid var(--border);box-shadow:0 4px 15px #082b550b
-}
-.card h3{margin:0 0 16px;color:var(--navy);font-size:19px}
-.card h4{color:var(--navy)}
-input,button,select,textarea{
- width:100%;padding:12px 13px;margin:8px 0;
- border:1px solid #cbd7e5;border-radius:8px;
- font-size:15px;font-family:inherit
-}
-input,select,textarea{background:#fff;color:var(--text)}
-input:focus,select:focus,textarea:focus{
- outline:none;border-color:var(--royal);box-shadow:0 0 0 3px #087ac21a
-}
-button{
- background:linear-gradient(120deg,var(--blue),var(--royal));
- color:white;border:0;font-weight:bold;cursor:pointer;transition:.2s
-}
-button:hover{filter:brightness(1.08)}
-button:disabled{opacity:.6;cursor:not-allowed}
+header{background:linear-gradient(125deg,#061e3e,#073b75,#087ac2);color:white;padding:24px 15px;text-align:center;border-bottom:4px solid var(--gold)}
+.logo{width:55px;height:55px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;border:2px solid var(--gold);border-radius:14px;color:var(--gold);font-size:23px;font-weight:bold}
+header h2{margin:0;font-size:24px}header p{margin:8px 0 0;color:#e6efff;font-size:13px}
+.container{max-width:1150px;margin:22px auto;padding:0 14px 30px}
+.card{background:white;padding:19px;border-radius:13px;margin-bottom:17px;border:1px solid var(--border);box-shadow:0 4px 14px #082b550b}
+h3{color:var(--navy);margin:0 0 15px}
+input,select,textarea,button{width:100%;padding:12px;margin:7px 0;border:1px solid #cbd7e5;border-radius:8px;font-size:15px;font-family:inherit}
+input,select,textarea{background:white;color:var(--text)}
+button{background:linear-gradient(120deg,var(--blue),var(--royal));color:white;border:0;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+button:hover{filter:brightness(1.07)}
 .hidden{display:none!important}
-.logout,.delete-btn,.reject-btn{background:linear-gradient(120deg,#991b1b,#c62828)}
-.excel-btn,.paid-btn,.approve-btn{background:linear-gradient(120deg,#11632e,#16803c)}
-.edit-btn{background:linear-gradient(120deg,#a66a08,#d18a16)}
-.block-btn{background:linear-gradient(120deg,#991b1b,#c62828)}
-.activate-btn{background:linear-gradient(120deg,#11632e,#16803c)}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}
-.stat{
- text-align:center;background:linear-gradient(145deg,#fff,#f1f7ff);
- padding:20px 12px;border:1px solid var(--border);
- border-top:4px solid var(--gold);border-radius:13px;
- color:var(--muted);font-size:14px;font-weight:bold
-}
-.stat strong{display:block;margin-top:8px;font-size:29px;color:var(--navy)}
-.application,.partner-card{
- border:1px solid var(--border);border-left:4px solid var(--royal);
- padding:17px;border-radius:12px;margin:15px 0;background:white;
- box-shadow:0 3px 12px #082b5509
-}
-.application h3,.partner-card h3{
- color:var(--navy);margin:0 0 12px;font-size:18px;overflow-wrap:anywhere
-}
-.application p,.partner-card p{
- margin:8px 0;font-size:14px;line-height:1.55;overflow-wrap:anywhere
-}
-.application select{background:#f8fbff}
-.application button,.partner-card button{margin-top:7px}
-.edit-form,.payment-box{
- background:#f4f8fd;padding:15px;border-radius:10px;
- margin-top:14px;border:1px solid #dce7f3
-}
-.edit-form{border-left:4px solid #d18a16}
-.payment-box{
- background:linear-gradient(145deg,#fffdf8,#f4f8fd);
- border:1px solid #e8d6ad;border-left:4px solid var(--gold)
-}
-.payment-box h4{margin:0 0 12px;font-size:16px}
-.payment-status{font-weight:bold;color:var(--blue);overflow-wrap:anywhere}
-.paid-text{color:var(--green)}
-.rejected-text{color:var(--red)}
-#loginBox{max-width:440px;margin:45px auto;border-top:5px solid var(--gold)}
-#loginBox h3{text-align:center;font-size:22px}
-#loginMessage{text-align:center;color:var(--red);font-size:14px;overflow-wrap:anywhere}
-.dashboard-heading{
- display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap
-}
-.dashboard-heading h3{margin:0}
-.dashboard-heading button{width:auto;min-width:110px;padding:10px 18px}
-.section-heading{
- display:flex;align-items:center;gap:9px;
- border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:15px
-}
-.section-heading span{color:var(--gold);font-size:20px}
-#loading,#partnerLoading{color:var(--muted);text-align:center;padding:15px 5px}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
-.tab-btn{width:auto;flex:1;min-width:130px}
-.tab-btn.active{background:linear-gradient(120deg,#a66a08,#d18a16)}
-.partner-status{
- display:inline-block;padding:5px 12px;border-radius:20px;
- background:#fff3cd;color:#765500;font-weight:bold;font-size:13px
-}
-.partner-status.Approved{background:#e8f7ee;color:#176b3a}
-.partner-status.Rejected,.partner-status.Blocked{background:#fff0f0;color:#a51f1f}
-.partner-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.partner-actions button{margin:3px 0}
+.logout,.danger{background:linear-gradient(120deg,#991b1b,#c62828)}
+.success{background:linear-gradient(120deg,#11632e,#16803c)}
+.gold{background:linear-gradient(120deg,#a66a08,#d18a16)}
+.gray{background:#64748b}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+.tab{width:auto;flex:1;min-width:130px}
+.tab.active{background:linear-gradient(120deg,#a66a08,#d18a16)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:17px}
+.stat{background:#f4f8fd;border:1px solid var(--border);border-top:4px solid var(--gold);border-radius:11px;padding:14px 7px;text-align:center;color:var(--muted);font-size:13px}
+.stat strong{display:block;font-size:25px;color:var(--navy);margin-top:7px}
+.item{background:white;border:1px solid var(--border);border-left:4px solid var(--royal);padding:15px;border-radius:10px;margin:12px 0;overflow-wrap:anywhere}
+.item h4{margin:0 0 10px;color:var(--navy);font-size:17px}
+.item p{font-size:14px;line-height:1.5;margin:6px 0}
+.item button{margin-top:5px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.actions button{margin:3px 0}
+.badge{display:inline-block;padding:5px 10px;border-radius:20px;background:#fff3cd;color:#765500;font-weight:bold;font-size:12px}
+.badge.Approved,.badge.Paid,.badge.Completed,.badge.Active{background:#e8f7ee;color:#176b3a}
+.badge.Rejected,.badge.Blocked{background:#fff0f0;color:#a51f1f}
+.badge.Unpaid,.badge.Pending{background:#fff3cd;color:#765500}
+.formbox{background:#f4f8fd;border:1px solid var(--border);padding:14px;border-radius:10px;margin:12px 0}
+.formbox h4{margin:0 0 10px;color:var(--navy)}
 .message{padding:12px;border-radius:8px;margin:10px 0;overflow-wrap:anywhere}
-.message.success{background:#e8f7ee;color:#176b3a}
-.message.error{background:#fff0f0;color:#a51f1f}
-.message.info{background:#eaf3ff;color:#164a80}
-footer{text-align:center;padding:18px 10px;color:var(--muted);font-size:13px}
+.info{background:#eaf3ff;color:#164a80}
+#loginBox{max-width:440px;margin:40px auto;border-top:5px solid var(--gold)}
+#loginBox h3{text-align:center}
+#loginMessage{color:var(--red);text-align:center;font-size:14px}
+.muted{color:var(--muted);font-size:13px}
+.section-title{border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:13px}
+footer{text-align:center;padding:18px;color:var(--muted);font-size:13px}
 @media(max-width:600px){
- header{padding:21px 12px}header h2{font-size:21px}
- .container{margin:16px auto;padding:0 11px 25px}
- .card{padding:15px;border-radius:11px}
- .stats{gap:7px}.stat{padding:13px 4px;font-size:12px}
- .stat strong{font-size:23px}
- .application,.partner-card{padding:13px}
- .application p,.partner-card p{font-size:13px}
- .dashboard-heading{align-items:stretch}
- .dashboard-heading button{width:100%}
- .partner-actions{grid-template-columns:1fr}
+ header h2{font-size:21px}.container{padding:0 10px 25px}
+ .card{padding:14px}.stats{gap:6px}.stat{padding:12px 3px;font-size:11px}
+ .stat strong{font-size:22px}.actions{grid-template-columns:1fr}
+ .tabs{gap:5px}.tab{min-width:105px;font-size:13px;padding:10px 5px}
 }
 </style>
 </head>
-
 <body>
 
 <header>
- <div class="brand-logo">RC</div>
+ <div class="logo">RC</div>
  <h2>RAHUL COMPUTER'S</h2>
  <p>ADMINISTRATION & MANAGEMENT PANEL</p>
 </header>
@@ -146,7 +71,7 @@ footer{text-align:center;padding:18px 10px;color:var(--muted);font-size:13px}
 
 <div class="card" id="loginBox">
  <h3>Admin Login</h3>
- <p style="text-align:center;color:#64748b;font-size:14px">अपने Admin Account से Login करें</p>
+ <p class="muted" style="text-align:center">अपने Admin Account से Login करें</p>
  <input type="email" id="email" placeholder="Admin Email">
  <input type="password" id="password" placeholder="Password">
  <button id="loginBtn">Login करें</button>
@@ -156,76 +81,137 @@ footer{text-align:center;padding:18px 10px;color:var(--muted);font-size:13px}
 <div id="dashboard" class="hidden">
 
  <div class="card">
-  <div class="dashboard-heading">
-   <h3>नमस्ते Admin जी! 🙏</h3>
-   <button class="logout" id="logoutBtn">Logout</button>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+   <h3 style="margin:0">नमस्ते Admin जी! 🙏</h3>
+   <button class="logout" id="logoutBtn" style="width:auto;padding:10px 18px">Logout</button>
   </div>
-  <p style="margin:10px 0 0;color:#64748b;font-size:13px">RAHUL COMPUTER'S - Admin Dashboard</p>
+  <p class="muted">RAHUL COMPUTER'S — Main Administration</p>
  </div>
 
  <div class="tabs">
-  <button class="tab-btn active" id="applicationsTab">Customer Applications</button>
-  <button class="tab-btn" id="partnersTab">Partner Management</button>
+  <button class="tab active" data-tab="customers">Customer Applications</button>
+  <button class="tab" data-tab="partners">Partners</button>
+  <button class="tab" data-tab="services">Services</button>
+  <button class="tab" data-tab="partnerApps">Partner Applications</button>
+  <button class="tab" data-tab="ledger">Commission & Payout</button>
  </div>
 
- <!-- CUSTOMER APPLICATION SECTION -->
- <div id="applicationsSection">
-
+ <!-- CUSTOMER APPLICATIONS -->
+ <section id="customersSection">
   <div class="stats">
    <div class="stat">कुल आवेदन<strong id="total">0</strong></div>
    <div class="stat">Pending<strong id="pending">0</strong></div>
    <div class="stat">Completed<strong id="completed">0</strong></div>
   </div>
-
   <div class="card">
-   <div class="section-heading"><span>◆</span><h3 style="margin:0">ग्राहकों के आवेदन</h3></div>
-   <button class="excel-btn" id="excelBtn">Excel रिपोर्ट डाउनलोड करें</button>
-   <input type="text" id="searchApplication" placeholder="नाम, मोबाइल या Tracking ID से खोजें...">
-   <select id="statusFilter">
+   <h3>ग्राहकों के आवेदन</h3>
+   <button class="success" id="exportCustomers">CSV रिपोर्ट डाउनलोड करें</button>
+   <input id="customerSearch" placeholder="नाम, मोबाइल या Tracking ID खोजें">
+   <select id="customerFilter">
     <option value="All">सभी आवेदन</option>
-    <option value="Pending">केवल Pending आवेदन</option>
-    <option value="Completed">केवल Completed आवेदन</option>
+    <option value="Pending">Pending</option>
+    <option value="Completed">Completed</option>
    </select>
-   <p id="loading">आवेदन लोड हो रहे हैं...</p>
-   <div id="applications"></div>
+   <p id="customerLoading" class="muted">आवेदन लोड हो रहे हैं...</p>
+   <div id="customerList"></div>
   </div>
- </div>
+ </section>
 
- <!-- PARTNER MANAGEMENT SECTION -->
- <div id="partnersSection" class="hidden">
-
+ <!-- PARTNERS -->
+ <section id="partnersSection" class="hidden">
   <div class="stats">
    <div class="stat">कुल पार्टनर<strong id="partnerTotal">0</strong></div>
    <div class="stat">Pending<strong id="partnerPending">0</strong></div>
    <div class="stat">Approved<strong id="partnerApproved">0</strong></div>
   </div>
-
   <div class="card">
-   <div class="section-heading"><span>◆</span><h3 style="margin:0">Partner Management</h3></div>
-   <button id="refreshPartners" type="button">Refresh Partner List</button>
-   <input type="search" id="partnerSearch" placeholder="नाम, मोबाइल, Partner ID, जिला या तहसील खोजें...">
-   <select id="partnerStatusFilter">
+   <h3>Partner Management</h3>
+   <button id="refreshPartners">Refresh Partner List</button>
+   <input id="partnerSearch" placeholder="नाम, मोबाइल, ID, जिला खोजें">
+   <select id="partnerFilter">
     <option value="All">सभी पार्टनर</option>
     <option value="Pending">Pending</option>
-    <option value="Approved">Approved / Active</option>
+    <option value="Approved">Approved</option>
     <option value="Rejected">Rejected</option>
     <option value="Blocked">Blocked</option>
    </select>
-   <p id="partnerLoading">Partner सूची लोड हो रही है...</p>
-   <div id="partnersList"></div>
+   <p id="partnerLoading" class="muted">लोड हो रहा है...</p>
+   <div id="partnerList"></div>
   </div>
-
   <div class="card">
-   <h3>Partner Network की जानकारी</h3>
-   <p>यहाँ Registered पार्टनर की जानकारी और Approval नियंत्रित किया जाएगा।</p>
-   <p><strong>Approved:</strong> पार्टनर का निजी नेटवर्क अकाउंट सक्रिय है।</p>
-   <p><strong>Blocked:</strong> पार्टनर का नेटवर्क अकाउंट रोक दिया गया है।</p>
-   <p style="font-size:13px;color:#64748b">
-    Partner ID जारी करना सरकारी CSC या अन्य सरकारी पोर्टल की अनुमति नहीं देता।
-    संबंधित सेवाओं के लिए अलग से अधिकृत अनुमति आवश्यक होगी।
-   </p>
+   <h3>Partner Network जानकारी</h3>
+   <p>Partner ID केवल RAHUL COMPUTER'S के निजी नेटवर्क की पहचान है। इससे सरकारी CSC या किसी सरकारी पोर्टल की अनुमति स्वतः नहीं मिलती।</p>
   </div>
- </div>
+ </section>
+
+ <!-- SERVICES -->
+ <section id="servicesSection" class="hidden">
+  <div class="card">
+   <h3 class="section-title">नई Service जोड़ें</h3>
+   <div class="formbox">
+    <input id="serviceName" placeholder="Service का नाम">
+    <input id="serviceCategory" placeholder="Category (जैसे PAN, सरकारी फॉर्म, अन्य)">
+    <textarea id="serviceDescription" rows="3" placeholder="Service की जानकारी"></textarea>
+    <label class="muted">ग्राहक से ली जाने वाली फीस (₹)</label>
+    <input id="customerFee" type="number" min="0" step="0.01" placeholder="उदाहरण: 100">
+    <label class="muted">Partner Commission (₹)</label>
+    <input id="partnerCommission" type="number" min="0" step="0.01" placeholder="उदाहरण: 20">
+    <label><input id="serviceActive" type="checkbox" checked style="width:auto;margin-right:7px">Service Active रखें</label>
+    <button id="addService" class="success">Service Save करें</button>
+   </div>
+  </div>
+  <div class="card">
+   <h3>सभी Services</h3>
+   <button id="refreshServices">Refresh Services</button>
+   <p id="serviceLoading" class="muted">Services लोड हो रही हैं...</p>
+   <div id="serviceList"></div>
+  </div>
+ </section>
+
+ <!-- PARTNER APPLICATIONS -->
+ <section id="partnerAppsSection" class="hidden">
+  <div class="card">
+   <h3>Partner द्वारा भेजे गए Customer Applications</h3>
+   <button id="refreshPartnerApps">Refresh Applications</button>
+   <select id="partnerAppFilter">
+    <option value="All">सभी आवेदन</option>
+    <option value="Pending">Pending</option>
+    <option value="Processing">Processing</option>
+    <option value="Completed">Completed</option>
+    <option value="Rejected">Rejected</option>
+   </select>
+   <p id="partnerAppLoading" class="muted">Applications लोड हो रहे हैं...</p>
+   <div id="partnerAppList"></div>
+  </div>
+ </section>
+
+ <!-- LEDGER -->
+ <section id="ledgerSection" class="hidden">
+  <div class="stats">
+   <div class="stat">कुल Commission<strong id="ledgerTotal">₹0</strong></div>
+   <div class="stat">भुगतान बाकी<strong id="ledgerDue">₹0</strong></div>
+   <div class="stat">भुगतान किया<strong id="ledgerPaid">₹0</strong></div>
+  </div>
+  <div class="card">
+   <h3>Partner Commission Entry</h3>
+   <div class="formbox">
+    <select id="ledgerPartner">
+     <option value="">Partner चुनें</option>
+    </select>
+    <input id="ledgerAmount" type="number" min="0.01" step="0.01" placeholder="Commission Amount ₹">
+    <input id="ledgerApplication" placeholder="Partner Application ID (वैकल्पिक)">
+    <input id="ledgerDescription" placeholder="विवरण (जैसे PAN आवेदन Commission)">
+    <button class="success" id="addLedger">Commission जोड़ें</button>
+   </div>
+  </div>
+  <div class="card">
+   <h3>Commission और Payout Records</h3>
+   <button id="refreshLedger">Refresh Records</button>
+   <input id="ledgerSearch" placeholder="Partner नाम या Partner ID खोजें">
+   <p id="ledgerLoading" class="muted">Records लोड हो रहे हैं...</p>
+   <div id="ledgerList"></div>
+  </div>
+ </section>
 
 </div>
 </div>
@@ -234,14 +220,12 @@ footer{text-align:center;padding:18px 10px;color:var(--muted);font-size:13px}
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-
 import {
  getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
-
 import {
- getFirestore,collection,getDocs,doc,getDoc,writeBatch,
- updateDoc,setDoc,deleteDoc,serverTimestamp
+ getFirestore,collection,getDocs,doc,getDoc,addDoc,
+ updateDoc,setDoc,deleteDoc,serverTimestamp,writeBatch
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
 const firebaseConfig={
@@ -257,563 +241,437 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 const ADMIN_UID="Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3";
-
-let currentApplications=[];
-let currentPartners=[];
-
 const $=id=>document.getElementById(id);
 
-function formatDate(timestamp){
- if(!timestamp)return "उपलब्ध नहीं";
- try{
-  return new Intl.DateTimeFormat("hi-IN",{
-   dateStyle:"medium",timeStyle:"short",timeZone:"Asia/Kolkata"
-  }).format(timestamp.toDate());
- }catch(e){return "उपलब्ध नहीं";}
-}
+let customers=[],partners=[],services=[],partnerApps=[],ledger=[];
 
-function csvCell(value){
- let text=String(value??"");
- if(/^[\s]*[=+\-@]/.test(text))text="'"+text;
- return '"'+text.replace(/"/g,'""')+'"';
+function dateText(t){
+ if(!t)return "उपलब्ध नहीं";
+ try{return new Intl.DateTimeFormat("hi-IN",{dateStyle:"medium",timeStyle:"short",timeZone:"Asia/Kolkata"}).format(t.toDate());}
+ catch(e){return "उपलब्ध नहीं";}
 }
-
-function showTab(tab){
- const isPartner=tab==="partners";
- $("applicationsSection").classList.toggle("hidden",isPartner);
- $("partnersSection").classList.toggle("hidden",!isPartner);
- $("applicationsTab").classList.toggle("active",!isPartner);
- $("partnersTab").classList.toggle("active",isPartner);
- if(isPartner)loadPartners();
+function money(v){return "₹"+Number(v||0).toLocaleString("en-IN",{maximumFractionDigits:2});}
+function make(tag,cls,txt){
+ const e=document.createElement(tag);
+ if(cls)e.className=cls;
+ if(txt!==undefined)e.textContent=txt;
+ return e;
 }
+function field(parent,label,value){
+ const p=make("p","",label+": "+(value??"उपलब्ध नहीं"));
+ parent.appendChild(p);
+}
+function button(parent,label,cls,fn){
+ const b=make("button",cls||"",label);
+ b.type="button";b.addEventListener("click",fn);parent.appendChild(b);return b;
+}
+function badge(parent,status){
+ const b=make("span","badge "+(status||"Pending"),status||"Pending");
+ parent.appendChild(b);
+}
+function showMessage(text){alert(text);}
 
-$("applicationsTab").addEventListener("click",()=>showTab("applications"));
-$("partnersTab").addEventListener("click",()=>showTab("partners"));
+// TAB NAVIGATION
+function showTab(name){
+ document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
+ ["customers","partners","services","partnerApps","ledger"].forEach(x=>{
+  $(x+"Section").classList.toggle("hidden",x!==name);
+ });
+ if(name==="customers")loadCustomers();
+ if(name==="partners")loadPartners();
+ if(name==="services")loadServices();
+ if(name==="partnerApps")loadPartnerApps();
+ if(name==="ledger"){loadPartners().then(loadLedger);}
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
 
 // CUSTOMER APPLICATIONS
-$("excelBtn").addEventListener("click",()=>{
- if(!currentApplications.length){
-  alert("डाउनलोड करने के लिए कोई आवेदन उपलब्ध नहीं है।");
-  return;
+async function loadCustomers(){
+ $("customerList").textContent="";
+ $("customerLoading").textContent="आवेदन लोड हो रहे हैं...";
+ customers=[];
+ try{
+  const snap=await getDocs(collection(db,"applications"));
+  customers=snap.docs.map(x=>({id:x.id,data:x.data()}));
+  const pending=customers.filter(x=>x.data.status!=="Completed").length;
+  $("total").textContent=customers.length;
+  $("pending").textContent=pending;
+  $("completed").textContent=customers.length-pending;
+  $("customerLoading").textContent=customers.length?"कुल "+customers.length+" आवेदन मिले।":"अभी कोई आवेदन नहीं है।";
+  renderCustomers();
+ }catch(e){
+  console.error(e);$("customerLoading").textContent="लोड नहीं हुआ: "+e.message;
  }
- const rows=[[
-  "ग्राहक का नाम","मोबाइल नंबर","गाँव","सेवा","जानकारी",
-  "Tracking ID","आवेदन की तारीख और समय","स्थिति"
- ]];
- currentApplications.forEach(item=>{
-  const d=item.data;
-  rows.push([
-   d.customerName,d.mobile,d.village,d.service,d.details,
-   d.trackingId,formatDate(d.createdAt),d.status||"Pending"
-  ]);
+}
+function renderCustomers(){
+ const list=$("customerList");list.textContent="";
+ const q=$("customerSearch").value.toLowerCase().trim();
+ const filter=$("customerFilter").value;
+ const data=customers.filter(x=>{
+  const d=x.data;
+  return JSON.stringify(d).toLowerCase().includes(q)&&(filter==="All"||(d.status||"Pending")===filter);
  });
- const csv="\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
- const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
- const url=URL.createObjectURL(blob);
- const link=document.createElement("a");
- link.href=url;
- link.download="RAHUL_COMPUTERS_Report_"+new Date().toISOString().slice(0,10)+".csv";
- document.body.appendChild(link);link.click();link.remove();
- URL.revokeObjectURL(url);
+ data.forEach(item=>{
+  const d=item.data,c=make("div","item");
+  c.appendChild(make("h4", "",d.customerName||"Customer"));
+  field(c,"Mobile",d.mobile);field(c,"Village",d.village);
+  field(c,"Service",d.service);field(c,"Details",d.details);
+  field(c,"Tracking ID",d.trackingId);field(c,"Date",dateText(d.createdAt));
+  c.append("Status: ");badge(c,d.status||"Pending");
+
+  const sel=make("select");
+  ["Pending","Completed"].forEach(s=>{
+   const o=make("option","",s);o.value=s;o.selected=(d.status||"Pending")===s;sel.appendChild(o);
+  });
+  c.appendChild(sel);
+  button(c,"Status Update","success",async()=>{
+   try{
+    const batch=writeBatch(db);
+    batch.update(doc(db,"applications",item.id),{status:sel.value});
+    if(d.trackingId)batch.update(doc(db,"tracking",d.trackingId),{status:sel.value});
+    await batch.commit();showMessage("Status अपडेट हो गया।");loadCustomers();
+   }catch(e){showMessage("Status अपडेट नहीं हुआ: "+e.message);}
+  });
+
+  button(c,"Payment जानकारी देखें / सेट करें","gold",async()=>{
+   if(!d.trackingId){showMessage("इस आवेदन में Tracking ID नहीं है।");return;}
+   try{
+    const ref=doc(db,"paymentInfo",d.trackingId);
+    const snap=await getDoc(ref);
+    const old=snap.exists()?snap.data():{};
+    const amt=prompt("ग्राहक की फीस रुपये में:",old.amount??"");
+    if(amt===null)return;
+    const value=Number(amt);
+    if(!Number.isFinite(value)||value<=0){showMessage("सही फीस दर्ज करें।");return;}
+    const state=old.paymentStatus||"Unpaid";
+    await setDoc(ref,{amount:value,paymentStatus:state,updatedAt:serverTimestamp()});
+    showMessage("Payment जानकारी Save हो गई।");
+   }catch(e){showMessage("Payment जानकारी Save नहीं हुई: "+e.message);}
+  });
+
+  button(c,"Payment Status देखें / Update करें","gold",async()=>{
+   if(!d.trackingId)return;
+   try{
+    const ref=doc(db,"paymentInfo",d.trackingId);
+    const snap=await getDoc(ref);
+    if(!snap.exists()){showMessage("पहले Payment जानकारी सेट करें।");return;}
+    const old=snap.data();
+    const sub=await getDoc(doc(db,"paymentSubmissions",d.trackingId));
+    const transaction=sub.exists()?sub.data().transactionId:"अभी जमा नहीं";
+    const next=prompt("वर्तमान स्थिति: "+old.paymentStatus+"\nग्राहक Transaction ID: "+transaction+"\nनई स्थिति लिखें: Unpaid, Paid या Rejected",old.paymentStatus||"Unpaid");
+    if(next===null)return;
+    if(!["Unpaid","Paid","Rejected"].includes(next)){showMessage("स्थिति Unpaid, Paid या Rejected में से होनी चाहिए।");return;}
+    if(next==="Paid"&&!confirm("क्या आपने बैंक/UPI में भुगतान वास्तव में प्राप्त होने की पुष्टि कर ली है?"))return;
+    await setDoc(ref,{amount:old.amount,paymentStatus:next,updatedAt:serverTimestamp()});
+    showMessage("Payment Status अपडेट हो गया।");
+   }catch(e){showMessage("Payment अपडेट नहीं हुआ: "+e.message);}
+  });
+
+  button(c,"आवेदन Delete करें","danger",async()=>{
+   if(!confirm("क्या आप आवेदन और इससे जुड़ी Tracking तथा Payment जानकारी हटाना चाहते हैं?"))return;
+   try{
+    const batch=writeBatch(db);
+    batch.delete(doc(db,"applications",item.id));
+    if(d.trackingId){
+     batch.delete(doc(db,"tracking",d.trackingId));
+     batch.delete(doc(db,"paymentInfo",d.trackingId));
+     batch.delete(doc(db,"paymentSubmissions",d.trackingId));
+    }
+    await batch.commit();showMessage("आवेदन Delete हो गया।");loadCustomers();
+   }catch(e){showMessage("Delete नहीं हुआ: "+e.message);}
+  });
+  list.appendChild(c);
+ });
+ if(!data.length)list.appendChild(make("p","muted","कोई आवेदन नहीं मिला।"));
+}
+$("customerSearch").addEventListener("input",renderCustomers);
+$("customerFilter").addEventListener("change",renderCustomers);
+$("exportCustomers").addEventListener("click",()=>{
+ if(!customers.length){showMessage("कोई आवेदन उपलब्ध नहीं है।");return;}
+ const rows=[["नाम","मोबाइल","गाँव","सेवा","जानकारी","Tracking ID","Date","Status"]];
+ customers.forEach(x=>{
+  const d=x.data;rows.push([d.customerName,d.mobile,d.village,d.service,d.details,d.trackingId,dateText(d.createdAt),d.status]);
+ });
+ const cell=v=>'"'+String(v??"").replace(/^[\s]*[=+\-@]/,"'").replace(/"/g,'""')+'"';
+ const csv="\uFEFF"+rows.map(r=>r.map(cell).join(",")).join("\r\n");
+ const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+ const a=make("a");a.href=url;a.download="RAHUL_COMPUTER_Customers.csv";a.click();URL.revokeObjectURL(url);
 });
 
-function applyFilters(){
- const query=$("searchApplication").value.trim().toLowerCase();
- const status=$("statusFilter").value;
- document.querySelectorAll(".application").forEach(card=>{
-  const matches=card.textContent.toLowerCase().includes(query);
-  const statusMatch=status==="All"||card.dataset.status===status;
-  card.style.display=matches&&statusMatch?"":"none";
- });
-}
-$("searchApplication").addEventListener("input",applyFilters);
-$("statusFilter").addEventListener("change",applyFilters);
-
-function createEditForm(item,card){
- const d=item.data;
- const form=document.createElement("div");
- form.className="edit-form";
- const heading=document.createElement("h4");
- heading.textContent="आवेदन में सुधार करें";
- form.appendChild(heading);
-
- function field(label,value){
-  const input=document.createElement("input");
-  input.placeholder=label;input.value=value||"";
-  form.appendChild(input);return input;
- }
- const name=field("ग्राहक का नाम",d.customerName);
- const mobile=field("मोबाइल नंबर",d.mobile);
- const village=field("गाँव",d.village);
- const service=field("सेवा",d.service);
- const details=document.createElement("textarea");
- details.placeholder="आवेदन की जानकारी";details.value=d.details||"";
- details.rows=4;form.appendChild(details);
-
- const save=document.createElement("button");
- save.textContent="बदलाव Save करें";form.appendChild(save);
- const cancel=document.createElement("button");
- cancel.textContent="रद्द करें";cancel.style.background="#64748b";
- form.appendChild(cancel);
- cancel.onclick=()=>form.remove();
-
- save.onclick=async()=>{
-  const values={
-   customerName:name.value.trim(),mobile:mobile.value.trim(),
-   village:village.value.trim(),service:service.value.trim(),
-   details:details.value.trim()
-  };
-  if(!values.customerName||!values.mobile||!values.village||!values.service){
-   alert("नाम, मोबाइल, गाँव और सेवा भरना जरूरी है।");return;
-  }
-  if(!/^[0-9]{10}$/.test(values.mobile)){
-   alert("कृपया सही 10 अंकों का मोबाइल नंबर भरें।");return;
-  }
-  save.disabled=true;
-  try{
-   await updateDoc(doc(db,"applications",item.id),values);
-   alert("आवेदन अपडेट हो गया!");
-   await loadApplications();
-  }catch(e){
-   console.error(e);save.disabled=false;
-   alert("आवेदन अपडेट नहीं हुआ: "+e.message);
-  }
- };
- card.appendChild(form);
-}
-
-async function createPaymentBox(item,card){
- const trackingId=item.data.trackingId;
- if(!trackingId)return;
-
- const box=document.createElement("div");
- box.className="payment-box";
- const heading=document.createElement("h4");
- heading.textContent="भुगतान / Payment Management";
- box.appendChild(heading);
-
- const amount=document.createElement("input");
- amount.type="number";amount.min="1";amount.step="0.01";
- amount.placeholder="आवेदन की फीस रुपये में";box.appendChild(amount);
-
- const upi=document.createElement("input");
- upi.placeholder="UPI ID (यदि उपयोग कर रहे हैं)";
- box.appendChild(upi);
-
- const qr=document.createElement("input");
- qr.placeholder="QR Image URL (वैकल्पिक)";
- box.appendChild(qr);
-
- const save=document.createElement("button");
- save.textContent="फीस Save करें";box.appendChild(save);
-
- const status=document.createElement("p");
- status.className="payment-status";box.appendChild(status);
-
- const transaction=document.createElement("p");
- box.appendChild(transaction);
-
- const paid=document.createElement("button");
- paid.textContent="भुगतान Paid करें";paid.className="paid-btn";
- paid.style.display="none";box.appendChild(paid);
-
- const reject=document.createElement("button");
- reject.textContent="भुगतान Reject करें";reject.className="reject-btn";
- reject.style.display="none";box.appendChild(reject);
-
- card.appendChild(box);
-
- let paymentInfo=null,submission=null;
-
- async function refresh(){
-  try{
-   const [p,s]=await Promise.all([
-    getDoc(doc(db,"paymentInfo",trackingId)),
-    getDoc(doc(db,"paymentSubmissions",trackingId))
-   ]);
-   paymentInfo=p.exists()?p.data():null;
-   submission=s.exists()?s.data():null;
-
-   amount.value=paymentInfo?.amount||"";
-   upi.value=paymentInfo?.upiId||"";
-   qr.value=paymentInfo?.qrImage||"";
-
-   const paymentStatus=paymentInfo?.paymentStatus||paymentInfo?.status||"Unpaid";
-   status.textContent="Payment Status: "+paymentStatus;
-   status.className="payment-status";
-   if(paymentStatus==="Paid")status.classList.add("paid-text");
-   if(paymentStatus==="Rejected")status.classList.add("rejected-text");
-
-   if(submission){
-    transaction.textContent="ग्राहक का UTR / Transaction ID: "+
-     (submission.utr||submission.transactionId||"उपलब्ध नहीं");
-    if(submission.submittedAt)
-     transaction.textContent+=" | जमा समय: "+formatDate(submission.submittedAt);
-   }else{
-    transaction.textContent="अभी ग्राहक ने Transaction ID जमा नहीं किया है।";
-   }
-
-   const canVerify=!!submission&&paymentStatus!=="Paid";
-   paid.style.display=canVerify?"block":"none";
-   reject.style.display=canVerify?"block":"none";
-  }catch(e){
-   console.error(e);status.textContent="Payment जानकारी लोड नहीं हुई: "+e.message;
-  }
- }
-
- save.onclick=async()=>{
-  const value=Number(amount.value);
-  if(!Number.isFinite(value)||value<=0){
-   alert("कृपया सही फीस भरें।");return;
-  }
-  save.disabled=true;
-  try{
-   await setDoc(doc(db,"paymentInfo",trackingId),{
-    amount:value,upiId:upi.value.trim(),qrImage:qr.value.trim(),
-    paymentStatus:paymentInfo?.paymentStatus||paymentInfo?.status||"Unpaid",
-    updatedAt:serverTimestamp()
-   },{merge:true});
-   alert("फीस जानकारी Save हो गई!");
-   await refresh();
-  }catch(e){
-   console.error(e);alert("फीस Save नहीं हुई: "+e.message);
-  }finally{save.disabled=false;}
- };
-
- paid.onclick=async()=>{
-  if(!submission)return;
-  if(!confirm("क्या आपने बैंक/UPI ऐप में पैसा वास्तव में प्राप्त होने की पुष्टि कर ली है?"))return;
-  paid.disabled=true;
-  try{
-   await setDoc(doc(db,"paymentInfo",trackingId),{
-    paymentStatus:"Paid",status:"Paid",paidAt:serverTimestamp(),
-    updatedAt:serverTimestamp()
-   },{merge:true});
-   alert("भुगतान Paid कर दिया गया!");
-   await refresh();
-  }catch(e){console.error(e);alert("Payment अपडेट नहीं हुआ: "+e.message);}
-  finally{paid.disabled=false;}
- };
-
- reject.onclick=async()=>{
-  if(!submission)return;
-  if(!confirm("क्या आप इस Payment को Reject करना चाहते हैं?"))return;
-  reject.disabled=true;
-  try{
-   await setDoc(doc(db,"paymentInfo",trackingId),{
-    paymentStatus:"Rejected",status:"Rejected",updatedAt:serverTimestamp()
-   },{merge:true});
-   await deleteDoc(doc(db,"paymentSubmissions",trackingId));
-   alert("भुगतान Reject हो गया।");
-   await refresh();
-  }catch(e){console.error(e);alert("Payment Reject नहीं हुआ: "+e.message);}
-  finally{reject.disabled=false;}
- };
-
- await refresh();
-}
-
-async function loadApplications(){
- $("applications").textContent="";
- currentApplications=[];
- $("loading").textContent="आवेदन लोड हो रहे हैं...";
-
- try{
-  const snapshot=await getDocs(collection(db,"applications"));
-  let pending=0,completed=0;
-  $("total").textContent=snapshot.size;
-
-  if(snapshot.empty){
-   $("loading").textContent="अभी कोई आवेदन नहीं है।";
-   $("pending").textContent="0";$("completed").textContent="0";return;
-  }
-  $("loading").textContent="";
-
-  for(const item of snapshot.docs){
-   const d=item.data();
-   currentApplications.push({id:item.id,data:d});
-   if(d.status==="Completed")completed++;else pending++;
-
-   const card=document.createElement("div");
-   card.className="application";card.dataset.status=d.status||"Pending";
-   const heading=document.createElement("h3");
-   heading.textContent=d.customerName||"नाम उपलब्ध नहीं";
-   card.appendChild(heading);
-
-   const fields=[
-    ["मोबाइल",d.mobile],["गाँव",d.village],["सेवा",d.service],
-    ["जानकारी",d.details],["Tracking ID",d.trackingId],
-    ["आवेदन की तारीख और समय",formatDate(d.createdAt)],
-    ["स्थिति",d.status||"Pending"]
-   ];
-   fields.forEach(([label,value])=>{
-    if(value){
-     const p=document.createElement("p");
-     p.textContent=label+": "+value;card.appendChild(p);
-    }
-   });
-
-   const select=document.createElement("select");
-   ["Pending","Completed"].forEach(s=>{
-    const option=document.createElement("option");
-    option.value=s;option.textContent=s;
-    if((d.status||"Pending")===s)option.selected=true;
-    select.appendChild(option);
-   });
-
-   const save=document.createElement("button");
-   save.textContent="Status अपडेट करें";
-   save.onclick=async()=>{
-    try{
-     const batch=writeBatch(db);
-     batch.update(doc(db,"applications",item.id),{status:select.value});
-     if(d.trackingId){
-      batch.update(doc(db,"tracking",d.trackingId),{status:select.value});
-     }
-     await batch.commit();alert("Status अपडेट हो गया!");
-     await loadApplications();
-    }catch(e){console.error(e);alert("Status अपडेट नहीं हुआ: "+e.message);}
-   };
-   card.appendChild(select);card.appendChild(save);
-
-   const edit=document.createElement("button");
-   edit.textContent="आवेदन Edit करें";edit.className="edit-btn";
-   edit.onclick=()=>{
-    const old=card.querySelector(".edit-form");
-    if(old){old.remove();return;}
-    createEditForm({id:item.id,data:d},card);
-   };
-   card.appendChild(edit);
-
-   if(d.trackingId)await createPaymentBox({id:item.id,data:d},card);
-
-   const del=document.createElement("button");
-   del.textContent="आवेदन Delete करें";del.className="delete-btn";
-   del.onclick=async()=>{
-    if(!confirm("क्या आप यह आवेदन और इससे जुड़ी Tracking तथा Payment जानकारी Delete करना चाहते हैं?"))return;
-    del.disabled=true;
-    try{
-     const batch=writeBatch(db);
-     batch.delete(doc(db,"applications",item.id));
-     if(d.trackingId){
-      batch.delete(doc(db,"tracking",d.trackingId));
-      batch.delete(doc(db,"paymentInfo",d.trackingId));
-      batch.delete(doc(db,"paymentSubmissions",d.trackingId));
-     }
-     await batch.commit();alert("आवेदन Delete हो गया!");
-     await loadApplications();
-    }catch(e){
-     console.error(e);del.disabled=false;
-     alert("Delete नहीं हुआ: "+e.message);
-    }
-   };
-   card.appendChild(del);
-   $("applications").appendChild(card);
-  }
-
-  $("pending").textContent=pending;
-  $("completed").textContent=completed;
-  applyFilters();
- }catch(e){
-  console.error(e);
-  $("loading").textContent="आवेदन लोड नहीं हुए। Firebase Rules जाँचें: "+e.message;
- }
-}
-
-// PARTNER MANAGEMENT
+// PARTNERS
 async function loadPartners(){
- $("partnersList").textContent="";
  $("partnerLoading").textContent="Partner सूची लोड हो रही है...";
- currentPartners=[];
-
  try{
-  const snapshot=await getDocs(collection(db,"partners"));
-  currentPartners=snapshot.docs.map(item=>({id:item.id,data:item.data()}));
-
-  $("partnerTotal").textContent=currentPartners.length;
-  $("partnerPending").textContent=currentPartners.filter(x=>x.data.status==="Pending").length;
-  $("partnerApproved").textContent=currentPartners.filter(x=>x.data.status==="Approved").length;
-
-  $("partnerLoading").textContent=currentPartners.length?
-   "कुल "+currentPartners.length+" पार्टनर मिले।":"अभी कोई Partner Registration नहीं है।";
-
+  const snap=await getDocs(collection(db,"partners"));
+  partners=snap.docs.map(x=>({id:x.id,data:x.data()}));
+  $("partnerTotal").textContent=partners.length;
+  $("partnerPending").textContent=partners.filter(x=>x.data.status==="Pending").length;
+  $("partnerApproved").textContent=partners.filter(x=>x.data.status==="Approved").length;
+  $("partnerLoading").textContent=partners.length?"कुल "+partners.length+" पार्टनर मिले।":"अभी कोई Partner नहीं है।";
   renderPartners();
- }catch(e){
-  console.error(e);
-  $("partnerLoading").textContent="Partner सूची लोड नहीं हुई: "+e.message;
- }
+  fillPartnerSelect();
+ }catch(e){$("partnerLoading").textContent="Partner लोड नहीं हुए: "+e.message;throw e;}
 }
-
 function renderPartners(){
- const list=$("partnersList");
- list.textContent="";
- const query=$("partnerSearch").value.trim().toLowerCase();
- const filter=$("partnerStatusFilter").value;
-
- const filtered=currentPartners.filter(item=>{
-  const d=item.data;
-  const text=[
-   d.fullName,d.email,d.mobile,d.village,d.district,d.tehsil,d.partnerId,d.status
-  ].join(" ").toLowerCase();
-  return text.includes(query)&&(filter==="All"||d.status===filter);
+ const list=$("partnerList");list.textContent="";
+ const q=$("partnerSearch").value.toLowerCase().trim(),filter=$("partnerFilter").value;
+ const data=partners.filter(x=>{
+  const d=x.data;
+  return JSON.stringify(d).toLowerCase().includes(q)&&(filter==="All"||d.status===filter);
  });
-
- if(!filtered.length){
-  const p=document.createElement("p");
-  p.textContent="इस खोज के अनुसार कोई पार्टनर नहीं मिला।";
-  list.appendChild(p);return;
- }
-
- filtered.forEach(item=>{
-  const d=item.data;
-  const card=document.createElement("div");
-  card.className="partner-card";
-
-  const heading=document.createElement("h3");
-  heading.textContent=d.fullName||"नाम उपलब्ध नहीं";
-  card.appendChild(heading);
-
-  const details=[
-   ["Email",d.email],["Mobile",d.mobile],["गाँव / शहर",d.village],
-   ["जिला",d.district],["तहसील",d.tehsil],
-   ["Partner ID",d.partnerId||"अभी जारी नहीं हुई"],
-   ["Registration Date",formatDate(d.createdAt)]
-  ];
-  details.forEach(([label,value])=>{
-   const p=document.createElement("p");
-   p.textContent=label+": "+(value||"उपलब्ध नहीं");
-   card.appendChild(p);
-  });
-
-  const status=document.createElement("p");
-  status.innerHTML="";
-  const badge=document.createElement("span");
-  badge.className="partner-status "+(d.status||"Pending");
-  badge.textContent=d.status||"Pending";
-  status.append("Account Status: ",badge);
-  card.appendChild(status);
-
-  const actions=document.createElement("div");
-  actions.className="partner-actions";
-
-  function actionButton(label,className,callback){
-   const button=document.createElement("button");
-   button.textContent=label;
-   if(className)button.className=className;
-   button.onclick=callback;
-   actions.appendChild(button);
-  }
-
-  actionButton("Approve / Partner ID","approve-btn",()=>approvePartner(item));
-  actionButton("Reject","reject-btn",()=>changePartnerStatus(item,"Rejected"));
-
-  if(d.status==="Blocked"){
-   actionButton("Activate करें","activate-btn",()=>changePartnerStatus(item,"Approved"));
-  }else if(d.status==="Approved"){
-   actionButton("Block करें","block-btn",()=>changePartnerStatus(item,"Blocked"));
-  }
-
-  if(d.status==="Rejected"){
-   actionButton("दोबारा Pending करें","edit-btn",()=>changePartnerStatus(item,"Pending"));
-  }
-
-  card.appendChild(actions);
-  list.appendChild(card);
+ data.forEach(item=>{
+  const d=item.data,c=make("div","item");
+  c.appendChild(make("h4","",d.fullName||"Partner"));
+  field(c,"Email",d.email);field(c,"Mobile",d.mobile);
+  field(c,"Village",d.village);field(c,"District",d.district);
+  field(c,"Tehsil",d.tehsil);field(c,"Partner ID",d.partnerId||"अभी जारी नहीं");
+  field(c,"Registration",dateText(d.createdAt));
+  c.append("Status: ");badge(c,d.status||"Pending");
+  const actions=make("div","actions");
+  c.appendChild(actions);
+  button(actions,"Approve / Partner ID","success",()=>approvePartner(item));
+  if(d.status!=="Blocked")button(actions,"Block करें","danger",()=>setPartnerStatus(item,"Blocked"));
+  if(d.status==="Blocked")button(actions,"Activate करें","success",()=>setPartnerStatus(item,"Approved"));
+  button(actions,"Reject","danger",()=>setPartnerStatus(item,"Rejected"));
+  if(d.status==="Rejected")button(actions,"Pending करें","gold",()=>setPartnerStatus(item,"Pending"));
+  list.appendChild(c);
  });
+ if(!data.length)list.appendChild(make("p","muted","कोई Partner नहीं मिला।"));
 }
-
 async function approvePartner(item){
- const currentId=item.data.partnerId||"";
- const proposedId=currentId||"RC-MP-00001";
- const partnerId=prompt(
-  "इस पार्टनर को एक Unique Partner ID दें:",
-  proposedId
- );
-
- if(partnerId===null)return;
- const id=partnerId.trim().toUpperCase();
-
- if(!/^RC-MP-[A-Z0-9-]{3,20}$/.test(id)){
-  alert("Partner ID का प्रारूप सही नहीं है। उदाहरण: RC-MP-00001");
-  return;
+ const id=prompt("Unique Partner ID दें:",item.data.partnerId||"RC-MP-00001");
+ if(id===null)return;
+ const partnerId=id.trim().toUpperCase();
+ if(!/^RC-MP-[A-Z0-9-]{3,20}$/.test(partnerId)){showMessage("Partner ID का format सही नहीं है।");return;}
+ if(partners.some(x=>x.id!==item.id&&String(x.data.partnerId||"").toUpperCase()===partnerId)){
+  showMessage("यह Partner ID पहले से उपयोग में है।");return;
  }
-
- const duplicate=currentPartners.some(x=>
-  x.id!==item.id&&String(x.data.partnerId||"").toUpperCase()===id
- );
- if(duplicate){
-  alert("यह Partner ID पहले से किसी अन्य पार्टनर को दी गई है। दूसरी ID दें।");
-  return;
- }
-
- if(!confirm("क्या आप इस पार्टनर को Approve करना चाहते हैं?\nPartner ID: "+id))return;
-
+ if(!confirm("इस Partner को Approve करें?\n"+partnerId))return;
  try{
-  await updateDoc(doc(db,"partners",item.id),{
-   partnerId:id,status:"Approved"
-  });
-  alert("पार्टनर Approved हो गया!\nPartner ID: "+id);
-  await loadPartners();
- }catch(e){
-  console.error(e);
-  alert("Approval नहीं हो पाया: "+e.message);
- }
+  await updateDoc(doc(db,"partners",item.id),{partnerId,status:"Approved"});
+  showMessage("Partner Approved: "+partnerId);await loadPartners();
+ }catch(e){showMessage("Approval नहीं हुआ: "+e.message);}
 }
-
-async function changePartnerStatus(item,newStatus){
- const messages={
-  Rejected:"क्या आप इस Partner Application को Reject करना चाहते हैं?",
-  Blocked:"क्या आप इस Approved Partner को Block करना चाहते हैं?",
-  Approved:"क्या आप इस Partner को दोबारा Activate करना चाहते हैं?",
-  Pending:"क्या आप इस Application को दोबारा Pending करना चाहते हैं?"
- };
-
- if(!confirm(messages[newStatus]||"क्या आप Status बदलना चाहते हैं?"))return;
-
+async function setPartnerStatus(item,status){
+ if(!confirm("Partner Status "+status+" करना चाहते हैं?"))return;
  try{
-  await updateDoc(doc(db,"partners",item.id),{status:newStatus});
-  alert("Partner Status अपडेट हो गया: "+newStatus);
-  await loadPartners();
- }catch(e){
-  console.error(e);
-  alert("Status अपडेट नहीं हुआ: "+e.message);
- }
+  await updateDoc(doc(db,"partners",item.id),{status});
+  showMessage("Partner Status अपडेट हो गया।");await loadPartners();
+ }catch(e){showMessage("Status अपडेट नहीं हुआ: "+e.message);}
 }
-
 $("partnerSearch").addEventListener("input",renderPartners);
-$("partnerStatusFilter").addEventListener("change",renderPartners);
+$("partnerFilter").addEventListener("change",renderPartners);
 $("refreshPartners").addEventListener("click",loadPartners);
 
-// ADMIN LOGIN
-$("loginBtn").addEventListener("click",async()=>{
- const email=$("email").value.trim();
- const password=$("password").value;
-
- if(!email||!password){
-  $("loginMessage").textContent="Email और Password भरें।";return;
- }
- $("loginMessage").textContent="Login हो रहा है...";
- $("loginBtn").disabled=true;
-
+// SERVICES
+async function loadServices(){
+ $("serviceLoading").textContent="Services लोड हो रही हैं...";
+ $("serviceList").textContent="";
  try{
-  await signInWithEmailAndPassword(auth,email,password);
- }catch(e){
-  console.error(e);
-  $("loginMessage").textContent="Login नहीं हुआ। Email और Password जाँचें।";
- }finally{
-  $("loginBtn").disabled=false;
- }
+  const snap=await getDocs(collection(db,"services"));
+  services=snap.docs.map(x=>({id:x.id,data:x.data()}));
+  $("serviceLoading").textContent=services.length?"कुल "+services.length+" Services":"अभी कोई Service नहीं है।";
+  services.forEach(item=>{
+   const d=item.data,c=make("div","item");
+   c.appendChild(make("h4","",d.serviceName||"Service"));
+   field(c,"Category",d.category);field(c,"Description",d.description);
+   field(c,"Customer Fee",money(d.customerFee));
+   field(c,"Partner Commission",money(d.partnerCommission));
+   c.append("स्थिति: ");badge(c,d.active?"Active":"Blocked");
+   button(c,"Edit Service","gold",()=>editService(item));
+   button(c,d.active?"Service बंद करें":"Service चालू करें",d.active?"danger":"success",async()=>{
+    try{
+     await updateDoc(doc(db,"services",item.id),{active:!d.active,updatedAt:serverTimestamp()});
+     showMessage("Service Status बदल गया।");loadServices();
+    }catch(e){showMessage("बदलाव नहीं हुआ: "+e.message);}
+   });
+   button(c,"Delete Service","danger",async()=>{
+    if(!confirm("क्या यह Service Delete करनी है?"))return;
+    try{await deleteDoc(doc(db,"services",item.id));showMessage("Service Delete हो गई।");loadServices();}
+    catch(e){showMessage("Delete नहीं हुई: "+e.message);}
+   });
+   $("serviceList").appendChild(c);
+  });
+ }catch(e){$("serviceLoading").textContent="Services लोड नहीं हुईं: "+e.message;}
+}
+function readServiceForm(){
+ const name=$("serviceName").value.trim();
+ const category=$("serviceCategory").value.trim();
+ const description=$("serviceDescription").value.trim();
+ const fee=Number($("customerFee").value);
+ const commission=Number($("partnerCommission").value);
+ if(!name||!category){showMessage("Service का नाम और Category भरें।");return null;}
+ if(!Number.isFinite(fee)||fee<0||!Number.isFinite(commission)||commission<0){showMessage("फीस और Commission सही भरें।");return null;}
+ if(commission>fee){if(!confirm("Partner Commission ग्राहक फीस से अधिक है। क्या फिर भी जारी रखना है?"))return null;}
+ return {serviceName:name,category,description,customerFee:fee,partnerCommission:commission,active:$("serviceActive").checked,updatedAt:serverTimestamp()};
+}
+$("addService").addEventListener("click",async()=>{
+ const data=readServiceForm();if(!data)return;
+ try{
+  data.createdAt=serverTimestamp();
+  await addDoc(collection(db,"services"),data);
+  ["serviceName","serviceCategory","serviceDescription","customerFee","partnerCommission"].forEach(id=>$(id).value="");
+  $("serviceActive").checked=true;
+  showMessage("नई Service जोड़ दी गई।");loadServices();
+ }catch(e){showMessage("Service Save नहीं हुई: "+e.message);}
 });
+async function editService(item){
+ const d=item.data;
+ const name=prompt("Service का नाम:",d.serviceName||"");if(name===null)return;
+ const category=prompt("Category:",d.category||"");if(category===null)return;
+ const description=prompt("Description:",d.description||"");if(description===null)return;
+ const fee=prompt("Customer Fee:",d.customerFee??0);if(fee===null)return;
+ const commission=prompt("Partner Commission:",d.partnerCommission??0);if(commission===null)return;
+ const active=confirm("OK = Service Active, Cancel = Service Inactive");
+ const f=Number(fee),co=Number(commission);
+ if(!name.trim()||!category.trim()||!Number.isFinite(f)||f<0||!Number.isFinite(co)||co<0){showMessage("जानकारी सही नहीं है।");return;}
+ try{
+  await updateDoc(doc(db,"services",item.id),{
+   serviceName:name.trim(),category:category.trim(),description:description.trim(),
+   customerFee:f,partnerCommission:co,active,updatedAt:serverTimestamp()
+  });
+  showMessage("Service अपडेट हो गई।");loadServices();
+ }catch(e){showMessage("Update नहीं हुआ: "+e.message);}
+}
+$("refreshServices").addEventListener("click",loadServices);
 
-$("logoutBtn").addEventListener("click",async()=>{
- await signOut(auth);
+// PARTNER APPLICATIONS
+async function loadPartnerApps(){
+ $("partnerAppList").textContent="";
+ $("partnerAppLoading").textContent="Applications लोड हो रहे हैं...";
+ try{
+  const snap=await getDocs(collection(db,"partnerApplications"));
+  partnerApps=snap.docs.map(x=>({id:x.id,data:x.data()}));
+  $("partnerAppLoading").textContent=partnerApps.length?"कुल "+partnerApps.length+" आवेदन मिले।":"अभी कोई Partner Application नहीं है।";
+  renderPartnerApps();
+ }catch(e){$("partnerAppLoading").textContent="Applications लोड नहीं हुए: "+e.message;}
+}
+function renderPartnerApps(){
+ const list=$("partnerAppList");list.textContent="";
+ const filter=$("partnerAppFilter").value;
+ const data=partnerApps.filter(x=>filter==="All"||(x.data.status||"Pending")===filter);
+ data.forEach(item=>{
+  const d=item.data,c=make("div","item");
+  c.appendChild(make("h4","",d.customerName||"Customer"));
+  field(c,"Customer Mobile",d.mobile);field(c,"Village",d.village);
+  field(c,"Service",d.serviceName);field(c,"Service ID",d.serviceId);
+  field(c,"Partner Name",d.partnerName||"");
+  field(c,"Partner ID",d.partnerId);field(c,"Partner UID",d.partnerUid);
+  field(c,"Details",d.details);field(c,"Application ID",item.id);
+  field(c,"Date",dateText(d.createdAt));
+  c.append("Status: ");badge(c,d.status||"Pending");
+  const sel=make("select");
+  ["Pending","Processing","Completed","Rejected"].forEach(s=>{
+   const o=make("option","",s);o.value=s;o.selected=(d.status||"Pending")===s;sel.appendChild(o);
+  });
+  c.appendChild(sel);
+  button(c,"Application Status Update","success",async()=>{
+   try{
+    await updateDoc(doc(db,"partnerApplications",item.id),{status:sel.value,updatedAt:serverTimestamp()});
+    showMessage("Application Status अपडेट हो गया।");loadPartnerApps();
+   }catch(e){showMessage("Update नहीं हुआ: "+e.message);}
+  });
+  list.appendChild(c);
+ });
+ if(!data.length)list.appendChild(make("p","muted","कोई Application नहीं मिला।"));
+}
+$("partnerAppFilter").addEventListener("change",renderPartnerApps);
+$("refreshPartnerApps").addEventListener("click",loadPartnerApps);
+
+// COMMISSION LEDGER
+function fillPartnerSelect(){
+ const select=$("ledgerPartner");
+ const current=select.value;
+ select.textContent="";
+ const first=make("option","","Partner चुनें");first.value="";select.appendChild(first);
+ partners.filter(x=>x.data.status==="Approved").forEach(x=>{
+  const d=x.data,o=make("option","",(d.fullName||"Partner")+" — "+(d.partnerId||x.id));
+  o.value=x.id;select.appendChild(o);
+ });
+ if([...select.options].some(o=>o.value===current))select.value=current;
+}
+$("addLedger").addEventListener("click",async()=>{
+ const uid=$("ledgerPartner").value;
+ const amount=Number($("ledgerAmount").value);
+ const description=$("ledgerDescription").value.trim();
+ const applicationId=$("ledgerApplication").value.trim();
+ const partner=partners.find(x=>x.id===uid);
+ if(!uid||!partner){showMessage("Approved Partner चुनें।");return;}
+ if(!Number.isFinite(amount)||amount<=0){showMessage("सही Commission Amount भरें।");return;}
+ if(!description){showMessage("Commission का विवरण भरें।");return;}
+ const d=partner.data;
+ try{
+  await addDoc(collection(db,"partnerLedger"),{
+   partnerUid:uid,partnerId:d.partnerId||"",partnerName:d.fullName||"",
+   amount,status:"Unpaid",applicationId,description,
+   createdAt:serverTimestamp(),updatedAt:serverTimestamp()
+  });
+  $("ledgerAmount").value="";$("ledgerApplication").value="";$("ledgerDescription").value="";
+  showMessage("Commission Entry जोड़ दी गई।");loadLedger();
+ }catch(e){showMessage("Commission Entry नहीं जुड़ी: "+e.message);}
 });
+async function loadLedger(){
+ $("ledgerLoading").textContent="Commission Records लोड हो रहे हैं...";
+ $("ledgerList").textContent="";
+ try{
+  const snap=await getDocs(collection(db,"partnerLedger"));
+  ledger=snap.docs.map(x=>({id:x.id,data:x.data()}));
+  const total=ledger.reduce((s,x)=>s+Number(x.data.amount||0),0);
+  const paid=ledger.filter(x=>x.data.status==="Paid").reduce((s,x)=>s+Number(x.data.amount||0),0);
+  $("ledgerTotal").textContent=money(total);
+  $("ledgerPaid").textContent=money(paid);
+  $("ledgerDue").textContent=money(total-paid);
+  $("ledgerLoading").textContent=ledger.length?"कुल "+ledger.length+" Records":"अभी कोई Commission Record नहीं है।";
+  renderLedger();
+ }catch(e){$("ledgerLoading").textContent="Records लोड नहीं हुए: "+e.message;}
+}
+function renderLedger(){
+ const list=$("ledgerList");list.textContent="";
+ const q=$("ledgerSearch").value.toLowerCase().trim();
+ const data=ledger.filter(x=>JSON.stringify(x.data).toLowerCase().includes(q));
+ data.forEach(item=>{
+  const d=item.data,c=make("div","item");
+  c.appendChild(make("h4","",d.partnerName||"Partner"));
+  field(c,"Partner ID",d.partnerId);field(c,"Amount",money(d.amount));
+  field(c,"Description",d.description);field(c,"Application ID",d.applicationId||"");
+  field(c,"Date",dateText(d.createdAt));c.append("Payment: ");badge(c,d.status||"Unpaid");
+  if(d.status!=="Paid"){
+   button(c,"Payment Paid Mark करें","success",async()=>{
+    if(!confirm("क्या Partner को यह Commission वास्तव में भुगतान कर दिया गया है?"))return;
+    try{
+     await updateDoc(doc(db,"partnerLedger",item.id),{status:"Paid",updatedAt:serverTimestamp(),paidAt:serverTimestamp()});
+     showMessage("Payout Paid Mark हो गया।");loadLedger();
+    }catch(e){showMessage("Payout Update नहीं हुआ: "+e.message);}
+   });
+  }
+  button(c,"Record Delete करें","danger",async()=>{
+   if(!confirm("क्या यह Commission Record Delete करना है?"))return;
+   try{await deleteDoc(doc(db,"partnerLedger",item.id));showMessage("Record Delete हो गया।");loadLedger();}
+   catch(e){showMessage("Delete नहीं हुआ: "+e.message);}
+  });
+  list.appendChild(c);
+ });
+ if(!data.length)list.appendChild(make("p","muted","कोई Record नहीं मिला।"));
+}
+$("ledgerSearch").addEventListener("input",renderLedger);
+$("refreshLedger").addEventListener("click",loadLedger);
+
+// LOGIN / AUTH
+$("loginBtn").addEventListener("click",async()=>{
+ const email=$("email").value.trim(),password=$("password").value;
+ if(!email||!password){$("loginMessage").textContent="Email और Password भरें।";return;}
+ $("loginBtn").disabled=true;$("loginMessage").textContent="Login हो रहा है...";
+ try{await signInWithEmailAndPassword(auth,email,password);}
+ catch(e){console.error(e);$("loginMessage").textContent="Login नहीं हुआ। Email और Password जाँचें।";}
+ finally{$("loginBtn").disabled=false;}
+});
+$("logoutBtn").addEventListener("click",()=>signOut(auth));
 
 onAuthStateChanged(auth,async user=>{
  if(user&&user.uid===ADMIN_UID){
   $("loginBox").classList.add("hidden");
   $("dashboard").classList.remove("hidden");
-  await loadApplications();
+  await loadCustomers();
  }else{
   $("dashboard").classList.add("hidden");
   $("loginBox").classList.remove("hidden");
@@ -824,6 +682,5 @@ onAuthStateChanged(auth,async user=>{
  }
 });
 </script>
-
 </body>
-  </html>
+ </html>
