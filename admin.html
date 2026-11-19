@@ -3,35 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#082b55">
 <title>RAHUL COMPUTER'S - Admin Panel</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}
-header{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:20px;text-align:center}
-.container{max-width:900px;margin:20px auto;padding:15px}
-.card{background:white;padding:18px;border-radius:12px;margin-bottom:15px;box-shadow:0 2px 9px #0001}
-input,button,select,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ccd5df;border-radius:7px;font-size:16px}
-button{background:#087ac2;color:white;border:0;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6}
-.logout,.delete-btn,.reject-btn{background:#b42318}
-.excel-btn,.paid-btn{background:#16803c}
-.edit-btn{background:#e18a00}
-.stats{display:flex;gap:10px}
-.stat{flex:1;text-align:center;background:#e6f2ff;padding:15px;border-radius:9px}
-.stat strong{display:block;font-size:25px;color:#07569a}
-.application{border:1px solid #dce3eb;padding:13px;border-radius:9px;margin:12px 0;background:white}
-.hidden{display:none}
-.application button{margin-top:6px}
-.edit-form,.payment-box{background:#f1f5f9;padding:12px;border-radius:8px;margin-top:12px}
-.payment-box h4{margin-top:0}
-.payment-status{font-weight:bold;color:#07569a}
-.paid-text{color:#16803c}
-.rejected-text{color:#b42318}
-@media(max-width:450px){
-.stats{gap:5px}
-.stat{padding:10px 4px;font-size:13px}
-.stat strong{font-size:21px}
+:root{
+  --navy:#082b55;
+  --blue:#07569a;
+  --royal:#087ac2;
+  --gold:#d8ad55;
+  --light-gold:#fff7e5;
+  --bg:#f3f6fb;
+  --text:#172b45;
+  --muted:#64748b;
+  --border:#dce5ef;
+  --green:#16803c;
+  --red:#b42318;
+}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  background:linear-gradient(125deg,#061e3e,#073b75,#087ac2);
+  color:white;
+  padding:25px 15px;
+  text-align:center;
+  border-bottom:4px solid var(--gold);
+  box-shadow:0 4px 15px #082b5525;
+}
+.brand-logo{
+  width:55px;
+  height:55px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 10px;
+  border:2px solid var(--gold);
+  border-radius:14px;
+  color:var(--gold);
+  font-size:23px;
+  font-weight:bold;
+  background:#ffffff12;
+}
+header h2{
+  margin:0;
+  font-size:25px;
+  letter-spacing:1px;
+}
+header p{
+  margin:8px 0 0;
+  color:#e6efff;
+  font-size:14px;
+}
+.container{
+  max-width:1100px;
+  margin:25px auto;
+  padding:0 16px 30px;
+}
+.card{
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  margin-bottom:18px;
+  border:1px solid var(--border);
+  box-shadow:0 4px 15px #082b550b;
+}
+.card h3{
+  margin:0 0 16px;
+  color:var(--navy);
+  font-size:19px;
+}
+.card h4{
+  color:var(--navy);
+}
+input,button,select,textarea{
+  width:100%;
+  padding:12px 13px;
+  margin:8px 0;
+  border:1px solid #cbd7e5;
+  border-radius:8px;
+  font-size:15px;
+  font-family:inherit;
+}
+input,select,textarea{
+  background:#fff;
+  color:var(--text);
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:var(--royal);
+  box-shadow:0 0 0 3px #087ac21a;
+}
+button{
+  background:linear-gradient(120deg,var(--blue),var(--royal));
+  color:white;
+  border:0;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
+}
+button:hover{
+  filter:brightness(1.08);
+  transform:translateY(-1px);
+}
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
+}
+.hidden{display:none!important}
+.logout,.delete-btn,.reject-btn{
+  background:linear-gradient(120deg,#991b1b,#c62828);
+}
+.excel-btn,.paid-btn{
+  background:linear-gradient(120deg,#11632e,#16803c);
+}
+.edit-btn{
+  background:linear-gradient(120deg,#a66a08,#d18a16);
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:18px;
+}
+.stat{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  background:linear-gradient(145deg,#fff,#f1f7ff);
+  padding:20px 12px;
+  border:1px solid var(--border);
+  border-top:4px solid var(--gold);
+  border-radius:13px;
+  box-shadow:0 4px 12px #082b5509;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:bold;
+}
+.stat strong{
+  display:block;
+  margin-top:8px;
+  font-size:29px;
+  color:var(--navy);
+}
+.application{
+  border:1px solid var(--border);
+  border-left:4px solid var(--royal);
+  padding:17px;
+  border-radius:12px;
+  margin:15px 0;
+  background:white;
+  box-shadow:0 3px 12px #082b5509;
+}
+.application h3{
+  color:var(--navy);
+  margin:0 0 12px;
+  font-size:18px;
+  overflow-wrap:anywhere;
+}
+.application p{
+  margin:8px 0;
+  font-size:14px;
+  line-height:1.55;
+  overflow-wrap:anywhere;
+}
+.application select{
+  background:#f8fbff;
+}
+.application button{
+  margin-top:7px;
+}
+.edit-form,.payment-box{
+  background:#f4f8fd;
+  padding:15px;
+  border-radius:10px;
+  margin-top:14px;
+  border:1px solid #dce7f3;
+}
+.edit-form{
+  border-left:4px solid #d18a16;
+}
+.payment-box{
+  background:linear-gradient(145deg,#fffdf8,#f4f8fd);
+  border:1px solid #e8d6ad;
+  border-left:4px solid var(--gold);
+}
+.payment-box h4{
+  margin:0 0 12px;
+  font-size:16px;
+}
+.payment-status{
+  font-weight:bold;
+  color:var(--blue);
+  overflow-wrap:anywhere;
+}
+.paid-text{color:var(--green)}
+.rejected-text{color:var(--red)}
+#loginBox{
+  max-width:440px;
+  margin:45px auto;
+  border-top:5px solid var(--gold);
+}
+#loginBox h3{
+  text-align:center;
+  font-size:22px;
+}
+#loginMessage{
+  text-align:center;
+  color:var(--red);
+  font-size:14px;
+  overflow-wrap:anywhere;
+}
+.dashboard-heading{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.dashboard-heading h3{
+  margin:0;
+}
+.dashboard-heading button{
+  width:auto;
+  min-width:110px;
+  padding:10px 18px;
+}
+.section-heading{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  border-bottom:1px solid var(--border);
+  padding-bottom:12px;
+  margin-bottom:15px;
+}
+.section-heading span{
+  color:var(--gold);
+  font-size:20px;
+}
+#loading{
+  color:var(--muted);
+  text-align:center;
+  padding:15px 5px;
+}
+footer{
+  text-align:center;
+  padding:18px 10px;
+  color:var(--muted);
+  font-size:13px;
+}
+@media(max-width:600px){
+  header{padding:21px 12px}
+  header h2{font-size:21px}
+  .container{margin:16px auto;padding:0 11px 25px}
+  .card{padding:15px;border-radius:11px}
+  .stats{gap:7px}
+  .stat{padding:13px 4px;font-size:12px}
+  .stat strong{font-size:23px}
+  .application{padding:13px}
+  .application p{font-size:13px}
+  .dashboard-heading{align-items:stretch}
+  .dashboard-heading button{width:100%}
+}
+@media(min-width:800px){
+  .container{padding-left:22px;padding-right:22px}
+  .application{padding:20px}
 }
 </style>
 </head>
@@ -39,55 +280,80 @@ button:disabled{opacity:.6}
 <body>
 
 <header>
-<h2>RAHUL COMPUTER'S</h2>
-<p>Admin Dashboard</p>
+  <div class="brand-logo">RC</div>
+  <h2>RAHUL COMPUTER'S</h2>
+  <p>ADMINISTRATION & MANAGEMENT PANEL</p>
 </header>
 
 <div class="container">
 
 <div class="card" id="loginBox">
-<h3>Admin Login</h3>
-<input type="email" id="email" placeholder="Admin Email">
-<input type="password" id="password" placeholder="Password">
-<button id="loginBtn">Login करें</button>
-<p id="loginMessage"></p>
+  <h3>Admin Login</h3>
+  <p style="text-align:center;color:#64748b;font-size:14px">
+    अपने Admin Account से Login करें
+  </p>
+  <input type="email" id="email" placeholder="Admin Email">
+  <input type="password" id="password" placeholder="Password">
+  <button id="loginBtn">Login करें</button>
+  <p id="loginMessage"></p>
 </div>
 
 <div id="dashboard" class="hidden">
 
-<div class="card">
-<h3>नमस्ते Admin जी!</h3>
-<button class="logout" id="logoutBtn">Logout</button>
+  <div class="card">
+    <div class="dashboard-heading">
+      <h3>नमस्ते Admin जी! 🙏</h3>
+      <button class="logout" id="logoutBtn">Logout</button>
+    </div>
+    <p style="margin:10px 0 0;color:#64748b;font-size:13px">
+      RAHUL COMPUTER'S - आपका Admin Dashboard
+    </p>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      कुल आवेदन
+      <strong id="total">0</strong>
+    </div>
+    <div class="stat">
+      Pending
+      <strong id="pending">0</strong>
+    </div>
+    <div class="stat">
+      Completed
+      <strong id="completed">0</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-heading">
+      <span>◆</span>
+      <h3 style="margin:0">ग्राहकों के आवेदन</h3>
+    </div>
+
+    <button class="excel-btn" id="excelBtn">
+      Excel रिपोर्ट डाउनलोड करें
+    </button>
+
+    <input type="text" id="searchApplication"
+    placeholder="नाम, मोबाइल या Tracking ID से खोजें...">
+
+    <select id="statusFilter">
+      <option value="All">सभी आवेदन</option>
+      <option value="Pending">केवल Pending आवेदन</option>
+      <option value="Completed">केवल Completed आवेदन</option>
+    </select>
+
+    <p id="loading">आवेदन लोड हो रहे हैं...</p>
+    <div id="applications"></div>
+  </div>
+
+</div>
 </div>
 
-<div class="stats">
-<div class="stat">कुल आवेदन<strong id="total">0</strong></div>
-<div class="stat">Pending<strong id="pending">0</strong></div>
-<div class="stat">Completed<strong id="completed">0</strong></div>
-</div>
-
-<div class="card">
-<h3>ग्राहकों के आवेदन</h3>
-
-<button class="excel-btn" id="excelBtn">
-Excel रिपोर्ट डाउनलोड करें
-</button>
-
-<input type="text" id="searchApplication"
-placeholder="नाम, मोबाइल या Tracking ID से खोजें...">
-
-<select id="statusFilter">
-<option value="All">सभी आवेदन</option>
-<option value="Pending">केवल Pending आवेदन</option>
-<option value="Completed">केवल Completed आवेदन</option>
-</select>
-
-<p id="loading">आवेदन लोड हो रहे हैं...</p>
-<div id="applications"></div>
-</div>
-
-</div>
-</div>
+<footer>
+  © RAHUL COMPUTER'S | Admin Panel
+</footer>
 
 <script type="module">
 
@@ -858,4 +1124,4 @@ async function loadApplications() {
 
 </script>
 </body>
-</html>
+  </html>
