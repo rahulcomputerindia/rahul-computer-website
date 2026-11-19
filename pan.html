@@ -21,244 +21,128 @@
 }
 *{box-sizing:border-box;scroll-behavior:smooth}
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:var(--bg);
- color:var(--text);
- line-height:1.6;
+ margin:0;font-family:Arial,sans-serif;
+ background:var(--bg);color:var(--text);line-height:1.6;
 }
 header{
  background:linear-gradient(125deg,var(--navy),var(--blue),var(--royal));
- color:white;
- text-align:center;
- padding:42px 15px 38px;
+ color:white;text-align:center;padding:42px 15px 38px;
  border-bottom:4px solid var(--gold);
 }
 .brand-mark{
- display:inline-flex;
- align-items:center;
- justify-content:center;
- width:62px;
- height:62px;
- border:2px solid var(--gold);
- border-radius:17px;
- background:linear-gradient(145deg,#0b5799,#052b50);
- color:#fff;
- font-size:23px;
- font-weight:bold;
- margin-bottom:12px;
+ display:inline-flex;align-items:center;justify-content:center;
+ width:62px;height:62px;border:2px solid var(--gold);
+ border-radius:17px;background:linear-gradient(145deg,#0b5799,#052b50);
+ color:#fff;font-size:23px;font-weight:bold;margin-bottom:12px;
  box-shadow:0 5px 18px #0003;
 }
-header h1{
- margin:0;
- font-size:clamp(25px,4vw,35px);
- letter-spacing:1px;
-}
+header h1{margin:0;font-size:clamp(25px,4vw,35px);letter-spacing:1px}
 header p{margin:8px 0;line-height:1.7}
 .hero-buttons{
- display:flex;
- justify-content:center;
- gap:12px;
- flex-wrap:wrap;
- margin-top:22px;
+ display:flex;justify-content:center;gap:12px;
+ flex-wrap:wrap;margin-top:22px;
 }
 .hero-buttons a{
- text-decoration:none;
- padding:12px 22px;
- border-radius:9px;
- font-weight:bold;
- transition:.2s;
+ text-decoration:none;padding:12px 22px;border-radius:9px;
+ font-weight:bold;transition:.2s;
 }
 .hero-primary{background:var(--gold);color:var(--navy)}
 .hero-secondary{border:1px solid white;color:white}
 .hero-buttons a:hover{transform:translateY(-2px)}
 nav{
- background:var(--navy);
- display:flex;
- justify-content:center;
- flex-wrap:wrap;
- gap:5px;
- padding:10px;
- position:sticky;
- top:0;
- z-index:100;
- box-shadow:0 3px 12px #0002;
+ background:var(--navy);display:flex;justify-content:center;
+ flex-wrap:wrap;gap:5px;padding:10px;position:sticky;top:0;
+ z-index:100;box-shadow:0 3px 12px #0002;
 }
 nav a{
- color:white;
- text-decoration:none;
- padding:10px 16px;
- border-radius:7px;
- font-size:14px;
- font-weight:bold;
- transition:.2s;
+ color:white;text-decoration:none;padding:10px 16px;
+ border-radius:7px;font-size:14px;font-weight:bold;transition:.2s;
 }
 nav a:hover,nav a:focus{background:var(--royal)}
-.container{
- max-width:1120px;
- margin:auto;
- padding:20px;
-}
+.container{max-width:1120px;margin:auto;padding:20px}
 .card{
- background:white;
- padding:25px;
- margin:20px 0;
- border-radius:15px;
- border:1px solid #e2e8f0;
- border-top:3px solid var(--gold);
+ background:white;padding:25px;margin:20px 0;border-radius:15px;
+ border:1px solid #e2e8f0;border-top:3px solid var(--gold);
  box-shadow:0 5px 18px #0b254010;
 }
 h2{
- color:var(--blue);
- text-align:center;
- margin:4px 0 12px;
+ color:var(--blue);text-align:center;margin:4px 0 12px;
  font-size:clamp(21px,3vw,27px);
 }
-.section-intro{
- text-align:center;
- line-height:1.8;
- color:#475569;
-}
+.section-intro{text-align:center;line-height:1.8;color:#475569}
 .service-grid{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:18px;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;
 }
 .service{
- border:1px solid #d9e6f4;
- border-radius:13px;
- padding:21px;
- display:flex;
- flex-direction:column;
+ border:1px solid #d9e6f4;border-radius:13px;padding:21px;
+ display:flex;flex-direction:column;
  background:linear-gradient(145deg,#fff,#f4f8ff);
  transition:transform .2s,box-shadow .2s;
 }
-.service:hover{
- transform:translateY(-3px);
- box-shadow:0 8px 20px #073b7518;
-}
-.service h3{
- margin:0 0 10px;
- color:var(--blue);
- font-size:18px;
-}
+.service:hover{transform:translateY(-3px);box-shadow:0 8px 20px #073b7518}
+.service h3{margin:0 0 10px;color:var(--blue);font-size:18px}
 .service p{line-height:1.7}
 .price{
- font-size:25px;
- color:var(--green);
- font-weight:bold;
- margin-top:auto;
- margin-bottom:0;
+ font-size:25px;color:var(--green);font-weight:bold;
+ margin-top:auto;margin-bottom:0;
 }
 .btn{
- display:block;
- text-align:center;
- text-decoration:none;
- color:white;
+ display:block;text-align:center;text-decoration:none;color:white;
  background:linear-gradient(110deg,var(--blue),var(--royal));
- padding:13px 15px;
- border-radius:9px;
- font-weight:bold;
- margin-top:12px;
- border:0;
- width:100%;
- font-size:15px;
- cursor:pointer;
- line-height:1.5;
- transition:.2s;
+ padding:13px 15px;border-radius:9px;font-weight:bold;
+ margin-top:12px;border:0;width:100%;font-size:15px;
+ cursor:pointer;line-height:1.5;transition:.2s;
 }
-.btn:hover{
- filter:brightness(1.08);
- transform:translateY(-1px);
-}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
 .whatsapp{background:linear-gradient(110deg,#087c43,#16a35b)}
 .back{background:#475569}
-.note{
- font-size:13px;
- color:var(--muted);
- line-height:1.7;
-}
+.note{font-size:13px;color:var(--muted);line-height:1.7}
 .form-group{margin:14px 0}
 .form-group label{
- display:block;
- font-weight:bold;
- margin-bottom:7px;
- color:var(--blue);
- line-height:1.5;
+ display:block;font-weight:bold;margin-bottom:7px;
+ color:var(--blue);line-height:1.5;
 }
-.form-group input,
-.form-group select,
-.form-group textarea{
- width:100%;
- padding:13px;
- border:1px solid #cbd5e1;
- border-radius:8px;
- font-size:15px;
- background:white;
- font-family:Arial,sans-serif;
- color:var(--text);
+.form-group input,.form-group select,.form-group textarea{
+ width:100%;padding:13px;border:1px solid #cbd5e1;
+ border-radius:8px;font-size:15px;background:white;
+ font-family:Arial,sans-serif;color:var(--text);
 }
-.form-group input:focus,
-.form-group select:focus,
+.form-group input:focus,.form-group select:focus,
 .form-group textarea:focus{
- outline:2px solid #bfdbfe;
- border-color:var(--royal);
+ outline:2px solid #bfdbfe;border-color:var(--royal);
 }
 .form-group textarea{min-height:95px;resize:vertical}
 .form-group textarea:read-only{background:#f1f5f9}
 .row{
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:12px;
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
 }
 .two{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:12px;
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
 }
 .consent{
- display:flex;
- align-items:flex-start;
- gap:10px;
- font-size:14px;
- line-height:1.7;
- margin:17px 0;
+ display:flex;align-items:flex-start;gap:10px;
+ font-size:14px;line-height:1.7;margin:17px 0;
 }
 .consent input{
- margin-top:5px;
- flex-shrink:0;
- width:18px;
- height:18px;
+ margin-top:5px;flex-shrink:0;width:18px;height:18px;
  accent-color:var(--royal);
 }
 .fee-box{
- background:var(--light-gold);
- border:1px solid #e8ca83;
- border-left:4px solid var(--gold);
- padding:15px;
- border-radius:9px;
- margin:17px 0;
- font-weight:bold;
- color:#805b12;
- line-height:1.7;
+ background:var(--light-gold);border:1px solid #e8ca83;
+ border-left:4px solid var(--gold);padding:15px;
+ border-radius:9px;margin:17px 0;font-weight:bold;
+ color:#805b12;line-height:1.7;
 }
 .contact-card{text-align:center}
 .contact-card p{margin:9px 0}
 .important-list p{
- padding:10px 12px;
- background:#f7faff;
- border-radius:8px;
- border-left:3px solid var(--gold);
- margin:10px 0;
+ padding:10px 12px;background:#f7faff;border-radius:8px;
+ border-left:3px solid var(--gold);margin:10px 0;
 }
 footer{
  background:linear-gradient(120deg,var(--navy),var(--blue));
- color:white;
- text-align:center;
- padding:25px 12px;
- margin-top:30px;
- border-top:4px solid var(--gold);
- line-height:1.7;
+ color:white;text-align:center;padding:25px 12px;
+ margin-top:30px;border-top:4px solid var(--gold);line-height:1.7;
 }
 footer p{margin:5px}
 @media(max-width:700px){
@@ -272,9 +156,7 @@ footer p{margin:5px}
  .service{padding:17px}
  .hero-buttons a{padding:11px 15px;font-size:14px}
 }
-@media(min-width:701px){
- .container{padding:22px}
-}
+@media(min-width:701px){.container{padding:22px}}
 </style>
 </head>
 
@@ -285,7 +167,6 @@ footer p{margin:5px}
 <h1>RAHUL COMPUTER'S</h1>
 <p><strong>PAN CARD ONLINE ASSISTANCE</strong></p>
 <p>आपकी अपनी डिजिटल सेवा केंद्र | Your Own Digital Service Center</p>
-
 <div class="hero-buttons">
 <a class="hero-primary" href="#panServices">सेवाएँ देखें | View Services</a>
 <a class="hero-secondary" href="#panForm">अभी आवेदन करें | Apply Now</a>
@@ -319,6 +200,7 @@ Assistance with the new PAN Card application.</p>
 <p class="price">₹50</p>
 <p class="note">सहायता फीस | Assistance Fee</p>
 <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">नया PAN आवेदन पोर्टल | Open New PAN Portal</a>
+<p class="note">आधिकारिक पोर्टल पर New PAN Application और लागू नया फॉर्म चुनें।</p>
 </div>
 
 <div class="service">
@@ -327,7 +209,7 @@ Assistance with the new PAN Card application.</p>
 Assistance with corrections in name and other details.</p>
 <p class="price">₹70</p>
 <p class="note">सहायता फीस | Assistance Fee</p>
-<a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">Correction पोर्टल | Open Correction Portal</a>
+<a class="btn" href="https://onlineservices.proteantech.in/paam/endUserRegisterContact.html" target="_blank" rel="noopener">Correction पोर्टल | Open Correction Portal</a>
 </div>
 
 <div class="service">
@@ -336,7 +218,8 @@ Assistance with corrections in name and other details.</p>
 Assistance with getting a reprint of an existing PAN Card.</p>
 <p class="price">₹30</p>
 <p class="note">सहायता फीस | Assistance Fee</p>
-<a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">Reprint पोर्टल | Open Reprint Portal</a>
+<a class="btn" href="https://onlineservices.proteantech.in/paam/ReprintEPan.html" target="_blank" rel="noopener">Reprint पोर्टल | Open Reprint Portal</a>
+<p class="note">यह सुविधा पात्र PAN धारकों के लिए है।</p>
 </div>
 
 <div class="service">
