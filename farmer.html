@@ -3,159 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071d49">
-<meta name="description" content="RAHUL COMPUTER'S - Farmer ID, Farmer Registry, Khasra and Khatauni Services">
+<meta name="theme-color" content="#082b55">
+<meta name="description" content="RAHUL COMPUTER'S - Farmer Registry and Farmer ID Services">
 <title>Farmer Services | RAHUL COMPUTER'S</title>
 
 <style>
-*{box-sizing:border-box}
 :root{
- --navy:#071d49;
- --blue:#073b75;
+ --navy:#082b55;
+ --blue:#07569a;
  --royal:#087ac2;
- --gold:#e9b949;
- --light:#f1f5f9;
+ --gold:#e2b84b;
+ --bg:#f3f6fb;
+ --ink:#17263b;
+ --muted:#64748b;
+ --line:#dce5ef;
 }
-html{scroll-behavior:smooth}
+*{box-sizing:border-box}
 body{
  margin:0;
- font-family:Arial,sans-serif;
- background:var(--light);
- color:#172033;
- line-height:1.6;
+ background:var(--bg);
+ font-family:Arial,"Noto Sans Devanagari",sans-serif;
+ color:var(--ink);
+ line-height:1.55;
 }
 header{
  background:linear-gradient(120deg,var(--navy),var(--blue),var(--royal));
  color:white;
- padding:15px 5%;
- display:flex;
- justify-content:space-between;
- align-items:center;
- flex-wrap:wrap;
- gap:12px;
-}
-.logo{font-size:21px;font-weight:bold}
-.logo span{color:var(--gold)}
-nav{display:flex;gap:16px;flex-wrap:wrap}
-nav a{color:white;text-decoration:none;font-size:14px}
-nav a:hover{color:var(--gold)}
-.hero{
- background:linear-gradient(135deg,#071d49,#07569a);
- color:white;
+ padding:25px 16px 30px;
  text-align:center;
- padding:55px 18px;
 }
-.hero .icon{font-size:58px}
-.hero h1{font-size:32px;margin:10px 0}
-.hero p{max-width:680px;margin:10px auto;color:#e2e8f0}
-.btn{
- display:inline-block;
- background:var(--gold);
- color:#172033;
- text-decoration:none;
- padding:11px 19px;
- border-radius:8px;
- font-weight:bold;
- margin:7px 4px;
- border:0;
- cursor:pointer;
+.brand{font-weight:800;letter-spacing:.7px;font-size:25px}
+.sub{color:#dbeafe;font-size:14px;margin-top:4px}
+.hero{max-width:850px;margin:20px auto 0}
+.hero h1{font-size:25px;margin:0 0 8px}
+.hero p{margin:0;color:#e7f2ff}
+.wrap{max-width:1000px;margin:22px auto;padding:0 14px}
+.notice{
+ background:#fff8e5;
+ border:1px solid #f1d58a;
+ border-radius:12px;
+ padding:13px 15px;
+ font-size:13px;
+ margin-bottom:17px;
 }
-.btn.blue{background:var(--royal);color:white}
-.btn.outline{background:transparent;border:1px solid white;color:white}
-.container{max-width:1100px;margin:auto;padding:30px 16px}
-.heading{text-align:center;margin-bottom:25px}
-.heading h2{color:var(--navy);margin-bottom:5px}
-.heading p{color:#64748b;margin-top:0}
+.section-title{font-size:21px;color:var(--navy);margin:22px 0 12px}
 .grid{
  display:grid;
- grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
- gap:17px;
+ grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+ gap:12px;
 }
-.card{
- background:white;
- padding:20px;
- border-radius:13px;
- box-shadow:0 4px 15px #0f172a12;
- border:1px solid #e2e8f0;
+.card,.panel{
+ background:#fff;
+ border:1px solid var(--line);
+ border-radius:15px;
+ padding:17px;
+ box-shadow:0 5px 18px #0b31520a;
 }
-.card .symbol{font-size:32px}
-.card h3{margin:8px 0;color:var(--navy)}
-.card p{font-size:14px;color:#64748b}
-.card .btn{font-size:13px}
-.info{
- background:white;
- padding:22px;
- border-radius:13px;
- box-shadow:0 4px 15px #0f172a10;
- margin-bottom:18px;
-}
-.info h3{color:var(--blue);margin-top:0}
-ul{padding-left:22px}
-li{margin:7px 0}
-.notice{
- background:#fff8e6;
- border-left:4px solid var(--gold);
- padding:14px;
- border-radius:7px;
- margin:15px 0;
+.card h3{font-size:16px;margin:0 0 6px;color:var(--navy)}
+.card p{font-size:13px;color:var(--muted);margin:0 0 12px}
+button,.btn{
+ border:0;
+ border-radius:9px;
+ background:var(--blue);
+ color:white;
+ padding:11px 15px;
+ font-weight:700;
+ cursor:pointer;
+ display:inline-block;
+ text-decoration:none;
  font-size:14px;
 }
+button.secondary,.btn.secondary{
+ background:#eaf2fa;
+ color:var(--navy);
+ border:1px solid #cbdced;
+}
+button:disabled{opacity:.6;cursor:not-allowed}
+.panel{margin-top:16px}
+.panel h2{font-size:19px;color:var(--navy);margin:0 0 12px}
+form{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:12px;
+}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.full{grid-column:1/-1}
+label{font-size:13px;font-weight:700;color:#334155}
+input,select,textarea{
+ width:100%;
+ border:1px solid #cbd5e1;
+ border-radius:9px;
+ padding:11px 12px;
+ font:inherit;
+ background:white;
+ color:#17263b;
+ min-height:43px;
+}
+textarea{min-height:90px;resize:vertical}
+small,.hint{color:var(--muted);font-size:12px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:5px}
+.hidden{display:none!important}
+#message{
+ margin-top:12px;
+ padding:11px;
+ border-radius:9px;
+ display:none;
+ font-size:13px;
+}
+#message.ok{display:block;background:#e8f7ee;color:#146c3b}
+#message.err{display:block;background:#fff0f0;color:#a32727}
+.track-result{
+ margin-top:12px;
+ padding:13px;
+ background:#f0f6ff;
+ border:1px solid #c9dcf2;
+ border-radius:10px;
+ overflow-wrap:anywhere;
+}
+.status{font-weight:800;color:var(--navy)}
 .steps{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
- gap:13px;
+ gap:10px;
 }
-.step{
- background:white;
- padding:17px;
- border-radius:10px;
- border:1px solid #e2e8f0;
-}
-.step strong{color:var(--royal)}
-.search{
- width:100%;
- max-width:450px;
- padding:13px;
- border:1px solid #cbd5e1;
- border-radius:8px;
- margin:10px auto 20px;
- display:block;
- font-size:15px;
-}
-.contact{
- background:linear-gradient(120deg,var(--navy),var(--blue));
- color:white;
- text-align:center;
- padding:35px 18px;
- border-radius:14px;
-}
-.contact p{color:#e2e8f0}
-footer{
- background:#06152f;
- color:#cbd5e1;
- text-align:center;
- padding:22px 12px;
- font-size:13px;
-}
-footer a{color:var(--gold);text-decoration:none}
-#topBtn{
- position:fixed;
- right:17px;
- bottom:18px;
- background:var(--gold);
- border:0;
- border-radius:50%;
- width:43px;
- height:43px;
- font-size:20px;
- cursor:pointer;
- display:none;
-}
+.step{padding:12px;background:#f6f9fd;border-radius:10px;font-size:13px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 12px}
 @media(max-width:600px){
- header{justify-content:center;text-align:center}
- nav{justify-content:center}
- .hero h1{font-size:25px}
- .container{padding:24px 13px}
+ form{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+ .brand{font-size:22px}
+ .hero h1{font-size:21px}
 }
 </style>
 </head>
@@ -163,202 +140,343 @@ footer a{color:var(--gold);text-decoration:none}
 <body>
 
 <header>
- <div class="logo">RAHUL <span>COMPUTER'S</span></div>
- <nav>
-  <a href="index.html">Home</a>
-  <a href="#services">Farmer Services</a>
-  <a href="#documents">Documents</a>
-  <a href="#process">Process</a>
-  <a href="#contact">Contact</a>
- </nav>
+ <div class="brand">RAHUL COMPUTER'S</div>
+ <div class="sub">आपकी डिजिटल सेवा, आपके गाँव में</div>
+ <div class="hero">
+  <h1>किसान / Farmer Registry सेवाएँ</h1>
+  <p>Farmer ID पंजीयन, विवरण सुधार और किसान भूमि रिकॉर्ड सहायता के लिए ऑनलाइन आवेदन करें।</p>
+ </div>
 </header>
 
-<section class="hero">
- <div class="icon">🌾</div>
- <h1>किसान ऑनलाइन सेवाएँ</h1>
- <p>Farmer ID, Farmer Registry, खसरा और खतौनी सहित किसान संबंधी ऑनलाइन सेवाओं के लिए RAHUL COMPUTER'S पर आपका स्वागत है।</p>
- <a class="btn" href="#services">सभी सेवाएँ देखें</a>
- <a class="btn outline" href="https://mpfr.agristack.gov.in/" target="_blank" rel="noopener">Farmer Registry पोर्टल ↗</a>
-</section>
-
-<main>
-
-<section class="container" id="services">
- <div class="heading">
-  <h2>हमारी किसान सेवाएँ</h2>
-  <p>अपनी जरूरत के अनुसार सेवा चुनें</p>
- </div>
-
- <input class="search" id="serviceSearch" type="search" placeholder="🔍 किसान सेवा खोजें..." oninput="searchServices()">
-
- <div class="grid" id="serviceGrid">
-
-  <div class="card" data-name="फार्मर आईडी किसान आईडी farmer id खोजें find">
-   <div class="symbol">🪪</div>
-   <h3>Farmer ID खोजें</h3>
-   <p>किसान पहचान संख्या देखने और उपलब्ध रिकॉर्ड खोजने की प्रक्रिया में सहायता।</p>
-   <button class="btn blue" onclick="chooseService('Farmer ID खोजने की सहायता')">सेवा चुनें</button>
-  </div>
-
-  <div class="card" data-name="फार्मर आईडी सुधार correction">
-   <div class="symbol">✏️</div>
-   <h3>Farmer ID सुधार</h3>
-   <p>किसान प्रोफाइल में उपलब्ध विवरण की जाँच और सुधार प्रक्रिया की जानकारी।</p>
-   <button class="btn blue" onclick="chooseService('Farmer ID सुधार')">सेवा चुनें</button>
-  </div>
-
-  <div class="card" data-name="फार्मर रजिस्ट्री पंजीयन registration">
-   <div class="symbol">📝</div>
-   <h3>Farmer Registry पंजीयन</h3>
-   <p>किसान पंजीयन और Farmer ID बनाने की आधिकारिक प्रक्रिया में सहायता।</p>
-   <a class="btn blue" href="https://mpfr.agristack.gov.in/" target="_blank" rel="noopener">पंजीयन पोर्टल</a>
-  </div>
-
-  <div class="card" data-name="खसरा नकल khasra print">
-   <div class="symbol">📄</div>
-   <h3>खसरा नकल प्रिंट</h3>
-   <p>भूमि के खसरा रिकॉर्ड की ऑनलाइन जानकारी और प्रिंट में सहायता।</p>
-   <a class="btn blue" href="https://mpbhulekh.gov.in/" target="_blank" rel="noopener">भूलेख पोर्टल</a>
-  </div>
-
-  <div class="card" data-name="खतौनी बी वन b1 khatauni print">
-   <div class="symbol">📑</div>
-   <h3>खतौनी / B-1 प्रिंट</h3>
-   <p>भूमि की खतौनी और B-1 रिकॉर्ड देखने एवं प्रिंट करने में सहायता।</p>
-   <a class="btn blue" href="https://mpbhulekh.gov.in/" target="_blank" rel="noopener">B-1 पोर्टल</a>
-  </div>
-
-  <div class="card" data-name="किसान रिकॉर्ड जानकारी land record">
-   <div class="symbol">🌱</div>
-   <h3>किसान भूमि रिकॉर्ड</h3>
-   <p>खसरा, भूमि विवरण और उपलब्ध रिकॉर्ड की जानकारी प्राप्त करें।</p>
-   <button class="btn blue" onclick="chooseService('किसान भूमि रिकॉर्ड संबंधी सहायता')">सेवा चुनें</button>
-  </div>
-
- </div>
- <p id="noResult" style="display:none;text-align:center;color:#64748b">कोई सेवा नहीं मिली। दूसरा नाम खोजें।</p>
-</section>
-
-<section class="container" id="documents">
- <div class="heading">
-  <h2>आवश्यक दस्तावेज</h2>
-  <p>सेवा के अनुसार दस्तावेज अलग हो सकते हैं</p>
- </div>
-
- <div class="info">
-  <h3>📁 सामान्यतः आवश्यक दस्तावेज</h3>
-  <ul>
-   <li>आधार कार्ड</li>
-   <li>आधार से लिंक मोबाइल नंबर, जहाँ OTP आवश्यक हो</li>
-   <li>समग्र ID (जहाँ आवश्यक हो)</li>
-   <li>खसरा नंबर और भूमि संबंधी जानकारी</li>
-   <li>ग्राम, तहसील और जिला की जानकारी</li>
-   <li>पुरानी Farmer ID, यदि उपलब्ध हो</li>
-   <li>भूमि रिकॉर्ड या संबंधित प्रमाण, जहाँ मांगा जाए</li>
-  </ul>
-  <div class="notice">
-   <strong>महत्वपूर्ण:</strong> दस्तावेजों की अंतिम सूची संबंधित सरकारी पोर्टल के नियमों के अनुसार तय होगी। केवल उन्हीं भूमि रिकॉर्ड का उपयोग करें जिनकी जानकारी देने का आपको अधिकार है।
-  </div>
- </div>
-</section>
-
-<section class="container">
- <div class="heading">
-  <h2>किसान योजनाओं और रिकॉर्ड की जानकारी</h2>
-  <p>आवेदन से पहले जरूरी बातें समझें</p>
- </div>
-
- <div class="info">
-  <h3>Farmer Registry क्या है?</h3>
-  <p>Farmer Registry, AgriStack पहल के अंतर्गत किसानों की डिजिटल पहचान और संबंधित कृषि जानकारी का रिकॉर्ड तैयार करने की व्यवस्था है। पात्रता और पंजीयन की प्रक्रिया सरकारी नियमों के अनुसार होती है।</p>
-
-  <h3>खसरा और B-1</h3>
-  <p>मध्य प्रदेश में भूमि रिकॉर्ड की जानकारी MP Bhulekh पोर्टल पर उपलब्ध सुविधाओं के माध्यम से देखी जा सकती है। रिकॉर्ड की प्रमाणित प्रति के लिए लागू सरकारी प्रक्रिया और शुल्क का पालन करें।</p>
-
-  <h3>ध्यान देने योग्य बातें</h3>
-  <ul>
-   <li>आवेदन में सही आधार और भूमि संबंधी जानकारी दें।</li>
-   <li>Farmer ID बनना या रिकॉर्ड अपडेट होना सत्यापन पर निर्भर है।</li>
-   <li>किसी अन्य व्यक्ति की भूमि का रिकॉर्ड बिना अधिकार उपयोग न करें।</li>
-  </ul>
- </div>
-</section>
-
-<section class="container" id="process">
- <div class="heading">
-  <h2>हमारी सेवा लेने की प्रक्रिया</h2>
-  <p>आसान चरणों में सहायता प्राप्त करें</p>
- </div>
-
- <div class="steps">
-  <div class="step"><strong>01. सेवा चुनें</strong><p>अपनी जरूरत की किसान सेवा चुनें।</p></div>
-  <div class="step"><strong>02. संपर्क करें</strong><p>WhatsApp पर सेवा का नाम भेजें।</p></div>
-  <div class="step"><strong>03. दस्तावेज दें</strong><p>आवश्यक जानकारी और दस्तावेज तैयार रखें।</p></div>
-  <div class="step"><strong>04. आधिकारिक प्रक्रिया</strong><p>संबंधित सरकारी पोर्टल के नियमों के अनुसार प्रक्रिया पूरी करें।</p></div>
- </div>
+<main class="wrap">
 
  <div class="notice">
-  <strong>सुरक्षा सूचना:</strong> अपना Aadhaar OTP, बैंक OTP, पासवर्ड या अन्य गोपनीय जानकारी किसी अनजान व्यक्ति को न दें। सरकारी रिकॉर्ड में बदलाव केवल अधिकृत प्रक्रिया से ही होता है।
+  <b>महत्वपूर्ण सूचना:</b>
+  RAHUL COMPUTER'S एक निजी डिजिटल सहायता सेवा है, सरकारी विभाग नहीं।
+  आवेदन जमा होना Farmer ID जारी होने की पुष्टि नहीं है।
+  सरकारी पोर्टल पर सत्यापन और अधिकृत प्रक्रिया पूरी होने के बाद ही परिणाम मिलेगा।
+  किसी को भी अपना OTP, पासवर्ड या बैंक PIN न बताएं।
  </div>
-</section>
 
-<section class="container">
- <div class="info">
-  <h3>🌐 आधिकारिक सरकारी पोर्टल</h3>
-  <p>किसान और भूमि रिकॉर्ड की सरकारी सेवाओं के लिए नीचे दिए गए पोर्टल खोलें।</p>
-  <a class="btn blue" href="https://mpfr.agristack.gov.in/" target="_blank" rel="noopener">MP Farmer Registry ↗</a>
-  <a class="btn blue" href="https://mpbhulekh.gov.in/" target="_blank" rel="noopener">MP Bhulekh ↗</a>
-  <a class="btn blue" href="https://mp.gov.in/" target="_blank" rel="noopener">MP Government ↗</a>
- </div>
-</section>
+ <h2 class="section-title">हमारी Farmer सेवाएँ</h2>
 
-<section class="container" id="contact">
- <div class="contact">
-  <h2>RAHUL COMPUTER'S</h2>
-  <p>किसान और अन्य ऑनलाइन सेवाओं के लिए हमसे संपर्क करें।</p>
-  <p><strong>📍 Amiliya, Maihar, Madhya Pradesh</strong></p>
-  <p><strong>📞 9752039020</strong></p>
-  <a class="btn" href="https://wa.me/919752039020?text=Namaste%20Rahul%20Computer%27s%2C%20mujhe%20Farmer%20ID%20aur%20Kisan%20seva%20ke%20liye%20jankari%20chahiye." target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a>
-  <a class="btn outline" href="index.html">मुख्य वेबसाइट पर जाएँ</a>
+ <div class="grid">
+
+  <article class="card">
+   <h3>🌾 Farmer Registry पंजीयन</h3>
+   <p>नए किसान पंजीयन के लिए दस्तावेज़ और जानकारी जमा करें।</p>
+   <button type="button" onclick="chooseService('New Farmer Registration')">आवेदन करें</button>
+  </article>
+
+  <article class="card">
+   <h3>✏️ Farmer ID में सुधार</h3>
+   <p>मौजूदा Farmer विवरण में सुधार हेतु अनुरोध करें।</p>
+   <button type="button" onclick="chooseService('Farmer Details Update')">आवेदन करें</button>
+  </article>
+
+  <article class="card">
+   <h3>🔎 Farmer ID खोज सहायता</h3>
+   <p>Farmer ID खोजने में सहायता के लिए संपर्क करें।</p>
+   <a class="btn secondary" href="https://wa.me/919752039020">WhatsApp</a>
+  </article>
+
+  <article class="card">
+   <h3>📄 खसरा नकल</h3>
+   <p>खसरा रिकॉर्ड की ऑनलाइन प्रति प्राप्त करने में सहायता।</p>
+   <a class="btn secondary" href="https://wa.me/919752039020">WhatsApp</a>
+  </article>
+
+  <article class="card">
+   <h3>📑 खतौनी / B-1</h3>
+   <p>खतौनी और B-1 रिकॉर्ड प्रिंट सहायता।</p>
+   <a class="btn secondary" href="https://wa.me/919752039020">WhatsApp</a>
+  </article>
+
+  <article class="card">
+   <h3>🧾 किसान भूमि रिकॉर्ड</h3>
+   <p>भूमि रिकॉर्ड से संबंधित सहायता और जानकारी।</p>
+   <a class="btn secondary" href="https://wa.me/919752039020">WhatsApp</a>
+  </article>
+
  </div>
-</section>
+
+ <section class="panel" id="applicationPanel">
+  <h2>ऑनलाइन Farmer आवेदन</h2>
+  <p class="hint">
+   सभी * वाले विवरण भरें। अधिकतम 5 दस्तावेज़ अपलोड कर सकते हैं।
+   प्रत्येक फाइल 5 MB तक और PDF/JPG/PNG होनी चाहिए।
+  </p>
+
+  <form id="farmerForm">
+
+   <div class="field">
+    <label for="customerName">पूरा नाम *</label>
+    <input id="customerName" maxlength="80" required placeholder="अपना पूरा नाम">
+   </div>
+
+   <div class="field">
+    <label for="mobile">मोबाइल नंबर *</label>
+    <input id="mobile" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required placeholder="10 अंकों का मोबाइल">
+   </div>
+
+   <div class="field">
+    <label for="village">गाँव *</label>
+    <input id="village" maxlength="80" required placeholder="गाँव का नाम">
+   </div>
+
+   <div class="field">
+    <label for="tehsil">तहसील *</label>
+    <input id="tehsil" maxlength="80" required placeholder="तहसील">
+   </div>
+
+   <div class="field">
+    <label for="district">जिला *</label>
+    <input id="district" maxlength="80" required placeholder="जिला">
+   </div>
+
+   <div class="field">
+    <label for="serviceType">सेवा चुनें *</label>
+    <select id="serviceType" required>
+     <option value="">सेवा चुनें</option>
+     <option value="New Farmer Registration">नया Farmer Registry पंजीयन</option>
+     <option value="Farmer Details Update">Farmer ID विवरण सुधार</option>
+    </select>
+   </div>
+
+   <div class="field">
+    <label for="farmerId">मौजूदा Farmer ID (सुधार के लिए)</label>
+    <input id="farmerId" maxlength="40" placeholder="यदि लागू हो">
+   </div>
+
+   <div class="field full">
+    <label for="details">आवेदन का विवरण *</label>
+    <textarea id="details" maxlength="1200" required placeholder="किस काम के लिए आवेदन कर रहे हैं? सुधार है तो सही जानकारी लिखें।"></textarea>
+   </div>
+
+   <div class="field full">
+    <label for="documents">दस्तावेज़ अपलोड करें (अधिकतम 5)</label>
+    <input id="documents" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png">
+    <small>केवल आवश्यक दस्तावेज़ अपलोड करें। आधार की पूरी संख्या या OTP विवरण टेक्स्ट में न लिखें।</small>
+   </div>
+
+   <div class="field full">
+    <label>
+     <input id="consent" type="checkbox" required style="width:auto;min-height:auto">
+     मैं सहमत हूँ कि दी गई जानकारी और दस्तावेज़ इस सेवा के आवेदन हेतु उपयोग किए जाएँ।
+    </label>
+   </div>
+
+   <div class="field full actions">
+    <button id="submitBtn" type="submit">आवेदन जमा करें</button>
+    <button class="secondary" type="reset">फॉर्म साफ करें</button>
+   </div>
+
+  </form>
+
+  <div id="message" role="status"></div>
+ </section>
+
+ <section class="panel">
+  <h2>आवेदन की स्थिति देखें</h2>
+  <p class="hint">आवेदन जमा होने पर मिली Tracking ID डालें। Tracking ID को सुरक्षित रखें।</p>
+
+  <div class="field">
+   <label for="trackingInput">Tracking ID</label>
+   <input id="trackingInput" maxlength="24" placeholder="24 अक्षरों की Tracking ID">
+  </div>
+
+  <div class="actions">
+   <button type="button" onclick="trackApplication()">स्थिति देखें</button>
+  </div>
+
+  <div id="trackingResult" class="track-result hidden"></div>
+ </section>
+
+ <section class="panel">
+  <h2>आवेदन प्रक्रिया</h2>
+  <div class="steps">
+   <div class="step"><b>1. आवेदन</b><br>फॉर्म और आवश्यक दस्तावेज़ जमा करें।</div>
+   <div class="step"><b>2. जाँच</b><br>Admin आपके आवेदन और दस्तावेज़ जाँचेगा।</div>
+   <div class="step"><b>3. सरकारी प्रक्रिया</b><br>अधिकृत Farmer Registry पोर्टल पर आवश्यक सत्यापन होगा।</div>
+   <div class="step"><b>4. अपडेट</b><br>Tracking ID से आवेदन की स्थिति देखें।</div>
+  </div>
+ </section>
+
+ <p style="text-align:center;margin-top:18px">
+  <a class="btn secondary" href="index.html">← मुख्य वेबसाइट पर जाएँ</a>
+  <a class="btn" href="https://wa.me/919752039020">WhatsApp सहायता</a>
+ </p>
 
 </main>
 
 <footer>
- <p>© 2026 RAHUL COMPUTER'S | All Rights Reserved</p>
- <p>Digital Services | Amiliya, Maihar, Madhya Pradesh</p>
- <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms & Conditions</a></p>
- <p>यह एक निजी डिजिटल सहायता सेवा है, सरकारी वेबसाइट नहीं।</p>
+ © RAHUL COMPUTER'S | सहायता: 9752039020<br>
+ सरकारी सेवाओं के लिए अंतिम स्वीकृति संबंधित सरकारी विभाग द्वारा होती है।
 </footer>
 
-<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-storage.js";
 
-<script>
-function chooseService(service){
- const message="नमस्ते RAHUL COMPUTER'S, मुझे "+service+" के लिए सहायता चाहिए। कृपया जानकारी दें।";
- window.open("https://wa.me/919752039020?text="+encodeURIComponent(message),"_blank");
+const firebaseConfig = {
+ apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain: "rahul-computer-s.firebaseapp.com",
+ projectId: "rahul-computer-s",
+ storageBucket: "rahul-computer-s.firebasestorage.app",
+ messagingSenderId: "969449083821",
+ appId: "1:969449083821:web:4696bc1253fa97ea304724"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+const form = document.getElementById("farmerForm");
+const message = document.getElementById("message");
+const submitBtn = document.getElementById("submitBtn");
+
+function showMessage(text,type){
+ message.textContent = text;
+ message.className = type;
 }
 
-function searchServices(){
- const query=document.getElementById("serviceSearch").value.toLowerCase().trim();
- const cards=document.querySelectorAll("#serviceGrid .card");
- let visible=0;
-
- cards.forEach(card=>{
-  const name=card.getAttribute("data-name").toLowerCase();
-  const text=card.innerText.toLowerCase();
-  const match=name.includes(query)||text.includes(query);
-  card.style.display=match?"block":"none";
-  if(match)visible++;
- });
-
- document.getElementById("noResult").style.display=visible===0?"block":"none";
+function makeTrackingId(){
+ const bytes = new Uint8Array(12);
+ crypto.getRandomValues(bytes);
+ return Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("").toUpperCase();
 }
 
-window.addEventListener("scroll",()=>{
- document.getElementById("topBtn").style.display=window.scrollY>300?"block":"none";
+window.chooseService = function(value){
+ document.getElementById("serviceType").value = value;
+ document.getElementById("applicationPanel").scrollIntoView({behavior:"smooth"});
+};
+
+form.addEventListener("submit",async(event)=>{
+ event.preventDefault();
+ message.className = "";
+
+ const mobile = document.getElementById("mobile").value.trim();
+ const files = Array.from(document.getElementById("documents").files || []);
+
+ if(!/^[0-9]{10}$/.test(mobile)){
+  return showMessage("कृपया सही 10 अंकों का मोबाइल नंबर भरें।","err");
+ }
+
+ if(files.length > 5){
+  return showMessage("अधिकतम 5 दस्तावेज़ अपलोड कर सकते हैं।","err");
+ }
+
+ const allowed = ["application/pdf","image/jpeg","image/png"];
+
+ if(files.some(f=>!allowed.includes(f.type)||f.size>5*1024*1024)){
+  return showMessage("हर फाइल PDF/JPG/PNG होनी चाहिए और 5 MB से बड़ी नहीं होनी चाहिए।","err");
+ }
+
+ submitBtn.disabled = true;
+ submitBtn.textContent = "आवेदन जमा हो रहा है...";
+
+ try{
+  const credential = await signInAnonymously(auth);
+  const uid = credential.user.uid;
+  const trackingId = makeTrackingId();
+  const uploadedPaths = [];
+
+  for(let i=0;i<files.length;i++){
+   const file = files[i];
+   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,"_").slice(-90) || `document-${i+1}`;
+   const filePath = `farmer-documents/${uid}/${trackingId}/${i+1}-${safeName}`;
+
+   await uploadBytes(ref(storage,filePath),file,{contentType:file.type});
+   uploadedPaths.push(filePath);
+  }
+
+  const data = {
+   customerName: document.getElementById("customerName").value.trim(),
+   mobile,
+   village: document.getElementById("village").value.trim(),
+   district: document.getElementById("district").value.trim(),
+   tehsil: document.getElementById("tehsil").value.trim(),
+   serviceType: document.getElementById("serviceType").value,
+   farmerId: document.getElementById("farmerId").value.trim(),
+   details: document.getElementById("details").value.trim(),
+   documents: uploadedPaths,
+   status: "Pending",
+   paymentStatus: "Unpaid",
+   amount: 0,
+   trackingId,
+   ownerUid: uid,
+   createdAt: serverTimestamp()
+  };
+
+  await setDoc(doc(db,"farmerApplications",trackingId),data);
+
+  await setDoc(doc(db,"farmerTracking",trackingId),{
+   status:"Pending",
+   paymentStatus:"Unpaid",
+   serviceType:data.serviceType
+  });
+
+  showMessage("आपका आवेदन जमा हो गया है। आपकी Tracking ID: "+trackingId+" — इसे सुरक्षित रखें।","ok");
+  document.getElementById("trackingInput").value = trackingId;
+  form.reset();
+  document.getElementById("trackingResult").classList.add("hidden");
+
+ }catch(error){
+  console.error(error);
+  showMessage("आवेदन जमा नहीं हो पाया। इंटरनेट, Firebase Authentication और Storage सेटिंग जाँचें। सहायता के लिए WhatsApp करें।","err");
+ }finally{
+  submitBtn.disabled = false;
+  submitBtn.textContent = "आवेदन जमा करें";
+ }
 });
+
+window.trackApplication = async function(){
+ const id = document.getElementById("trackingInput").value.trim().toUpperCase();
+ const result = document.getElementById("trackingResult");
+
+ result.classList.remove("hidden");
+
+ if(!/^[A-F0-9]{24}$/.test(id)){
+  result.textContent = "कृपया सही 24 अक्षरों की Tracking ID डालें।";
+  return;
+ }
+
+ result.textContent = "स्थिति देखी जा रही है...";
+
+ try{
+  const snap = await getDoc(doc(db,"farmerTracking",id));
+
+  if(!snap.exists()){
+   result.textContent = "इस Tracking ID का रिकॉर्ड नहीं मिला। कृपया ID जाँचें।";
+   return;
+  }
+
+  const d = snap.data();
+  const statusText = {
+   Pending:"लंबित",
+   Processing:"प्रक्रिया में",
+   Completed:"पूरा",
+   Rejected:"अस्वीकृत"
+  };
+  const payText = {
+   Unpaid:"भुगतान बाकी",
+   Paid:"भुगतान सत्यापित",
+   Rejected:"भुगतान अस्वीकृत"
+  };
+
+  result.textContent =
+   "आवेदन स्थिति: "+(statusText[d.status]||d.status)+
+   " | भुगतान स्थिति: "+(payText[d.paymentStatus]||d.paymentStatus)+
+   " | सेवा: "+(d.serviceType||"Farmer सेवा");
+
+ }catch(error){
+  console.error(error);
+  result.textContent = "स्थिति प्राप्त नहीं हो सकी। कृपया कुछ देर बाद पुनः प्रयास करें।";
+ }
+};
 </script>
 
 </body>
