@@ -41,7 +41,7 @@ button:hover{filter:brightness(1.07)}
 .badge.Approved,.badge.Paid,.badge.Completed,.badge.Active{background:#e8f7ee;color:#176b3a}
 .badge.Rejected,.badge.Blocked{background:#fff0f0;color:#a51f1f}
 .badge.Unpaid,.badge.Pending{background:#fff3cd;color:#765500}
-.badge.Processing{background:#eaf3ff;color:#164a80}
+.badge.Processing,.badge.Submitted{background:#eaf3ff;color:#164a80}
 .formbox{background:#f4f8fd;border:1px solid var(--border);padding:14px;border-radius:10px;margin:12px 0}
 .formbox h4{margin:0 0 10px;color:var(--navy)}
 .message{padding:12px;border-radius:8px;margin:10px 0;overflow-wrap:anywhere}
@@ -53,6 +53,8 @@ button:hover{filter:brightness(1.07)}
 .section-title{border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:13px}
 .doc-link{display:block;padding:10px;margin:7px 0;background:#eaf3ff;border-radius:8px;color:#07569a;text-decoration:none;font-weight:bold;overflow-wrap:anywhere}
 .doc-link:hover{background:#dcecff}
+.payment-proof{background:#fff8e8;border:1px solid #ead5a6;border-radius:9px;padding:13px;margin:12px 0}
+.payment-proof h4{margin:0 0 9px;color:#765500}
 footer{text-align:center;padding:18px;color:var(--muted);font-size:13px}
 @media(max-width:600px){
  header h2{font-size:21px}.container{padding:0 10px 25px}
@@ -130,7 +132,7 @@ footer{text-align:center;padding:18px;color:var(--muted);font-size:13px}
   </div>
   <div class="card">
    <h3>Farmer Registry Applications</h3>
-   <p class="muted">यहाँ Farmer के आवेदन, दस्तावेज, फीस, भुगतान और आवेदन की स्थिति नियंत्रित करें।</p>
+   <p class="muted">Farmer आवेदन, दस्तावेज, फीस, UPI Transaction ID, भुगतान स्क्रीनशॉट और आवेदन की स्थिति नियंत्रित करें।</p>
    <button class="success" id="refreshFarmers">Refresh Farmer Applications</button>
    <input id="farmerSearch" placeholder="नाम, मोबाइल या Tracking ID खोजें">
    <select id="farmerStatusFilter">
@@ -143,6 +145,7 @@ footer{text-align:center;padding:18px;color:var(--muted);font-size:13px}
    <select id="farmerPaymentFilter">
     <option value="All">सभी Payment Status</option>
     <option value="Unpaid">Unpaid</option>
+    <option value="Submitted">Submitted</option>
     <option value="Paid">Paid</option>
     <option value="Rejected">Rejected</option>
    </select>
@@ -282,6 +285,7 @@ const ADMIN_UID="Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3";
 const $=id=>document.getElementById(id);
 
 let customers=[],partners=[],services=[],partnerApps=[],ledger=[],farmers=[];
+let farmerPaymentSubmissions={};
 
 function dateText(t){
  if(!t)return "उपलब्ध नहीं";
@@ -442,14 +446,26 @@ async function loadFarmers(){
  $("farmerList").textContent="";
  $("farmerLoading").textContent="Farmer Applications लोड हो रहे हैं...";
  farmers=[];
+ farmerPaymentSubmissions={};
+
  try{
-  const snap=await getDocs(collection(db,"farmerApplications"));
-  farmers=snap.docs.map(x=>({id:x.id,data:x.data()}));
+  const results=await Promise.all([
+   getDocs(collection(db,"farmerApplications")),
+   getDocs(collection(db,"farmerPaymentSubmissions"))
+  ]);
+
+  farmers=results[0].docs.map(x=>({id:x.id,data:x.data()}));
+
+  results[1].docs.forEach(x=>{
+   farmerPaymentSubmissions[x.id]=x.data();
+  });
+
   $("farmerTotal").textContent=farmers.length;
   $("farmerPending").textContent=farmers.filter(x=>(x.data.status||"Pending")==="Pending").length;
   $("farmerCompleted").textContent=farmers.filter(x=>x.data.status==="Completed").length;
   $("farmerLoading").textContent=farmers.length?"कुल "+farmers.length+" Farmer आवेदन मिले।":"अभी कोई Farmer आवेदन नहीं है।";
   renderFarmers();
+
  }catch(e){
   console.error(e);
   $("farmerLoading").textContent="Farmer Applications लोड नहीं हुए: "+e.message;
@@ -459,21 +475,26 @@ async function loadFarmers(){
 async function addFarmerDocuments(parent,documents){
  const heading=make("h4","","ग्राहक के दस्तावेज");
  parent.appendChild(heading);
+
  if(!Array.isArray(documents)||documents.length===0){
   parent.appendChild(make("p","muted","कोई दस्तावेज अपलोड नहीं किया गया।"));
   return;
  }
+
  for(let i=0;i<documents.length;i++){
   const path=typeof documents[i]==="string"?documents[i]:documents[i]?.path;
   const label=typeof documents[i]==="string"?documents[i].split("/").pop():(documents[i]?.name||"Document "+(i+1));
+
   if(!path){
    parent.appendChild(make("p","muted","दस्तावेज का Storage Path उपलब्ध नहीं है।"));
    continue;
   }
+
   const a=make("a","doc-link","📄 "+label+" — देखें / डाउनलोड करें");
   a.href="#";
   a.target="_blank";
   a.rel="noopener";
+
   a.addEventListener("click",async ev=>{
    ev.preventDefault();
    try{
@@ -483,25 +504,74 @@ async function addFarmerDocuments(parent,documents){
     showMessage("दस्तावेज नहीं खुला: "+e.message);
    }
   });
+
   parent.appendChild(a);
  }
 }
 
+async function addFarmerPaymentProof(parent,trackingId){
+ const proof=farmerPaymentSubmissions[trackingId];
+ const box=make("div","payment-proof");
+
+ box.appendChild(make("h4","","💳 ग्राहक का UPI भुगतान प्रमाण"));
+
+ if(!proof){
+  box.appendChild(make("p","muted","ग्राहक ने अभी भुगतान का Transaction ID या स्क्रीनशॉट जमा नहीं किया है।"));
+  parent.appendChild(box);
+  return;
+ }
+
+ field(box,"Transaction ID / UTR",proof.transactionId||"उपलब्ध नहीं");
+ field(box,"भुगतान राशि",money(proof.amount));
+ field(box,"प्रमाण जमा स्थिति",proof.paymentStatus||"Submitted");
+ field(box,"प्रमाण जमा दिनांक",dateText(proof.createdAt));
+
+ if(proof.screenshotPath){
+  const a=make("a","doc-link","🖼️ भुगतान स्क्रीनशॉट देखें");
+  a.href="#";
+  a.target="_blank";
+  a.rel="noopener";
+
+  a.addEventListener("click",async ev=>{
+   ev.preventDefault();
+   try{
+    const url=await getDownloadURL(storageRef(storage,proof.screenshotPath));
+    window.open(url,"_blank","noopener");
+   }catch(e){
+    showMessage("भुगतान स्क्रीनशॉट नहीं खुला: "+e.message);
+   }
+  });
+
+  box.appendChild(a);
+ }else{
+  box.appendChild(make("p","muted","स्क्रीनशॉट का Storage Path उपलब्ध नहीं है।"));
+ }
+
+ parent.appendChild(box);
+}
+
 function renderFarmers(){
- const list=$("farmerList");list.textContent="";
+ const list=$("farmerList");
+ list.textContent="";
+
  const q=$("farmerSearch").value.toLowerCase().trim();
  const statusFilter=$("farmerStatusFilter").value;
  const paymentFilter=$("farmerPaymentFilter").value;
+
  const data=farmers.filter(x=>{
   const d=x.data;
   const text=[d.customerName,d.mobile,d.village,d.tehsil,d.district,d.serviceType,d.farmerId,d.trackingId,x.id].join(" ").toLowerCase();
+
   return text.includes(q)&&
    (statusFilter==="All"||(d.status||"Pending")===statusFilter)&&
    (paymentFilter==="All"||(d.paymentStatus||"Unpaid")===paymentFilter);
  });
 
  data.forEach(item=>{
-  const d=item.data,c=make("div","item");
+  const d=item.data;
+  const trackingId=d.trackingId||item.id;
+  const c=make("div","item");
+
   c.appendChild(make("h4","",d.customerName||"Farmer Customer"));
   field(c,"Mobile",d.mobile);
   field(c,"Village",d.village);
@@ -510,35 +580,43 @@ function renderFarmers(){
   field(c,"Service",d.serviceType);
   field(c,"Farmer ID",d.farmerId||"अभी उपलब्ध नहीं");
   field(c,"Details",d.details);
-  field(c,"Tracking ID",d.trackingId||item.id);
+  field(c,"Tracking ID",trackingId);
   field(c,"Application Date",dateText(d.createdAt));
 
   c.append("Application Status: ");
   badge(c,d.status||"Pending");
   c.append("  Payment Status: ");
   badge(c,d.paymentStatus||"Unpaid");
+
   field(c,"वर्तमान फीस",money(d.amount));
 
   addFarmerDocuments(c,d.documents);
 
+  // CUSTOMER PAYMENT DETAILS
+  addFarmerPaymentProof(c,trackingId);
+
   const form=make("div","formbox");
-  form.appendChild(make("h4","","आवेदन अपडेट करें"));
+  form.appendChild(make("h4","","आवेदन और भुगतान अपडेट करें"));
 
   const status=make("select");
   ["Pending","Processing","Completed","Rejected"].forEach(s=>{
    const o=make("option","",s);
-   o.value=s;o.selected=(d.status||"Pending")===s;
+   o.value=s;
+   o.selected=(d.status||"Pending")===s;
    status.appendChild(o);
   });
+
   form.appendChild(make("label","muted","Application Status"));
   form.appendChild(status);
 
   const payment=make("select");
-  ["Unpaid","Paid","Rejected"].forEach(s=>{
+  ["Unpaid","Submitted","Paid","Rejected"].forEach(s=>{
    const o=make("option","",s);
-   o.value=s;o.selected=(d.paymentStatus||"Unpaid")===s;
+   o.value=s;
+   o.selected=(d.paymentStatus||"Unpaid")===s;
    payment.appendChild(o);
   });
+
   form.appendChild(make("label","muted","Payment Status"));
   form.appendChild(payment);
 
@@ -548,24 +626,33 @@ function renderFarmers(){
   amount.step="0.01";
   amount.value=Number(d.amount||0);
   amount.placeholder="ग्राहक की फीस रुपये में";
+
   form.appendChild(make("label","muted","ग्राहक से ली जाने वाली फीस (₹)"));
   form.appendChild(amount);
 
   const save=button(form,"सभी बदलाव Save करें","success",async()=>{
    const newAmount=Number(amount.value);
+
    if(!Number.isFinite(newAmount)||newAmount<0){
     showMessage("कृपया सही फीस दर्ज करें।");
     return;
    }
+
    if(payment.value==="Paid"&&(d.paymentStatus||"Unpaid")!=="Paid"){
-    if(!confirm("क्या आपने ग्राहक का भुगतान बैंक/UPI में वास्तव में प्राप्त होने की पुष्टि कर ली है? पुष्टि के बाद ही Paid करें।"))return;
+    if(!confirm("क्या आपने ग्राहक का भुगतान बैंक/UPI में वास्तव में प्राप्त होने की पुष्टि कर ली है? स्क्रीनशॉट और Transaction ID भी जांच लें।"))return;
    }
+
+   if(payment.value==="Submitted"&&!farmerPaymentSubmissions[trackingId]){
+    showMessage("ग्राहक का भुगतान प्रमाण उपलब्ध नहीं है।");
+    return;
+   }
+
    if(!confirm("क्या आप इस Farmer Application का Status, Payment Status और फीस अपडेट करना चाहते हैं?"))return;
 
    save.disabled=true;
    save.textContent="अपडेट हो रहा है...";
+
    try{
-    const trackingId=d.trackingId||item.id;
     const batch=writeBatch(db);
 
     batch.update(doc(db,"farmerApplications",item.id),{
@@ -576,15 +663,28 @@ function renderFarmers(){
 
     batch.update(doc(db,"farmerTracking",trackingId),{
      status:status.value,
-     paymentStatus:payment.value
+     paymentStatus:payment.value,
+     amount:newAmount
     });
 
+    const proof=farmerPaymentSubmissions[trackingId];
+
+    if(proof && ["Paid","Rejected"].includes(payment.value)){
+     batch.update(doc(db,"farmerPaymentSubmissions",trackingId),{
+      paymentStatus:payment.value,
+      reviewedAt:serverTimestamp(),
+      reviewedBy:auth.currentUser.uid
+     });
+    }
+
     await batch.commit();
-    showMessage("Farmer Application और Tracking दोनों अपडेट हो गए।");
+
+    showMessage("Farmer Application, फीस और Tracking अपडेट हो गए।");
     await loadFarmers();
+
    }catch(e){
     console.error(e);
-    showMessage("अपडेट नहीं हुआ: "+e.message+"\nकृपया जाँचें कि इस आवेदन की farmerTracking entry मौजूद है और Firestore Rules अनुमति दे रहे हैं।");
+    showMessage("अपडेट नहीं हुआ: "+e.message+"\nकृपया जाँचें कि Firestore Rules में Farmer Payment की अनुमति जोड़ी गई है।");
    }finally{
     save.disabled=false;
     save.textContent="सभी बदलाव Save करें";
