@@ -407,14 +407,25 @@ function renderCategories(filter=""){
 }
 
 function showCategory(index){
+ const cat=services[index];
 
- // PAN CARD पर क्लिक करते ही अलग PAN Portal खुलेगा
- if(services[index].name==="PAN CARD"){
+ // PAN, SAMAGRA और VOTER ID के अलग-अलग पेज खोलें
+ if(cat.name==="PAN CARD"){
   window.location.href="pan.html";
   return;
  }
 
- const cat=services[index];
+ if(cat.name==="SAMAGRA"){
+  window.location.href="samagra.html";
+  return;
+ }
+
+ if(cat.name==="VOTER ID"){
+  window.location.href="voter.html";
+  return;
+ }
+
+ // बाकी Categories मुख्य वेबसाइट पर ही खुलेंगी
  $("serviceDetails").classList.remove("hidden");
  $("detailTitle").textContent=cat.icon+" "+cat.name;
  $("detailDescription").textContent=cat.description;
@@ -596,4 +607,4 @@ function printTextDocument(){
 }
 </script>
 </body>
-  </html>
+ </html>
