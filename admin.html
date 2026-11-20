@@ -41,6 +41,7 @@ button:hover{filter:brightness(1.07)}
 .badge.Approved,.badge.Paid,.badge.Completed,.badge.Active{background:#e8f7ee;color:#176b3a}
 .badge.Rejected,.badge.Blocked{background:#fff0f0;color:#a51f1f}
 .badge.Unpaid,.badge.Pending{background:#fff3cd;color:#765500}
+.badge.Processing{background:#eaf3ff;color:#164a80}
 .formbox{background:#f4f8fd;border:1px solid var(--border);padding:14px;border-radius:10px;margin:12px 0}
 .formbox h4{margin:0 0 10px;color:var(--navy)}
 .message{padding:12px;border-radius:8px;margin:10px 0;overflow-wrap:anywhere}
@@ -50,6 +51,8 @@ button:hover{filter:brightness(1.07)}
 #loginMessage{color:var(--red);text-align:center;font-size:14px}
 .muted{color:var(--muted);font-size:13px}
 .section-title{border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:13px}
+.doc-link{display:block;padding:10px;margin:7px 0;background:#eaf3ff;border-radius:8px;color:#07569a;text-decoration:none;font-weight:bold;overflow-wrap:anywhere}
+.doc-link:hover{background:#dcecff}
 footer{text-align:center;padding:18px;color:var(--muted);font-size:13px}
 @media(max-width:600px){
  header h2{font-size:21px}.container{padding:0 10px 25px}
@@ -90,6 +93,7 @@ footer{text-align:center;padding:18px;color:var(--muted);font-size:13px}
 
  <div class="tabs">
   <button class="tab active" data-tab="customers">Customer Applications</button>
+  <button class="tab" data-tab="farmers">Farmer Applications</button>
   <button class="tab" data-tab="partners">Partners</button>
   <button class="tab" data-tab="services">Services</button>
   <button class="tab" data-tab="partnerApps">Partner Applications</button>
@@ -114,6 +118,36 @@ footer{text-align:center;padding:18px;color:var(--muted);font-size:13px}
    </select>
    <p id="customerLoading" class="muted">आवेदन लोड हो रहे हैं...</p>
    <div id="customerList"></div>
+  </div>
+ </section>
+
+ <!-- FARMER APPLICATIONS -->
+ <section id="farmersSection" class="hidden">
+  <div class="stats">
+   <div class="stat">कुल Farmer आवेदन<strong id="farmerTotal">0</strong></div>
+   <div class="stat">Pending<strong id="farmerPending">0</strong></div>
+   <div class="stat">Completed<strong id="farmerCompleted">0</strong></div>
+  </div>
+  <div class="card">
+   <h3>Farmer Registry Applications</h3>
+   <p class="muted">यहाँ Farmer के आवेदन, दस्तावेज, फीस, भुगतान और आवेदन की स्थिति नियंत्रित करें।</p>
+   <button class="success" id="refreshFarmers">Refresh Farmer Applications</button>
+   <input id="farmerSearch" placeholder="नाम, मोबाइल या Tracking ID खोजें">
+   <select id="farmerStatusFilter">
+    <option value="All">सभी Application Status</option>
+    <option value="Pending">Pending</option>
+    <option value="Processing">Processing</option>
+    <option value="Completed">Completed</option>
+    <option value="Rejected">Rejected</option>
+   </select>
+   <select id="farmerPaymentFilter">
+    <option value="All">सभी Payment Status</option>
+    <option value="Unpaid">Unpaid</option>
+    <option value="Paid">Paid</option>
+    <option value="Rejected">Rejected</option>
+   </select>
+   <p id="farmerLoading" class="muted">Farmer Applications लोड हो रहे हैं...</p>
+   <div id="farmerList"></div>
   </div>
  </section>
 
@@ -227,6 +261,9 @@ import {
  getFirestore,collection,getDocs,doc,getDoc,addDoc,
  updateDoc,setDoc,deleteDoc,serverTimestamp,writeBatch
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import {
+ getStorage,ref as storageRef,getDownloadURL
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-storage.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
@@ -240,10 +277,11 @@ const firebaseConfig={
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
+const storage=getStorage(app);
 const ADMIN_UID="Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3";
 const $=id=>document.getElementById(id);
 
-let customers=[],partners=[],services=[],partnerApps=[],ledger=[];
+let customers=[],partners=[],services=[],partnerApps=[],ledger=[],farmers=[];
 
 function dateText(t){
  if(!t)return "उपलब्ध नहीं";
@@ -274,10 +312,11 @@ function showMessage(text){alert(text);}
 // TAB NAVIGATION
 function showTab(name){
  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===name));
- ["customers","partners","services","partnerApps","ledger"].forEach(x=>{
+ ["customers","farmers","partners","services","partnerApps","ledger"].forEach(x=>{
   $(x+"Section").classList.toggle("hidden",x!==name);
  });
  if(name==="customers")loadCustomers();
+ if(name==="farmers")loadFarmers();
  if(name==="partners")loadPartners();
  if(name==="services")loadServices();
  if(name==="partnerApps")loadPartnerApps();
@@ -313,7 +352,7 @@ function renderCustomers(){
  });
  data.forEach(item=>{
   const d=item.data,c=make("div","item");
-  c.appendChild(make("h4", "",d.customerName||"Customer"));
+  c.appendChild(make("h4","",d.customerName||"Customer"));
   field(c,"Mobile",d.mobile);field(c,"Village",d.village);
   field(c,"Service",d.service);field(c,"Details",d.details);
   field(c,"Tracking ID",d.trackingId);field(c,"Date",dateText(d.createdAt));
@@ -397,6 +436,172 @@ $("exportCustomers").addEventListener("click",()=>{
  const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
  const a=make("a");a.href=url;a.download="RAHUL_COMPUTER_Customers.csv";a.click();URL.revokeObjectURL(url);
 });
+
+// FARMER APPLICATIONS
+async function loadFarmers(){
+ $("farmerList").textContent="";
+ $("farmerLoading").textContent="Farmer Applications लोड हो रहे हैं...";
+ farmers=[];
+ try{
+  const snap=await getDocs(collection(db,"farmerApplications"));
+  farmers=snap.docs.map(x=>({id:x.id,data:x.data()}));
+  $("farmerTotal").textContent=farmers.length;
+  $("farmerPending").textContent=farmers.filter(x=>(x.data.status||"Pending")==="Pending").length;
+  $("farmerCompleted").textContent=farmers.filter(x=>x.data.status==="Completed").length;
+  $("farmerLoading").textContent=farmers.length?"कुल "+farmers.length+" Farmer आवेदन मिले।":"अभी कोई Farmer आवेदन नहीं है।";
+  renderFarmers();
+ }catch(e){
+  console.error(e);
+  $("farmerLoading").textContent="Farmer Applications लोड नहीं हुए: "+e.message;
+ }
+}
+
+async function addFarmerDocuments(parent,documents){
+ const heading=make("h4","","ग्राहक के दस्तावेज");
+ parent.appendChild(heading);
+ if(!Array.isArray(documents)||documents.length===0){
+  parent.appendChild(make("p","muted","कोई दस्तावेज अपलोड नहीं किया गया।"));
+  return;
+ }
+ for(let i=0;i<documents.length;i++){
+  const path=typeof documents[i]==="string"?documents[i]:documents[i]?.path;
+  const label=typeof documents[i]==="string"?documents[i].split("/").pop():(documents[i]?.name||"Document "+(i+1));
+  if(!path){
+   parent.appendChild(make("p","muted","दस्तावेज का Storage Path उपलब्ध नहीं है।"));
+   continue;
+  }
+  const a=make("a","doc-link","📄 "+label+" — देखें / डाउनलोड करें");
+  a.href="#";
+  a.target="_blank";
+  a.rel="noopener";
+  a.addEventListener("click",async ev=>{
+   ev.preventDefault();
+   try{
+    const url=await getDownloadURL(storageRef(storage,path));
+    window.open(url,"_blank","noopener");
+   }catch(e){
+    showMessage("दस्तावेज नहीं खुला: "+e.message);
+   }
+  });
+  parent.appendChild(a);
+ }
+}
+
+function renderFarmers(){
+ const list=$("farmerList");list.textContent="";
+ const q=$("farmerSearch").value.toLowerCase().trim();
+ const statusFilter=$("farmerStatusFilter").value;
+ const paymentFilter=$("farmerPaymentFilter").value;
+ const data=farmers.filter(x=>{
+  const d=x.data;
+  const text=[d.customerName,d.mobile,d.village,d.tehsil,d.district,d.serviceType,d.farmerId,d.trackingId,x.id].join(" ").toLowerCase();
+  return text.includes(q)&&
+   (statusFilter==="All"||(d.status||"Pending")===statusFilter)&&
+   (paymentFilter==="All"||(d.paymentStatus||"Unpaid")===paymentFilter);
+ });
+
+ data.forEach(item=>{
+  const d=item.data,c=make("div","item");
+  c.appendChild(make("h4","",d.customerName||"Farmer Customer"));
+  field(c,"Mobile",d.mobile);
+  field(c,"Village",d.village);
+  field(c,"Tehsil",d.tehsil);
+  field(c,"District",d.district);
+  field(c,"Service",d.serviceType);
+  field(c,"Farmer ID",d.farmerId||"अभी उपलब्ध नहीं");
+  field(c,"Details",d.details);
+  field(c,"Tracking ID",d.trackingId||item.id);
+  field(c,"Application Date",dateText(d.createdAt));
+
+  c.append("Application Status: ");
+  badge(c,d.status||"Pending");
+  c.append("  Payment Status: ");
+  badge(c,d.paymentStatus||"Unpaid");
+  field(c,"वर्तमान फीस",money(d.amount));
+
+  addFarmerDocuments(c,d.documents);
+
+  const form=make("div","formbox");
+  form.appendChild(make("h4","","आवेदन अपडेट करें"));
+
+  const status=make("select");
+  ["Pending","Processing","Completed","Rejected"].forEach(s=>{
+   const o=make("option","",s);
+   o.value=s;o.selected=(d.status||"Pending")===s;
+   status.appendChild(o);
+  });
+  form.appendChild(make("label","muted","Application Status"));
+  form.appendChild(status);
+
+  const payment=make("select");
+  ["Unpaid","Paid","Rejected"].forEach(s=>{
+   const o=make("option","",s);
+   o.value=s;o.selected=(d.paymentStatus||"Unpaid")===s;
+   payment.appendChild(o);
+  });
+  form.appendChild(make("label","muted","Payment Status"));
+  form.appendChild(payment);
+
+  const amount=make("input");
+  amount.type="number";
+  amount.min="0";
+  amount.step="0.01";
+  amount.value=Number(d.amount||0);
+  amount.placeholder="ग्राहक की फीस रुपये में";
+  form.appendChild(make("label","muted","ग्राहक से ली जाने वाली फीस (₹)"));
+  form.appendChild(amount);
+
+  const save=button(form,"सभी बदलाव Save करें","success",async()=>{
+   const newAmount=Number(amount.value);
+   if(!Number.isFinite(newAmount)||newAmount<0){
+    showMessage("कृपया सही फीस दर्ज करें।");
+    return;
+   }
+   if(payment.value==="Paid"&&(d.paymentStatus||"Unpaid")!=="Paid"){
+    if(!confirm("क्या आपने ग्राहक का भुगतान बैंक/UPI में वास्तव में प्राप्त होने की पुष्टि कर ली है? पुष्टि के बाद ही Paid करें।"))return;
+   }
+   if(!confirm("क्या आप इस Farmer Application का Status, Payment Status और फीस अपडेट करना चाहते हैं?"))return;
+
+   save.disabled=true;
+   save.textContent="अपडेट हो रहा है...";
+   try{
+    const trackingId=d.trackingId||item.id;
+    const batch=writeBatch(db);
+
+    batch.update(doc(db,"farmerApplications",item.id),{
+     status:status.value,
+     paymentStatus:payment.value,
+     amount:newAmount
+    });
+
+    batch.update(doc(db,"farmerTracking",trackingId),{
+     status:status.value,
+     paymentStatus:payment.value
+    });
+
+    await batch.commit();
+    showMessage("Farmer Application और Tracking दोनों अपडेट हो गए।");
+    await loadFarmers();
+   }catch(e){
+    console.error(e);
+    showMessage("अपडेट नहीं हुआ: "+e.message+"\nकृपया जाँचें कि इस आवेदन की farmerTracking entry मौजूद है और Firestore Rules अनुमति दे रहे हैं।");
+   }finally{
+    save.disabled=false;
+    save.textContent="सभी बदलाव Save करें";
+   }
+  });
+
+  c.appendChild(form);
+  list.appendChild(c);
+ });
+
+ if(!data.length)list.appendChild(make("p","muted","कोई Farmer Application नहीं मिला।"));
+}
+
+$("farmerSearch").addEventListener("input",renderFarmers);
+$("farmerStatusFilter").addEventListener("change",renderFarmers);
+$("farmerPaymentFilter").addEventListener("change",renderFarmers);
+$("refreshFarmers").addEventListener("click",loadFarmers);
 
 // PARTNERS
 async function loadPartners(){
