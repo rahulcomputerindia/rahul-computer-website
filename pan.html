@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#073b75">
-<meta name="description" content="RAHUL COMPUTER'S PAN Card Services - New PAN, Correction, Reprint and e-PAN assistance.">
+<meta name="description" content="RAHUL COMPUTER'S - PAN Card New Application, Correction, Reprint, e-PAN and PAN assistance.">
 <title>PAN Card Services | RAHUL COMPUTER'S</title>
 
 <style>
@@ -13,133 +13,142 @@
  --blue:#073b75;
  --royal:#087ac2;
  --gold:#d9ad50;
- --light-gold:#fff8e7;
  --bg:#f1f5f9;
  --text:#172554;
  --muted:#64748b;
- --white:#fff;
  --green:#16803c;
 }
 *{box-sizing:border-box;scroll-behavior:smooth}
 body{
  margin:0;font-family:Arial,sans-serif;
- background:var(--bg);color:var(--text);line-height:1.6;
+ background:var(--bg);color:var(--text);line-height:1.65;
 }
 header{
  background:linear-gradient(125deg,var(--navy),var(--blue),var(--royal));
  color:white;text-align:center;padding:38px 15px;
  border-bottom:4px solid var(--gold);
 }
-.brand-mark{
+.brand{
  display:inline-flex;align-items:center;justify-content:center;
- width:62px;height:62px;border:2px solid var(--gold);
- border-radius:17px;background:#0b5799;
- color:#fff;font-size:23px;font-weight:bold;margin-bottom:12px;
+ width:60px;height:60px;border:2px solid var(--gold);
+ border-radius:16px;background:#0b5799;
+ font-size:23px;font-weight:bold;margin-bottom:10px;
 }
 header h1{margin:0;font-size:clamp(25px,4vw,35px)}
-header p{margin:8px 0}
+header p{margin:7px 0}
 .hero-buttons{
- display:flex;justify-content:center;gap:12px;
- flex-wrap:wrap;margin-top:20px;
+ display:flex;justify-content:center;gap:10px;
+ flex-wrap:wrap;margin-top:18px;
 }
 .hero-buttons a{
- text-decoration:none;padding:12px 20px;border-radius:9px;
- font-weight:bold;
+ text-decoration:none;padding:11px 19px;
+ border-radius:8px;font-weight:bold;
 }
 .hero-primary{background:var(--gold);color:var(--navy)}
 .hero-secondary{border:1px solid white;color:white}
 nav{
  background:var(--navy);display:flex;justify-content:center;
- flex-wrap:wrap;gap:5px;padding:10px;position:sticky;top:0;
- z-index:100;box-shadow:0 3px 12px #0002;
+ flex-wrap:wrap;gap:5px;padding:10px;
+ position:sticky;top:0;z-index:100;
 }
 nav a{
- color:white;text-decoration:none;padding:10px 15px;
- border-radius:7px;font-size:14px;font-weight:bold;
+ color:white;text-decoration:none;padding:9px 13px;
+ border-radius:7px;font-size:13px;font-weight:bold;
 }
 nav a:hover{background:var(--royal)}
 .container{max-width:1120px;margin:auto;padding:20px}
 .card{
- background:white;padding:24px;margin:18px 0;border-radius:15px;
- border:1px solid #e2e8f0;border-top:3px solid var(--gold);
+ background:white;padding:23px;margin:18px 0;
+ border-radius:14px;border:1px solid #e2e8f0;
+ border-top:3px solid var(--gold);
  box-shadow:0 5px 18px #0b254010;
 }
 h2{
- color:var(--blue);text-align:center;margin:4px 0 12px;
- font-size:clamp(21px,3vw,27px);
+ color:var(--blue);text-align:center;
+ margin:4px 0 12px;font-size:25px;
 }
+h3{color:var(--blue)}
 .intro{text-align:center;color:#475569;line-height:1.8}
-.service-grid{
+.grid{
  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
  gap:16px;
 }
 .service{
- border:1px solid #d9e6f4;border-radius:13px;padding:19px;
+ border:1px solid #d9e6f4;border-radius:12px;
+ padding:18px;background:linear-gradient(145deg,#fff,#f4f8ff);
  display:flex;flex-direction:column;
- background:linear-gradient(145deg,#fff,#f4f8ff);
 }
-.service h3{margin:0 0 9px;color:var(--blue);font-size:18px}
-.service p{line-height:1.7;margin:7px 0}
+.service h3{margin:0 0 8px;font-size:18px}
+.service p{margin:6px 0}
 .price{
- font-size:24px;color:var(--green);font-weight:bold;
- margin-top:auto!important;
+ color:var(--green);font-size:23px;
+ font-weight:bold;margin-top:auto!important;
 }
 .note{font-size:13px;color:var(--muted);line-height:1.7}
 .btn{
- display:block;text-align:center;text-decoration:none;color:white;
+ display:block;width:100%;text-align:center;
+ text-decoration:none;color:white;
  background:linear-gradient(110deg,var(--blue),var(--royal));
- padding:13px 15px;border-radius:9px;font-weight:bold;
- margin-top:12px;border:0;width:100%;font-size:15px;
+ padding:12px 14px;border:0;border-radius:8px;
+ font-weight:bold;font-size:14px;margin-top:11px;
  cursor:pointer;line-height:1.5;
 }
 .btn:hover{filter:brightness(1.08)}
-.whatsapp{background:linear-gradient(110deg,#087c43,#16a35b)}
-.email{background:#475569}
+.green{background:linear-gradient(110deg,#087c43,#16a35b)}
+.gray{background:#475569}
 .gold{background:#9a6b12}
-.fee-box{
- background:var(--light-gold);border:1px solid #e8ca83;
- border-left:4px solid var(--gold);padding:15px;
- border-radius:9px;margin:15px 0;color:#805b12;
- line-height:1.8;
-}
-.payment-area{
- display:none;background:#f8fbff;border:1px solid #cbdced;
- border-radius:13px;padding:18px;margin-top:18px;text-align:center;
-}
-.payment-area img{
- width:220px;max-width:100%;height:auto;
- border:1px solid #dbe3ed;border-radius:10px;
- padding:7px;background:white;
-}
-.payment-area h3{color:var(--blue);margin-top:5px}
-.select-box{
- width:100%;padding:14px;border:1px solid #cbd5e1;
- border-radius:9px;font-size:16px;background:white;
- color:var(--text);margin:10px 0;
+.box{
+ background:#f3f8ff;border:1px solid #d4e2f1;
+ border-radius:10px;padding:15px;margin:14px 0;
 }
 .notice{
  background:#fff8e7;border-left:4px solid var(--gold);
- padding:14px;border-radius:8px;margin:14px 0;
+ border-radius:8px;padding:14px;margin:14px 0;
  font-size:14px;line-height:1.8;
 }
 .steps{padding-left:22px}
-.steps li{margin:10px 0;line-height:1.7}
+.steps li{margin:9px 0}
+.select{
+ width:100%;padding:13px;border:1px solid #cbd5e1;
+ border-radius:8px;font-size:15px;background:white;
+ margin:9px 0;color:var(--text);
+}
+.fee{
+ background:#fff8e7;border:1px solid #e8ca83;
+ border-left:4px solid var(--gold);
+ padding:14px;border-radius:8px;margin:14px 0;
+ line-height:1.8;color:#805b12;
+}
+.payment{
+ display:none;background:#f7fbff;
+ border:1px solid #cbdced;border-radius:12px;
+ padding:18px;margin-top:18px;text-align:center;
+}
+.payment img{
+ width:220px;max-width:100%;height:auto;
+ border:1px solid #ddd;border-radius:10px;
+ padding:6px;background:white;
+}
+.payment h3{margin-top:5px}
+.document-list li{margin:8px 0}
 .contact{text-align:center}
 footer{
  background:linear-gradient(120deg,var(--navy),var(--blue));
- color:white;text-align:center;padding:25px 12px;
+ color:white;text-align:center;padding:24px 12px;
  margin-top:30px;border-top:4px solid var(--gold);
- line-height:1.8;
 }
 footer p{margin:5px}
+[hidden]{display:none!important}
+
 @media(max-width:700px){
  .container{padding:10px}
  header{padding:30px 12px}
  nav{gap:3px}
- nav a{padding:9px 10px;font-size:12px}
- .service-grid{grid-template-columns:1fr}
+ nav a{padding:8px 9px;font-size:12px}
+ .grid{grid-template-columns:1fr}
  .card{padding:17px;margin:14px 0}
- .service{padding:17px}
+ .service{padding:16px}
+ h2{font-size:22px}
 }
 </style>
 </head>
@@ -147,243 +156,341 @@ footer p{margin:5px}
 <body>
 
 <header id="home">
- <div class="brand-mark">RC</div>
+ <div class="brand">RC</div>
  <h1>RAHUL COMPUTER'S</h1>
  <p><strong>PAN CARD DIGITAL SERVICES</strong></p>
- <p>आपकी अपनी डिजिटल सेवा केंद्र | Your Digital Service Center</p>
+ <p>आपकी अपनी डिजिटल सेवा केंद्र</p>
  <div class="hero-buttons">
   <a class="hero-primary" href="#services">PAN सेवाएँ देखें</a>
-  <a class="hero-secondary" href="#apply">अभी सेवा चुनें</a>
+  <a class="hero-secondary" href="#apply">सहायता प्राप्त करें</a>
  </div>
 </header>
 
 <nav>
  <a href="index.html">Home</a>
  <a href="#services">PAN Services</a>
- <a href="#apply">Apply / Assistance</a>
+ <a href="#apply">Apply</a>
+ <a href="#documents">Documents</a>
  <a href="#contact">Contact</a>
 </nav>
 
 <div class="container">
 
-<div class="card">
+<section class="card">
  <h2>PAN CARD सेवाएँ</h2>
  <p class="intro">
- अपनी जरूरत के अनुसार PAN सेवा चुनें। हम आपको सही आधिकारिक प्रक्रिया,
- आवेदन और डाउनलोड में सहायता प्रदान करेंगे।
+ नया PAN कार्ड, सुधार, Reprint, e-PAN और अन्य PAN सेवाओं के लिए
+ सही आधिकारिक प्रक्रिया में सहायता प्राप्त करें।
  </p>
-</div>
+ <div class="notice">
+ <strong>जरूरी सूचना:</strong>
+ हमारी वेबसाइट सहायता और मार्गदर्शन प्रदान करती है।
+ सरकारी आवेदन संबंधित आधिकारिक पोर्टल पर ही पूरा होगा।
+ सरकारी स्वीकृति की गारंटी नहीं दी जाती।
+ </div>
+</section>
 
-<div class="card" id="services">
- <h2>हमारी PAN सेवाएँ | Our Services</h2>
+<section class="card" id="services">
+ <h2>हमारी PAN सेवाएँ</h2>
 
- <div class="service-grid">
+ <div class="grid">
 
   <div class="service">
    <h3>1. नया PAN कार्ड</h3>
-   <p>नया PAN आवेदन करने की प्रक्रिया में सहायता।</p>
+   <p>भारतीय नागरिक के लिए नया PAN आवेदन करने में सहायता।</p>
    <p class="price">₹50</p>
-   <p class="note">हमारी वैकल्पिक सहायता फीस। सरकारी शुल्क अलग हो सकता है।</p>
-   <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">आधिकारिक PAN पोर्टल खोलें</a>
+   <p class="note">वैकल्पिक सहायता फीस। सरकारी शुल्क अलग।</p>
+   <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">नया PAN आवेदन पोर्टल</a>
   </div>
 
   <div class="service">
-   <h3>2. PAN Card Correction</h3>
-   <p>नाम, जन्मतिथि और अन्य विवरण में सुधार की प्रक्रिया में सहायता।</p>
+   <h3>2. PAN Correction</h3>
+   <p>नाम, जन्मतिथि, पता और अन्य विवरण में सुधार की प्रक्रिया में सहायता।</p>
    <p class="price">₹70</p>
-   <p class="note">हमारी वैकल्पिक सहायता फीस। सरकारी शुल्क अलग हो सकता है।</p>
-   <a class="btn" href="https://onlineservices.proteantech.in/paam/endUserRegisterContact.html" target="_blank" rel="noopener">Correction पोर्टल खोलें</a>
+   <p class="note">वैकल्पिक सहायता फीस। सरकारी शुल्क अलग।</p>
+   <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">Correction की आधिकारिक जानकारी</a>
   </div>
 
   <div class="service">
-   <h3>3. PAN Card Reprint</h3>
-   <p>पहले से बने PAN कार्ड की दोबारा कॉपी मँगाने में सहायता।</p>
+   <h3>3. PAN नंबर पता करें</h3>
+   <p>अपना PAN नंबर भूल जाने पर आधिकारिक तरीके से पता करने में सहायता।</p>
+   <p class="price">शुल्क पूछें</p>
+   <a class="btn green" href="https://wa.me/919752039020?text=Namaste%2C%20mujhe%20apna%20PAN%20number%20pata%20karne%20mein%20madad%20chahiye." target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a>
+  </div>
+
+  <div class="service">
+   <h3>4. PAN Reprint / PVC कार्ड</h3>
+   <p>पहले से जारी PAN कार्ड की दोबारा कॉपी प्राप्त करने में सहायता।</p>
    <p class="price">₹30</p>
-   <p class="note">हमारी वैकल्पिक सहायता फीस। पात्रता और सरकारी शुल्क लागू हो सकते हैं।</p>
-   <a class="btn" href="https://onlineservices.proteantech.in/paam/ReprintEPan.html" target="_blank" rel="noopener">Reprint पोर्टल खोलें</a>
+   <p class="note">वैकल्पिक सहायता फीस। सरकारी शुल्क अलग हो सकता है।</p>
+   <a class="btn" href="https://onlineservices.proteantech.in/paam/ReprintEPan.html" target="_blank" rel="noopener">Reprint आधिकारिक पोर्टल</a>
   </div>
 
   <div class="service">
-   <h3>4. Instant e-PAN</h3>
-   <p>पात्र आवेदकों को Income Tax Portal से e-PAN प्राप्त करने में सहायता।</p>
+   <h3>5. e-PAN PDF डाउनलोड</h3>
+   <p>पहले से जारी e-PAN PDF प्राप्त करने की प्रक्रिया में सहायता।</p>
+   <p class="price">शुल्क पूछें</p>
+   <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">e-PAN डाउनलोड जानकारी</a>
+  </div>
+
+  <div class="service">
+   <h3>6. Minor PAN कार्ड</h3>
+   <p>नाबालिग बच्चे के लिए PAN आवेदन की प्रक्रिया और दस्तावेज संबंधी सहायता।</p>
+   <p class="price">शुल्क पूछें</p>
+   <a class="btn green" href="https://wa.me/919752039020?text=Namaste%2C%20mujhe%20Minor%20PAN%20card%20ke%20liye%20madad%20chahiye." target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a>
+  </div>
+
+  <div class="service">
+   <h3>7. Instant e-PAN</h3>
+   <p>पात्र आवेदकों के लिए Income Tax Portal से Instant e-PAN प्राप्त करने में सहायता।</p>
    <p class="price">₹20</p>
-   <p class="note">सरकारी Instant e-PAN सुविधा पात्र आवेदकों के लिए निःशुल्क है। ₹20 केवल वैकल्पिक सहायता फीस है।</p>
-   <a class="btn" href="https://eportal.incometax.gov.in/iec/foservices/#/pre-login/instant-e-pan" target="_blank" rel="noopener">Income Tax Portal खोलें</a>
-  </div>
-
-  <div class="service">
-   <h3>5. PAN नंबर पता करें</h3>
-   <p>अपना PAN नंबर भूल जाने पर उसे खोजने की आधिकारिक प्रक्रिया में सहायता।</p>
-   <p class="price">शुल्क पहले पूछें</p>
-   <p class="note">पहले WhatsApp पर अपनी जरूरत बताएँ। पात्रता और उपलब्ध प्रक्रिया जाँचकर जानकारी दी जाएगी।</p>
-   <a class="btn whatsapp" href="https://wa.me/919752039020?text=Namaste%2C%20mujhe%20apna%20PAN%20number%20pata%20karne%20mein%20madad%20chahiye." target="_blank" rel="noopener">WhatsApp पर पूछें</a>
-  </div>
-
-  <div class="service">
-   <h3>6. PAN PVC कार्ड / e-PAN PDF</h3>
-   <p>मौजूदा PAN का PVC कार्ड ऑर्डर करने या उपलब्ध e-PAN PDF प्राप्त करने में सहायता।</p>
-   <p class="price">शुल्क पहले पूछें</p>
-   <p class="note">पहले WhatsApp पर संपर्क करें। उपलब्ध आधिकारिक विकल्प और लागू शुल्क बताए जाएँगे।</p>
-   <a class="btn whatsapp" href="https://wa.me/919752039020?text=Namaste%2C%20mujhe%20PAN%20PVC%20card%20ya%20e-PAN%20PDF%20ke%20liye%20madad%20chahiye." target="_blank" rel="noopener">WhatsApp पर पूछें</a>
+   <p class="note">यह केवल वैकल्पिक सहायता फीस है। पात्र आवेदकों के लिए सरकारी Instant e-PAN निःशुल्क है।</p>
+   <a class="btn" href="https://eportal.incometax.gov.in/iec/foservices/#/pre-login/instant-e-pan" target="_blank" rel="noopener">Instant e-PAN आधिकारिक पोर्टल</a>
   </div>
 
  </div>
-</div>
+</section>
 
-<div class="card" id="apply">
- <h2>सेवा चुनें और सहायता प्राप्त करें</h2>
+<section class="card" id="documents">
+ <h2>नया PAN आवेदन – जरूरी दस्तावेज</h2>
  <p class="intro">
- नीचे अपनी PAN सेवा चुनें। पहले WhatsApp पर सहायता की उपलब्धता और शुल्क की पुष्टि करें।
+ भारतीय नागरिक के Individual New PAN आवेदन के लिए Form No. 93 का उपयोग होता है।
  </p>
 
- <label for="serviceSelect"><strong>PAN सेवा चुनें | Select Service</strong></label>
- <select class="select-box" id="serviceSelect">
-  <option value="">-- सेवा चुनें --</option>
-  <option value="नया PAN कार्ड" data-fee="50">नया PAN कार्ड - ₹50</option>
-  <option value="PAN Correction" data-fee="70">PAN Correction - ₹70</option>
-  <option value="PAN Reprint" data-fee="30">PAN Reprint - ₹30</option>
-  <option value="Instant e-PAN सहायता" data-fee="20">Instant e-PAN सहायता - ₹20</option>
-  <option value="PAN नंबर पता करना" data-fee="">PAN नंबर पता करना - शुल्क पूछें</option>
-  <option value="PAN PVC कार्ड / e-PAN PDF" data-fee="">PAN PVC कार्ड / e-PAN PDF - शुल्क पूछें</option>
- </select>
+ <h3>1. पहचान प्रमाण (Proof of Identity)</h3>
+ <ul class="document-list">
+  <li>Aadhaar Card</li>
+  <li>Indian Passport</li>
+  <li>Driving Licence</li>
+  <li>Voter ID</li>
+  <li>फोटो वाला Ration Card (जहाँ स्वीकार्य हो)</li>
+  <li>अन्य निर्धारित सरकारी पहचान प्रमाण</li>
+ </ul>
 
- <div class="fee-box" id="feeBox">
-  सेवा चुनने पर सहायता शुल्क की जानकारी यहाँ दिखाई देगी।
+ <h3>2. पता प्रमाण (Proof of Address)</h3>
+ <ul class="document-list">
+  <li>Aadhaar Card</li>
+  <li>Indian Passport</li>
+  <li>Voter ID</li>
+  <li>Driving Licence</li>
+  <li>Post Office Passbook जिसमें आवेदक का पता हो</li>
+  <li>सरकारी Domicile Certificate</li>
+ </ul>
+
+ <h3>3. जन्मतिथि प्रमाण (Proof of Date of Birth)</h3>
+ <ul class="document-list">
+  <li>Birth Certificate</li>
+  <li>Indian Passport</li>
+  <li>Driving Licence</li>
+  <li>Voter ID</li>
+  <li>Matriculation Certificate / Marksheet</li>
+  <li>सरकारी Domicile Certificate या अन्य निर्धारित प्रमाण</li>
+ </ul>
+
+ <div class="notice">
+ <strong>ध्यान दें:</strong>
+ हर दस्तावेज तीनों श्रेणियों में मान्य नहीं होता।
+ कौन-सा दस्तावेज किस प्रमाण के लिए स्वीकार होगा,
+ इसकी पुष्टि आधिकारिक दस्तावेज सूची से करें।
  </div>
 
- <a class="btn whatsapp" id="contactService" href="https://wa.me/919752039020" target="_blank" rel="noopener">
+ <a class="btn" href="https://tinpan.proteantech.in/services/pan/documents-req" target="_blank" rel="noopener">आधिकारिक Documents List देखें</a>
+</section>
+
+<section class="card">
+ <h2>नया PAN आवेदन कैसे पूरा होगा?</h2>
+
+ <ol class="steps">
+  <li>आधिकारिक Protean PAN पोर्टल खोलें।</li>
+  <li>New PAN Application में Form No. 93 – Indian Citizen चुनें।</li>
+  <li>शुरुआती जानकारी भरकर आवेदन का Token Number प्राप्त करें।</li>
+  <li>Token Number से आवेदन दोबारा खोलकर पूरा विवरण भरें।</li>
+  <li>नाम, जन्मतिथि, पता और अन्य जानकारी जाँचें।</li>
+  <li>आधिकारिक पोर्टल पर उपलब्ध e-KYC/e-Sign या अन्य स्वीकार्य दस्तावेज प्रक्रिया चुनें।</li>
+  <li>सरकारी आवेदन शुल्क आधिकारिक पोर्टल पर जमा करें।</li>
+  <li>आवेदन जमा होने के बाद Acknowledgement / Reference Number सुरक्षित रखें।</li>
+  <li>इसी नंबर से आवेदन की स्थिति जाँचें। स्वीकृति के बाद e-PAN या Physical PAN प्राप्त करें, जैसा चुना गया हो।</li>
+ </ol>
+
+ <div class="notice">
+ <strong>महत्वपूर्ण:</strong>
+ आवेदन पूरा करने के लिए ग्राहक को आवश्यक OTP, सत्यापन और भुगतान स्वयं आधिकारिक पोर्टल पर करना होगा।
+ हम बिना अधिकृत अनुमति ग्राहक की ओर से सरकारी आवेदन जमा करने का दावा नहीं करते।
+ </div>
+
+ <a class="btn" href="https://tinpan.proteantech.in/services/pan/pan-index.html" target="_blank" rel="noopener">Protean Official PAN Portal खोलें</a>
+ <a class="btn gray" href="https://tinpan.proteantech.in/services/pan/instructions-form_93-form_94.html" target="_blank" rel="noopener">Form 93 Instructions पढ़ें</a>
+</section>
+
+<section class="card" id="apply">
+ <h2>सेवा चुनें और सहायता प्राप्त करें</h2>
+ <p class="intro">
+ अपनी जरूरत के अनुसार सेवा चुनें।
+ पहले WhatsApp पर सेवा की उपलब्धता और सहायता फीस की पुष्टि करें।
+ </p>
+
+ <label for="serviceSelect"><strong>PAN सेवा चुनें</strong></label>
+ <select class="select" id="serviceSelect">
+  <option value="">-- PAN सेवा चुनें --</option>
+  <option value="नया PAN कार्ड" data-fee="50">नया PAN कार्ड - ₹50</option>
+  <option value="PAN Correction" data-fee="70">PAN Correction - ₹70</option>
+  <option value="PAN Reprint / PVC कार्ड" data-fee="30">PAN Reprint / PVC कार्ड - ₹30</option>
+  <option value="Instant e-PAN सहायता" data-fee="20">Instant e-PAN सहायता - ₹20</option>
+  <option value="PAN नंबर पता करना">PAN नंबर पता करना - शुल्क पूछें</option>
+  <option value="e-PAN PDF डाउनलोड">e-PAN PDF डाउनलोड - शुल्क पूछें</option>
+  <option value="Minor PAN कार्ड">Minor PAN कार्ड - शुल्क पूछें</option>
+ </select>
+
+ <div class="fee" id="feeBox">
+  सेवा चुनने पर सहायता फीस यहाँ दिखाई देगी।
+ </div>
+
+ <a class="btn green" id="confirmService" href="https://wa.me/919752039020" target="_blank" rel="noopener">
   WhatsApp पर सेवा की पुष्टि करें
  </a>
 
- <div class="payment-area" id="paymentArea">
-  <h3>UPI से सहायता फीस भुगतान</h3>
-  <p>पहले WhatsApp पर सेवा और फीस की पुष्टि करें। उसके बाद ही QR स्कैन करके भुगतान करें।</p>
-
-  <img src="rahul-upi-qr.png" alt="RAHUL COMPUTER'S UPI Payment QR Code">
-
-  <p><strong id="paymentAmount"></strong></p>
-  <p class="note">QR को अपने UPI ऐप से स्कैन करें। भुगतान से पहले प्राप्तकर्ता का नाम और राशि जाँच लें।</p>
-
+ <div id="paymentStep" hidden>
   <div class="notice">
-   <strong>ध्यान दें:</strong> भुगतान के बाद UTR नंबर WhatsApp पर भेजें।
-   भुगतान की पुष्टि बैंक/UPI ऐप में जाँचने के बाद ही सहायता प्रक्रिया शुरू होगी।
-   केवल स्क्रीनशॉट को भुगतान का प्रमाण नहीं माना जाएगा।
+   <strong>भुगतान से पहले:</strong>
+   WhatsApp पर हमारी तरफ से सेवा और सहायता फीस की पुष्टि मिलने के बाद ही भुगतान करें।
   </div>
 
-  <button class="btn whatsapp" id="sendPaymentDetails" type="button">
-   भुगतान विवरण WhatsApp पर भेजें
+  <button class="btn gold" id="showQR" type="button">
+   पुष्टि हो गई – UPI QR दिखाएँ
   </button>
  </div>
 
- <div class="notice">
-  सरकारी पोर्टल की फीस, यदि लागू हो, अलग हो सकती है।
-  हमारी सहायता फीस सरकारी शुल्क नहीं है। सरकारी आवेदन संबंधित आधिकारिक पोर्टल पर ही पूरा होगा।
+ <div class="payment" id="paymentArea">
+  <h3>UPI सहायता फीस भुगतान</h3>
+  <p id="paymentAmount"></p>
+
+  <img src="rahul-upi-qr.png" alt="RAHUL COMPUTER'S UPI QR Code">
+
+  <p class="note">
+   अपने UPI ऐप से QR स्कैन करें।
+   भुगतान से पहले प्राप्तकर्ता का नाम और राशि जाँच लें।
+  </p>
+
+  <div class="notice">
+   भुगतान करने के बाद UTR नंबर WhatsApp पर भेजें।
+   बैंक/UPI ऐप में भुगतान की पुष्टि होने के बाद ही सहायता प्रक्रिया शुरू होगी।
+   केवल स्क्रीनशॉट भुगतान का प्रमाण नहीं है।
+  </div>
+
+  <button class="btn green" id="sendUTR" type="button">
+   UTR नंबर भेजने के लिए WhatsApp खोलें
+  </button>
  </div>
-</div>
+</section>
 
-<div class="card">
- <h2>काम कैसे होगा? | How It Works</h2>
- <ol class="steps">
-  <li>अपनी जरूरत के अनुसार PAN सेवा चुनें।</li>
-  <li>WhatsApp पर हमसे सेवा की उपलब्धता और सहायता फीस की पुष्टि करें।</li>
-  <li>सहमति होने पर QR से सहायता फीस का भुगतान करें।</li>
-  <li>भुगतान का UTR नंबर WhatsApp पर भेजें।</li>
-  <li>आवश्यक सरकारी प्रक्रिया और OTP/सत्यापन ग्राहक स्वयं आधिकारिक पोर्टल पर पूरा करेगा।</li>
-  <li>जहाँ सहायता उपलब्ध होगी, वहाँ आवेदन की प्रक्रिया और PAN डाउनलोड करने में मदद मिलेगी।</li>
- </ol>
-</div>
+<section class="card">
+ <h2>शुल्क संबंधी जानकारी</h2>
 
-<div class="card">
- <h2>महत्वपूर्ण सुरक्षा जानकारी</h2>
  <div class="notice">
-  <p>• PAN आवेदन केवल अधिकृत सरकारी/सेवा प्रदाता पोर्टल से ही पूरा होगा।</p>
-  <p>• Aadhaar OTP, UPI PIN, पासवर्ड या बैंक PIN किसी के साथ साझा न करें।</p>
-  <p>• सहायता फीस और सरकारी फीस अलग-अलग हैं।</p>
-  <p>• Instant e-PAN पात्र आवेदकों के लिए सरकारी पोर्टल पर निःशुल्क है।</p>
-  <p>• आवेदन की स्वीकृति संबंधित सरकारी विभाग के नियमों और सत्यापन पर निर्भर करती है।</p>
-  <p>• भुगतान करने से PAN स्वीकृति या निश्चित समय में जारी होने की गारंटी नहीं मिलती।</p>
+  <p><strong>हमारी सहायता फीस:</strong> केवल मार्गदर्शन और सहायता के लिए है।</p>
+  <p><strong>सरकारी फीस:</strong> आवेदन के प्रकार, डिजिटल/फिजिकल प्रक्रिया और कार्ड विकल्प के अनुसार अलग हो सकती है।</p>
+  <p><strong>भुगतान:</strong> सरकारी फीस संबंधित आधिकारिक पोर्टल पर अलग से जमा होगी।</p>
+  <p><strong>Instant e-PAN:</strong> पात्र आवेदकों के लिए सरकारी सेवा निःशुल्क है। हमारी सहायता फीस वैकल्पिक है।</p>
  </div>
-</div>
 
-<div class="card contact" id="contact">
+ <a class="btn" href="https://tinpan.proteantech.in/faqs/pan/faq-pan-reqfornewpan.html" target="_blank" rel="noopener">Protean की आधिकारिक फीस जानकारी</a>
+</section>
+
+<section class="card contact" id="contact">
  <h2>संपर्क करें | Contact Us</h2>
  <p><strong>RAHUL COMPUTER'S</strong></p>
- <p>मोबाइल / WhatsApp: 9752039020</p>
+ <p>Mobile / WhatsApp: 9752039020</p>
  <p>Email: rahulsenhelp@gmail.com</p>
+ <p>Amiliya, Maihar, Madhya Pradesh</p>
 
- <a class="btn whatsapp" href="https://wa.me/919752039020" target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a>
- <a class="btn email" href="mailto:rahulsenhelp@gmail.com?subject=PAN%20Card%20Service%20Enquiry">ईमेल भेजें</a>
- <a class="btn back" href="index.html">मुख्य वेबसाइट पर वापस जाएँ</a>
-</div>
+ <a class="btn green" href="https://wa.me/919752039020" target="_blank" rel="noopener">WhatsApp पर संपर्क करें</a>
+ <a class="btn gray" href="mailto:rahulsenhelp@gmail.com?subject=PAN%20Service%20Enquiry">ईमेल भेजें</a>
+ <a class="btn" href="index.html">मुख्य वेबसाइट पर वापस जाएँ</a>
+</section>
 
 </div>
 
 <footer>
  <p><strong>RAHUL COMPUTER'S</strong></p>
- <p>आपकी सेवा, हमारा उद्देश्य। | Your Service, Our Commitment. 🙏</p>
- <p>Amiliya, Maihar, Madhya Pradesh</p>
+ <p>आपकी सेवा, हमारा उद्देश्य। 🙏</p>
+ <p>Official applications are subject to government verification and approval.</p>
 </footer>
 
 <script>
 const fees={
  "नया PAN कार्ड":50,
  "PAN Correction":70,
- "PAN Reprint":30,
+ "PAN Reprint / PVC कार्ड":30,
  "Instant e-PAN सहायता":20
 };
 
-const select=document.getElementById("serviceSelect");
+const serviceSelect=document.getElementById("serviceSelect");
 const feeBox=document.getElementById("feeBox");
+const confirmService=document.getElementById("confirmService");
+const paymentStep=document.getElementById("paymentStep");
 const paymentArea=document.getElementById("paymentArea");
-const contactButton=document.getElementById("contactService");
 const paymentAmount=document.getElementById("paymentAmount");
-const paymentButton=document.getElementById("sendPaymentDetails");
 
 let selectedService="";
 let selectedFee=null;
 
-select.addEventListener("change",function(){
+function hidePayment(){
+ paymentStep.hidden=true;
+ paymentArea.style.display="none";
+}
+
+serviceSelect.addEventListener("change",function(){
  selectedService=this.value;
  selectedFee=fees[selectedService] ?? null;
-
- paymentArea.style.display="none";
+ hidePayment();
 
  if(!selectedService){
-  feeBox.textContent="सेवा चुनने पर सहायता शुल्क की जानकारी यहाँ दिखाई देगी।";
-  contactButton.href="https://wa.me/919752039020";
+  feeBox.textContent="सेवा चुनने पर सहायता फीस यहाँ दिखाई देगी।";
+  confirmService.href="https://wa.me/919752039020";
   return;
  }
 
  if(selectedFee!==null){
-  feeBox.innerHTML="<strong>सहायता फीस: ₹"+selectedFee+
-  "</strong><br>पहले WhatsApp पर सेवा की उपलब्धता की पुष्टि करें। सरकारी शुल्क अलग हो सकता है।";
+  feeBox.innerHTML=
+   "<strong>वैकल्पिक सहायता फीस: ₹"+selectedFee+
+   "</strong><br>सरकारी पोर्टल शुल्क अलग हो सकता है। पहले WhatsApp पर पुष्टि करें।";
 
-  paymentAmount.textContent="भुगतान राशि: ₹"+selectedFee+
-  " (केवल सहायता फीस)";
-
-  paymentArea.style.display="block";
+  paymentAmount.textContent=
+   "आपकी सहायता फीस: ₹"+selectedFee;
+  paymentStep.hidden=false;
  }else{
-  feeBox.textContent="इस सेवा का शुल्क पहले WhatsApp पर पूछें। सेवा की उपलब्धता और प्रक्रिया की पुष्टि के बाद ही भुगतान करें।";
+  feeBox.innerHTML=
+   "<strong>इस सेवा की फीस पहले पूछें।</strong><br>उपलब्धता और प्रक्रिया की पुष्टि के बाद ही भुगतान करें।";
  }
 
- const message="नमस्ते RAHUL COMPUTER'S, मुझे "+selectedService+
- " सेवा चाहिए। कृपया उपलब्धता, प्रक्रिया और शुल्क की जानकारी दें।";
+ const message=
+  "नमस्ते RAHUL COMPUTER'S, मुझे "+selectedService+
+  " सेवा चाहिए। कृपया सेवा की उपलब्धता, प्रक्रिया और सहायता फीस बताएं।";
 
- contactButton.href="https://wa.me/919752039020?text="+encodeURIComponent(message);
+ confirmService.href=
+  "https://wa.me/919752039020?text="+encodeURIComponent(message);
 });
 
-paymentButton.addEventListener("click",function(){
+document.getElementById("showQR").addEventListener("click",function(){
  if(!selectedService || selectedFee===null){
   alert("कृपया पहले शुल्क वाली PAN सेवा चुनें।");
   return;
  }
 
+ paymentArea.style.display="block";
+ paymentArea.scrollIntoView({behavior:"smooth",block:"center"});
+});
+
+document.getElementById("sendUTR").addEventListener("click",function(){
+ if(!selectedService || selectedFee===null)return;
+
  const message=
- "नमस्ते RAHUL COMPUTER'S\n"+
- "मुझे "+selectedService+" सेवा चाहिए।\n"+
- "सहायता फीस: ₹"+selectedFee+"\n"+
- "मैंने UPI से भुगतान किया है।\n"+
- "कृपया UTR नंबर और भुगतान की पुष्टि के लिए मार्गदर्शन दें।";
+  "नमस्ते RAHUL COMPUTER'S\n\n"+
+  "सेवा: "+selectedService+"\n"+
+  "सहायता फीस: ₹"+selectedFee+"\n"+
+  "भुगतान किया है।\n"+
+  "UTR नंबर: (यहाँ अपना UTR नंबर लिखें)\n\n"+
+  "कृपया भुगतान की पुष्टि करके आगे की प्रक्रिया बताएं।";
 
  window.open(
   "https://wa.me/919752039020?text="+encodeURIComponent(message),
@@ -393,4 +500,4 @@ paymentButton.addEventListener("click",function(){
 </script>
 
 </body>
-</html>
+ </html>
