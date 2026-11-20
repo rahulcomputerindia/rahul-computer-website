@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#071d49">
-<meta name="description" content="RAHUL COMPUTER'S - PAN, Aadhaar, Samagra, Voter ID, MP Certificates, Ayushman and Digital Services">
+<meta name="description" content="RAHUL COMPUTER'S - PAN, Aadhaar, Samagra, Voter ID, MP Certificates, Ayushman, Farmer ID, E-Shram and Digital Services">
 <title>RAHUL COMPUTER'S | Digital Services</title>
 
 <style>
@@ -132,7 +132,7 @@ footer a{color:var(--gold);margin:0 8px;font-size:14px}
 <section class="hero" id="home">
  <div class="container">
   <h1>Welcome to <span>RAHUL COMPUTER'S</span></h1>
-  <p>आपकी डिजिटल सेवाएँ, अब एक ही जगह। PAN Card, Aadhaar, Samagra, Voter ID, प्रमाण पत्र, Ayushman और अन्य सेवाओं की जानकारी एवं आधिकारिक पोर्टल लिंक प्राप्त करें।</p>
+  <p>आपकी डिजिटल सेवाएँ, अब एक ही जगह। PAN Card, Aadhaar, Samagra, Voter ID, प्रमाण पत्र, Ayushman, Farmer ID, E-Shram और अन्य सेवाओं की जानकारी एवं आधिकारिक पोर्टल लिंक प्राप्त करें।</p>
   <a class="btn" href="#services">सभी सेवाएँ देखें</a>
  </div>
 </section>
@@ -345,7 +345,7 @@ const services = [
 },
 {
  name:"CAST CERTIFICATE",icon:"📄",description:"जाति प्रमाण पत्र आवेदन और प्रमाण पत्र प्राप्ति।",
- url:"https://eseva.mp.gov.in/",
+ url:"https://mpedistrict.gov.in/",
  items:[
  ["जाति प्रमाण पत्र बनवाएं","मध्य प्रदेश के नागरिक सेवा पोर्टल पर आवेदन प्रक्रिया और दस्तावेज देखें।"],
  ["जाति प्रमाण पत्र प्रिंट","जारी प्रमाण पत्र डाउनलोड/प्रिंट करने के लिए आधिकारिक पोर्टल पर जाएँ।"]
@@ -353,7 +353,7 @@ const services = [
 },
 {
  name:"INCOME CERTIFICATE",icon:"💰",description:"आय प्रमाण पत्र आवेदन और डाउनलोड।",
- url:"https://eseva.mp.gov.in/",
+ url:"https://mpedistrict.gov.in/",
  items:[
  ["आय प्रमाण पत्र बनवाएं","आय प्रमाण पत्र के लिए आवेदन और जरूरी दस्तावेज देखें।"],
  ["आय प्रमाण पत्र प्रिंट","जारी प्रमाण पत्र डाउनलोड करने के लिए आधिकारिक पोर्टल देखें।"]
@@ -361,7 +361,7 @@ const services = [
 },
 {
  name:"DOMICILE CERTIFICATE",icon:"🏠",description:"मध्य प्रदेश मूल निवासी/निवास प्रमाण पत्र सेवाएँ।",
- url:"https://eseva.mp.gov.in/",
+ url:"https://mpedistrict.gov.in/",
  items:[
  ["निवास प्रमाण पत्र बनवाएं","निवास प्रमाण पत्र आवेदन की पात्रता और दस्तावेज देखें।"],
  ["निवास प्रमाण पत्र प्रिंट","जारी प्रमाण पत्र डाउनलोड करने के लिए आधिकारिक पोर्टल देखें।"]
@@ -409,23 +409,27 @@ function renderCategories(filter=""){
 function showCategory(index){
  const cat=services[index];
 
- // PAN, SAMAGRA और VOTER ID के अलग-अलग पेज खोलें
- if(cat.name==="PAN CARD"){
-  window.location.href="pan.html";
+ // सभी अलग-अलग सर्विस पेज एक साथ जोड़ दिए गए हैं
+ const servicePages={
+  "PAN CARD":"pan.html",
+  "AADHAAR":"aadhaar.html",
+  "SAMAGRA":"samagra.html",
+  "VOTER ID":"voter.html",
+  "SAMBAL":"sambal.html",
+  "FARMER":"farmer.html",
+  "CAST CERTIFICATE":"certificate.html",
+  "INCOME CERTIFICATE":"certificate.html",
+  "DOMICILE CERTIFICATE":"certificate.html",
+  "AYUSHMAN":"ayushman.html",
+  "E-SHRAM":"eshram.html"
+ };
+
+ if(servicePages[cat.name]){
+  window.location.href=servicePages[cat.name];
   return;
  }
 
- if(cat.name==="SAMAGRA"){
-  window.location.href="samagra.html";
-  return;
- }
-
- if(cat.name==="VOTER ID"){
-  window.location.href="voter.html";
-  return;
- }
-
- // बाकी Categories मुख्य वेबसाइट पर ही खुलेंगी
+ // अन्य Categories के लिए पुराना तरीका सुरक्षित रहेगा
  $("serviceDetails").classList.remove("hidden");
  $("detailTitle").textContent=cat.icon+" "+cat.name;
  $("detailDescription").textContent=cat.description;
@@ -607,4 +611,4 @@ function printTextDocument(){
 }
 </script>
 </body>
- </html>
+       </html>
