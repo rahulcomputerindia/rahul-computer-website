@@ -4,20 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#071d49">
-<title>RAHUL COMPUTER'S | Digital Services</title>
+<meta name="description" content="RAHUL COMPUTER'S - Online Resume, PDF, Photo and Document Tools">
+<title>RAHUL COMPUTER'S | Online Digital Tools</title>
 
 <style>
 :root{
- --navy:#071d49;
- --blue:#073b75;
- --royal:#087ac2;
- --gold:#e9b949;
- --light:#f1f5f9;
- --white:#fff;
- --text:#172033;
- --muted:#64748b;
- --green:#16834a;
- --red:#c62828;
+ --navy:#071d49;--blue:#073b75;--royal:#087ac2;
+ --gold:#e9b949;--light:#f1f5f9;--white:#fff;
+ --text:#172033;--muted:#64748b;--green:#16834a;--red:#c62828;
 }
 *{box-sizing:border-box;scroll-behavior:smooth}
 body{margin:0;font-family:Arial,sans-serif;background:var(--light);color:var(--text);line-height:1.6}
@@ -30,12 +24,13 @@ header{
  justify-content:space-between;gap:15px;flex-wrap:wrap;
  position:sticky;top:0;z-index:1000;box-shadow:0 3px 12px #0002
 }
-.logo{font-size:21px;font-weight:900;letter-spacing:.4px}
+.logo{font-size:21px;font-weight:900}
 .logo span{color:var(--gold)}
-nav{display:flex;gap:17px;align-items:center;flex-wrap:wrap}
-nav a{font-size:14px;font-weight:bold;color:white}
+nav{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+nav a{font-size:14px;font-weight:bold}
 nav a:hover{color:var(--gold)}
-.menu-btn{display:none;background:transparent;color:white;border:1px solid #ffffff70;padding:6px 12px;border-radius:7px}
+.menu-btn{display:none;background:transparent;color:white;border:1px solid #ffffff70;padding:7px 12px;border-radius:7px}
+.container{width:min(1120px,92%);margin:auto}
 .hero{
  background:linear-gradient(120deg,#071d49,#075c9b);
  color:white;text-align:center;padding:65px 18px
@@ -50,90 +45,68 @@ nav a:hover{color:var(--gold)}
 .btn.blue{background:var(--blue);color:white}
 .btn.green{background:var(--green);color:white}
 .btn.red{background:var(--red);color:white}
-.btn.light{background:#eaf2ff;color:var(--blue)}
-.container{width:min(1120px,92%);margin:auto}
-section{padding:48px 0}
-.section-title{text-align:center;margin:0 0 25px;color:var(--navy);font-size:28px}
-.section-sub{text-align:center;color:var(--muted);margin:-16px 0 25px}
-.about-card,.form-card,.info-card,.partner-banner,.admin-card{
- background:white;border-radius:14px;padding:23px;
- box-shadow:0 5px 22px #0b28520d;border:1px solid #e2e8f0
+.btn:disabled{opacity:.5;cursor:not-allowed}
+section{padding:45px 0}
+.section-title{text-align:center;margin:0 0 12px;color:var(--navy);font-size:28px}
+.section-sub{text-align:center;color:var(--muted);margin:0 0 25px}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.service-card{
+ background:white;border:1px solid #e2e8f0;border-radius:13px;
+ padding:20px;box-shadow:0 3px 12px #00000008
 }
-.about-card{text-align:center}
-.service-tools{display:flex;gap:10px;max-width:650px;margin:0 auto 22px}
+.service-card .symbol{font-size:32px}
+.service-card h3{margin:7px 0;color:var(--blue)}
+.service-card p{color:var(--muted);font-size:14px;min-height:44px}
+.service-card button{width:100%;margin-top:8px}
+.panel{
+ background:white;border:1px solid #e2e8f0;border-radius:14px;
+ padding:22px;box-shadow:0 5px 22px #0b28520d
+}
+.tool-panel{max-width:850px;margin:auto}
+.tool-panel h3{margin-top:0;color:var(--blue)}
 input,select,textarea{
- width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;
- background:white;color:var(--text);outline:none
+ width:100%;padding:12px;border:1px solid #cbd5e1;
+ border-radius:8px;background:white;color:var(--text);outline:none
 }
 input:focus,select:focus,textarea:focus{border-color:var(--royal);box-shadow:0 0 0 2px #087ac21c}
-.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.service-card{
- background:white;border:1px solid #e2e8f0;border-radius:12px;
- padding:19px;box-shadow:0 3px 12px #00000008
-}
-.service-card h3{margin:0 0 8px;color:var(--blue);font-size:18px}
-.service-card p{margin:0 0 13px;color:var(--muted);font-size:14px}
-.service-card a{color:var(--royal);font-weight:bold;font-size:14px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.form-card{max-width:800px;margin:auto}
-.form-card h3{color:var(--blue);margin-top:0}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
 .full{grid-column:1/-1}
 .note{font-size:13px;color:var(--muted)}
-.status-message{padding:12px;border-radius:8px;margin-top:12px;display:none;overflow-wrap:anywhere}
-.success{display:block;background:#e8f7ee;color:#176b3a}
-.error{display:block;background:#fff0f0;color:#a51f1f}
-.info{display:block;background:#eaf3ff;color:#164a80}
-.track-result{margin-top:15px}
-.track-row{padding:9px 0;border-bottom:1px solid #e2e8f0}
-.track-row strong{color:var(--blue)}
-.payment-qr{display:block;width:190px;max-width:100%;margin:15px auto;border:1px solid #ddd;border-radius:10px}
-.partner-banner{
- background:linear-gradient(120deg,#071d49,#087ac2);color:white;
- display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap
-}
-.partner-banner h2{margin:0 0 5px}
-.partner-banner p{margin:0;color:#e5efff}
-.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.contact-item{background:white;border-radius:12px;padding:18px;text-align:center;border:1px solid #e2e8f0}
-.contact-item h3{color:var(--blue);margin:0 0 6px}
-.admin-card{max-width:480px;margin:auto}
-footer{background:var(--navy);color:white;text-align:center;padding:25px 12px}
-footer a{color:var(--gold);margin:0 7px;font-size:14px}
-footer p{margin:8px 0;font-size:13px;color:#dbeafe}
+.status{padding:12px;border-radius:8px;margin-top:12px;display:none;overflow-wrap:anywhere}
+.status.success{display:block;background:#e8f7ee;color:#176b3a}
+.status.error{display:block;background:#fff0f0;color:#a51f1f}
+.status.info{display:block;background:#eaf3ff;color:#164a80}
 .hidden{display:none!important}
-@media(max-width:800px){
- .service-grid{grid-template-columns:repeat(2,1fr)}
- nav{gap:11px}
-}
+.tool-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.preview{background:#f8fafc;border:1px dashed #cbd5e1;border-radius:9px;padding:15px;margin-top:15px;overflow:auto}
+.preview img{max-width:100%;height:auto}
+.contact{text-align:center;background:white;border:1px solid #e2e8f0;border-radius:12px;padding:22px}
+footer{background:var(--navy);color:white;text-align:center;padding:25px 12px}
+footer a{color:var(--gold);margin:0 8px;font-size:14px}
+@media(max-width:800px){.service-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){
  header{padding:12px 4%}
  .menu-btn{display:block}
  nav{display:none;width:100%;flex-direction:column;align-items:flex-start;padding:8px 0}
  nav.open{display:flex}
  .hero{padding:48px 15px}
- .service-grid,.contact-grid{grid-template-columns:1fr}
- .form-grid{grid-template-columns:1fr}
+ .service-grid,.grid2{grid-template-columns:1fr}
  .full{grid-column:auto}
- .service-tools{flex-direction:column}
  .section-title{font-size:24px}
 }
 </style>
 </head>
 
 <body>
-
 <header>
- <a class="logo" href="index.html">RAHUL <span>COMPUTER'S</span></a>
- <button class="menu-btn" id="menuBtn" type="button">☰ Menu</button>
+ <a class="logo" href="#home">RAHUL <span>COMPUTER'S</span></a>
+ <button class="menu-btn" id="menuBtn">☰ Menu</button>
  <nav id="mainNav">
   <a href="#home">Home</a>
-  <a href="#about">About</a>
   <a href="#services">Services</a>
-  <a href="#apply">Apply Online</a>
-  <a href="#tracking">Track Application</a>
+  <a href="#tools">Use Tools</a>
   <a href="#contact">Contact</a>
-  <a href="services.html">All Services</a>
-  <a href="partner.html">Partner Portal</a>
  </nav>
 </header>
 
@@ -141,212 +114,168 @@ footer p{margin:8px 0;font-size:13px;color:#dbeafe}
 <section class="hero" id="home">
  <div class="container">
   <h1>Welcome to <span>RAHUL COMPUTER'S</span></h1>
-  <p>आपकी सभी Digital Services और Online Applications के लिए एक विश्वसनीय सहायता केंद्र। घर बैठे ऑनलाइन आवेदन की सुविधा प्राप्त करें।</p>
-  <a class="btn" href="#apply">Apply Online</a>
-  <a class="btn blue" href="#services">Our Services</a>
- </div>
-</section>
-
-<section id="about">
- <div class="container">
-  <h2 class="section-title">About RAHUL COMPUTER'S</h2>
-  <div class="about-card">
-   <h3 style="color:#073b75">आपकी डिजिटल सेवाओं का साथी</h3>
-   <p>RAHUL COMPUTER'S के माध्यम से विभिन्न सरकारी एवं गैर-सरकारी ऑनलाइन सेवाओं के आवेदन में सहायता उपलब्ध कराई जाती है। हमारा उद्देश्य लोगों को डिजिटल सेवाओं तक सरल पहुँच प्रदान करना है।</p>
-   <p class="note">हम सरकारी विभाग नहीं हैं। सभी सेवाएँ संबंधित विभाग के नियमों, पात्रता और उपलब्ध आधिकारिक सुविधाओं के अनुसार की जाती हैं।</p>
-  </div>
+  <p>अपना डिजिटल काम खुद करें। Resume बनाएँ, PDF तैयार करें और फोटो Resize करें — आसान तरीके से, सीधे अपने मोबाइल या कंप्यूटर पर।</p>
+  <a class="btn" href="#services">Explore Services</a>
  </div>
 </section>
 
 <section id="services">
  <div class="container">
-  <h2 class="section-title">Our Digital Services</h2>
-  <p class="section-sub">अपनी आवश्यक सेवा चुनें</p>
-  <div class="service-tools">
-   <input id="serviceSearch" type="search" placeholder="Search service...">
-   <a class="btn blue" href="services.html">All Services</a>
-  </div>
-
-  <div class="service-grid" id="serviceGrid">
-   <div class="service-card" data-search="pan card new correction reprint">
-    <h3>PAN Card Services</h3>
-    <p>New PAN, Correction, Reprint और अन्य PAN सहायता।</p>
-    <a href="pan.html">View PAN Services →</a>
+  <h2 class="section-title">Our Online Services</h2>
+  <p class="section-sub">अपनी जरूरत की सेवा चुनें और तुरंत इस्तेमाल करें।</p>
+  <div class="service-grid">
+   <div class="service-card">
+    <div class="symbol">📄</div>
+    <h3>Resume Maker</h3>
+    <p>अपनी जानकारी भरकर Resume तैयार करें और PDF प्रिंट या सेव करें।</p>
+    <button class="btn blue" onclick="openTool('resume')">Resume बनाएँ</button>
    </div>
-   <div class="service-card" data-search="ayushman card health card">
-    <h3>Ayushman Card</h3>
-    <p>Ayushman Card आवेदन एवं उपलब्ध e-KYC सहायता।</p>
-    <a href="#apply" data-service="Ayushman Card">Apply Now →</a>
+   <div class="service-card">
+    <div class="symbol">📑</div>
+    <h3>PDF Merge</h3>
+    <p>एक से अधिक PDF फाइलों को एक PDF में जोड़ें।</p>
+    <button class="btn blue" onclick="openTool('merge')">PDF जोड़ें</button>
    </div>
-   <div class="service-card" data-search="samagra id family member">
-    <h3>Samagra ID</h3>
-    <p>Samagra ID से संबंधित उपलब्ध ऑनलाइन सहायता।</p>
-    <a href="#apply" data-service="Samagra ID">Apply Now →</a>
+   <div class="service-card">
+    <div class="symbol">✂️</div>
+    <h3>PDF Split</h3>
+    <p>PDF के चुने हुए पेज अलग PDF में निकालें।</p>
+    <button class="btn blue" onclick="openTool('split')">PDF Split करें</button>
    </div>
-   <div class="service-card" data-search="voter id election card">
-    <h3>Voter ID Card</h3>
-    <p>Voter ID आवेदन एवं सुधार संबंधी सहायता।</p>
-    <a href="#apply" data-service="Voter ID Card">Apply Now →</a>
+   <div class="service-card">
+    <div class="symbol">🗜️</div>
+    <h3>PDF Compress</h3>
+    <p>PDF को दोबारा सेव करके उसका आकार कम करने का प्रयास करें।</p>
+    <button class="btn blue" onclick="openTool('compress')">PDF Compress करें</button>
    </div>
-   <div class="service-card" data-search="e shram card">
-    <h3>e-Shram Card</h3>
-    <p>e-Shram पंजीयन संबंधी सहायता।</p>
-    <a href="#apply" data-service="e-Shram Card">Apply Now →</a>
+   <div class="service-card">
+    <div class="symbol">📷</div>
+    <h3>Photo Resize</h3>
+    <p>फोटो की चौड़ाई, ऊँचाई और फाइल फॉर्मेट बदलें।</p>
+    <button class="btn blue" onclick="openTool('photo')">Photo Resize करें</button>
    </div>
-   <div class="service-card" data-search="farmer id kisan registry">
-    <h3>Farmer ID</h3>
-    <p>Farmer Registry / Kisan ID संबंधी सहायता।</p>
-    <a href="#apply" data-service="Farmer ID">Apply Now →</a>
+   <div class="service-card">
+    <div class="symbol">🪪</div>
+    <h3>Passport Size Photo</h3>
+    <p>फोटो को सामान्य Passport Size में तैयार करें।</p>
+    <button class="btn blue" onclick="openTool('passport')">फोटो बनाएँ</button>
    </div>
-   <div class="service-card" data-search="income caste residence domicile certificate">
-    <h3>MP Certificates</h3>
-    <p>आय, जाति, निवास एवं अन्य प्रमाण पत्र।</p>
-    <a href="#apply" data-service="MP Certificate">Apply Now →</a>
-   </div>
-   <div class="service-card" data-search="birth certificate janm">
-    <h3>Birth Certificate</h3>
-    <p>जन्म प्रमाण पत्र संबंधी ऑनलाइन सहायता।</p>
-    <a href="#apply" data-service="Birth Certificate">Apply Now →</a>
-   </div>
-   <div class="service-card" data-search="epfo pf pension">
-    <h3>EPFO Services</h3>
-    <p>PF Claim, UAN एवं EPFO संबंधी सहायता।</p>
-    <a href="#apply" data-service="EPFO Services">Apply Now →</a>
-   </div>
-   <div class="service-card" data-search="online form job admission">
-    <h3>Online Form Filling</h3>
-    <p>विभिन्न ऑनलाइन फॉर्म भरने में सहायता।</p>
-    <a href="#apply" data-service="Online Form Filling">Apply Now →</a>
-   </div>
-   <div class="service-card" data-search="abha health id">
-    <h3>ABHA Health ID</h3>
-    <p>ABHA ID संबंधी उपलब्ध सहायता।</p>
-    <a href="#apply" data-service="ABHA Health ID">Apply Now →</a>
-   </div>
-   <div class="service-card" data-search="other services">
-    <h3>Other Digital Services</h3>
-    <p>अन्य ऑनलाइन सेवाओं के लिए संपर्क करें।</p>
-    <a href="#apply" data-service="Other Service">Apply Now →</a>
+   <div class="service-card">
+    <div class="symbol">📝</div>
+    <h3>Text to PDF</h3>
+    <p>अपना टेक्स्ट लिखें और PDF फाइल बनाएँ।</p>
+    <button class="btn blue" onclick="openTool('textpdf')">PDF बनाएँ</button>
    </div>
   </div>
-  <p class="note" style="text-align:center;margin-top:18px">सेवा की उपलब्धता संबंधित विभाग की अनुमति, पोर्टल और पात्रता पर निर्भर करती है।</p>
  </div>
 </section>
 
-<section id="apply">
+<section id="tools">
  <div class="container">
-  <h2 class="section-title">Online Application</h2>
-  <p class="section-sub">अपनी जानकारी भरकर आवेदन भेजें</p>
-  <div class="form-card">
-   <form id="applicationForm">
-    <div class="form-grid">
-     <div>
-      <label for="customerName">पूरा नाम *</label>
-      <input id="customerName" required maxlength="80" placeholder="अपना नाम लिखें">
-     </div>
-     <div>
-      <label for="mobile">मोबाइल नंबर *</label>
-      <input id="mobile" required inputmode="numeric" maxlength="10" placeholder="10 अंकों का मोबाइल नंबर">
-     </div>
-     <div>
-      <label for="village">गाँव / शहर *</label>
-      <input id="village" required maxlength="80" placeholder="गाँव या शहर">
-     </div>
-     <div>
-      <label for="service">सेवा चुनें *</label>
-      <select id="service" required>
-       <option value="">-- सेवा चुनें --</option>
-       <option>PAN Card</option>
-       <option>Ayushman Card</option>
-       <option>Samagra ID</option>
-       <option>Voter ID Card</option>
-       <option>e-Shram Card</option>
-       <option>Farmer ID</option>
-       <option>MP Certificate</option>
-       <option>Birth Certificate</option>
-       <option>EPFO Services</option>
-       <option>Online Form Filling</option>
-       <option>ABHA Health ID</option>
-       <option>Other Service</option>
-      </select>
-     </div>
-     <div class="full">
-      <label for="details">आवेदन संबंधी जानकारी</label>
-      <textarea id="details" rows="4" maxlength="1000" placeholder="कृपया अपनी आवश्यकता लिखें"></textarea>
-     </div>
-     <div class="full">
-      <button class="btn blue" id="submitApplication" type="submit" style="width:100%">Submit Application</button>
-      <p class="note">कृपया यहाँ Aadhaar OTP, बैंक PIN, पासवर्ड या अन्य गोपनीय जानकारी न लिखें।</p>
-      <div id="applicationMessage" class="status-message" role="status"></div>
-     </div>
+  <h2 class="section-title">Online Tool</h2>
+  <p class="section-sub">अपनी चुनी हुई Service यहाँ इस्तेमाल करें।</p>
+
+  <div class="panel tool-panel">
+   <div id="toolWelcome">
+    <h3>RAHUL COMPUTER'S Digital Tools</h3>
+    <p>ऊपर से कोई Service चुनिए। आपकी फाइल आपके डिवाइस पर ही प्रोसेस होगी।</p>
+   </div>
+
+   <div id="resumeTool" class="hidden">
+    <h3>📄 Resume Maker</h3>
+    <div class="grid2">
+     <div><label>पूरा नाम *</label><input id="rName" placeholder="अपना नाम"></div>
+     <div><label>मोबाइल नंबर</label><input id="rMobile" maxlength="10" placeholder="मोबाइल नंबर"></div>
+     <div><label>Email</label><input id="rEmail" type="email" placeholder="Email"></div>
+     <div><label>पता</label><input id="rAddress" placeholder="पूरा पता"></div>
+     <div><label>शिक्षा</label><textarea id="rEducation" rows="3" placeholder="10th, 12th, Graduation आदि"></textarea></div>
+     <div><label>Skills</label><textarea id="rSkills" rows="3" placeholder="आपकी Skills"></textarea></div>
+     <div class="full"><label>Work Experience</label><textarea id="rExperience" rows="3" placeholder="काम का अनुभव"></textarea></div>
+     <div class="full"><label>Career Objective</label><textarea id="rObjective" rows="3" placeholder="अपने करियर का उद्देश्य"></textarea></div>
     </div>
-   </form>
-  </div>
- </div>
-</section>
-
-<section id="tracking">
- <div class="container">
-  <h2 class="section-title">Track Application & Payment</h2>
-  <p class="section-sub">अपना Tracking ID डालकर आवेदन की स्थिति देखें</p>
-  <div class="form-card">
-   <form id="trackingForm">
-    <label for="trackingId">Tracking ID</label>
-    <input id="trackingId" required maxlength="24" placeholder="अपना 24 अक्षरों का Tracking ID डालें">
-    <button class="btn blue" type="submit" style="width:100%;margin-top:12px">Check Status</button>
-   </form>
-   <div id="trackingMessage" class="status-message" role="status"></div>
-   <div id="trackingResult" class="track-result hidden"></div>
-  </div>
- </div>
-</section>
-
-<section id="partner">
- <div class="container">
-  <div class="partner-banner">
-   <div>
-    <h2>RAHUL COMPUTER'S Partner Network</h2>
-    <p>हमारे डिजिटल सर्विस नेटवर्क से जुड़ने के लिए Partner Portal पर जाएँ।</p>
+    <div class="tool-actions">
+     <button class="btn blue" onclick="makeResume()">Resume तैयार करें</button>
+     <button class="btn" onclick="printResume()">PDF डाउनलोड / Print</button>
+    </div>
+    <div id="resumePreview" class="preview hidden"></div>
    </div>
-   <a class="btn" href="partner.html">Partner Portal खोलें →</a>
+
+   <div id="mergeTool" class="hidden">
+    <h3>📑 PDF Merge</h3>
+    <label>दो या अधिक PDF फाइल चुनें</label>
+    <input id="mergeFiles" type="file" accept="application/pdf,.pdf" multiple>
+    <p class="note">फाइलों का क्रम चुनने के क्रम के अनुसार रहेगा।</p>
+    <button class="btn blue" onclick="mergePDFs()">PDF जोड़कर डाउनलोड करें</button>
+    <div id="mergeMessage" class="status"></div>
+   </div>
+
+   <div id="splitTool" class="hidden">
+    <h3>✂️ PDF Split</h3>
+    <label>PDF फाइल चुनें</label>
+    <input id="splitFile" type="file" accept="application/pdf,.pdf">
+    <label>कौन से पेज निकालने हैं?</label>
+    <input id="splitPages" placeholder="उदाहरण: 1,3,5">
+    <p class="note">पेज नंबर 1 से शुरू होंगे। चुने गए पेज एक नई PDF में मिलेंगे।</p>
+    <button class="btn blue" onclick="splitPDF()">Selected Pages डाउनलोड करें</button>
+    <div id="splitMessage" class="status"></div>
+   </div>
+
+   <div id="compressTool" class="hidden">
+    <h3>🗜️ PDF Compress</h3>
+    <label>PDF फाइल चुनें</label>
+    <input id="compressFile" type="file" accept="application/pdf,.pdf">
+    <p class="note">यह PDF को दोबारा सेव करेगा। हर PDF का आकार कम होना निश्चित नहीं है।</p>
+    <button class="btn blue" onclick="compressPDF()">PDF डाउनलोड करें</button>
+    <div id="compressMessage" class="status"></div>
+   </div>
+
+   <div id="photoTool" class="hidden">
+    <h3>📷 Photo Resize</h3>
+    <label>फोटो चुनें</label>
+    <input id="photoFile" type="file" accept="image/*">
+    <div class="grid2">
+     <div><label>Width (px)</label><input id="photoWidth" type="number" min="1" max="5000" value="600"></div>
+     <div><label>Height (px)</label><input id="photoHeight" type="number" min="1" max="5000" value="600"></div>
+    </div>
+    <label>फॉर्मेट</label>
+    <select id="photoFormat"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select>
+    <button class="btn blue" onclick="resizePhoto(false)">Resize & Download</button>
+    <div id="photoMessage" class="status"></div>
+    <div id="photoPreview" class="preview hidden"></div>
+   </div>
+
+   <div id="passportTool" class="hidden">
+    <h3>🪪 Passport Size Photo</h3>
+    <label>फोटो चुनें</label>
+    <input id="passportFile" type="file" accept="image/*">
+    <p class="note">यह सामान्य 3.5 × 4.5 cm अनुपात के अनुसार फोटो तैयार करेगा। अलग-अलग आवेदन में फोटो के नियम अलग हो सकते हैं।</p>
+    <button class="btn blue" onclick="resizePhoto(true)">Passport Photo डाउनलोड करें</button>
+    <div id="passportMessage" class="status"></div>
+    <div id="passportPreview" class="preview hidden"></div>
+   </div>
+
+   <div id="textpdfTool" class="hidden">
+    <h3>📝 Text to PDF</h3>
+    <label>दस्तावेज का शीर्षक</label>
+    <input id="textTitle" placeholder="दस्तावेज का शीर्षक">
+    <label>अपना टेक्स्ट लिखें</label>
+    <textarea id="textContent" rows="10" placeholder="यहाँ अपना दस्तावेज लिखें..."></textarea>
+    <button class="btn blue" onclick="downloadTextFile()">Text File डाउनलोड करें</button>
+    <p class="note">PDF में हिंदी सही दिखाने के लिए Unicode Hindi font embedding की सुविधा अगले संस्करण में जोड़ी जाएगी।</p>
+   </div>
   </div>
  </div>
 </section>
 
 <section id="contact">
  <div class="container">
-  <h2 class="section-title">Contact Us</h2>
-  <div class="contact-grid">
-   <div class="contact-item">
-    <h3>Phone / WhatsApp</h3>
-    <p>9752039020</p>
-    <a class="btn green" href="https://wa.me/919752039020" target="_blank" rel="noopener">WhatsApp करें</a>
-   </div>
-   <div class="contact-item">
-    <h3>Location</h3>
-    <p>Amiliya, Maihar, Madhya Pradesh</p>
-   </div>
-   <div class="contact-item">
-    <h3>Working Hours</h3>
-    <p>Online Application Assistance</p>
-    <p class="note">सेवा समय की पुष्टि WhatsApp पर करें।</p>
-   </div>
-  </div>
- </div>
-</section>
-
-<section id="adminLogin">
- <div class="container">
-  <div class="admin-card">
-   <h2 class="section-title" style="font-size:22px">Admin Login</h2>
-   <form id="adminLoginForm">
-    <label for="adminEmail">Admin Email</label>
-    <input id="adminEmail" type="email" required placeholder="Admin email">
-    <label for="adminPassword" style="display:block;margin-top:12px">Password</label>
-    <input id="adminPassword" type="password" required placeholder="Admin password">
-    <button class="btn blue" type="submit" style="width:100%;margin-top:15px">Login to Admin Panel</button>
-    <div id="adminMessage" class="status-message" role="status"></div>
-   </form>
+  <h2 class="section-title">Need Help?</h2>
+  <div class="contact">
+   <h3 style="color:#073b75">RAHUL COMPUTER'S</h3>
+   <p>किसी सेवा में परेशानी हो तो हमसे संपर्क करें।</p>
+   <p><strong>Phone / WhatsApp: 9752039020</strong></p>
+   <a class="btn green" href="https://wa.me/919752039020" target="_blank" rel="noopener">WhatsApp करें</a>
+   <p>Amiliya, Maihar, Madhya Pradesh</p>
   </div>
  </div>
 </section>
@@ -354,291 +283,171 @@ footer p{margin:8px 0;font-size:13px;color:#dbeafe}
 
 <footer>
  <div class="logo">RAHUL <span>COMPUTER'S</span></div>
- <p>Digital Services | Online Application Assistance</p>
+ <p>Online Digital Tools & Services</p>
  <p>
-  <a href="index.html">Home</a>
-  <a href="services.html">All Services</a>
-  <a href="pan.html">PAN Services</a>
-  <a href="partner.html">Partner Portal</a>
   <a href="privacy.html">Privacy Policy</a>
   <a href="terms.html">Terms & Conditions</a>
+  <a href="admin.html">Admin Login</a>
  </p>
  <p>© <span id="year"></span> RAHUL COMPUTER'S. All Rights Reserved.</p>
 </footer>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-import {
- getFirestore, collection, doc, getDoc, setDoc, writeBatch, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
-import {
- getAuth, signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
-
-const firebaseConfig = {
- apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
- authDomain: "rahul-computer-s.firebaseapp.com",
- projectId: "rahul-computer-s",
- storageBucket: "rahul-computer-s.firebasestorage.app",
- messagingSenderId: "969449083821",
- appId: "1:969449083821:web:4696bc1253fa97ea304724"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script>
 const $ = id => document.getElementById(id);
 $("year").textContent = new Date().getFullYear();
 
-$("menuBtn").addEventListener("click", () => {
+$("menuBtn").addEventListener("click",()=>{
  $("mainNav").classList.toggle("open");
 });
-document.querySelectorAll("#mainNav a").forEach(link => {
- link.addEventListener("click", () => $("mainNav").classList.remove("open"));
+document.querySelectorAll("#mainNav a").forEach(a=>{
+ a.addEventListener("click",()=>$("mainNav").classList.remove("open"));
 });
 
-function showMessage(element, message, type="info"){
- element.textContent = message;
- element.className = "status-message " + type;
-}
-function makeTrackingId(){
- const bytes = new Uint8Array(12);
- crypto.getRandomValues(bytes);
- return Array.from(bytes, b => b.toString(16).padStart(2,"0")).join("").toUpperCase();
-}
-function formatPaymentDate(value){
- if(!value) return "Not available";
- try{
-  const date = value.toDate ? value.toDate() : new Date(value);
-  return date.toLocaleString("en-IN");
- }catch(e){return "Not available";}
-}
-function safeText(value){
- return String(value ?? "").replace(/[&<>"']/g, char => ({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
- }[char]));
+const toolIds=["resume","merge","split","compress","photo","passport","textpdf"];
+function openTool(name){
+ toolIds.forEach(id=>$(id+"Tool").classList.add("hidden"));
+ $("toolWelcome").classList.add("hidden");
+ $(name+"Tool").classList.remove("hidden");
+ $("tools").scrollIntoView({behavior:"smooth"});
 }
 
-$("serviceSearch").addEventListener("input", event => {
- const term = event.target.value.trim().toLowerCase();
- document.querySelectorAll(".service-card").forEach(card => {
-  const content = (card.innerText + " " + (card.dataset.search || "")).toLowerCase();
-  card.style.display = content.includes(term) ? "" : "none";
- });
-});
+function showStatus(id,msg,type="info"){
+ const el=$(id);
+ el.textContent=msg;
+ el.className="status "+type;
+}
 
-document.querySelectorAll("[data-service]").forEach(link => {
- link.addEventListener("click", () => {
-  $("service").value = link.dataset.service;
- });
-});
+function downloadBlob(blob,name){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download=name;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
 
-$("applicationForm").addEventListener("submit", async event => {
- event.preventDefault();
- const button = $("submitApplication");
- const message = $("applicationMessage");
- const name = $("customerName").value.trim();
- const mobile = $("mobile").value.trim();
- const village = $("village").value.trim();
- const service = $("service").value;
- const details = $("details").value.trim();
+function makeResume(){
+ const name=$("rName").value.trim();
+ if(!name){alert("कृपया अपना नाम भरें।");return;}
+ const data={
+  name,mobile:$("rMobile").value,email:$("rEmail").value,
+  address:$("rAddress").value,education:$("rEducation").value,
+  skills:$("rSkills").value,experience:$("rExperience").value,
+  objective:$("rObjective").value
+ };
+ const esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const section=(title,value)=>value?`<h3>${title}</h3><p>${esc(value).replace(/\n/g,"<br>")}</p>`:"";
+ $("resumePreview").innerHTML=`
+ <div id="resumePaper" style="background:white;color:#172033;padding:28px;max-width:760px;margin:auto;font-family:Arial">
+ <h1 style="color:#073b75;text-align:center;margin-bottom:5px">${esc(data.name)}</h1>
+ <p style="text-align:center">${esc(data.mobile)} ${data.email?" | "+esc(data.email):""}</p>
+ <p style="text-align:center">${esc(data.address)}</p>
+ <hr>
+ ${section("CAREER OBJECTIVE",data.objective)}
+ ${section("EDUCATION",data.education)}
+ ${section("SKILLS",data.skills)}
+ ${section("WORK EXPERIENCE",data.experience)}
+ </div>`;
+ $("resumePreview").classList.remove("hidden");
+}
+function printResume(){
+ if($("resumePreview").classList.contains("hidden")){alert("पहले Resume तैयार करें।");return;}
+ const paper=$("resumePaper").innerHTML;
+ const win=window.open("","_blank");
+ if(!win){alert("कृपया इस वेबसाइट के लिए pop-ups की अनुमति दें।");return;}
+ win.document.write(`<html><head><title>Resume</title><style>body{font-family:Arial;margin:25px}@media print{body{margin:10mm}}</style></head><body>${paper}<script>window.onload=()=>window.print();<\/script></body></html>`);
+ win.document.close();
+}
 
- if(!/^[0-9]{10}$/.test(mobile)){
-  showMessage(message,"कृपया सही 10 अंकों का मोबाइल नंबर डालें।","error");
-  return;
- }
- if(!name || !village || !service){
-  showMessage(message,"कृपया सभी जरूरी जानकारी भरें।","error");
-  return;
- }
-
- button.disabled = true;
- button.textContent = "Submitting...";
+async function mergePDFs(){
+ const files=[...$("mergeFiles").files];
+ if(files.length<2){showStatus("mergeMessage","कम से कम दो PDF चुनें।","error");return;}
  try{
-  const trackingId = makeTrackingId();
-  const applicationRef = doc(db,"applications",trackingId);
-  const trackingRef = doc(db,"tracking",trackingId);
-  const batch = writeBatch(db);
+  if(!window.PDFLib)throw new Error("PDF Tool लोड नहीं हुआ। इंटरनेट जाँचें।");
+  const merged=await PDFLib.PDFDocument.create();
+  for(const file of files){
+   const source=await PDFLib.PDFDocument.load(await file.arrayBuffer());
+   const pages=await merged.copyPages(source,source.getPageIndices());
+   pages.forEach(p=>merged.addPage(p));
+  }
+  downloadBlob(new Blob([await merged.save()],{type:"application/pdf"}),"merged.pdf");
+  showStatus("mergeMessage","PDF सफलतापूर्वक तैयार हो गई।","success");
+ }catch(e){showStatus("mergeMessage","PDF नहीं बन सकी: "+e.message,"error");}
+}
 
-  batch.set(applicationRef,{
-   customerName:name,
-   mobile,
-   village,
-   service,
-   details,
-   status:"Pending",
-   trackingId,
-   createdAt:serverTimestamp()
-  });
-
-  batch.set(trackingRef,{
-   trackingId,
-   customerName:name,
-   mobile,
-   service,
-   status:"Pending",
-   createdAt:serverTimestamp()
-  });
-
-  await batch.commit();
-
-  showMessage(
-   message,
-   "आपका आवेदन सफलतापूर्वक सेव हो गया है। आपका Tracking ID: " + trackingId,
-   "success"
-  );
-
-  const whatsappText =
-   "नमस्ते RAHUL COMPUTER'S,%0A" +
-   "मेरा ऑनलाइन आवेदन जमा हुआ है।%0A" +
-   "नाम: " + encodeURIComponent(name) + "%0A" +
-   "मोबाइल: " + encodeURIComponent(mobile) + "%0A" +
-   "गाँव: " + encodeURIComponent(village) + "%0A" +
-   "सेवा: " + encodeURIComponent(service) + "%0A" +
-   "Tracking ID: " + trackingId + "%0A" +
-   "जानकारी: " + encodeURIComponent(details);
-
-  window.open("https://api.whatsapp.com/send?phone=919752039020&text=" + whatsappText,"_blank");
-  $("trackingId").value = trackingId;
- }catch(error){
-  console.error(error);
-  showMessage(message,"आवेदन सेव नहीं हो पाया। कृपया इंटरनेट जाँचकर दोबारा प्रयास करें। Error: " + error.message,"error");
- }finally{
-  button.disabled = false;
-  button.textContent = "Submit Application";
- }
-});
-
-$("trackingForm").addEventListener("submit", async event => {
- event.preventDefault();
- const id = $("trackingId").value.trim().toUpperCase();
- const message = $("trackingMessage");
- const result = $("trackingResult");
- result.classList.add("hidden");
- result.innerHTML = "";
-
- if(!/^[A-F0-9]{24}$/.test(id)){
-  showMessage(message,"कृपया सही Tracking ID डालें।","error");
-  return;
- }
-
- showMessage(message,"आवेदन की जानकारी देखी जा रही है...","info");
+async function splitPDF(){
+ const file=$("splitFile").files[0],raw=$("splitPages").value.trim();
+ if(!file||!raw){showStatus("splitMessage","PDF और पेज नंबर चुनें।","error");return;}
  try{
-  const trackingSnap = await getDoc(doc(db,"tracking",id));
-  if(!trackingSnap.exists()){
-   showMessage(message,"इस Tracking ID से कोई आवेदन नहीं मिला।","error");
-   return;
-  }
+  if(!window.PDFLib)throw new Error("PDF Tool लोड नहीं हुआ।");
+  const source=await PDFLib.PDFDocument.load(await file.arrayBuffer());
+  const nums=raw.split(",").map(x=>Number(x.trim()));
+  if(nums.some(n=>!Number.isInteger(n)||n<1||n>source.getPageCount()))throw new Error("पेज नंबर सही नहीं हैं। कुल पेज: "+source.getPageCount());
+  const output=await PDFLib.PDFDocument.create();
+  const pages=await output.copyPages(source,nums.map(n=>n-1));
+  pages.forEach(p=>output.addPage(p));
+  downloadBlob(new Blob([await output.save()],{type:"application/pdf"}),"selected-pages.pdf");
+  showStatus("splitMessage","चुने हुए पेज की PDF तैयार है।","success");
+ }catch(e){showStatus("splitMessage","PDF Split नहीं हुई: "+e.message,"error");}
+}
 
-  const data = trackingSnap.data();
-  const paymentSnap = await getDoc(doc(db,"paymentInfo",id));
-  const payment = paymentSnap.exists() ? paymentSnap.data() : null;
-
-  let paymentHtml = "";
-  if(payment && payment.status === "Paid"){
-   paymentHtml = `<div class="track-row"><strong>Payment:</strong> Paid</div>
-   <div class="track-row"><strong>Payment Date:</strong> ${safeText(formatPaymentDate(payment.paidAt))}</div>
-   <button class="btn blue" id="printReceipt" type="button" style="margin-top:12px">Print Receipt</button>`;
-  }else if(payment && payment.status === "Rejected"){
-   paymentHtml = `<div class="track-row"><strong>Payment:</strong> Rejected</div>`;
-  }else if(payment && Number(payment.amount) > 0){
-   paymentHtml = `
-    <div class="track-row"><strong>Payment Status:</strong> Pending</div>
-    <div class="track-row"><strong>Amount:</strong> ₹${safeText(payment.amount)}</div>
-    <div class="track-row"><strong>UPI ID:</strong> ${safeText(payment.upiId || "Contact us")}</div>
-    ${payment.qrImage ? `<img class="payment-qr" src="${safeText(payment.qrImage)}" alt="Payment QR">` : ""}
-    <form id="utrForm" style="margin-top:12px">
-     <label for="utrInput">Payment UTR / Transaction ID</label>
-     <input id="utrInput" required maxlength="40" placeholder="अपना UTR नंबर डालें">
-     <button class="btn green" type="submit" style="width:100%;margin-top:10px">Submit Payment Details</button>
-    </form>
-    <div id="utrMessage" class="status-message"></div>`;
-  }else{
-   paymentHtml = `<div class="track-row"><strong>Payment:</strong> अभी भुगतान राशि निर्धारित नहीं की गई है।</div>`;
-  }
-
-  result.innerHTML = `
-   <div class="info-card">
-    <h3 style="color:#073b75">Application Details</h3>
-    <div class="track-row"><strong>Tracking ID:</strong> ${safeText(id)}</div>
-    <div class="track-row"><strong>Name:</strong> ${safeText(data.customerName)}</div>
-    <div class="track-row"><strong>Mobile:</strong> ${safeText(data.mobile)}</div>
-    <div class="track-row"><strong>Service:</strong> ${safeText(data.service)}</div>
-    <div class="track-row"><strong>Status:</strong> ${safeText(data.status || "Pending")}</div>
-    ${paymentHtml}
-   </div>`;
-  result.classList.remove("hidden");
-  showMessage(message,"आवेदन की जानकारी मिल गई।","success");
-
-  const utrForm = $("utrForm");
-  if(utrForm){
-   utrForm.addEventListener("submit", async e => {
-    e.preventDefault();
-    const utr = $("utrInput").value.trim();
-    const utrMessage = $("utrMessage");
-    if(!utr){showMessage(utrMessage,"UTR नंबर डालें।","error");return;}
-    try{
-     await setDoc(doc(db,"paymentSubmissions",id),{
-      trackingId:id,
-      utr,
-      status:"Pending",
-      submittedAt:serverTimestamp()
-     });
-     showMessage(utrMessage,"Payment details सफलतापूर्वक भेज दी गई हैं।","success");
-     $("utrInput").value = "";
-    }catch(err){
-     showMessage(utrMessage,"Payment details भेजने में समस्या: " + err.message,"error");
-    }
-   });
-  }
-
-  const printButton = $("printReceipt");
-  if(printButton){
-   printButton.addEventListener("click", () => {
-    const receipt = `
-     <html><head><title>Payment Receipt</title>
-     <style>body{font-family:Arial;padding:25px;color:#172033}
-     .receipt{max-width:600px;margin:auto;border:2px solid #073b75;padding:25px}
-     h2{color:#073b75;text-align:center}.line{padding:10px 0;border-bottom:1px solid #ddd}
-     </style></head><body><div class="receipt">
-     <h2>RAHUL COMPUTER'S</h2><h3 style="text-align:center">Payment Receipt</h3>
-     <div class="line">Tracking ID: ${safeText(id)}</div>
-     <div class="line">Customer: ${safeText(data.customerName)}</div>
-     <div class="line">Service: ${safeText(data.service)}</div>
-     <div class="line">Amount Paid: ₹${safeText(payment.amount)}</div>
-     <div class="line">Payment Date: ${safeText(formatPaymentDate(payment.paidAt))}</div>
-     <div class="line">Payment Status: PAID</div>
-     <p style="text-align:center;margin-top:30px">Thank you for choosing RAHUL COMPUTER'S</p>
-     </div><script>window.onload=()=>window.print();<\/script></body></html>`;
-    const win = window.open("","_blank");
-    if(win){win.document.write(receipt);win.document.close();}
-   });
-  }
- }catch(error){
-  console.error(error);
-  showMessage(message,"जानकारी प्राप्त नहीं हो सकी: " + error.message,"error");
- }
-});
-
-$("adminLoginForm").addEventListener("submit", async event => {
- event.preventDefault();
- const button = event.submitter;
- const message = $("adminMessage");
- button.disabled = true;
+async function compressPDF(){
+ const file=$("compressFile").files[0];
+ if(!file){showStatus("compressMessage","पहले PDF चुनें।","error");return;}
  try{
-  await signInWithEmailAndPassword(
-   auth,
-   $("adminEmail").value.trim(),
-   $("adminPassword").value
-  );
-  window.location.href = "admin.html";
- }catch(error){
-  showMessage(message,"Admin Login असफल: " + error.message,"error");
- }finally{
-  button.disabled = false;
- }
-});
+  if(!window.PDFLib)throw new Error("PDF Tool लोड नहीं हुआ।");
+  const pdf=await PDFLib.PDFDocument.load(await file.arrayBuffer());
+  const bytes=await pdf.save({useObjectStreams:true});
+  downloadBlob(new Blob([bytes],{type:"application/pdf"}),"compressed.pdf");
+  showStatus("compressMessage","PDF दोबारा सेव कर दी गई। नया आकार पुराने से कम हो, यह निश्चित नहीं है।","success");
+ }catch(e){showStatus("compressMessage","PDF प्रोसेस नहीं हुई: "+e.message,"error");}
+}
+
+function resizePhoto(passport){
+ const file=passport?$("passportFile").files[0]:$("photoFile").files[0];
+ const msg=passport?"passportMessage":"photoMessage";
+ const preview=passport?"passportPreview":"photoPreview";
+ if(!file){showStatus(msg,"पहले फोटो चुनें।","error");return;}
+ if(!file.type.startsWith("image/")){showStatus(msg,"कृपया सही Image फाइल चुनें।","error");return;}
+ const url=URL.createObjectURL(file);
+ const img=new Image();
+ img.onload=()=>{
+  let w,h;
+  if(passport){w=413;h=531;}
+  else{
+   w=Number($("photoWidth").value);h=Number($("photoHeight").value);
+   if(!w||!h||w<1||h<1||w>5000||h>5000){showStatus(msg,"Width और Height 1 से 5000 के बीच रखें।","error");URL.revokeObjectURL(url);return;}
+  }
+  const canvas=document.createElement("canvas");
+  canvas.width=w;canvas.height=h;
+  const ctx=canvas.getContext("2d");
+  ctx.fillStyle="#ffffff";ctx.fillRect(0,0,w,h);
+  if(passport){
+   const scale=Math.max(w/img.width,h/img.height);
+   const dw=img.width*scale,dh=img.height*scale;
+   ctx.drawImage(img,(w-dw)/2,(h-dh)/2,dw,dh);
+  }else ctx.drawImage(img,0,0,w,h);
+  const type=passport?"image/jpeg":$("photoFormat").value;
+  canvas.toBlob(blob=>{
+   if(!blob){showStatus(msg,"फोटो तैयार नहीं हुई।","error");return;}
+   downloadBlob(blob,passport?"passport-photo.jpg":("resized-photo."+(type==="image/png"?"png":"jpg")));
+   $(preview).innerHTML=`<img src="${canvas.toDataURL(type,.92)}" alt="Preview">`;
+   $(preview).classList.remove("hidden");
+   showStatus(msg,"फोटो तैयार है और डाउनलोड शुरू हो गया है।","success");
+   URL.revokeObjectURL(url);
+  },type,.92);
+ };
+ img.onerror=()=>{showStatus(msg,"फोटो पढ़ी नहीं जा सकी।","error");URL.revokeObjectURL(url);};
+ img.src=url;
+}
+
+function downloadTextFile(){
+ const title=$("textTitle").value.trim()||"My Document";
+ const content=$("textContent").value;
+ if(!content.trim()){alert("कृपया दस्तावेज का टेक्स्ट लिखें।");return;}
+ const blob=new Blob([title+"\n\n"+content],{type:"text/plain;charset=utf-8"});
+ downloadBlob(blob,"document.txt");
+}
 </script>
 </body>
-     </html>
+ </html>
