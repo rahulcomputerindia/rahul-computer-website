@@ -3,330 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#082b55">
-<meta name="description" content="RAHUL COMPUTER'S - Farmer Registry and Farmer ID Services">
-<title>Farmer Services | RAHUL COMPUTER'S</title>
+<meta name="theme-color" content="#071d49">
+<meta name="description" content="RAHUL COMPUTER'S Farmer Registry Online Application">
+<title>Farmer Registry | RAHUL COMPUTER'S</title>
 
 <style>
+*{box-sizing:border-box}
 :root{
- --navy:#082b55;
+ --navy:#071d49;
  --blue:#07569a;
  --royal:#087ac2;
- --gold:#e2b84b;
- --bg:#f3f6fb;
- --ink:#17263b;
- --muted:#64748b;
- --line:#dce5ef;
+ --gold:#e9b949;
+ --light:#f1f5f9;
+ --green:#15803d;
+ --red:#b91c1c;
 }
-*{box-sizing:border-box}
 body{
  margin:0;
- background:var(--bg);
  font-family:Arial,"Noto Sans Devanagari",sans-serif;
- color:var(--ink);
- line-height:1.55;
+ background:var(--light);
+ color:#172033;
 }
 header{
  background:linear-gradient(120deg,var(--navy),var(--blue),var(--royal));
  color:white;
- padding:25px 16px 30px;
  text-align:center;
+ padding:25px 15px;
 }
-.brand{font-weight:800;letter-spacing:.7px;font-size:25px}
-.sub{color:#dbeafe;font-size:14px;margin-top:4px}
-.hero{max-width:850px;margin:20px auto 0}
-.hero h1{font-size:25px;margin:0 0 8px}
-.hero p{margin:0;color:#e7f2ff}
-.wrap{max-width:1000px;margin:22px auto;padding:0 14px}
-.notice{
- background:#fff8e5;
- border:1px solid #f1d58a;
- border-radius:12px;
- padding:13px 15px;
- font-size:13px;
- margin-bottom:17px;
+header h1{margin:0;font-size:25px}
+header p{margin:8px 0 0;font-size:14px}
+.container{max-width:850px;margin:20px auto;padding:0 12px}
+.card{
+ background:white;
+ border-radius:13px;
+ padding:20px;
+ margin-bottom:18px;
+ box-shadow:0 3px 15px #00000012;
 }
-.section-title{font-size:21px;color:var(--navy);margin:22px 0 12px}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
- gap:12px;
-}
-.card,.panel{
- background:#fff;
- border:1px solid var(--line);
- border-radius:15px;
- padding:17px;
- box-shadow:0 5px 18px #0b31520a;
-}
-.card h3{font-size:16px;margin:0 0 6px;color:var(--navy)}
-.card p{font-size:13px;color:var(--muted);margin:0 0 12px}
-button,.btn{
- border:0;
- border-radius:9px;
- background:var(--blue);
- color:white;
- padding:11px 15px;
- font-weight:700;
- cursor:pointer;
- display:inline-block;
- text-decoration:none;
- font-size:14px;
-}
-button.secondary,.btn.secondary{
- background:#eaf2fa;
- color:var(--navy);
- border:1px solid #cbdced;
-}
-button:disabled{opacity:.6;cursor:not-allowed}
-.panel{margin-top:16px}
-.panel h2{font-size:19px;color:var(--navy);margin:0 0 12px}
-form{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:12px;
-}
-.field{display:flex;flex-direction:column;gap:5px}
-.field.full{grid-column:1/-1}
-label{font-size:13px;font-weight:700;color:#334155}
+h2{font-size:20px;color:var(--navy);margin:0 0 16px}
+h3{color:var(--blue);font-size:17px}
+label{display:block;font-weight:600;margin:13px 0 6px;font-size:14px}
 input,select,textarea{
  width:100%;
+ padding:12px;
  border:1px solid #cbd5e1;
- border-radius:9px;
- padding:11px 12px;
- font:inherit;
+ border-radius:8px;
+ font-size:15px;
  background:white;
- color:#17263b;
- min-height:43px;
 }
 textarea{min-height:90px;resize:vertical}
-small,.hint{color:var(--muted);font-size:12px}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:5px}
-.hidden{display:none!important}
-#message{
- margin-top:12px;
- padding:11px;
- border-radius:9px;
- display:none;
- font-size:13px;
+button{
+ border:0;
+ border-radius:8px;
+ padding:13px 18px;
+ background:var(--blue);
+ color:white;
+ font-size:15px;
+ font-weight:bold;
+ cursor:pointer;
+ width:100%;
+ margin-top:15px;
 }
-#message.ok{display:block;background:#e8f7ee;color:#146c3b}
-#message.err{display:block;background:#fff0f0;color:#a32727}
-.track-result{
- margin-top:12px;
- padding:13px;
- background:#f0f6ff;
- border:1px solid #c9dcf2;
- border-radius:10px;
+button:disabled{opacity:.6;cursor:not-allowed}
+.gold{background:#b77908}
+.green{background:var(--green)}
+.note{
+ background:#eff6ff;
+ border-left:4px solid var(--royal);
+ padding:12px;
+ border-radius:6px;
+ font-size:14px;
+ line-height:1.6;
+ margin:12px 0;
+}
+.warning{
+ background:#fff7ed;
+ border-left:4px solid #ea580c;
+ padding:12px;
+ border-radius:6px;
+ font-size:14px;
+ line-height:1.6;
+ margin:12px 0;
+}
+.success{
+ color:#166534;
+ background:#dcfce7;
+ padding:12px;
+ border-radius:8px;
+ line-height:1.6;
  overflow-wrap:anywhere;
 }
-.status{font-weight:800;color:var(--navy)}
-.steps{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
- gap:10px;
+.error{
+ color:#991b1b;
+ background:#fee2e2;
+ padding:12px;
+ border-radius:8px;
+ line-height:1.6;
 }
-.step{padding:12px;background:#f6f9fd;border-radius:10px;font-size:13px}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:28px 12px}
-@media(max-width:600px){
- form{grid-template-columns:1fr}
- .field.full{grid-column:auto}
- .brand{font-size:22px}
- .hero h1{font-size:21px}
+.hidden{display:none!important}
+.qr{
+ display:block;
+ max-width:280px;
+ width:100%;
+ margin:15px auto;
+ border:1px solid #ddd;
+ border-radius:10px;
+ padding:8px;
+ background:white;
 }
+.status{
+ display:inline-block;
+ padding:6px 11px;
+ border-radius:20px;
+ background:#e0f2fe;
+ color:#075985;
+ font-size:13px;
+ font-weight:bold;
+}
+footer{
+ text-align:center;
+ padding:20px;
+ color:#64748b;
+ font-size:13px;
+}
+.small{font-size:13px;color:#64748b;line-height:1.5}
+hr{border:0;border-top:1px solid #e2e8f0;margin:18px 0}
 </style>
 </head>
 
 <body>
-
 <header>
- <div class="brand">RAHUL COMPUTER'S</div>
- <div class="sub">आपकी डिजिटल सेवा, आपके गाँव में</div>
- <div class="hero">
-  <h1>किसान / Farmer Registry सेवाएँ</h1>
-  <p>Farmer ID पंजीयन, विवरण सुधार और किसान भूमि रिकॉर्ड सहायता के लिए ऑनलाइन आवेदन करें।</p>
- </div>
+ <h1>RAHUL COMPUTER'S</h1>
+ <p>Farmer Registry एवं किसान ऑनलाइन सेवा</p>
+ <p>आवेदन करें • भुगतान करें • आवेदन की स्थिति देखें</p>
 </header>
 
-<main class="wrap">
+<div class="container">
 
- <div class="notice">
-  <b>महत्वपूर्ण सूचना:</b>
-  RAHUL COMPUTER'S एक निजी डिजिटल सहायता सेवा है, सरकारी विभाग नहीं।
-  आवेदन जमा होना Farmer ID जारी होने की पुष्टि नहीं है।
-  सरकारी पोर्टल पर सत्यापन और अधिकृत प्रक्रिया पूरी होने के बाद ही परिणाम मिलेगा।
-  किसी को भी अपना OTP, पासवर्ड या बैंक PIN न बताएं।
- </div>
-
- <h2 class="section-title">हमारी Farmer सेवाएँ</h2>
-
- <div class="grid">
-
-  <article class="card">
-   <h3>🌾 Farmer Registry पंजीयन</h3>
-   <p>नए किसान पंजीयन के लिए दस्तावेज़ और जानकारी जमा करें।</p>
-   <button type="button" onclick="chooseService('New Farmer Registration')">आवेदन करें</button>
-  </article>
-
-  <article class="card">
-   <h3>✏️ Farmer ID में सुधार</h3>
-   <p>मौजूदा Farmer विवरण में सुधार हेतु अनुरोध करें।</p>
-   <button type="button" onclick="chooseService('Farmer Details Update')">आवेदन करें</button>
-  </article>
-
-  <article class="card">
-   <h3>🔎 Farmer ID खोज सहायता</h3>
-   <p>Farmer ID खोजने में सहायता के लिए संपर्क करें।</p>
-   <a class="btn secondary" href="https://wa.me/919752039020">WhatsApp</a>
-  </article>
-
-  <article class="card">
-   <h3>📄 खसरा नकल</h3>
-   <p>खसरा रिकॉर्ड की ऑनलाइन प्रति प्राप्त करने में सहायता।</p>
-   <a class="btn secondary" href="https://wa.me/919752039020">WhatsApp</a>
-  </article>
-
-  <article class="card">
-   <h3>📑 खतौनी / B-1</h3>
-   <p>खतौनी और B-1 रिकॉर्ड प्रिंट सहायता।</p>
-   <a class="btn secondary" href="https://wa.me/919752039020">WhatsApp</a>
-  </article>
-
-  <article class="card">
-   <h3>🧾 किसान भूमि रिकॉर्ड</h3>
-   <p>भूमि रिकॉर्ड से संबंधित सहायता और जानकारी।</p>
-   <a class="btn secondary" href="https://wa.me/919752039020">WhatsApp</a>
-  </article>
-
- </div>
-
- <section class="panel" id="applicationPanel">
-  <h2>ऑनलाइन Farmer आवेदन</h2>
-  <p class="hint">
-   सभी * वाले विवरण भरें। अधिकतम 5 दस्तावेज़ अपलोड कर सकते हैं।
-   प्रत्येक फाइल 5 MB तक और PDF/JPG/PNG होनी चाहिए।
-  </p>
+ <div class="card">
+  <h2>किसान आवेदन फॉर्म</h2>
+  <div class="note">
+   कृपया सही जानकारी भरें। आवश्यक दस्तावेज PDF, JPG या PNG में अपलोड करें। प्रत्येक फाइल अधिकतम 5 MB की हो सकती है।
+  </div>
 
   <form id="farmerForm">
+   <label>आवेदक का पूरा नाम *</label>
+   <input id="customerName" required maxlength="100" placeholder="अपना नाम लिखें">
 
-   <div class="field">
-    <label for="customerName">पूरा नाम *</label>
-    <input id="customerName" maxlength="80" required placeholder="अपना पूरा नाम">
-   </div>
+   <label>मोबाइल नंबर *</label>
+   <input id="mobile" required inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10 अंकों का मोबाइल नंबर">
 
-   <div class="field">
-    <label for="mobile">मोबाइल नंबर *</label>
-    <input id="mobile" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required placeholder="10 अंकों का मोबाइल">
-   </div>
+   <label>ग्राम / गांव *</label>
+   <input id="village" required maxlength="100" placeholder="गांव का नाम">
 
-   <div class="field">
-    <label for="village">गाँव *</label>
-    <input id="village" maxlength="80" required placeholder="गाँव का नाम">
-   </div>
+   <label>तहसील *</label>
+   <input id="tehsil" required maxlength="100" placeholder="तहसील">
 
-   <div class="field">
-    <label for="tehsil">तहसील *</label>
-    <input id="tehsil" maxlength="80" required placeholder="तहसील">
-   </div>
+   <label>जिला *</label>
+   <input id="district" required maxlength="100" value="मैहर">
 
-   <div class="field">
-    <label for="district">जिला *</label>
-    <input id="district" maxlength="80" required placeholder="जिला">
-   </div>
+   <label>किस सेवा के लिए आवेदन करना है? *</label>
+   <select id="serviceType" required>
+    <option value="">सेवा चुनें</option>
+    <option value="New Farmer Registration">नया Farmer Registry पंजीयन</option>
+    <option value="Farmer Details Update">Farmer Registry विवरण सुधार / अपडेट</option>
+   </select>
 
-   <div class="field">
-    <label for="serviceType">सेवा चुनें *</label>
-    <select id="serviceType" required>
-     <option value="">सेवा चुनें</option>
-     <option value="New Farmer Registration">नया Farmer Registry पंजीयन</option>
-     <option value="Farmer Details Update">Farmer ID विवरण सुधार</option>
-    </select>
-   </div>
+   <label>Farmer ID (यदि पहले से है)</label>
+   <input id="farmerId" maxlength="50" placeholder="पुरानी Farmer ID (वैकल्पिक)">
 
-   <div class="field">
-    <label for="farmerId">मौजूदा Farmer ID (सुधार के लिए)</label>
-    <input id="farmerId" maxlength="40" placeholder="यदि लागू हो">
-   </div>
+   <label>अन्य जानकारी</label>
+   <textarea id="details" maxlength="1000" placeholder="अपनी समस्या या आवश्यक जानकारी लिखें"></textarea>
 
-   <div class="field full">
-    <label for="details">आवेदन का विवरण *</label>
-    <textarea id="details" maxlength="1200" required placeholder="किस काम के लिए आवेदन कर रहे हैं? सुधार है तो सही जानकारी लिखें।"></textarea>
-   </div>
+   <label>दस्तावेज अपलोड करें (अधिकतम 5)</label>
+   <input id="documents" type="file" multiple accept=".pdf,.jpg,.jpeg,.png">
+   <p class="small">PDF / JPG / PNG | प्रत्येक फाइल अधिकतम 5 MB</p>
 
-   <div class="field full">
-    <label for="documents">दस्तावेज़ अपलोड करें (अधिकतम 5)</label>
-    <input id="documents" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png">
-    <small>केवल आवश्यक दस्तावेज़ अपलोड करें। आधार की पूरी संख्या या OTP विवरण टेक्स्ट में न लिखें।</small>
-   </div>
+   <label style="display:flex;gap:8px;align-items:flex-start;font-weight:normal">
+    <input id="consent" type="checkbox" required style="width:auto;margin-top:3px">
+    <span>मैं सहमत हूं कि मेरे द्वारा दी गई जानकारी आवेदन प्रक्रिया के लिए उपयोग की जाएगी।</span>
+   </label>
 
-   <div class="field full">
-    <label>
-     <input id="consent" type="checkbox" required style="width:auto;min-height:auto">
-     मैं सहमत हूँ कि दी गई जानकारी और दस्तावेज़ इस सेवा के आवेदन हेतु उपयोग किए जाएँ।
-    </label>
-   </div>
-
-   <div class="field full actions">
-    <button id="submitBtn" type="submit">आवेदन जमा करें</button>
-    <button class="secondary" type="reset">फॉर्म साफ करें</button>
-   </div>
-
+   <button id="submitBtn" type="submit">आवेदन जमा करें</button>
   </form>
 
-  <div id="message" role="status"></div>
- </section>
+  <div id="applicationMessage" class="hidden" style="margin-top:15px"></div>
+ </div>
 
- <section class="panel">
-  <h2>आवेदन की स्थिति देखें</h2>
-  <p class="hint">आवेदन जमा होने पर मिली Tracking ID डालें। Tracking ID को सुरक्षित रखें।</p>
-
-  <div class="field">
-   <label for="trackingInput">Tracking ID</label>
-   <input id="trackingInput" maxlength="24" placeholder="24 अक्षरों की Tracking ID">
+ <div class="card">
+  <h2>आवेदन की स्थिति एवं भुगतान</h2>
+  <div class="note">
+   अपनी Tracking ID डालकर आवेदन की स्थिति और Admin द्वारा निर्धारित शुल्क देखें।
   </div>
 
-  <div class="actions">
-   <button type="button" onclick="trackApplication()">स्थिति देखें</button>
-  </div>
+  <label>अपनी Tracking ID डालें</label>
+  <input id="trackingInput" maxlength="24" placeholder="उदाहरण: A1B2C3D4...">
+  <button id="trackBtn" type="button">स्थिति देखें</button>
 
-  <div id="trackingResult" class="track-result hidden"></div>
- </section>
+  <div id="trackingResult" class="hidden" style="margin-top:18px"></div>
+ </div>
 
- <section class="panel">
-  <h2>आवेदन प्रक्रिया</h2>
-  <div class="steps">
-   <div class="step"><b>1. आवेदन</b><br>फॉर्म और आवश्यक दस्तावेज़ जमा करें।</div>
-   <div class="step"><b>2. जाँच</b><br>Admin आपके आवेदन और दस्तावेज़ जाँचेगा।</div>
-   <div class="step"><b>3. सरकारी प्रक्रिया</b><br>अधिकृत Farmer Registry पोर्टल पर आवश्यक सत्यापन होगा।</div>
-   <div class="step"><b>4. अपडेट</b><br>Tracking ID से आवेदन की स्थिति देखें।</div>
-  </div>
- </section>
-
- <p style="text-align:center;margin-top:18px">
-  <a class="btn secondary" href="index.html">← मुख्य वेबसाइट पर जाएँ</a>
-  <a class="btn" href="https://wa.me/919752039020">WhatsApp सहायता</a>
- </p>
-
-</main>
+</div>
 
 <footer>
- © RAHUL COMPUTER'S | सहायता: 9752039020<br>
- सरकारी सेवाओं के लिए अंतिम स्वीकृति संबंधित सरकारी विभाग द्वारा होती है।
+ © RAHUL COMPUTER'S | संपर्क: 9752039020
 </footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-storage.js";
+import {
+ getAuth,
+ signInAnonymously
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+import {
+ getFirestore,
+ doc,
+ setDoc,
+ getDoc,
+ serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import {
+ getStorage,
+ ref,
+ uploadBytes
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-storage.js";
 
 const firebaseConfig = {
- apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
- authDomain: "rahul-computer-s.firebaseapp.com",
- projectId: "rahul-computer-s",
- storageBucket: "rahul-computer-s.firebasestorage.app",
- messagingSenderId: "969449083821",
- appId: "1:969449083821:web:4696bc1253fa97ea304724"
+ apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain:"rahul-computer-s.firebaseapp.com",
+ projectId:"rahul-computer-s",
+ storageBucket:"rahul-computer-s.firebasestorage.app",
+ messagingSenderId:"969449083821",
+ appId:"1:969449083821:web:4696bc1253fa97ea304724"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -334,13 +242,16 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-const form = document.getElementById("farmerForm");
-const message = document.getElementById("message");
-const submitBtn = document.getElementById("submitBtn");
+const $ = id => document.getElementById(id);
 
-function showMessage(text,type){
- message.textContent = text;
- message.className = type;
+function escapeHtml(value){
+ return String(value ?? "").replace(/[&<>"']/g, ch => ({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[ch]));
 }
 
 function makeTrackingId(){
@@ -349,135 +260,278 @@ function makeTrackingId(){
  return Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("").toUpperCase();
 }
 
-window.chooseService = function(value){
- document.getElementById("serviceType").value = value;
- document.getElementById("applicationPanel").scrollIntoView({behavior:"smooth"});
-};
+function showMessage(element,message,type){
+ element.className = type;
+ element.textContent = message;
+}
 
-form.addEventListener("submit",async(event)=>{
- event.preventDefault();
- message.className = "";
-
- const mobile = document.getElementById("mobile").value.trim();
- const files = Array.from(document.getElementById("documents").files || []);
-
- if(!/^[0-9]{10}$/.test(mobile)){
-  return showMessage("कृपया सही 10 अंकों का मोबाइल नंबर भरें।","err");
+async function ensureLogin(){
+ if(!auth.currentUser){
+  await signInAnonymously(auth);
  }
+ return auth.currentUser;
+}
+
+$("farmerForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+
+ const btn = $("submitBtn");
+ const message = $("applicationMessage");
+ const files = Array.from($("documents").files || []);
 
  if(files.length > 5){
-  return showMessage("अधिकतम 5 दस्तावेज़ अपलोड कर सकते हैं।","err");
- }
-
- const allowed = ["application/pdf","image/jpeg","image/png"];
-
- if(files.some(f=>!allowed.includes(f.type)||f.size>5*1024*1024)){
-  return showMessage("हर फाइल PDF/JPG/PNG होनी चाहिए और 5 MB से बड़ी नहीं होनी चाहिए।","err");
- }
-
- submitBtn.disabled = true;
- submitBtn.textContent = "आवेदन जमा हो रहा है...";
-
- try{
-  const credential = await signInAnonymously(auth);
-  const uid = credential.user.uid;
-  const trackingId = makeTrackingId();
-  const uploadedPaths = [];
-
-  for(let i=0;i<files.length;i++){
-   const file = files[i];
-   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,"_").slice(-90) || `document-${i+1}`;
-   const filePath = `farmer-documents/${uid}/${trackingId}/${i+1}-${safeName}`;
-
-   await uploadBytes(ref(storage,filePath),file,{contentType:file.type});
-   uploadedPaths.push(filePath);
-  }
-
-  const data = {
-   customerName: document.getElementById("customerName").value.trim(),
-   mobile,
-   village: document.getElementById("village").value.trim(),
-   district: document.getElementById("district").value.trim(),
-   tehsil: document.getElementById("tehsil").value.trim(),
-   serviceType: document.getElementById("serviceType").value,
-   farmerId: document.getElementById("farmerId").value.trim(),
-   details: document.getElementById("details").value.trim(),
-   documents: uploadedPaths,
-   status: "Pending",
-   paymentStatus: "Unpaid",
-   amount: 0,
-   trackingId,
-   ownerUid: uid,
-   createdAt: serverTimestamp()
-  };
-
-  await setDoc(doc(db,"farmerApplications",trackingId),data);
-
-  await setDoc(doc(db,"farmerTracking",trackingId),{
-   status:"Pending",
-   paymentStatus:"Unpaid",
-   serviceType:data.serviceType
-  });
-
-  showMessage("आपका आवेदन जमा हो गया है। आपकी Tracking ID: "+trackingId+" — इसे सुरक्षित रखें।","ok");
-  document.getElementById("trackingInput").value = trackingId;
-  form.reset();
-  document.getElementById("trackingResult").classList.add("hidden");
-
- }catch(error){
-  console.error(error);
-  showMessage("आवेदन जमा नहीं हो पाया। इंटरनेट, Firebase Authentication और Storage सेटिंग जाँचें। सहायता के लिए WhatsApp करें।","err");
- }finally{
-  submitBtn.disabled = false;
-  submitBtn.textContent = "आवेदन जमा करें";
- }
-});
-
-window.trackApplication = async function(){
- const id = document.getElementById("trackingInput").value.trim().toUpperCase();
- const result = document.getElementById("trackingResult");
-
- result.classList.remove("hidden");
-
- if(!/^[A-F0-9]{24}$/.test(id)){
-  result.textContent = "कृपया सही 24 अक्षरों की Tracking ID डालें।";
+  showMessage(message,"अधिकतम 5 दस्तावेज ही अपलोड कर सकते हैं।","error");
   return;
  }
 
- result.textContent = "स्थिति देखी जा रही है...";
-
- try{
-  const snap = await getDoc(doc(db,"farmerTracking",id));
-
-  if(!snap.exists()){
-   result.textContent = "इस Tracking ID का रिकॉर्ड नहीं मिला। कृपया ID जाँचें।";
+ const allowed = ["application/pdf","image/jpeg","image/png"];
+ for(const file of files){
+  if(!allowed.includes(file.type)){
+   showMessage(message,"केवल PDF, JPG या PNG फाइल अपलोड करें।","error");
    return;
   }
+  if(file.size > 5*1024*1024){
+   showMessage(message,"हर दस्तावेज का आकार 5 MB से कम होना चाहिए।","error");
+   return;
+  }
+ }
 
-  const d = snap.data();
-  const statusText = {
-   Pending:"लंबित",
-   Processing:"प्रक्रिया में",
-   Completed:"पूरा",
-   Rejected:"अस्वीकृत"
-  };
-  const payText = {
-   Unpaid:"भुगतान बाकी",
-   Paid:"भुगतान सत्यापित",
-   Rejected:"भुगतान अस्वीकृत"
+ const mobile = $("mobile").value.trim();
+ if(!/^[0-9]{10}$/.test(mobile)){
+  showMessage(message,"कृपया सही 10 अंकों का मोबाइल नंबर भरें।","error");
+  return;
+ }
+
+ btn.disabled = true;
+ btn.textContent = "आवेदन जमा हो रहा है...";
+ message.className = "hidden";
+
+ try{
+  const user = await ensureLogin();
+  const trackingId = makeTrackingId();
+  const documentPaths = [];
+
+  for(let i=0;i<files.length;i++){
+   const file = files[i];
+   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+   const path = `farmer-documents/${user.uid}/${trackingId}/${i+1}-${safeName}`;
+   await uploadBytes(ref(storage,path),file,{
+    contentType:file.type
+   });
+   documentPaths.push(path);
+  }
+
+  const application = {
+   customerName:$("customerName").value.trim(),
+   mobile,
+   village:$("village").value.trim(),
+   tehsil:$("tehsil").value.trim(),
+   district:$("district").value.trim(),
+   serviceType:$("serviceType").value,
+   farmerId:$("farmerId").value.trim(),
+   details:$("details").value.trim(),
+   documents:documentPaths,
+   status:"Pending",
+   paymentStatus:"Unpaid",
+   amount:0,
+   trackingId,
+   ownerUid:user.uid,
+   createdAt:serverTimestamp()
   };
 
-  result.textContent =
-   "आवेदन स्थिति: "+(statusText[d.status]||d.status)+
-   " | भुगतान स्थिति: "+(payText[d.paymentStatus]||d.paymentStatus)+
-   " | सेवा: "+(d.serviceType||"Farmer सेवा");
+  await setDoc(doc(db,"farmerApplications",trackingId),application);
+
+  await setDoc(doc(db,"farmerTracking",trackingId),{
+   trackingId,
+   status:"Pending",
+   paymentStatus:"Unpaid",
+   amount:0,
+   serviceType:application.serviceType,
+   ownerUid:user.uid,
+   createdAt:serverTimestamp()
+  });
+
+  showMessage(
+   message,
+   "आपका आवेदन सफलतापूर्वक जमा हो गया है। अपनी Tracking ID सुरक्षित रखें: "+trackingId,
+   "success"
+  );
+
+  $("trackingInput").value = trackingId;
+  $("farmerForm").reset();
+  $("district").value = "मैहर";
+
+  await showTracking(trackingId);
 
  }catch(error){
   console.error(error);
-  result.textContent = "स्थिति प्राप्त नहीं हो सकी। कृपया कुछ देर बाद पुनः प्रयास करें।";
+  showMessage(message,"आवेदन जमा नहीं हो सका। कृपया इंटरनेट और Firebase Rules जांचें। विवरण: "+error.message,"error");
+ }finally{
+  btn.disabled = false;
+  btn.textContent = "आवेदन जमा करें";
  }
-};
-</script>
+});
 
+$("trackBtn").addEventListener("click",async()=>{
+ const id = $("trackingInput").value.trim().toUpperCase();
+ if(!/^[A-F0-9]{24}$/.test(id)){
+  showMessage($("trackingResult"),"कृपया सही 24 अक्षरों वाली Tracking ID डालें।","error");
+  return;
+ }
+ await showTracking(id);
+});
+
+async function showTracking(trackingId){
+ const result = $("trackingResult");
+ result.className = "note";
+ result.textContent = "जानकारी प्राप्त की जा रही है...";
+
+ try{
+  const snap = await getDoc(doc(db,"farmerTracking",trackingId));
+
+  if(!snap.exists()){
+   showMessage(result,"इस Tracking ID का रिकॉर्ड नहीं मिला। कृपया ID जांचें।","error");
+   return;
+  }
+
+  const data = snap.data();
+  const amount = Number(data.amount || 0);
+  const status = data.status || "Pending";
+  const paymentStatus = data.paymentStatus || "Unpaid";
+
+  let html = `
+   <h3>आपके आवेदन की जानकारी</h3>
+   <p><b>Tracking ID:</b> ${escapeHtml(trackingId)}</p>
+   <p><b>सेवा:</b> ${escapeHtml(data.serviceType || "-")}</p>
+   <p><b>आवेदन स्थिति:</b> <span class="status">${escapeHtml(status)}</span></p>
+   <p><b>भुगतान स्थिति:</b> <span class="status">${escapeHtml(paymentStatus)}</span></p>
+   <p><b>निर्धारित शुल्क:</b> ₹${amount.toFixed(2)}</p>
+  `;
+
+  if(amount > 0 && paymentStatus !== "Paid"){
+   html += `
+    <hr>
+    <h3>ऑनलाइन भुगतान (UPI)</h3>
+    <p>कृपया नीचे दिए QR कोड को स्कैन करके ठीक ₹${amount.toFixed(2)} का भुगतान करें।</p>
+    <img class="qr" src="rahul-upi-qr.png" alt="RAHUL COMPUTER'S UPI QR Code">
+    <div class="warning">
+     भुगतान करने से पहले QR कोड में प्राप्तकर्ता का नाम जांच लें। सही राशि ही भेजें। भुगतान के बाद Transaction ID और स्क्रीनशॉट जमा करें।
+    </div>
+   `;
+
+   if(paymentStatus === "Submitted"){
+    html += `<div class="note">आपका भुगतान प्रमाण जमा हो चुका है। Admin द्वारा जांच की जा रही है। कृपया दोबारा भुगतान न करें।</div>`;
+   }else{
+    html += `
+     <form id="paymentForm">
+      <label>UPI Transaction ID / UTR नंबर *</label>
+      <input id="transactionId" required minlength="6" maxlength="80" placeholder="UPI Transaction ID / UTR भरें">
+
+      <label>भुगतान का स्क्रीनशॉट *</label>
+      <input id="paymentScreenshot" type="file" accept="image/jpeg,image/png" required>
+      <p class="small">केवल JPG या PNG स्क्रीनशॉट, अधिकतम 5 MB।</p>
+
+      <button type="submit" class="gold" id="paymentBtn">भुगतान प्रमाण जमा करें</button>
+     </form>
+     <div id="paymentMessage" class="hidden" style="margin-top:12px"></div>
+    `;
+   }
+  }else if(paymentStatus === "Paid"){
+   html += `<div class="success">आपका भुगतान Admin द्वारा सत्यापित कर दिया गया है। धन्यवाद!</div>`;
+  }else if(amount <= 0){
+   html += `<div class="note">अभी Admin द्वारा आवेदन शुल्क निर्धारित नहीं किया गया है। कृपया बाद में Tracking ID से दोबारा जांचें।</div>`;
+  }
+
+  result.className = "card";
+  result.innerHTML = html;
+
+  const paymentForm = $("paymentForm");
+  if(paymentForm){
+   paymentForm.addEventListener("submit",async event=>{
+    event.preventDefault();
+    await submitPayment(trackingId);
+   });
+  }
+
+ }catch(error){
+  console.error(error);
+  showMessage(result,"जानकारी प्राप्त नहीं हो सकी। कृपया दोबारा प्रयास करें। "+error.message,"error");
+ }
+}
+
+async function submitPayment(trackingId){
+ const btn = $("paymentBtn");
+ const message = $("paymentMessage");
+ const transactionId = $("transactionId").value.trim();
+ const file = $("paymentScreenshot").files[0];
+
+ if(transactionId.length < 6 || transactionId.length > 80){
+  showMessage(message,"कृपया सही Transaction ID भरें।","error");
+  return;
+ }
+
+ if(!file || !["image/jpeg","image/png"].includes(file.type) || file.size > 5*1024*1024){
+  showMessage(message,"कृपया 5 MB से कम JPG या PNG स्क्रीनशॉट चुनें।","error");
+  return;
+ }
+
+ btn.disabled = true;
+ btn.textContent = "भुगतान प्रमाण जमा हो रहा है...";
+
+ try{
+  const user = await ensureLogin();
+  const trackingSnap = await getDoc(doc(db,"farmerTracking",trackingId));
+
+  if(!trackingSnap.exists()) throw new Error("Tracking ID नहीं मिली।");
+
+  const tracking = trackingSnap.data();
+
+  if(tracking.ownerUid !== user.uid){
+   throw new Error("इस आवेदन के साथ आपका लॉगिन मेल नहीं खाता।");
+  }
+
+  if(Number(tracking.amount || 0) <= 0){
+   throw new Error("Admin ने अभी शुल्क निर्धारित नहीं किया है।");
+  }
+
+  if(tracking.paymentStatus === "Paid"){
+   throw new Error("इस आवेदन का भुगतान पहले ही सत्यापित हो चुका है।");
+  }
+
+  if(tracking.paymentStatus === "Submitted"){
+   throw new Error("आपका भुगतान प्रमाण पहले से जांच के लिए जमा है।");
+  }
+
+  const path = `farmer-payment-screenshots/${user.uid}/${trackingId}/payment-${Date.now()}.png`;
+  await uploadBytes(ref(storage,path),file,{
+   contentType:file.type
+  });
+
+  await setDoc(doc(db,"farmerPaymentSubmissions",trackingId),{
+   trackingId,
+   ownerUid:user.uid,
+   transactionId,
+   screenshotPath:path,
+   amount:Number(tracking.amount),
+   paymentStatus:"Submitted",
+   createdAt:serverTimestamp()
+  });
+
+  await setDoc(doc(db,"farmerTracking",trackingId),{
+   paymentStatus:"Submitted"
+  },{merge:true});
+
+  showMessage(message,"भुगतान प्रमाण सफलतापूर्वक जमा हो गया है। Admin द्वारा जांच के बाद स्थिति अपडेट होगी।","success");
+  await showTracking(trackingId);
+
+ }catch(error){
+  console.error(error);
+  showMessage(message,"भुगतान प्रमाण जमा नहीं हो सका: "+error.message,"error");
+ }finally{
+  btn.disabled = false;
+  btn.textContent = "भुगतान प्रमाण जमा करें";
+ }
+}
+</script>
 </body>
 </html>
