@@ -1,0 +1,1 @@
+document.getElementById('menu')?.addEventListener('click',()=>document.getElementById('links')?.classList.toggle('open'));document.getElementById('search')?.addEventListener('input',e=>{let q=e.target.value.toLowerCase();document.querySelectorAll('.service-card').forEach(c=>c.style.display=c.innerText.toLowerCase().includes(q)?'':'none')});
