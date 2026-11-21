@@ -1,2 +1,495 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ऑनलाइन आवेदन | RAHUL COMPUTER'S</title><link rel="stylesheet" href="assets/style.css"></head><body><div class="topline"><div class="wrap"><span>RAHUL COMPUTER'S • Digital Seva Portal</span><span>☎ <a href="tel:9752039020">9752039020</a></span></div></div><header class="header"><div class="wrap nav"><a class="brand" href="index.html"><span class="logo">RC</span><span>RAHUL COMPUTER'S<small>Online Application</small></span></a><a class="btn outline" href="index.html">← होम</a></div></header><section class="page-hero"><div class="wrap"><h1>ऑनलाइन सेवा आवेदन</h1><p>फॉर्म भरें, हम आपसे संपर्क करेंगे।</p></div></section><section class="section"><div class="wrap form-layout"><div class="panel"><h2 style="margin-top:0">आवेदन फॉर्म</h2><p style="color:var(--muted);margin-top:-8px">सही जानकारी भरें। * वाले फ़ील्ड जरूरी हैं।</p><form id="applyForm"><div class="form-grid"><div class="field"><label>पूरा नाम *</label><input id="name" required maxlength="70" placeholder="अपना नाम लिखें"></div><div class="field"><label>मोबाइल नंबर *</label><input id="mobile" required inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" placeholder="10 अंकों का मोबाइल"></div><div class="field"><label>गाँव / शहर *</label><input id="village" required maxlength="80" placeholder="गाँव का नाम"></div><div class="field"><label>सेवा चुनें *</label><select id="service" required><option value="">सेवा चुनें</option><option>Aadhaar सहायता</option><option>PAN Card</option><option>Voter ID</option><option>Samagra ID</option><option>Farmer ID</option><option>Ayushman Card</option><option>MP e-District</option><option>Sambal Yojana</option><option>e-Shram Card</option><option>Birth Certificate</option><option>Ration Card</option><option>EPFO / PF</option><option>Mobile / SIM</option><option>Online Form</option><option>Print / Scan</option></select></div><div class="field full"><label>आवेदन से जुड़ी जानकारी</label><textarea id="details" maxlength="1000" placeholder="किस प्रकार की सहायता चाहिए? (वैकल्पिक)"></textarea></div><div class="field full"><label><input id="consent" type="checkbox" required style="width:auto"> मैं सहमत हूँ कि मेरी दी गई जानकारी इस आवेदन के लिए उपयोग की जाएगी।</label><span class="help">कृपया OTP, पासवर्ड, UPI PIN या बैंक PIN यहाँ न लिखें।</span></div><div class="field full"><button class="btn" type="submit" id="send">आवेदन भेजें →</button><div class="result" id="result"></div></div></div></form></div><aside class="sidebox"><h3>आवेदन के बाद क्या होगा?</h3><ul><li>आपका आवेदन पोर्टल पर दर्ज होगा।</li><li>आपको एक ट्रैकिंग नंबर मिलेगा।</li><li>हम जरूरत पड़ने पर फोन/WhatsApp करेंगे।</li><li>आवेदन की स्वीकृति संबंधित विभाग के नियमों पर निर्भर है।</li></ul><hr style="border:0;border-top:1px solid #dce8f5;margin:17px 0"><b>सीधे संपर्क करें</b><p style="margin:6px 0;color:#60748c">9752039020</p><a class="btn green" style="width:100%" href="https://wa.me/919752039020">WhatsApp सहायता</a></aside></div></section><footer class="footer"><div class="wrap"><div class="copyright">© 2026 RAHUL COMPUTER'S · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div></div></footer>
-<script type="module">import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';import {getFirestore,collection,addDoc,doc,setDoc,serverTimestamp} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';const firebaseConfig={apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",authDomain:"rahul-computer-s.firebaseapp.com",projectId:"rahul-computer-s",storageBucket:"rahul-computer-s.firebasestorage.app",messagingSenderId:"969449083821",appId:"1:969449083821:web:4696bc1253fa97ea304724"};const app=initializeApp(firebaseConfig);const db=getFirestore(app);const form=document.getElementById('applyForm');const result=document.getElementById('result');const params=new URLSearchParams(location.search);if(params.get('service'))document.getElementById('service').value=params.get('service');form.addEventListener('submit',async e=>{e.preventDefault();const btn=document.getElementById('send');const mobile=document.getElementById('mobile').value.trim();if(!/^[6-9][0-9]{9}$/.test(mobile)){alert('कृपया सही 10 अंकों का मोबाइल नंबर लिखें।');return}btn.disabled=true;btn.textContent='आवेदन भेजा जा रहा है...';const trackingId=Array.from(crypto.getRandomValues(new Uint8Array(12))).map(x=>x.toString(16).padStart(2,'0')).join('').toUpperCase();const data={customerName:document.getElementById('name').value.trim(),mobile,village:document.getElementById('village').value.trim(),service:document.getElementById('service').value,details:document.getElementById('details').value.trim(),trackingId,status:'Pending',createdAt:serverTimestamp()};try{await addDoc(collection(db,'applications'),data);try{await setDoc(doc(db,'tracking',trackingId),{trackingId,status:'Pending',service:data.service,createdAt:serverTimestamp()})}catch(trackError){console.warn('Tracking index not written',trackError)}result.style.display='block';result.innerHTML='आवेदन सफलतापूर्वक दर्ज हुआ।<br><b>आपका ट्रैकिंग नंबर: '+trackingId+'</b><br><a href="track.html" style="text-decoration:underline">आवेदन ट्रैक करें</a>';form.reset();}catch(err){console.error(err);const msg='नमस्ते, मुझे '+data.service+' के लिए आवेदन करना है। नाम: '+data.customerName+' मोबाइल: '+data.mobile+' गाँव: '+data.village+' विवरण: '+data.details;result.style.display='block';result.innerHTML='ऑनलाइन आवेदन अभी सेव नहीं हो पाया। नीचे WhatsApp से जानकारी भेजें।';const a=document.createElement('a');a.className='btn green';a.href='https://wa.me/919752039020?text='+encodeURIComponent(msg);a.textContent='WhatsApp पर भेजें';a.target='_blank';result.appendChild(a);}finally{btn.disabled=false;btn.textContent='आवेदन भेजें →'}});</script></body></html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ऑनलाइन आवेदन | RAHUL COMPUTER'S</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f1f5f9;color:#172554;font-family:Arial,sans-serif}
+header{background:linear-gradient(120deg,#073b75,#087ac2);color:white;padding:18px}
+.wrap{max-width:900px;margin:auto}
+nav{display:flex;gap:18px;margin-top:13px;flex-wrap:wrap;font-size:14px}
+a{color:inherit;text-decoration:none}
+.hero{padding:25px 15px;background:#e0f2fe}
+.hero h1{margin:0 0 8px;color:#073b75}
+.hero p{margin:0;color:#475569}
+main{padding:20px 14px}
+.panel{background:white;padding:20px;border-radius:15px;box-shadow:0 3px 15px #0f172a0c}
+label{display:block;font-size:14px;font-weight:bold;margin:14px 0 7px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:9px;font-size:15px;background:white}
+textarea{min-height:100px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 13px}
+.full{grid-column:1/-1}
+.info{background:#eff6ff;border:1px solid #bfdbfe;padding:13px;border-radius:10px;margin:14px 0;font-size:13px;line-height:1.6}
+.docs{background:#f8fafc;padding:12px;border-radius:9px;font-size:13px;line-height:1.7}
+.check{display:flex;gap:9px;align-items:flex-start;font-size:13px;margin:15px 0}
+.check input{width:auto;margin-top:2px}
+button{width:100%;padding:14px;border:0;border-radius:9px;background:#087ac2;color:white;font-size:16px;font-weight:bold}
+button:disabled{opacity:.6}
+#result{display:none;margin-top:16px;padding:15px;border-radius:10px;background:#ecfdf5;color:#065f46;line-height:1.8;overflow-wrap:anywhere}
+.side{margin-top:15px;background:#fff7ed;padding:14px;border-radius:10px;color:#9a3412;font-size:13px;line-height:1.7}
+footer{text-align:center;padding:20px;background:#073b75;color:white;font-size:13px;margin-top:25px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.panel{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<strong>🔷 RAHUL COMPUTER'S</strong>
+<nav>
+<a href="index.html">होम</a>
+<a href="services.html">सभी सेवाएँ</a>
+<a href="track.html">आवेदन ट्रैक करें</a>
+</nav>
+</div>
+</header>
+
+<section class="hero">
+<div class="wrap">
+<h1>ऑनलाइन सेवा आवेदन</h1>
+<p>अपनी जानकारी भरें। हमारी टीम आपसे संपर्क करेगी।</p>
+</div>
+</section>
+
+<main class="wrap">
+<div class="panel">
+<h2 style="margin-top:0">आवेदन फॉर्म</h2>
+<p style="color:#64748b;font-size:13px">* वाले सभी विवरण भरना जरूरी है।</p>
+
+<form id="applyForm">
+<div class="grid">
+
+<div class="full">
+<label>सेवा चुनें *</label>
+<select id="service" required>
+<option value="">सेवा चुनें</option>
+</select>
+</div>
+
+<div class="full info" id="serviceInfo">
+सेवा चुनने पर उसकी जानकारी यहाँ दिखाई देगी।
+</div>
+
+<div class="full">
+<label>किस प्रकार का काम है? *</label>
+<select id="workType" required>
+<option value="">काम चुनें</option>
+</select>
+</div>
+
+<div>
+<label>पूरा नाम *</label>
+<input id="name" required maxlength="70" placeholder="अपना पूरा नाम">
+</div>
+
+<div>
+<label>मोबाइल नंबर *</label>
+<input id="mobile" required inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" placeholder="10 अंकों का मोबाइल">
+</div>
+
+<div>
+<label>गाँव / शहर *</label>
+<input id="village" required maxlength="80" placeholder="गाँव का नाम">
+</div>
+
+<div>
+<label>जिला</label>
+<input id="district" maxlength="60" value="मैहर">
+</div>
+
+<div class="full">
+<label>आवश्यक दस्तावेजों की जानकारी</label>
+<div class="docs" id="documents">सेवा चुनने के बाद जरूरी दस्तावेजों की जानकारी दिखाई देगी।</div>
+</div>
+
+<div class="full">
+<label>अतिरिक्त जानकारी</label>
+<textarea id="details" maxlength="1000" placeholder="अपने काम के बारे में लिखें। OTP, पासवर्ड, UPI PIN या बैंक PIN न लिखें।"></textarea>
+</div>
+
+<div class="full">
+<div class="info">
+<strong>शुल्क:</strong> संपर्क करके पुष्टि करें।<br>
+सरकारी शुल्क और हमारी सेवा फीस अलग-अलग हो सकती हैं। आवेदन से पहले शुल्क बताया जाएगा।
+</div>
+</div>
+
+<div class="full">
+<label class="check">
+<input type="checkbox" id="consent" required>
+<span>मैं सहमत हूँ कि मेरी दी गई जानकारी इस आवेदन के लिए उपयोग की जा सकती है और जरूरत पड़ने पर मुझसे संपर्क किया जा सकता है।</span>
+</label>
+</div>
+
+<div class="full">
+<button type="submit" id="send">आवेदन भेजें →</button>
+<div id="result"></div>
+</div>
+
+</div>
+</form>
+</div>
+
+<div class="side">
+<strong>जरूरी सूचना</strong><br>
+यह फॉर्म आपकी सेवा-अनुरोध जानकारी दर्ज करता है। इससे सरकारी आवेदन अपने-आप जमा नहीं होता। वास्तविक प्रक्रिया संबंधित सरकारी पोर्टल, अधिकृत सेवा या अनुमति पर निर्भर करेगी।
+</div>
+
+<div class="side">
+<strong>सहायता:</strong> <a href="tel:9752039020">9752039020</a><br>
+<a href="https://wa.me/919752039020">WhatsApp पर संपर्क करें</a>
+</div>
+</main>
+
+<footer>
+RAHUL COMPUTER'S<br>
+अमिलिया, मैहर, मध्यप्रदेश<br>
+© 2026 RAHUL COMPUTER'S
+</footer>
+
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';
+import {
+ getFirestore,collection,addDoc,doc,setDoc,serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
+
+const firebaseConfig={
+ apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain:"rahul-computer-s.firebaseapp.com",
+ projectId:"rahul-computer-s",
+ storageBucket:"rahul-computer-s.firebasestorage.app",
+ messagingSenderId:"969449083821",
+ appId:"1:969449083821:web:4696bc1253fa97ea304724"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+
+const services={
+"Aadhaar सहायता":{
+work:["मोबाइल अपडेट सहायता","PVC कार्ड सहायता","अन्य अधिकृत सहायता"],
+docs:"आधार संबंधी जानकारी। OTP या पूरा आधार नंबर यहाँ न लिखें।"
+},
+"PAN Card":{
+work:["नया PAN","PAN में सुधार","PAN रीप्रिंट","PAN स्टेटस सहायता"],
+docs:"पहचान, पता और जन्मतिथि प्रमाण की जानकारी। दस्तावेज सुरक्षित माध्यम से ही दें।"
+},
+"Voter ID":{
+work:["नया मतदाता पंजीयन","विवरण सुधार","डाउनलोड सहायता","स्टेटस सहायता"],
+docs:"मतदाता पहचान और पते के प्रमाण की जानकारी।"
+},
+"Passport":{
+work:["नया पासपोर्ट","री-इश्यू","फॉर्म सहायता"],
+docs:"पहचान, पता और जन्मतिथि दस्तावेजों की जानकारी।"
+},
+"Driving Licence":{
+work:["Learner Licence","Driving Licence","Renewal","अन्य सहायता"],
+docs:"लाइसेंस और पहचान संबंधी दस्तावेजों की जानकारी।"
+},
+"DigiLocker":{
+work:["नया अकाउंट","दस्तावेज प्राप्त करना","अन्य सहायता"],
+docs:"मोबाइल नंबर और संबंधित दस्तावेज की जानकारी।"
+},
+"Samagra ID":{
+work:["नया परिवार पंजीयन","नया सदस्य पंजीयन","सदस्य जोड़ना","नाम/जन्मतिथि/लिंग सुधार","मोबाइल/पता सुधार","सदस्य हटाने का अनुरोध","परिवार विभाजन/स्थानांतरण","विवाह अपडेट","मृत्यु अपडेट","e-KYC सहायता","परिवार विवरण/प्रिंट","आवेदन स्थिति"],
+docs:"समग्र परिवार ID/सदस्य ID और संबंधित प्रमाण की जानकारी।"
+},
+"समग्र सदस्य जोड़ना":{
+work:["नया सदस्य जोड़ना","सदस्य विवरण सुधार"],
+docs:"समग्र परिवार ID और सदस्य का संबंधित प्रमाण।"
+},
+"समग्र सुधार":{
+work:["नाम सुधार","जन्मतिथि सुधार","लिंग सुधार","मोबाइल सुधार","पता सुधार"],
+docs:"समग्र ID और सुधार के समर्थन में प्रमाण।"
+},
+"समग्र परिवार विभाजन":{
+work:["परिवार विभाजन","परिवार स्थानांतरण"],
+docs:"समग्र परिवार ID और संबंधित जानकारी।"
+},
+"समग्र विवाह अपडेट":{
+work:["विवाह विवरण अपडेट","परिवार विवरण सुधार"],
+docs:"समग्र ID और विवाह संबंधी प्रमाण की जानकारी।"
+},
+"समग्र मृत्यु अपडेट":{
+work:["मृत्यु अपडेट अनुरोध"],
+docs:"समग्र ID और मृत्यु प्रमाण संबंधी जानकारी।"
+},
+"समग्र e-KYC":{
+work:["e-KYC सहायता","स्थिति जाँच"],
+docs:"समग्र ID। OTP यहाँ न लिखें।"
+},
+"आय प्रमाण-पत्र":{
+work:["नया आवेदन","सुधार","स्टेटस सहायता"],
+docs:"पहचान, पता और आय संबंधी प्रमाण।"
+},
+"जाति प्रमाण-पत्र":{
+work:["नया आवेदन","सुधार","स्टेटस सहायता"],
+docs:"पहचान, निवास और जाति संबंधी प्रमाण।"
+},
+"निवास प्रमाण-पत्र":{
+work:["नया आवेदन","सुधार","स्टेटस सहायता"],
+docs:"पहचान और निवास संबंधी प्रमाण।"
+},
+"जन्म प्रमाण-पत्र":{
+work:["नया आवेदन","सुधार","प्रति प्राप्त करना"],
+docs:"जन्म संबंधी अस्पताल/स्थानीय निकाय रिकॉर्ड की जानकारी।"
+},
+"मृत्यु प्रमाण-पत्र":{
+work:["नया आवेदन","प्रति प्राप्त करना","सुधार"],
+docs:"मृत्यु संबंधी रिकॉर्ड और प्रमाण।"
+},
+"विवाह पंजीयन":{
+work:["नया पंजीयन","प्रमाण-पत्र सहायता"],
+docs:"पति-पत्नी की पहचान और विवाह संबंधी दस्तावेज।"
+},
+"Sambal Yojana":{
+work:["नया पंजीयन","सुधार","आवेदन स्थिति"],
+docs:"समग्र ID और पात्रता संबंधी दस्तावेज।"
+},
+"Ration Card":{
+work:["नया राशन कार्ड","सदस्य जोड़ना","सदस्य हटाना","सुधार","स्थिति सहायता"],
+docs:"राशन कार्ड/समग्र ID और परिवार संबंधी दस्तावेज।"
+},
+"Farmer ID":{
+work:["नया किसान पंजीयन","सुधार","स्टेटस सहायता"],
+docs:"आधार संबंधी जानकारी और भूमि रिकॉर्ड।"
+},
+"PM-Kisan":{
+work:["नया आवेदन","e-KYC सहायता","स्टेटस सहायता"],
+docs:"किसान पंजीयन और भूमि संबंधी जानकारी।"
+},
+"Kisan Credit Card":{
+work:["नया आवेदन","बैंक सहायता"],
+docs:"बैंक और भूमि संबंधी दस्तावेजों की जानकारी।"
+},
+"फसल बीमा":{
+work:["फसल बीमा आवेदन सहायता","स्टेटस सहायता"],
+docs:"फसल, भूमि और किसान पंजीयन की जानकारी।"
+},
+"खसरा / B-1":{
+work:["खसरा प्रति","B-1 प्रति","नक्शा सहायता"],
+docs:"जिला, तहसील, ग्राम और खसरा नंबर।"
+},
+"Ayushman Card":{
+work:["पात्रता जाँच सहायता","कार्ड सहायता","परिवार सदस्य सहायता"],
+docs:"पात्रता और पहचान संबंधी जानकारी। OTP न लिखें।"
+},
+"ABHA Health ID":{
+work:["ABHA ID बनाना","कार्ड डाउनलोड सहायता","अन्य सहायता"],
+docs:"मोबाइल नंबर। OTP यहाँ न लिखें।"
+},
+"e-Shram Card":{
+work:["नया पंजीयन","सुधार","डाउनलोड सहायता"],
+docs:"पहचान और व्यवसाय संबंधी जानकारी।"
+},
+"श्रमिक पंजीयन":{
+work:["नया पंजीयन","नवीनीकरण","सुधार"],
+docs:"पहचान और श्रमिक संबंधी दस्तावेज।"
+},
+"पेंशन आवेदन":{
+work:["वृद्धावस्था पेंशन","विधवा पेंशन","दिव्यांग पेंशन","स्टेटस सहायता"],
+docs:"पहचान, समग्र ID और पात्रता संबंधी दस्तावेज।"
+},
+"Scholarship":{
+work:["नया आवेदन","नवीनीकरण","स्टेटस सहायता"],
+docs:"समग्र ID, शैक्षणिक रिकॉर्ड और बैंक संबंधी दस्तावेज।"
+},
+"Gaon Ki Beti":{
+work:["नया आवेदन","स्टेटस सहायता"],
+docs:"शैक्षणिक रिकॉर्ड और पात्रता संबंधी दस्तावेज।"
+},
+"MPESB Form":{
+work:["नया फॉर्म","फॉर्म सुधार","एडमिट कार्ड सहायता"],
+docs:"शैक्षणिक जानकारी और फोटो/हस्ताक्षर।"
+},
+"Job Form":{
+work:["नौकरी आवेदन","रोजगार पंजीयन","अन्य फॉर्म"],
+docs:"शैक्षणिक और पहचान संबंधी जानकारी।"
+},
+"Admit Card / Result":{
+work:["एडमिट कार्ड","रिजल्ट","अन्य सहायता"],
+docs:"परीक्षा का नाम और आवेदन/रोल नंबर।"
+},
+"बिजली बिल":{
+work:["बिल भुगतान सहायता","बिल जानकारी"],
+docs:"उपभोक्ता नंबर।"
+},
+"Mobile / SIM":{
+work:["नया SIM","MNP पोर्ट","SIM Replacement","अन्य सहायता"],
+docs:"टेलीकॉम कंपनी और आवश्यक पहचान दस्तावेज।"
+},
+"EPFO / PF":{
+work:["UAN सहायता","PF पासबुक","Form 19","Form 10C","क्लेम स्टेटस"],
+docs:"UAN और संबंधित जानकारी। पासवर्ड/OTP न लिखें।"
+},
+"Udyam Registration":{
+work:["नया पंजीयन","सुधार","डाउनलोड सहायता"],
+docs:"व्यवसाय और पहचान संबंधी जानकारी।"
+},
+"GST सहायता":{
+work:["GST पंजीयन सहायता","GST फॉर्म सहायता"],
+docs:"व्यवसाय और कर संबंधी दस्तावेज।"
+},
+"Online Form":{
+work:["सरकारी फॉर्म","निजी फॉर्म","परीक्षा फॉर्म","अन्य"],
+docs:"संबंधित फॉर्म के अनुसार दस्तावेज।"
+},
+"Print / Scan / PDF":{
+work:["प्रिंट","स्कैन","PDF बनाना","फोटो/दस्तावेज कार्य"],
+docs:"काम से संबंधित फाइल या दस्तावेज।"
+},
+"RTI / जनसुनवाई":{
+work:["RTI आवेदन सहायता","जनसुनवाई शिकायत","अन्य सहायता"],
+docs:"आवेदन या शिकायत से संबंधित जानकारी।"
+}
+};
+
+const service=document.getElementById("service");
+const workType=document.getElementById("workType");
+const info=document.getElementById("serviceInfo");
+const documents=document.getElementById("documents");
+
+Object.keys(services).forEach(name=>{
+ const option=document.createElement("option");
+ option.value=name;
+ option.textContent=name;
+ service.appendChild(option);
+});
+
+function updateService(){
+ const selected=service.value;
+ workType.innerHTML='<option value="">काम चुनें</option>';
+ if(!services[selected]){
+  info.textContent="सेवा चुनने पर उसकी जानकारी यहाँ दिखाई देगी।";
+  documents.textContent="सेवा चुनने के बाद जरूरी दस्तावेजों की जानकारी दिखाई देगी।";
+  return;
+ }
+ const item=services[selected];
+ item.work.forEach(work=>{
+  const option=document.createElement("option");
+  option.value=work;
+  option.textContent=work;
+  workType.appendChild(option);
+ });
+ info.textContent="सेवा: "+selected+" | शुल्क: संपर्क करके पुष्टि करें।";
+ documents.textContent=item.docs;
+}
+
+service.addEventListener("change",updateService);
+
+const params=new URLSearchParams(location.search);
+const requested=params.get("service");
+if(requested&&services[requested]){
+ service.value=requested;
+ updateService();
+}
+
+const form=document.getElementById("applyForm");
+const result=document.getElementById("result");
+
+form.addEventListener("submit",async event=>{
+ event.preventDefault();
+
+ const btn=document.getElementById("send");
+ const mobile=document.getElementById("mobile").value.trim();
+ const selectedService=service.value;
+ const selectedWork=workType.value;
+
+ if(!/^[6-9][0-9]{9}$/.test(mobile)){
+  alert("कृपया सही 10 अंकों का मोबाइल नंबर लिखें।");
+  return;
+ }
+
+ if(!services[selectedService]||!selectedWork){
+  alert("कृपया सेवा और काम दोनों चुनें।");
+  return;
+ }
+
+ btn.disabled=true;
+ btn.textContent="आवेदन भेजा जा रहा है...";
+ result.style.display="none";
+
+ const trackingId=Array.from(
+  crypto.getRandomValues(new Uint8Array(12))
+ ).map(x=>x.toString(16).padStart(2,"0")).join("").toUpperCase();
+
+ const name=document.getElementById("name").value.trim();
+ const village=document.getElementById("village").value.trim();
+ const district=document.getElementById("district").value.trim();
+ const extra=document.getElementById("details").value.trim();
+
+ const details=
+ "कार्य: "+selectedWork+
+ " | जिला: "+district+
+ " | दस्तावेज जानकारी: "+services[selectedService].docs+
+ " | अतिरिक्त जानकारी: "+extra;
+
+ const data={
+  customerName:name,
+  mobile:mobile,
+  village:village,
+  service:selectedService+" - "+selectedWork,
+  details:details,
+  trackingId:trackingId,
+  status:"Pending",
+  createdAt:serverTimestamp()
+ };
+
+ try{
+  await addDoc(collection(db,"applications"),data);
+
+  try{
+   await setDoc(doc(db,"tracking",trackingId),{
+    trackingId:trackingId,
+    status:"Pending",
+    service:data.service,
+    createdAt:serverTimestamp()
+   });
+  }catch(trackError){
+   console.warn("Tracking index not written",trackError);
+  }
+
+  result.replaceChildren();
+  const heading=document.createElement("strong");
+  heading.textContent="आवेदन सफलतापूर्वक दर्ज हुआ!";
+  const line=document.createElement("p");
+  line.textContent="आपका Tracking ID: "+trackingId;
+  const link=document.createElement("a");
+  link.href="track.html";
+  link.textContent="आवेदन ट्रैक करें →";
+  link.style.fontWeight="bold";
+  link.style.textDecoration="underline";
+  result.append(heading,line,link);
+  result.style.display="block";
+  form.reset();
+  updateService();
+
+ }catch(error){
+  console.error(error);
+  result.textContent="आवेदन ऑनलाइन सेव नहीं हो पाया। कृपया WhatsApp से संपर्क करें।";
+  result.style.display="block";
+  const message=
+   "नमस्ते, मुझे "+selectedService+
+   " के लिए "+selectedWork+
+   " का आवेदन करना है। नाम: "+name+
+   " मोबाइल: "+mobile+
+   " गाँव: "+village+
+   " जिला: "+district+
+   " जानकारी: "+extra;
+  const link=document.createElement("a");
+  link.href="https://wa.me/919752039020?text="+encodeURIComponent(message);
+  link.target="_blank";
+  link.rel="noopener";
+  link.textContent="WhatsApp पर भेजें";
+  link.style.display="block";
+  link.style.marginTop="10px";
+  result.appendChild(link);
+ }finally{
+  btn.disabled=false;
+  btn.textContent="आवेदन भेजें →";
+ }
+});
+</script>
+</body>
+</html>
