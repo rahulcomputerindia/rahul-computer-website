@@ -1,110 +1,155 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>आवेदन ट्रैक करें | RAHUL COMPUTER'S</title>
-<link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Application - RAHUL COMPUTER'S</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+    .box {
+      max-width: 480px;
+      margin: 45px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 15px #00000015;
+    }
+    h2 { text-align: center; color: #073b75; }
+    p { text-align: center; }
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 15px 0;
+      border: 1px solid #cbd5e1;
+      border-radius: 7px;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #087ac2;
+      color: white;
+      border: 0;
+      border-radius: 7px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #f1f5f9;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+    .status { font-weight: bold; color: #087ac2; }
+    a { color: #087ac2; }
+  </style>
 </head>
 <body>
 
-<div class="topline">
-  <div class="wrap">RAHUL COMPUTER'S <span>☎ 9752039020</span></div>
+<div class="box">
+  <h2>RAHUL COMPUTER'S</h2>
+  <p>आवेदन की स्थिति जानें</p>
+
+  <form id="trackForm">
+    <input
+      type="text"
+      id="trackingId"
+      placeholder="अपना 24 अक्षर का Tracking ID डालें"
+      maxlength="24"
+      minlength="24"
+      required
+    >
+    <button type="submit" id="searchBtn">स्टेटस देखें</button>
+  </form>
+
+  <div id="result">यहाँ आपके आवेदन की जानकारी दिखाई देगी।</div>
+  <p><a href="index.html">मुख्य पेज पर वापस जाएँ</a></p>
 </div>
 
-<header class="header">
-  <div class="wrap nav">
-    <a class="brand" href="index.html">
-      <span class="logo">RC</span>
-      <span>RAHUL COMPUTER'S<small>Application Tracking</small></span>
-    </a>
-    <a class="btn outline" href="index.html">← होम</a>
-  </div>
-</header>
-
-<section class="page-hero">
-  <div class="wrap">
-    <h1>आवेदन की स्थिति देखें</h1>
-    <p>अपना ट्रैकिंग नंबर दर्ज करें।</p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap" style="max-width:650px">
-    <div class="panel">
-      <form id="trackForm">
-        <div class="field">
-          <label>ट्रैकिंग नंबर *</label>
-          <input id="trackingId" required maxlength="40" placeholder="अपना ट्रैकिंग नंबर डालें">
-        </div>
-        <button class="btn" style="margin-top:14px" type="submit">स्थिति देखें</button>
-      </form>
-      <div id="result" class="result"></div>
-    </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="wrap">
-    <div class="copyright">© 2026 RAHUL COMPUTER'S</div>
-  </div>
-</footer>
-
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs
-} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
+  import { initializeApp } from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
-  authDomain: "rahul-computer-s.firebaseapp.com",
-  projectId: "rahul-computer-s",
-  storageBucket: "rahul-computer-s.firebasestorage.app",
-  messagingSenderId: "969449083821",
-  appId: "1:969449083821:web:4696bc1253fa97ea304724"
-};
+  import { getFirestore, doc, getDoc } from
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const db = getFirestore(initializeApp(firebaseConfig));
+  const firebaseConfig = {
+    apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+    authDomain: "rahul-computer-s.firebaseapp.com",
+    projectId: "rahul-computer-s",
+    storageBucket: "rahul-computer-s.firebasestorage.app",
+    messagingSenderId: "969449083821",
+    appId: "1:969449083821:web:4696bc1253fa97ea304724"
+  };
 
-document.getElementById('trackForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-  const id = document.getElementById('trackingId').value.trim().toUpperCase();
-  const box = document.getElementById('result');
+  const form = document.getElementById("trackForm");
+  const result = document.getElementById("result");
+  const searchBtn = document.getElementById("searchBtn");
 
-  box.style.display = 'block';
-  box.textContent = 'आवेदन खोजा जा रहा है...';
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  try {
-    const q = query(
-      collection(db, 'applications'),
-      where('trackingNumber', '==', id)
-    );
+    const trackingId = document.getElementById("trackingId")
+      .value.trim().toUpperCase();
 
-    const snap = await getDocs(q);
-
-    if (snap.empty) {
-      box.textContent = 'इस ट्रैकिंग नंबर की जानकारी नहीं मिली। नंबर जाँचें या 9752039020 पर संपर्क करें।';
+    if (!/^[A-F0-9]{24}$/.test(trackingId)) {
+      result.textContent = "कृपया सही 24 अक्षर का Tracking ID डालें।";
       return;
     }
 
-    const d = snap.docs[0].data();
+    searchBtn.disabled = true;
+    searchBtn.textContent = "जाँच हो रही है...";
+    result.textContent = "कृपया प्रतीक्षा करें...";
 
-    box.textContent =
-      'आवेदन की स्थिति: ' + (d.status || 'Pending') +
-      ' | सेवा: ' + (d.service || '—') +
-      ' | ट्रैकिंग नंबर: ' + id;
+    try {
+      const trackingRef = doc(db, "tracking", trackingId);
+      const trackingSnap = await getDoc(trackingRef);
 
-  } catch (err) {
-    box.textContent = 'जानकारी प्राप्त नहीं हो सकी। कृपया कुछ देर बाद प्रयास करें या 9752039020 पर संपर्क करें।';
-    console.error(err);
-  }
-});
+      if (!trackingSnap.exists()) {
+        result.textContent = "इस Tracking ID का कोई आवेदन नहीं मिला। कृपया ID दोबारा जाँचें।";
+        return;
+      }
+
+      const data = trackingSnap.data();
+
+      const heading = document.createElement("h3");
+      heading.textContent = "आवेदन मिल गया!";
+      result.replaceChildren(heading);
+
+      const idLine = document.createElement("p");
+      idLine.textContent = "Tracking ID: " + trackingId;
+
+      const serviceLine = document.createElement("p");
+      serviceLine.textContent = "सेवा: " + (data.service || "उपलब्ध नहीं");
+
+      const statusLine = document.createElement("p");
+      statusLine.textContent = "वर्तमान स्थिति: " + (data.status || "Pending");
+      statusLine.className = "status";
+
+      result.append(idLine, serviceLine, statusLine);
+
+    } catch (error) {
+      console.error("Tracking error:", error);
+      result.textContent =
+        "जानकारी प्राप्त नहीं हो सकी। कृपया इंटरनेट जाँचकर दोबारा प्रयास करें।";
+    } finally {
+      searchBtn.disabled = false;
+      searchBtn.textContent = "स्टेटस देखें";
+    }
+  });
 </script>
 
 </body>
