@@ -1,1 +1,580 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin | RAHUL COMPUTER'S</title><link rel="stylesheet" href="assets/style.css"></head><body><div class="topline"><div class="wrap">RAHUL COMPUTER'S <span>सुरक्षित Admin Panel</span></div></div><header class="header"><div class="wrap nav"><a class="brand" href="index.html"><span class="logo">RC</span><span>RAHUL COMPUTER'S<small>Administration</small></span></a><a class="btn outline" href="index.html">वेबसाइट</a></div></header><section class="page-hero"><div class="wrap"><h1>Admin Panel</h1><p>ग्राहक आवेदन और स्थिति प्रबंधन</p></div></section><section class="section"><div class="wrap"><div class="panel" id="loginBox" style="max-width:480px;margin:auto"><h2>Admin Login</h2><form id="loginForm"><div class="field"><label>Email</label><input id="email" type="email" required></div><div class="field" style="margin-top:12px"><label>Password</label><input id="password" type="password" required></div><button class="btn" style="margin-top:15px">Login</button></form><p id="loginMsg" class="help"></p></div><div id="dashboard" class="hide"><div class="section-head"><div><h2>ग्राहक आवेदन</h2><p id="summary">लोड हो रहा है...</p></div><button class="btn outline" id="logout">Logout</button></div><div class="panel" style="overflow:auto"><table class="admin-table"><thead><tr><th>नाम / मोबाइल</th><th>सेवा / गाँव</th><th>ट्रैकिंग नंबर</th><th>स्थिति</th><th>अपडेट</th></tr></thead><tbody id="rows"></tbody></table></div></div></div></section><script type="module">import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js';import {getFirestore,collection,getDocs,doc,updateDoc,setDoc,serverTimestamp} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';const firebaseConfig={apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",authDomain:"rahul-computer-s.firebaseapp.com",projectId:"rahul-computer-s",storageBucket:"rahul-computer-s.firebasestorage.app",messagingSenderId:"969449083821",appId:"1:969449083821:web:4696bc1253fa97ea304724"};const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);const ADMIN_UID='Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3';const loginBox=document.getElementById('loginBox'),dash=document.getElementById('dashboard');onAuthStateChanged(auth,user=>{if(user&&user.uid===ADMIN_UID){loginBox.classList.add('hide');dash.classList.remove('hide');load()}else{dash.classList.add('hide');loginBox.classList.remove('hide');if(user)signOut(auth)}});document.getElementById('loginForm').onsubmit=async e=>{e.preventDefault();try{await signInWithEmailAndPassword(auth,email.value,password.value)}catch(err){loginMsg.textContent='Login असफल: '+err.message}};document.getElementById('logout').onclick=()=>signOut(auth);async function load(){let body=document.getElementById('rows');body.innerHTML='';try{let snap=await getDocs(collection(db,'applications'));summary.textContent='कुल '+snap.size+' आवेदन';snap.forEach(item=>{let d=item.data(),tr=document.createElement('tr');let td1=document.createElement('td');td1.textContent=(d.customerName||'')+' / '+(d.mobile||'');let td2=document.createElement('td');td2.textContent=(d.service||'')+' / '+(d.village||'');let td3=document.createElement('td');td3.textContent=d.trackingId||'';let td4=document.createElement('td');let sel=document.createElement('select');['Pending','Processing','Completed','Rejected'].forEach(x=>{let o=document.createElement('option');o.value=x;o.textContent=x;o.selected=(d.status||'Pending')===x;sel.appendChild(o)});td4.appendChild(sel);let td5=document.createElement('td');let b=document.createElement('button');b.className='btn';b.textContent='Save';b.onclick=async()=>{try{await updateDoc(doc(db,'applications',item.id),{status:sel.value});if(d.trackingId)await setDoc(doc(db,'tracking',d.trackingId),{trackingId:d.trackingId,status:sel.value,service:d.service,updatedAt:serverTimestamp()},{merge:true});b.textContent='Saved';}catch(err){alert('अपडेट नहीं हुआ: '+err.message)}};td5.appendChild(b);[td1,td2,td3,td4,td5].forEach(x=>tr.appendChild(x));body.appendChild(tr)})}catch(err){summary.textContent='डेटा लोड नहीं हुआ: '+err.message}}</script></body></html>
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102b52">
+<title>Admin | RAHUL COMPUTER'S</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.admin-section{margin:22px 0}
+.admin-box{background:#fff;border:1px solid #dce4ef;border-radius:14px;padding:18px;margin-bottom:18px}
+.admin-box h2{margin-top:0}
+.admin-form{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.admin-form .field{flex:1;min-width:180px}
+.admin-form input{width:100%;padding:11px;border:1px solid #ccd5e2;border-radius:8px}
+.admin-table-wrap{overflow-x:auto}
+.admin-table{width:100%;min-width:850px;border-collapse:collapse}
+.admin-table th,.admin-table td{padding:11px;border-bottom:1px solid #e4eaf2;text-align:left;vertical-align:middle}
+.admin-table th{background:#f1f5fa}
+.admin-table select,.admin-table input{padding:8px;border:1px solid #ccd5e2;border-radius:7px}
+.pay-status{font-weight:700}
+.pay-actions{display:flex;gap:6px;flex-wrap:wrap}
+.small-btn{padding:7px 10px;border:0;border-radius:7px;cursor:pointer;font-weight:600}
+.paid-btn{background:#dcfce7;color:#166534}
+.reject-btn{background:#fee2e2;color:#991b1b}
+.muted{color:#64748b;font-size:13px}
+.hide{display:none!important}
+@media(max-width:600px){.admin-box{padding:12px}.admin-form{display:block}.admin-form .field{margin-bottom:12px}.admin-form button{width:100%}}
+</style>
+</head>
+<body>
+
+<div class="topline">
+ <div class="wrap">RAHUL COMPUTER'S <span>सुरक्षित Admin Panel</span></div>
+</div>
+
+<header class="header">
+ <div class="wrap nav">
+  <a class="brand" href="index.html">
+   <span class="logo">RC</span>
+   <span>RAHUL COMPUTER'S<small>Administration</small></span>
+  </a>
+  <a class="btn outline" href="index.html">वेबसाइट</a>
+ </div>
+</header>
+
+<section class="page-hero">
+ <div class="wrap">
+  <h1>Admin Panel</h1>
+  <p>आवेदन, सेवा शुल्क और भुगतान प्रबंधन</p>
+ </div>
+</section>
+
+<section class="section">
+<div class="wrap">
+
+<div class="panel" id="loginBox" style="max-width:480px;margin:auto">
+ <h2>Admin Login</h2>
+ <form id="loginForm">
+  <div class="field">
+   <label>Email</label>
+   <input id="email" type="email" required>
+  </div>
+  <div class="field" style="margin-top:12px">
+   <label>Password</label>
+   <input id="password" type="password" required>
+  </div>
+  <button class="btn" style="margin-top:15px">Login</button>
+ </form>
+ <p id="loginMsg" class="help"></p>
+</div>
+
+<div id="dashboard" class="hide">
+
+<div class="section-head">
+ <div>
+  <h2>Admin Dashboard</h2>
+  <p id="summary">लोड हो रहा है...</p>
+ </div>
+ <button class="btn outline" id="logout">Logout</button>
+</div>
+
+<!-- SERVICE CHARGES -->
+<div class="admin-section">
+ <div class="admin-box">
+  <h2>💰 सेवा शुल्क प्रबंधन</h2>
+  <p class="muted">सेवा का नाम और शुल्क दर्ज करके सेव करें। सेवा का नाम आवेदन में दर्ज नाम से बिल्कुल मेल खाना चाहिए।</p>
+
+  <form id="chargeForm" class="admin-form">
+   <div class="field">
+    <label>सेवा का नाम</label>
+    <input id="chargeService" type="text" placeholder="जैसे PAN Card" required>
+   </div>
+   <div class="field">
+    <label>सेवा शुल्क (₹)</label>
+    <input id="chargeAmount" type="number" min="1" step="1" placeholder="जैसे 100" required>
+   </div>
+   <button class="btn" type="submit">शुल्क सेव करें</button>
+  </form>
+  <p id="chargeMsg" class="help"></p>
+ </div>
+
+ <div class="admin-box">
+  <h3>सेव किए गए सेवा शुल्क</h3>
+  <div class="admin-table-wrap">
+   <table class="admin-table">
+    <thead>
+     <tr><th>सेवा</th><th>शुल्क</th><th>स्थिति</th></tr>
+    </thead>
+    <tbody id="chargeRows">
+     <tr><td colspan="3">लोड हो रहा है...</td></tr>
+    </tbody>
+   </table>
+  </div>
+ </div>
+</div>
+
+<!-- APPLICATIONS -->
+<div class="admin-section">
+ <div class="admin-box">
+  <h2>📋 ग्राहक आवेदन और भुगतान</h2>
+  <p class="muted">यहाँ आवेदन की स्थिति, शुल्क और ग्राहक द्वारा जमा की गई Transaction ID देख सकते हैं।</p>
+
+  <div class="admin-table-wrap">
+   <table class="admin-table">
+    <thead>
+     <tr>
+      <th>नाम / मोबाइल</th>
+      <th>सेवा / गाँव</th>
+      <th>Tracking ID</th>
+      <th>आवेदन स्थिति</th>
+      <th>अपडेट</th>
+      <th>शुल्क ₹</th>
+      <th>भुगतान स्थिति</th>
+      <th>Transaction ID</th>
+      <th>Verification</th>
+     </tr>
+    </thead>
+    <tbody id="rows">
+     <tr><td colspan="9">लोड हो रहा है...</td></tr>
+    </tbody>
+   </table>
+  </div>
+ </div>
+</div>
+
+</div>
+</div>
+</section>
+
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';
+
+import {
+ getAuth,
+ signInWithEmailAndPassword,
+ onAuthStateChanged,
+ signOut
+} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js';
+
+import {
+ getFirestore,
+ collection,
+ getDocs,
+ doc,
+ getDoc,
+ updateDoc,
+ setDoc,
+ deleteDoc,
+ serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
+
+const firebaseConfig={
+ apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain:"rahul-computer-s.firebaseapp.com",
+ projectId:"rahul-computer-s",
+ storageBucket:"rahul-computer-s.firebasestorage.app",
+ messagingSenderId:"969449083821",
+ appId:"1:969449083821:web:4696bc1253fa97ea304724"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const ADMIN_UID='Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3';
+
+const $=id=>document.getElementById(id);
+
+const loginBox=$('loginBox');
+const dashboard=$('dashboard');
+
+let serviceCharges={};
+
+function serviceDocId(name){
+ return encodeURIComponent(name.trim());
+}
+
+$('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ $('loginMsg').textContent='लॉगिन हो रहा है...';
+
+ try{
+  await signInWithEmailAndPassword(
+   auth,
+   $('email').value.trim(),
+   $('password').value
+  );
+ }catch(err){
+  $('loginMsg').textContent='Login असफल: '+err.message;
+ }
+});
+
+$('logout').addEventListener('click',()=>signOut(auth));
+
+onAuthStateChanged(auth,user=>{
+ if(user && user.uid===ADMIN_UID){
+  loginBox.classList.add('hide');
+  dashboard.classList.remove('hide');
+  loadAll();
+ }else{
+  dashboard.classList.add('hide');
+  loginBox.classList.remove('hide');
+
+  if(user){
+   signOut(auth);
+   $('loginMsg').textContent='यह अकाउंट Admin के लिए अधिकृत नहीं है।';
+  }
+ }
+});
+
+/* LOAD SERVICE CHARGES */
+
+async function loadCharges(){
+ serviceCharges={};
+
+ const snap=await getDocs(collection(db,'services'));
+ const body=$('chargeRows');
+ body.innerHTML='';
+
+ if(snap.empty){
+  body.innerHTML='<tr><td colspan="3">अभी कोई सेवा शुल्क सेव नहीं है।</td></tr>';
+  return;
+ }
+
+ snap.forEach(item=>{
+  const d=item.data();
+
+  if(d.serviceName){
+   serviceCharges[d.serviceName]=Number(d.amount)||0;
+  }
+
+  const tr=document.createElement('tr');
+
+  const name=document.createElement('td');
+  name.textContent=d.serviceName||item.id;
+
+  const amount=document.createElement('td');
+  amount.textContent='₹'+(Number(d.amount)||0);
+
+  const status=document.createElement('td');
+  status.textContent='सक्रिय';
+
+  tr.append(name,amount,status);
+  body.appendChild(tr);
+ });
+}
+
+/* SAVE SERVICE CHARGE */
+
+$('chargeForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+
+ const serviceName=$('chargeService').value.trim();
+ const amount=Number($('chargeAmount').value);
+
+ if(!serviceName){
+  $('chargeMsg').textContent='सेवा का नाम लिखें।';
+  return;
+ }
+
+ if(!Number.isFinite(amount)||amount<=0){
+  $('chargeMsg').textContent='शुल्क 1 रुपये या उससे अधिक होना चाहिए।';
+  return;
+ }
+
+ $('chargeMsg').textContent='शुल्क सेव हो रहा है...';
+
+ try{
+  await setDoc(
+   doc(db,'services',serviceDocId(serviceName)),
+   {
+    serviceName,
+    amount,
+    updatedAt:serverTimestamp()
+   }
+  );
+
+  $('chargeMsg').textContent='सेवा शुल्क सफलतापूर्वक सेव हो गया।';
+  $('chargeForm').reset();
+  await loadCharges();
+
+ }catch(err){
+  $('chargeMsg').textContent='शुल्क सेव नहीं हुआ: '+err.message;
+ }
+});
+
+/* LOAD APPLICATIONS AND PAYMENT DETAILS */
+
+async function loadApplications(){
+ const body=$('rows');
+ body.innerHTML='';
+
+ const snap=await getDocs(collection(db,'applications'));
+
+ $('summary').textContent='कुल '+snap.size+' आवेदन';
+
+ if(snap.empty){
+  body.innerHTML='<tr><td colspan="9">अभी कोई आवेदन नहीं है।</td></tr>';
+  return;
+ }
+
+ for(const item of snap.docs){
+  const d=item.data();
+  const trackingId=d.trackingId||'';
+
+  let paymentInfo=null;
+  let paymentSubmission=null;
+
+  if(trackingId){
+   try{
+    const results=await Promise.all([
+     getDoc(doc(db,'paymentInfo',trackingId)),
+     getDoc(doc(db,'paymentSubmissions',trackingId))
+    ]);
+
+    paymentInfo=results[0].exists()?results[0].data():null;
+    paymentSubmission=results[1].exists()?results[1].data():null;
+
+   }catch(err){
+    console.error('Payment data error:',err);
+   }
+  }
+
+  const tr=document.createElement('tr');
+
+  /* CUSTOMER */
+  const td1=document.createElement('td');
+  td1.textContent=(d.customerName||'')+' / '+(d.mobile||'');
+
+  /* SERVICE */
+  const td2=document.createElement('td');
+  td2.textContent=(d.service||'')+' / '+(d.village||'');
+
+  /* TRACKING */
+  const td3=document.createElement('td');
+  td3.textContent=trackingId;
+
+  /* APPLICATION STATUS */
+  const td4=document.createElement('td');
+  const sel=document.createElement('select');
+
+  ['Pending','Processing','Completed','Rejected'].forEach(x=>{
+   const o=document.createElement('option');
+   o.value=x;
+   o.textContent=x;
+   o.selected=(d.status||'Pending')===x;
+   sel.appendChild(o);
+  });
+
+  td4.appendChild(sel);
+
+  /* STATUS SAVE */
+  const td5=document.createElement('td');
+  const statusBtn=document.createElement('button');
+  statusBtn.className='btn';
+  statusBtn.textContent='Save';
+
+  statusBtn.onclick=async()=>{
+   statusBtn.disabled=true;
+
+   try{
+    await updateDoc(doc(db,'applications',item.id),{
+     status:sel.value
+    });
+
+    if(trackingId){
+     await setDoc(
+      doc(db,'tracking',trackingId),
+      {
+       trackingId,
+       status:sel.value,
+       service:d.service,
+       updatedAt:serverTimestamp()
+      },
+      {merge:true}
+     );
+    }
+
+    statusBtn.textContent='Saved';
+
+   }catch(err){
+    alert('Status अपडेट नहीं हुआ: '+err.message);
+    statusBtn.disabled=false;
+   }
+  };
+
+  td5.appendChild(statusBtn);
+
+  /* SERVICE AMOUNT */
+  const td6=document.createElement('td');
+  const amountInput=document.createElement('input');
+  amountInput.type='number';
+  amountInput.min='1';
+  amountInput.step='1';
+  amountInput.style.width='85px';
+
+  const defaultAmount=paymentInfo?.amount||
+   serviceCharges[d.service]||'';
+
+  amountInput.value=defaultAmount;
+
+  const applyChargeBtn=document.createElement('button');
+  applyChargeBtn.className='small-btn';
+  applyChargeBtn.style.marginTop='5px';
+  applyChargeBtn.textContent='शुल्क लागू करें';
+
+  applyChargeBtn.onclick=async()=>{
+   const amount=Number(amountInput.value);
+
+   if(!trackingId){
+    alert('इस आवेदन में Tracking ID उपलब्ध नहीं है।');
+    return;
+   }
+
+   if(!Number.isFinite(amount)||amount<=0){
+    alert('कृपया सही शुल्क दर्ज करें।');
+    return;
+   }
+
+   applyChargeBtn.disabled=true;
+
+   try{
+    await setDoc(
+     doc(db,'paymentInfo',trackingId),
+     {
+      amount,
+      paymentStatus:'Unpaid',
+      updatedAt:serverTimestamp()
+     }
+    );
+
+    applyChargeBtn.textContent='लागू हो गया';
+    alert('आवेदन पर ₹'+amount+' शुल्क लागू हो गया।');
+
+   }catch(err){
+    alert('शुल्क लागू नहीं हुआ: '+err.message);
+    applyChargeBtn.disabled=false;
+   }
+  };
+
+  td6.append(amountInput,document.createElement('br'),applyChargeBtn);
+
+  /* PAYMENT STATUS */
+  const td7=document.createElement('td');
+  const paymentStatus=paymentInfo?.paymentStatus||'शुल्क तय नहीं';
+
+  td7.className='pay-status';
+  td7.textContent=paymentStatus;
+
+  /* TRANSACTION ID */
+  const td8=document.createElement('td');
+  td8.textContent=paymentSubmission?.transactionId||'अभी जमा नहीं';
+
+  /* PAYMENT VERIFICATION */
+  const td9=document.createElement('td');
+  const actions=document.createElement('div');
+  actions.className='pay-actions';
+
+  if(paymentSubmission && paymentInfo){
+
+   const paidBtn=document.createElement('button');
+   paidBtn.className='small-btn paid-btn';
+   paidBtn.textContent='Paid';
+
+   paidBtn.onclick=async()=>{
+    if(!confirm('क्या आपने इस भुगतान की जाँच कर ली है और इसे Paid करना चाहते हैं?'))return;
+
+    try{
+     await setDoc(
+      doc(db,'paymentInfo',trackingId),
+      {
+       amount:Number(paymentInfo.amount),
+       paymentStatus:'Paid',
+       updatedAt:serverTimestamp()
+      }
+     );
+
+     await setDoc(
+      doc(db,'paymentSubmissions',trackingId),
+      {
+       paymentStatus:'Paid',
+       reviewedAt:serverTimestamp()
+      },
+      {merge:true}
+     );
+
+     alert('भुगतान Paid मार्क हो गया।');
+     await loadAll();
+
+    }catch(err){
+     alert('Payment अपडेट नहीं हुआ: '+err.message);
+    }
+   };
+
+   const rejectBtn=document.createElement('button');
+   rejectBtn.className='small-btn reject-btn';
+   rejectBtn.textContent='Reject';
+
+   rejectBtn.onclick=async()=>{
+    if(!confirm('क्या आप इस भुगतान को Reject करना चाहते हैं?'))return;
+
+    try{
+     await setDoc(
+      doc(db,'paymentInfo',trackingId),
+      {
+       amount:Number(paymentInfo.amount),
+       paymentStatus:'Rejected',
+       updatedAt:serverTimestamp()
+      }
+     );
+
+     await setDoc(
+      doc(db,'paymentSubmissions',trackingId),
+      {
+       paymentStatus:'Rejected',
+       reviewedAt:serverTimestamp()
+      },
+      {merge:true}
+     );
+
+     alert('भुगतान Rejected मार्क हो गया।');
+     await loadAll();
+
+    }catch(err){
+     alert('Payment अपडेट नहीं हुआ: '+err.message);
+    }
+   };
+
+   actions.append(paidBtn,rejectBtn);
+
+  }else if(!paymentInfo){
+   actions.textContent='पहले शुल्क लागू करें';
+  }else{
+   actions.textContent='ग्राहक भुगतान की प्रतीक्षा';
+  }
+
+  td9.appendChild(actions);
+
+  [td1,td2,td3,td4,td5,td6,td7,td8,td9].forEach(td=>{
+   tr.appendChild(td);
+  });
+
+  body.appendChild(tr);
+ }
+}
+
+async function loadAll(){
+ $('summary').textContent='डेटा लोड हो रहा है...';
+
+ try{
+  await loadCharges();
+  await loadApplications();
+ }catch(err){
+  $('summary').textContent='डेटा लोड नहीं हुआ: '+err.message;
+ }
+}
+</script>
+</body>
+</html>
