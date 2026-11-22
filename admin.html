@@ -32,7 +32,7 @@ padding:11px;border-bottom:1px solid #e4eaf2;text-align:left;vertical-align:midd
 padding:8px;border:1px solid #ccd5e2;border-radius:7px
 }
 .pay-status{font-weight:700}
-.pay-actions{display:flex;gap:6px;flex-wrap:wrap}
+.pay-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .small-btn{padding:7px 10px;border:0;border-radius:7px;cursor:pointer;font-weight:600}
 .small-btn:disabled{opacity:.5;cursor:not-allowed}
 .paid-btn{background:#dcfce7;color:#166534}
@@ -905,77 +905,119 @@ function renderApplications(){
   const actions=document.createElement('div');
   actions.className='pay-actions';
 
-  if(paymentSubmission&&paymentInfo){
-   const submissionStatus=paymentSubmission.paymentStatus||'Submitted';
+  const currentPaymentStatus=paymentInfo?.paymentStatus||'';
+  const submissionStatus=paymentSubmission?.paymentStatus||'';
 
-   if(submissionStatus==='Paid'||submissionStatus==='Rejected'){
-    const reviewed=document.createElement('span');
-    reviewed.className=statusClass(submissionStatus);
-    reviewed.textContent=submissionStatus;
-    actions.appendChild(reviewed);
-   }else{
-    const paidBtn=document.createElement('button');
-    paidBtn.className='small-btn paid-btn';
-    paidBtn.textContent='Paid';
+  const hasSubmittedTransaction=
+   !!paymentSubmission &&
+   submissionStatus==='Submitted' &&
+   !!paymentSubmission.transactionId;
 
-    paidBtn.onclick=async()=>{
-     if(!confirm('क्या आपने Transaction ID और भुगतान की जाँच कर ली है? क्या इसे Paid करना चाहते हैं?'))return;
-     paidBtn.disabled=true;
+  // Paid आवेदन: केवल Paid स्थिति
+  if(currentPaymentStatus==='Paid'){
+   const badge=document.createElement('span');
+   badge.className=statusClass('Paid');
+   badge.textContent='Paid ✓';
+   actions.appendChild(badge);
+  }
 
-     try{
-      await setDoc(doc(db,'paymentInfo',trackingId),{
-       amount:Number(paymentInfo.amount),paymentStatus:'Paid',updatedAt:serverTimestamp()
-      });
+  // Transaction ID जमा होने और Unpaid/Rejected भुगतान होने पर ही जाँच
+  else if(
+   paymentInfo &&
+   ['Unpaid','Rejected'].includes(currentPaymentStatus) &&
+   hasSubmittedTransaction
+  ){
+   const paidBtn=document.createElement('button');
+   paidBtn.className='small-btn paid-btn';
+   paidBtn.textContent='Paid';
 
-      await setDoc(doc(db,'paymentSubmissions',trackingId),{
-       paymentStatus:'Paid',reviewedAt:serverTimestamp()
-      },{merge:true});
+   paidBtn.onclick=async()=>{
+    if(!confirm('क्या आपने Transaction ID और वास्तविक भुगतान की जाँच कर ली है? क्या इसे Paid करना चाहते हैं?'))return;
 
-      alert('भुगतान Paid मार्क हो गया।');
-      await loadAll();
+    paidBtn.disabled=true;
 
-     }catch(err){
-      alert('Payment अपडेट नहीं हुआ: '+err.message);
-      paidBtn.disabled=false;
-     }
-    };
+    try{
+     await setDoc(doc(db,'paymentInfo',trackingId),{
+      amount:Number(paymentInfo.amount),
+      paymentStatus:'Paid',
+      updatedAt:serverTimestamp()
+     },{merge:true});
 
-    const rejectBtn=document.createElement('button');
-    rejectBtn.className='small-btn reject-btn';
-    rejectBtn.textContent='Reject';
+     await setDoc(doc(db,'paymentSubmissions',trackingId),{
+      paymentStatus:'Paid',
+      reviewedAt:serverTimestamp()
+     },{merge:true});
 
-    rejectBtn.onclick=async()=>{
-     if(!confirm('क्या आप इस Transaction ID को Reject करना चाहते हैं?'))return;
-     rejectBtn.disabled=true;
+     alert('भुगतान Paid मार्क हो गया।');
+     await loadAll();
 
-     try{
-      await setDoc(doc(db,'paymentInfo',trackingId),{
-       amount:Number(paymentInfo.amount),paymentStatus:'Rejected',updatedAt:serverTimestamp()
-      });
+    }catch(err){
+     alert('Payment अपडेट नहीं हुआ: '+err.message);
+     paidBtn.disabled=false;
+    }
+   };
 
-      await setDoc(doc(db,'paymentSubmissions',trackingId),{
-       paymentStatus:'Rejected',reviewedAt:serverTimestamp()
-      },{merge:true});
+   const rejectBtn=document.createElement('button');
+   rejectBtn.className='small-btn reject-btn';
+   rejectBtn.textContent='Reject';
 
-      alert('भुगतान Rejected मार्क हो गया।');
-      await loadAll();
+   rejectBtn.onclick=async()=>{
+    if(!confirm('क्या आपने Transaction ID की जाँच करके इसे Reject करने का निर्णय लिया है?'))return;
 
-     }catch(err){
-      alert('Payment अपडेट नहीं हुआ: '+err.message);
-      rejectBtn.disabled=false;
-     }
-    };
+    rejectBtn.disabled=true;
 
-    actions.append(paidBtn,rejectBtn);
-   }
-  }else if(!paymentInfo){
-   actions.textContent='पहले शुल्क लागू करें';
-  }else{
+    try{
+     await setDoc(doc(db,'paymentInfo',trackingId),{
+      amount:Number(paymentInfo.amount),
+      paymentStatus:'Rejected',
+      updatedAt:serverTimestamp()
+     },{merge:true});
+
+     await setDoc(doc(db,'paymentSubmissions',trackingId),{
+      paymentStatus:'Rejected',
+      reviewedAt:serverTimestamp()
+     },{merge:true});
+
+     alert('भुगतान Rejected मार्क हो गया।');
+     await loadAll();
+
+    }catch(err){
+     alert('Payment अपडेट नहीं हुआ: '+err.message);
+     rejectBtn.disabled=false;
+    }
+   };
+
+   actions.append(paidBtn,rejectBtn);
+  }
+
+  // Unpaid लेकिन ग्राहक ने अभी Transaction ID नहीं दी
+  else if(currentPaymentStatus==='Unpaid'){
    actions.textContent='ग्राहक भुगतान की प्रतीक्षा';
+  }
+
+  // Rejected और नया Transaction ID अभी जमा नहीं हुआ
+  else if(currentPaymentStatus==='Rejected'){
+   const badge=document.createElement('span');
+   badge.className=statusClass('Rejected');
+   badge.textContent='Rejected';
+   actions.appendChild(badge);
+
+   const note=document.createElement('small');
+   note.textContent='दोबारा भुगतान विवरण की प्रतीक्षा';
+   actions.appendChild(note);
+  }
+
+  else if(!paymentInfo){
+   actions.textContent='पहले शुल्क लागू करें';
+  }
+
+  else{
+   actions.textContent='भुगतान की स्थिति जाँचें';
   }
 
   td9.appendChild(actions);
   tr.appendChild(td9);
+
   body.appendChild(tr);
  });
 }
