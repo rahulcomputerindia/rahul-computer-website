@@ -6,38 +6,75 @@
 <meta name="theme-color" content="#102b52">
 <title>Admin | RAHUL COMPUTER'S</title>
 <link rel="stylesheet" href="assets/style.css">
+
 <style>
 .admin-section{margin:22px 0}
 .admin-box{background:#fff;border:1px solid #dce4ef;border-radius:14px;padding:18px;margin-bottom:18px}
 .admin-box h2{margin-top:0}
-.admin-form{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
-.admin-form .field{flex:1;min-width:160px}
-.admin-form input{width:100%;padding:11px;border:1px solid #ccd5e2;border-radius:8px}
-.admin-table-wrap{overflow-x:auto}
-.admin-table{width:100%;min-width:1050px;border-collapse:collapse}
-.admin-table th,.admin-table td{padding:11px;border-bottom:1px solid #e4eaf2;text-align:left;vertical-align:middle}
-.admin-table th{background:#f1f5fa}
-.admin-table select,.admin-table input{padding:8px;border:1px solid #ccd5e2;border-radius:7px}
-.admin-table input{width:90px}
-.pay-status{font-weight:700}
-.pay-actions{display:flex;gap:6px;flex-wrap:wrap}
-.small-btn{padding:7px 10px;border:0;border-radius:7px;cursor:pointer;font-weight:600}
-.paid-btn{background:#dcfce7;color:#166534}
-.reject-btn{background:#fee2e2;color:#991b1b}
 .muted{color:#64748b;font-size:13px}
 .hide{display:none!important}
 .total-fee{font-weight:700;color:#075985;margin:7px 0}
 .fee-inputs{display:flex;gap:6px;flex-wrap:wrap}
 .fee-inputs label{font-size:11px;color:#64748b;display:block}
-.fee-inputs input{display:block}
+.fee-inputs input{display:block;width:90px}
+.admin-form{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.admin-form .field{flex:1;min-width:160px}
+.admin-form input,.filter-input,.filter-select{
+width:100%;padding:11px;border:1px solid #ccd5e2;border-radius:8px
+}
+.admin-table-wrap{overflow-x:auto}
+.admin-table{width:100%;min-width:1100px;border-collapse:collapse}
+.admin-table th,.admin-table td{
+padding:11px;border-bottom:1px solid #e4eaf2;text-align:left;vertical-align:middle
+}
+.admin-table th{background:#f1f5fa;white-space:nowrap}
+.admin-table select,.admin-table input{
+padding:8px;border:1px solid #ccd5e2;border-radius:7px
+}
+.pay-status{font-weight:700}
+.pay-actions{display:flex;gap:6px;flex-wrap:wrap}
+.small-btn{padding:7px 10px;border:0;border-radius:7px;cursor:pointer;font-weight:600}
+.small-btn:disabled{opacity:.5;cursor:not-allowed}
+.paid-btn{background:#dcfce7;color:#166534}
+.reject-btn{background:#fee2e2;color:#991b1b}
+.neutral-btn{background:#e0f2fe;color:#075985}
+.admin-stats{
+display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0
+}
+.stat-card{
+background:#fff;border:1px solid #dce4ef;border-radius:13px;padding:15px
+}
+.stat-card small{display:block;color:#64748b;font-size:12px}
+.stat-card strong{display:block;font-size:25px;margin-top:5px;color:#102b52}
+.filter-grid{
+display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0
+}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.toolbar .btn{margin:0}
+.status-pill{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:700;background:#f1f5f9}
+.status-paid{background:#dcfce7;color:#166534}
+.status-rejected{background:#fee2e2;color:#991b1b}
+.status-unpaid{background:#fef3c7;color:#92400e}
+.status-submitted{background:#dbeafe;color:#1e40af}
+.empty-row{text-align:center;color:#64748b;padding:20px!important}
+.customer-table{min-width:750px}
+@media(max-width:800px){
+ .admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .filter-grid{grid-template-columns:1fr}
+}
 @media(max-width:600px){
  .admin-box{padding:12px}
  .admin-form{display:block}
  .admin-form .field{margin-bottom:12px}
  .admin-form button{width:100%}
+ .admin-stats{gap:8px}
+ .stat-card{padding:11px}
+ .stat-card strong{font-size:21px}
+ .toolbar .btn{width:100%}
 }
 </style>
 </head>
+
 <body>
 
 <div class="topline">
@@ -57,13 +94,14 @@
 <section class="page-hero">
  <div class="wrap">
   <h1>Admin Panel</h1>
-  <p>आवेदन, सेवा शुल्क और भुगतान प्रबंधन</p>
+  <p>आवेदन, ग्राहक, सेवा शुल्क और भुगतान प्रबंधन</p>
  </div>
 </section>
 
 <section class="section">
 <div class="wrap">
 
+<!-- LOGIN -->
 <div class="panel" id="loginBox" style="max-width:480px;margin:auto">
  <h2>Admin Login</h2>
  <form id="loginForm">
@@ -80,14 +118,54 @@
  <p id="loginMsg" class="help"></p>
 </div>
 
+<!-- DASHBOARD -->
 <div id="dashboard" class="hide">
 
 <div class="section-head">
  <div>
   <h2>Admin Dashboard</h2>
-  <p id="summary">लोड हो रहा है...</p>
+  <p id="summary">डेटा लोड हो रहा है...</p>
  </div>
- <button class="btn outline" id="logout">Logout</button>
+ <div class="toolbar">
+  <button class="btn outline" id="refreshBtn" type="button">↻ Refresh</button>
+  <button class="btn outline" id="logout" type="button">Logout</button>
+ </div>
+</div>
+
+<!-- SUMMARY CARDS -->
+<div class="admin-stats">
+ <div class="stat-card">
+  <small>कुल आवेदन</small>
+  <strong id="statApplications">0</strong>
+ </div>
+ <div class="stat-card">
+  <small>कुल ग्राहक</small>
+  <strong id="statCustomers">0</strong>
+ </div>
+ <div class="stat-card">
+  <small>Pending आवेदन</small>
+  <strong id="statPending">0</strong>
+ </div>
+ <div class="stat-card">
+  <small>Processing आवेदन</small>
+  <strong id="statProcessing">0</strong>
+ </div>
+ <div class="stat-card">
+  <small>Completed आवेदन</small>
+  <strong id="statCompleted">0</strong>
+ </div>
+ <div class="stat-card">
+  <small>Rejected आवेदन</small>
+  <strong id="statRejected">0</strong>
+ </div>
+ <div class="stat-card">
+  <small>Unpaid भुगतान</small>
+  <strong id="statUnpaid">0</strong>
+ </div>
+ <div class="stat-card">
+  <small>Paid भुगतान</small>
+  <strong id="statPaid">0</strong>
+ </div>
 </div>
 
 <!-- SERVICE CHARGES -->
@@ -104,17 +182,14 @@
     <label>सेवा का नाम</label>
     <input id="chargeService" type="text" placeholder="जैसे PAN Card" required>
    </div>
-
    <div class="field">
     <label>सरकारी शुल्क (₹)</label>
     <input id="governmentFee" type="number" min="0" step="1" value="0" required>
    </div>
-
    <div class="field">
     <label>अपना सर्विस चार्ज (₹)</label>
     <input id="serviceFee" type="number" min="0" step="1" placeholder="जैसे 100" required>
    </div>
-
    <button class="btn" type="submit">शुल्क सेव करें</button>
   </form>
 
@@ -143,14 +218,64 @@
  </div>
 </div>
 
+<!-- CUSTOMER DIRECTORY -->
+<div class="admin-section">
+ <div class="admin-box">
+  <h2>👥 ग्राहक सूची</h2>
+  <p class="muted">आवेदन करने वाले ग्राहकों का संक्षिप्त रिकॉर्ड। एक ग्राहक के कई आवेदन हो सकते हैं।</p>
+  <div class="admin-table-wrap">
+   <table class="admin-table customer-table">
+    <thead>
+     <tr>
+      <th>ग्राहक का नाम</th>
+      <th>मोबाइल नंबर</th>
+      <th>गाँव</th>
+      <th>कुल आवेदन</th>
+      <th>Customer UID</th>
+     </tr>
+    </thead>
+    <tbody id="customerRows">
+     <tr><td colspan="5">लोड हो रहा है...</td></tr>
+    </tbody>
+   </table>
+  </div>
+ </div>
+</div>
+
 <!-- APPLICATIONS -->
 <div class="admin-section">
  <div class="admin-box">
   <h2>📋 ग्राहक आवेदन और भुगतान</h2>
   <p class="muted">
-   आवेदन की स्थिति, सरकारी शुल्क, अपना सर्विस चार्ज,
-   कुल शुल्क और ग्राहक की Transaction ID यहाँ देख सकते हैं।
+   नाम, मोबाइल या Tracking ID से आवेदन खोजें। आवेदन की स्थिति, शुल्क और भुगतान सत्यापन यहीं करें।
   </p>
+
+  <div class="filter-grid">
+   <input class="filter-input" id="searchInput" type="search"
+    placeholder="🔎 नाम / मोबाइल / Tracking ID / सेवा खोजें">
+
+   <select class="filter-select" id="statusFilter">
+    <option value="">सभी आवेदन स्थिति</option>
+    <option value="Pending">Pending</option>
+    <option value="Processing">Processing</option>
+    <option value="Completed">Completed</option>
+    <option value="Rejected">Rejected</option>
+   </select>
+
+   <select class="filter-select" id="paymentFilter">
+    <option value="">सभी भुगतान स्थिति</option>
+    <option value="Unpaid">Unpaid</option>
+    <option value="Submitted">Submitted</option>
+    <option value="Paid">Paid</option>
+    <option value="Rejected">Rejected</option>
+    <option value="शुल्क तय नहीं">शुल्क तय नहीं</option>
+   </select>
+  </div>
+
+  <div class="toolbar" style="margin-bottom:14px">
+   <button class="btn outline" id="exportBtn" type="button">⬇ आवेदन CSV डाउनलोड करें</button>
+   <span class="muted" id="filterCount"></span>
+  </div>
 
   <div class="admin-table-wrap">
    <table class="admin-table">
@@ -216,10 +341,9 @@ const db=getFirestore(app);
 const ADMIN_UID='Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3';
 const $=id=>document.getElementById(id);
 
-const loginBox=$('loginBox');
-const dashboard=$('dashboard');
-
 let serviceCharges={};
+let applicationRecords=[];
+let customerRecords=[];
 
 function serviceDocId(name){
  return encodeURIComponent(name.trim());
@@ -227,6 +351,25 @@ function serviceDocId(name){
 
 function money(value){
  return '₹'+(Number(value)||0);
+}
+
+function safeText(value){
+ return value===undefined||value===null?'':String(value);
+}
+
+function addCell(row,value){
+ const td=document.createElement('td');
+ td.textContent=safeText(value);
+ row.appendChild(td);
+ return td;
+}
+
+function statusClass(status){
+ if(status==='Paid')return 'status-pill status-paid';
+ if(status==='Rejected')return 'status-pill status-rejected';
+ if(status==='Unpaid')return 'status-pill status-unpaid';
+ if(status==='Submitted')return 'status-pill status-submitted';
+ return 'status-pill';
 }
 
 /* LOGIN */
@@ -285,20 +428,14 @@ async function loadCharges(){
  body.innerHTML='';
 
  if(snap.empty){
-  body.innerHTML='<tr><td colspan="5">अभी कोई सेवा शुल्क सेव नहीं है।</td></tr>';
+  body.innerHTML='<tr><td colspan="5" class="empty-row">अभी कोई सेवा शुल्क सेव नहीं है।</td></tr>';
   return;
  }
 
  snap.forEach(item=>{
   const d=item.data();
-
   const govt=Number(d.governmentFee)||0;
-
-  // पुराने शुल्क रिकॉर्ड के लिए compatibility
-  const service=Number(
-   d.serviceFee!==undefined ? d.serviceFee : d.amount
-  )||0;
-
+  const service=Number(d.serviceFee!==undefined?d.serviceFee:d.amount)||0;
   const total=govt+service;
 
   if(d.serviceName){
@@ -310,21 +447,11 @@ async function loadCharges(){
   }
 
   const tr=document.createElement('tr');
-
-  const values=[
-   d.serviceName||item.id,
-   money(govt),
-   money(service),
-   money(total),
-   'सक्रिय'
-  ];
-
-  values.forEach(value=>{
-   const td=document.createElement('td');
-   td.textContent=value;
-   tr.appendChild(td);
-  });
-
+  addCell(tr,d.serviceName||item.id);
+  addCell(tr,money(govt));
+  addCell(tr,money(service));
+  addCell(tr,money(total));
+  addCell(tr,'सक्रिय');
   body.appendChild(tr);
  });
 }
@@ -346,30 +473,26 @@ $('chargeForm').addEventListener('submit',async e=>{
 
  if(!Number.isFinite(govt)||govt<0||
     !Number.isFinite(service)||service<0||total<=0){
-  $('chargeMsg').textContent='कृपया दोनों शुल्क की सही राशि दर्ज करें। कुल शुल्क शून्य से अधिक होना चाहिए।';
+  $('chargeMsg').textContent='कृपया सही शुल्क दर्ज करें। कुल शुल्क शून्य से अधिक होना चाहिए।';
   return;
  }
 
  $('chargeMsg').textContent='शुल्क सेव हो रहा है...';
 
  try{
-  await setDoc(
-   doc(db,'services',serviceDocId(serviceName)),
-   {
-    serviceName,
-    governmentFee:govt,
-    serviceFee:service,
-    amount:total,
-    updatedAt:serverTimestamp()
-   }
-  );
+  await setDoc(doc(db,'services',serviceDocId(serviceName)),{
+   serviceName,
+   governmentFee:govt,
+   serviceFee:service,
+   amount:total,
+   updatedAt:serverTimestamp()
+  });
 
   $('chargeMsg').textContent='सेवा शुल्क सफलतापूर्वक सेव हो गया।';
   $('chargeForm').reset();
   $('governmentFee').value='0';
   updateChargePreview();
-
-  await loadCharges();
+  await loadAll();
 
  }catch(err){
   $('chargeMsg').textContent='शुल्क सेव नहीं हुआ: '+err.message;
@@ -379,22 +502,12 @@ $('chargeForm').addEventListener('submit',async e=>{
 /* LOAD APPLICATIONS AND PAYMENT DETAILS */
 
 async function loadApplications(){
- const body=$('rows');
- body.innerHTML='';
-
  const snap=await getDocs(collection(db,'applications'));
-
- $('summary').textContent='कुल '+snap.size+' आवेदन';
-
- if(snap.empty){
-  body.innerHTML='<tr><td colspan="9">अभी कोई आवेदन नहीं है।</td></tr>';
-  return;
- }
+ const records=[];
 
  for(const item of snap.docs){
   const d=item.data();
   const trackingId=d.trackingId||'';
-
   let paymentInfo=null;
   let paymentSubmission=null;
 
@@ -409,127 +522,240 @@ async function loadApplications(){
     paymentSubmission=results[1].exists()?results[1].data():null;
 
    }catch(err){
-    console.error('Payment data error:',err);
+    console.error('Payment data error:',trackingId,err);
    }
   }
 
+  records.push({
+   id:item.id,
+   data:d,
+   trackingId,
+   paymentInfo,
+   paymentSubmission
+  });
+ }
+
+ records.sort((a,b)=>{
+  const ta=a.data.createdAt?.toMillis?.()||0;
+  const tb=b.data.createdAt?.toMillis?.()||0;
+  return tb-ta;
+ });
+
+ applicationRecords=records;
+}
+
+/* CUSTOMER DIRECTORY */
+
+function renderCustomers(){
+ const body=$('customerRows');
+ body.innerHTML='';
+
+ const customers=new Map();
+
+ applicationRecords.forEach(record=>{
+  const d=record.data;
+  const key=d.ownerUid||d.mobile||record.id;
+
+  if(!customers.has(key)){
+   customers.set(key,{
+    name:d.customerName||'',
+    mobile:d.mobile||'',
+    village:d.village||'',
+    uid:d.ownerUid||'',
+    count:0
+   });
+  }
+
+  customers.get(key).count++;
+ });
+
+ customerRecords=Array.from(customers.values())
+  .sort((a,b)=>a.name.localeCompare(b.name));
+
+ if(!customerRecords.length){
+  body.innerHTML='<tr><td colspan="5" class="empty-row">अभी कोई ग्राहक रिकॉर्ड नहीं है।</td></tr>';
+  return;
+ }
+
+ customerRecords.forEach(customer=>{
+  const tr=document.createElement('tr');
+  addCell(tr,customer.name);
+  addCell(tr,customer.mobile);
+  addCell(tr,customer.village);
+  addCell(tr,customer.count);
+  addCell(tr,customer.uid||'पुराना रिकॉर्ड');
+  body.appendChild(tr);
+ });
+}
+
+/* DASHBOARD COUNTS */
+
+function renderStats(){
+ const total=applicationRecords.length;
+ const uniqueCustomers=new Set(
+  applicationRecords.map(r=>r.data.ownerUid||r.data.mobile||r.id)
+ );
+
+ const countStatus=status=>
+  applicationRecords.filter(r=>(r.data.status||'Pending')===status).length;
+
+ const countPayment=status=>
+  applicationRecords.filter(r=>{
+   const p=r.paymentInfo?.paymentStatus||'शुल्क तय नहीं';
+   return p===status;
+  }).length;
+
+ $('statApplications').textContent=total;
+ $('statCustomers').textContent=uniqueCustomers.size;
+ $('statPending').textContent=countStatus('Pending');
+ $('statProcessing').textContent=countStatus('Processing');
+ $('statCompleted').textContent=countStatus('Completed');
+ $('statRejected').textContent=countStatus('Rejected');
+ $('statUnpaid').textContent=countPayment('Unpaid');
+ $('statPaid').textContent=countPayment('Paid');
+
+ $('summary').textContent='कुल '+total+' आवेदन और '+uniqueCustomers.size+' ग्राहक';
+}
+
+/* RENDER APPLICATION TABLE */
+
+function renderApplications(){
+ const body=$('rows');
+ body.innerHTML='';
+
+ const search=$('searchInput').value.trim().toLowerCase();
+ const statusValue=$('statusFilter').value;
+ const paymentValue=$('paymentFilter').value;
+
+ const filtered=applicationRecords.filter(record=>{
+  const d=record.data;
+  const paymentStatus=record.paymentInfo?.paymentStatus||'शुल्क तय नहीं';
+
+  const searchText=[
+   d.customerName,d.mobile,d.service,d.village,
+   record.trackingId,d.ownerUid
+  ].join(' ').toLowerCase();
+
+  return (!search||searchText.includes(search)) &&
+   (!statusValue||(d.status||'Pending')===statusValue) &&
+   (!paymentValue||paymentStatus===paymentValue);
+ });
+
+ $('filterCount').textContent='दिखाए जा रहे हैं: '+filtered.length+' / '+applicationRecords.length;
+
+ if(!filtered.length){
+  body.innerHTML='<tr><td colspan="9" class="empty-row">कोई मिलान करता हुआ आवेदन नहीं मिला।</td></tr>';
+  return;
+ }
+
+ filtered.forEach(record=>{
+  const {id,data:d,trackingId,paymentInfo,paymentSubmission}=record;
   const tr=document.createElement('tr');
 
   /* CUSTOMER */
-
-  const td1=document.createElement('td');
-  td1.textContent=(d.customerName||'')+' / '+(d.mobile||'');
+  addCell(tr,(d.customerName||'')+' / '+(d.mobile||''));
 
   /* SERVICE */
-
-  const td2=document.createElement('td');
-  td2.textContent=(d.service||'')+' / '+(d.village||'');
+  addCell(tr,(d.service||'')+' / '+(d.village||''));
 
   /* TRACKING */
-
-  const td3=document.createElement('td');
-  td3.textContent=trackingId;
+  addCell(tr,trackingId);
 
   /* APPLICATION STATUS */
-
   const td4=document.createElement('td');
   const sel=document.createElement('select');
 
   ['Pending','Processing','Completed','Rejected'].forEach(x=>{
-   const o=document.createElement('option');
-   o.value=x;
-   o.textContent=x;
-   o.selected=(d.status||'Pending')===x;
-   sel.appendChild(o);
+   const option=document.createElement('option');
+   option.value=x;
+   option.textContent=x;
+   option.selected=(d.status||'Pending')===x;
+   sel.appendChild(option);
   });
-
   td4.appendChild(sel);
+  tr.appendChild(td4);
 
   /* STATUS SAVE */
-
   const td5=document.createElement('td');
   const statusBtn=document.createElement('button');
-  statusBtn.className='btn';
+  statusBtn.className='small-btn neutral-btn';
   statusBtn.textContent='Save';
 
   statusBtn.onclick=async()=>{
    statusBtn.disabled=true;
+   statusBtn.textContent='Saving...';
 
    try{
-    await updateDoc(doc(db,'applications',item.id),{
+    await updateDoc(doc(db,'applications',id),{
      status:sel.value
     });
 
     if(trackingId){
-     await setDoc(
-      doc(db,'tracking',trackingId),
-      {
-       trackingId,
-       status:sel.value,
-       service:d.service,
-       updatedAt:serverTimestamp()
-      },
-      {merge:true}
-     );
+     await setDoc(doc(db,'tracking',trackingId),{
+      trackingId,
+      status:sel.value,
+      service:d.service,
+      updatedAt:serverTimestamp()
+     },{merge:true});
     }
 
-    statusBtn.textContent='Saved';
+    alert('आवेदन की स्थिति अपडेट हो गई।');
+    await loadAll();
 
    }catch(err){
     alert('Status अपडेट नहीं हुआ: '+err.message);
     statusBtn.disabled=false;
+    statusBtn.textContent='Save';
    }
   };
 
   td5.appendChild(statusBtn);
+  tr.appendChild(td5);
 
-  /* APPLICATION FEE DETAILS */
-
+  /* FEE DETAILS */
   const td6=document.createElement('td');
-
   const feeWrap=document.createElement('div');
   feeWrap.className='fee-inputs';
 
   const config=serviceCharges[d.service]||{
-   governmentFee:0,
-   serviceFee:0,
-   total:0
+   governmentFee:0,serviceFee:0,total:0
   };
 
   let govtDefault=config.governmentFee;
   let serviceDefault=config.serviceFee;
 
-  // पहले से लागू कुल शुल्क हो तो पुराने रिकॉर्ड को भी संभालें
-  if(paymentInfo && Number(paymentInfo.amount)>0){
+  if(paymentInfo&&Number(paymentInfo.amount)>0){
    const oldTotal=Number(paymentInfo.amount);
-   const configuredTotal=config.total;
-
-   if(configuredTotal===oldTotal){
-    govtDefault=config.governmentFee;
-    serviceDefault=config.serviceFee;
-   }else if(configuredTotal===0){
+   if(config.total===0){
+    govtDefault=0;
+    serviceDefault=oldTotal;
+   }else if(config.total!==oldTotal){
     govtDefault=0;
     serviceDefault=oldTotal;
    }
   }
 
+  const govtBox=document.createElement('div');
   const govtLabel=document.createElement('label');
   govtLabel.textContent='सरकारी ₹';
-
   const govtInput=document.createElement('input');
   govtInput.type='number';
   govtInput.min='0';
   govtInput.step='1';
   govtInput.value=govtDefault;
+  govtBox.append(govtLabel,govtInput);
 
+  const serviceBox=document.createElement('div');
   const serviceLabel=document.createElement('label');
   serviceLabel.textContent='सर्विस ₹';
-
   const serviceInput=document.createElement('input');
   serviceInput.type='number';
   serviceInput.min='0';
   serviceInput.step='1';
   serviceInput.value=serviceDefault;
+  serviceBox.append(serviceLabel,serviceInput);
+
+  feeWrap.append(govtBox,serviceBox);
 
   const totalDisplay=document.createElement('div');
   totalDisplay.className='total-fee';
@@ -544,16 +770,8 @@ async function loadApplications(){
   serviceInput.addEventListener('input',calculateTotal);
   calculateTotal();
 
-  const govtBox=document.createElement('div');
-  govtBox.append(govtLabel,govtInput);
-
-  const serviceBox=document.createElement('div');
-  serviceBox.append(serviceLabel,serviceInput);
-
-  feeWrap.append(govtBox,serviceBox);
-
   const applyChargeBtn=document.createElement('button');
-  applyChargeBtn.className='small-btn';
+  applyChargeBtn.className='small-btn neutral-btn';
   applyChargeBtn.style.marginTop='8px';
   applyChargeBtn.textContent='कुल शुल्क लागू करें';
 
@@ -569,127 +787,133 @@ async function loadApplications(){
 
    if(!Number.isFinite(govt)||govt<0||
       !Number.isFinite(service)||service<0||amount<=0){
-    alert('कृपया दोनों शुल्क की सही राशि दर्ज करें। कुल शुल्क शून्य से अधिक होना चाहिए।');
+    alert('कृपया सही शुल्क दर्ज करें। कुल शुल्क शून्य से अधिक होना चाहिए।');
     return;
    }
 
    if(paymentInfo?.paymentStatus==='Paid'){
-    const ok=confirm('यह भुगतान पहले से Paid है। नया शुल्क लागू करने पर भुगतान स्थिति Unpaid हो जाएगी। क्या आप जारी रखना चाहते हैं?');
+    const ok=confirm('यह भुगतान पहले से Paid है। शुल्क बदलने पर भुगतान स्थिति Unpaid हो जाएगी। क्या आप जारी रखना चाहते हैं?');
+    if(!ok)return;
+   }
+
+   if(paymentSubmission?.paymentStatus==='Submitted'){
+    const ok=confirm('ग्राहक ने Transaction ID जमा कर दी है। शुल्क बदलने पर भुगतान दोबारा जाँचना होगा। क्या आप जारी रखना चाहते हैं?');
     if(!ok)return;
    }
 
    applyChargeBtn.disabled=true;
+   applyChargeBtn.textContent='सेव हो रहा है...';
 
    try{
-    await setDoc(
-     doc(db,'paymentInfo',trackingId),
-     {
-      amount,
-      paymentStatus:'Unpaid',
-      updatedAt:serverTimestamp()
-     }
-    );
+    await setDoc(doc(db,'paymentInfo',trackingId),{
+     amount,
+     paymentStatus:'Unpaid',
+     updatedAt:serverTimestamp()
+    });
 
-    alert('कुल ₹'+amount+' शुल्क आवेदन पर लागू हो गया।');
+    alert('कुल '+money(amount)+' शुल्क आवेदन पर लागू हो गया।');
     await loadAll();
 
    }catch(err){
     alert('शुल्क लागू नहीं हुआ: '+err.message);
     applyChargeBtn.disabled=false;
+    applyChargeBtn.textContent='कुल शुल्क लागू करें';
    }
   };
 
   td6.append(feeWrap,totalDisplay,applyChargeBtn);
+  tr.appendChild(td6);
 
   /* PAYMENT STATUS */
-
   const td7=document.createElement('td');
   const paymentStatus=paymentInfo?.paymentStatus||'शुल्क तय नहीं';
-  td7.className='pay-status';
-  td7.textContent=paymentStatus;
+  const paymentBadge=document.createElement('span');
+  paymentBadge.className=statusClass(paymentStatus);
+  paymentBadge.textContent=paymentStatus;
+  td7.appendChild(paymentBadge);
+  tr.appendChild(td7);
 
   /* TRANSACTION ID */
-
   const td8=document.createElement('td');
   td8.textContent=paymentSubmission?.transactionId||'अभी जमा नहीं';
+  tr.appendChild(td8);
 
   /* PAYMENT VERIFICATION */
-
   const td9=document.createElement('td');
   const actions=document.createElement('div');
   actions.className='pay-actions';
 
-  if(paymentSubmission && paymentInfo){
+  if(paymentSubmission&&paymentInfo){
+   const submissionStatus=paymentSubmission.paymentStatus||'Submitted';
 
-   const paidBtn=document.createElement('button');
-   paidBtn.className='small-btn paid-btn';
-   paidBtn.textContent='Paid';
+   if(submissionStatus==='Paid'||submissionStatus==='Rejected'){
+    const reviewed=document.createElement('span');
+    reviewed.className=statusClass(submissionStatus);
+    reviewed.textContent=submissionStatus;
+    actions.appendChild(reviewed);
+   }else{
+    const paidBtn=document.createElement('button');
+    paidBtn.className='small-btn paid-btn';
+    paidBtn.textContent='Paid';
 
-   paidBtn.onclick=async()=>{
-    if(!confirm('क्या आपने इस भुगतान की जाँच कर ली है और इसे Paid करना चाहते हैं?'))return;
+    paidBtn.onclick=async()=>{
+     if(!confirm('क्या आपने Transaction ID और भुगतान की जाँच कर ली है? क्या इसे Paid करना चाहते हैं?'))return;
 
-    try{
-     await setDoc(
-      doc(db,'paymentInfo',trackingId),
-      {
+     paidBtn.disabled=true;
+
+     try{
+      await setDoc(doc(db,'paymentInfo',trackingId),{
        amount:Number(paymentInfo.amount),
        paymentStatus:'Paid',
        updatedAt:serverTimestamp()
-      }
-     );
+      });
 
-     await setDoc(
-      doc(db,'paymentSubmissions',trackingId),
-      {
+      await setDoc(doc(db,'paymentSubmissions',trackingId),{
        paymentStatus:'Paid',
        reviewedAt:serverTimestamp()
-      },
-      {merge:true}
-     );
+      },{merge:true});
 
-     alert('भुगतान Paid मार्क हो गया।');
-     await loadAll();
+      alert('भुगतान Paid मार्क हो गया।');
+      await loadAll();
 
-    }catch(err){
-     alert('Payment अपडेट नहीं हुआ: '+err.message);
-    }
-   };
+     }catch(err){
+      alert('Payment अपडेट नहीं हुआ: '+err.message);
+      paidBtn.disabled=false;
+     }
+    };
 
-   const rejectBtn=document.createElement('button');
-   rejectBtn.className='small-btn reject-btn';
-   rejectBtn.textContent='Reject';
+    const rejectBtn=document.createElement('button');
+    rejectBtn.className='small-btn reject-btn';
+    rejectBtn.textContent='Reject';
 
-   rejectBtn.onclick=async()=>{
-    if(!confirm('क्या आप इस भुगतान को Reject करना चाहते हैं?'))return;
+    rejectBtn.onclick=async()=>{
+     if(!confirm('क्या आप इस Transaction ID को Reject करना चाहते हैं?'))return;
 
-    try{
-     await setDoc(
-      doc(db,'paymentInfo',trackingId),
-      {
+     rejectBtn.disabled=true;
+
+     try{
+      await setDoc(doc(db,'paymentInfo',trackingId),{
        amount:Number(paymentInfo.amount),
        paymentStatus:'Rejected',
        updatedAt:serverTimestamp()
-      }
-     );
+      });
 
-     await setDoc(
-      doc(db,'paymentSubmissions',trackingId),
-      {
+      await setDoc(doc(db,'paymentSubmissions',trackingId),{
        paymentStatus:'Rejected',
        reviewedAt:serverTimestamp()
-      },
-      {merge:true}
-     );
+      },{merge:true});
 
-     alert('भुगतान Rejected मार्क हो गया।');
-     await loadAll();
+      alert('भुगतान Rejected मार्क हो गया।');
+      await loadAll();
 
-    }catch(err){
-     alert('Payment अपडेट नहीं हुआ: '+err.message);
-    }
-   };
+     }catch(err){
+      alert('Payment अपडेट नहीं हुआ: '+err.message);
+      rejectBtn.disabled=false;
+     }
+    };
 
-   actions.append(paidBtn,rejectBtn);
+    actions.append(paidBtn,rejectBtn);
+   }
 
   }else if(!paymentInfo){
    actions.textContent='पहले शुल्क लागू करें';
@@ -698,27 +922,95 @@ async function loadApplications(){
   }
 
   td9.appendChild(actions);
-
-  [td1,td2,td3,td4,td5,td6,td7,td8,td9].forEach(td=>{
-   tr.appendChild(td);
-  });
-
+  tr.appendChild(td9);
   body.appendChild(tr);
- }
+ });
 }
 
 /* LOAD ALL DATA */
 
 async function loadAll(){
  $('summary').textContent='डेटा लोड हो रहा है...';
+ $('rows').innerHTML='<tr><td colspan="9" class="empty-row">लोड हो रहा है...</td></tr>';
 
  try{
   await loadCharges();
   await loadApplications();
+  renderStats();
+  renderCustomers();
+  renderApplications();
+
  }catch(err){
   $('summary').textContent='डेटा लोड नहीं हुआ: '+err.message;
+  $('rows').innerHTML='<tr><td colspan="9" class="empty-row">डेटा लोड करने में समस्या: '+err.message+'</td></tr>';
  }
 }
+
+/* FILTERS */
+
+$('searchInput').addEventListener('input',renderApplications);
+$('statusFilter').addEventListener('change',renderApplications);
+$('paymentFilter').addEventListener('change',renderApplications);
+
+$('refreshBtn').addEventListener('click',async()=>{
+ $('refreshBtn').disabled=true;
+ $('refreshBtn').textContent='लोड हो रहा है...';
+ await loadAll();
+ $('refreshBtn').disabled=false;
+ $('refreshBtn').textContent='↻ Refresh';
+});
+
+/* CSV EXPORT */
+
+$('exportBtn').addEventListener('click',()=>{
+ if(!applicationRecords.length){
+  alert('डाउनलोड करने के लिए कोई आवेदन नहीं है।');
+  return;
+ }
+
+ const headers=[
+  'Customer Name','Mobile','Service','Village','Tracking ID',
+  'Application Status','Government Fee','Service Fee','Total Fee',
+  'Payment Status','Transaction ID','Customer UID'
+ ];
+
+ const rows=applicationRecords.map(record=>{
+  const d=record.data;
+  const info=record.paymentInfo||{};
+  const submission=record.paymentSubmission||{};
+  const total=Number(info.amount)||0;
+
+  return [
+   d.customerName||'',
+   d.mobile||'',
+   d.service||'',
+   d.village||'',
+   record.trackingId,
+   d.status||'Pending',
+   '',
+   '',
+   total,
+   info.paymentStatus||'शुल्क तय नहीं',
+   submission.transactionId||'',
+   d.ownerUid||''
+  ];
+ });
+
+ const escapeCSV=value=>'"'+String(value??'').replace(/"/g,'""')+'"';
+ const csv='\uFEFF'+[headers,...rows]
+  .map(row=>row.map(escapeCSV).join(','))
+  .join('\r\n');
+
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+ const url=URL.createObjectURL(blob);
+ const link=document.createElement('a');
+ link.href=url;
+ link.download='rahul-computers-applications.csv';
+ document.body.appendChild(link);
+ link.click();
+ link.remove();
+ URL.revokeObjectURL(url);
+});
 
 updateChargePreview();
 </script>
