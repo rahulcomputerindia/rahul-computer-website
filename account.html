@@ -2,10 +2,9 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#102b52">
 <title>My Account | RAHUL COMPUTER'S</title>
-
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f1f5f9;color:#172b4d;font-family:Arial,sans-serif}
@@ -18,15 +17,13 @@ button,a{cursor:pointer}
 .btn-light{background:white;color:#102b52;border:1px solid #dce4ef}
 .btn-red{background:#d93636}
 .container{max-width:1100px;margin:25px auto;padding:0 15px}
-.welcome{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 15px #102b5210;margin-bottom:20px}
+.welcome,.section{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 15px #102b5210;margin-bottom:20px}
 .welcome h2{margin:0 0 7px;font-size:22px}
 .muted{color:#667085;font-size:13px;overflow-wrap:anywhere}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
 .stat{background:white;padding:18px;border-radius:12px;box-shadow:0 3px 12px #102b520d}
 .stat span{display:block;color:#667085;font-size:13px}
 .stat strong{display:block;font-size:25px;margin-top:8px;color:#1769d2}
-.section{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 15px #102b5210;margin-bottom:20px}
-.section h3{margin:0 0 16px}
 .actions{display:flex;gap:10px;flex-wrap:wrap}
 .profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
 .profile-item{background:#f7f9fc;padding:13px;border-radius:9px}
@@ -37,14 +34,12 @@ button,a{cursor:pointer}
 .application p{font-size:13px;margin:7px 0;overflow-wrap:anywhere}
 .status{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#fff3cd;color:#805b00}
 .status.completed,.status.paid{background:#d8f5e3;color:#176b38}
-.status.processing{background:#dcecff;color:#1554a0}
+.status.processing,.status.submitted{background:#dcecff;color:#1554a0}
 .status.rejected{background:#ffe0e0;color:#a51f1f}
-.status.pending{background:#fff3cd;color:#805b00}
 .tracking{font-weight:bold;letter-spacing:.5px;color:#1769d2}
-.empty{text-align:center;padding:30px 10px;color:#667085}
+.empty,.loading{text-align:center;padding:25px 10px;color:#667085}
 .message{padding:12px;background:#fff3cd;border-radius:8px;color:#805b00;font-size:13px;display:none;margin-bottom:15px}
 footer{text-align:center;padding:22px;color:#667085;font-size:12px}
-.loading{text-align:center;padding:25px;color:#667085}
 .payment-box{margin-top:15px;padding:15px;background:#f7f9fc;border:1px solid #dce4ef;border-radius:10px}
 .payment-box h5{font-size:16px;margin:0 0 12px}
 .payment-amount{font-size:27px;color:#087ac2;font-weight:bold;margin:8px 0}
@@ -58,34 +53,20 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
 .payment-message{font-size:13px;margin-top:10px;overflow-wrap:anywhere}
 .copy-btn{background:#e5efff;color:#174e91;border:0;padding:9px 12px;border-radius:7px;font-weight:bold}
 .pay-button{width:100%;margin-top:8px}
-@media(max-width:700px){
- .stats{grid-template-columns:repeat(2,1fr)}
- .profile-grid{grid-template-columns:1fr}
-}
-@media(max-width:420px){
- .header-inner{align-items:flex-start}
- .stats{gap:9px}
- .stat{padding:13px}
- .stat strong{font-size:22px}
- .section{padding:15px}
-}
+.history-row{background:white;border:1px solid #e1e7ef;padding:12px;border-radius:9px;margin:10px 0}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.profile-grid{grid-template-columns:1fr}}
+@media(max-width:420px){.header-inner{align-items:flex-start}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}.section{padding:15px}}
 </style>
 </head>
-
 <body>
-
 <header>
 <div class="header-inner">
- <div>
-  <h2>RAHUL COMPUTER'S</h2>
-  <p>Customer Dashboard</p>
- </div>
+ <div><h2>RAHUL COMPUTER'S</h2><p>Customer Dashboard</p></div>
  <button id="logoutBtn" class="btn btn-red" type="button">Logout</button>
 </div>
 </header>
 
 <main class="container">
-
 <div id="pageMessage" class="message"></div>
 
 <section class="welcome">
@@ -94,22 +75,10 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
 </section>
 
 <section class="stats">
- <div class="stat">
-  <span>कुल आवेदन</span>
-  <strong id="totalCount">0</strong>
- </div>
- <div class="stat">
-  <span>Pending</span>
-  <strong id="pendingCount">0</strong>
- </div>
- <div class="stat">
-  <span>Processing</span>
-  <strong id="processingCount">0</strong>
- </div>
- <div class="stat">
-  <span>Completed</span>
-  <strong id="completedCount">0</strong>
- </div>
+ <div class="stat"><span>कुल आवेदन</span><strong id="totalCount">0</strong></div>
+ <div class="stat"><span>Pending</span><strong id="pendingCount">0</strong></div>
+ <div class="stat"><span>Processing</span><strong id="processingCount">0</strong></div>
+ <div class="stat"><span>Completed</span><strong id="completedCount">0</strong></div>
 </section>
 
 <section class="section">
@@ -124,24 +93,15 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
 <section class="section">
  <h3>मेरा प्रोफाइल</h3>
  <div class="profile-grid">
-  <div class="profile-item">
-   <span>पूरा नाम</span>
-   <strong id="profileName">लोड हो रहा है...</strong>
-  </div>
-  <div class="profile-item">
-   <span>Email Address</span>
-   <strong id="profileEmail">लोड हो रहा है...</strong>
-  </div>
-  <div class="profile-item">
-   <span>Account UID</span>
-   <strong id="profileUid">लोड हो रहा है...</strong>
-  </div>
+  <div class="profile-item"><span>पूरा नाम</span><strong id="profileName">लोड हो रहा है...</strong></div>
+  <div class="profile-item"><span>Email Address</span><strong id="profileEmail">लोड हो रहा है...</strong></div>
+  <div class="profile-item"><span>Account UID</span><strong id="profileUid">लोड हो रहा है...</strong></div>
  </div>
 </section>
 
 <section class="section">
  <h3>💳 मेरे भुगतान और हिस्ट्री</h3>
- <p class="muted">आपके आवेदन पर लागू कुल भुगतान राशि और भुगतान की स्थिति यहाँ दिखाई देगी।</p>
+ <p class="muted">हर आवेदन की फीस, Transaction ID और भुगतान सत्यापन की स्थिति यहाँ देखें।</p>
  <div id="paymentsList" class="loading">भुगतान की जानकारी लोड हो रही है...</div>
 </section>
 
@@ -149,296 +109,234 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
  <h3>मेरे आवेदन और हिस्ट्री</h3>
  <div id="applicationsList" class="loading">आपके आवेदन लोड हो रहे हैं...</div>
 </section>
-
 </main>
 
 <footer>
-RAHUL COMPUTER'S · अमिलिया, मैहर, मध्यप्रदेश
-<br>सहायता के लिए WhatsApp:
+RAHUL COMPUTER'S · अमिलिया, मैहर, मध्यप्रदेश<br>
+सहायता के लिए WhatsApp:
 <a href="https://wa.me/919752039020">9752039020</a>
 </footer>
 
 <script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-
+import {initializeApp} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+import {getAuth,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 import {
- getAuth,
- onAuthStateChanged,
- signOut
-} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
-
-import {
- getFirestore,
- collection,
- query,
- where,
- getDocs,
- doc,
- getDoc,
- setDoc,
- serverTimestamp
+ getFirestore,collection,query,where,getDocs,doc,getDoc,
+ setDoc,updateDoc,serverTimestamp
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-const firebaseConfig = {
- apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
- authDomain: "rahul-computer-s.firebaseapp.com",
- projectId: "rahul-computer-s",
- storageBucket: "rahul-computer-s.firebasestorage.app",
- messagingSenderId: "969449083821",
- appId: "1:969449083821:web:4696bc1253fa97ea304724"
+const firebaseConfig={
+ apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain:"rahul-computer-s.firebaseapp.com",
+ projectId:"rahul-computer-s",
+ storageBucket:"rahul-computer-s.firebasestorage.app",
+ messagingSenderId:"969449083821",
+ appId:"1:969449083821:web:4696bc1253fa97ea304724"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const $=id=>document.getElementById(id);
 
-const $ = id => document.getElementById(id);
+const UPI_ID="7489098704-2@ybl";
+const UPI_NAME="RAHUL SEN";
+let currentUser=null;
 
-const UPI_ID = "7489098704-2@ybl";
-const UPI_NAME = "RAHUL SEN";
-
-let currentUser = null;
-let applicationsData = [];
-
+function safeText(v){return String(v??"")}
+function money(v){return "₹"+(Number(v)||0)}
+function formatDate(t){
+ return t&&typeof t.toDate==="function"
+  ?t.toDate().toLocaleString("hi-IN"):"उपलब्ध नहीं";
+}
+function el(tag,cls,text){
+ const x=document.createElement(tag);
+ if(cls)x.className=cls;
+ if(text!==undefined)x.textContent=text;
+ return x;
+}
 function showMessage(text){
- const box = $("pageMessage");
- box.textContent = text;
- box.style.display = "block";
+ $("pageMessage").textContent=text;
+ $("pageMessage").style.display="block";
 }
-
-function safeText(value){
- return String(value ?? "");
+function statusClass(s){
+ const v=safeText(s).toLowerCase();
+ return ["completed","processing","rejected","paid","submitted"].includes(v)?v:"pending";
 }
-
-function money(value){
- return "₹"+(Number(value)||0);
-}
-
-function statusClass(status){
- const value = safeText(status).toLowerCase();
- if(value === "completed") return "completed";
- if(value === "processing") return "processing";
- if(value === "rejected") return "rejected";
- return "pending";
-}
-
-function formatDate(timestamp){
- if(!timestamp || typeof timestamp.toDate !== "function"){
-  return "उपलब्ध नहीं";
- }
- return timestamp.toDate().toLocaleString("hi-IN");
-}
-
-function createElement(tag,className,text){
- const el=document.createElement(tag);
- if(className)el.className=className;
- if(text!==undefined)el.textContent=text;
- return el;
-}
-
-/* APPLICATION LIST */
 
 function renderApplications(docs){
- const list = $("applicationsList");
+ const list=$("applicationsList");
+ $("totalCount").textContent=docs.length;
+ $("pendingCount").textContent=docs.filter(d=>d.status==="Pending").length;
+ $("processingCount").textContent=docs.filter(d=>d.status==="Processing").length;
+ $("completedCount").textContent=docs.filter(d=>d.status==="Completed").length;
 
- $("totalCount").textContent = docs.length;
- $("pendingCount").textContent =
-  docs.filter(d => d.status === "Pending").length;
- $("processingCount").textContent =
-  docs.filter(d => d.status === "Processing").length;
- $("completedCount").textContent =
-  docs.filter(d => d.status === "Completed").length;
-
- if(docs.length === 0){
-  list.innerHTML = '<div class="empty">अभी तक आपने कोई आवेदन नहीं किया है।<br><br><a class="btn" href="services.html">सेवाएँ देखें</a></div>';
+ list.innerHTML="";
+ if(!docs.length){
+  list.appendChild(el("div","empty","अभी तक आपने कोई आवेदन नहीं किया है।"));
   return;
  }
-
- list.innerHTML = "";
-
- docs.forEach(data => {
-  const card = createElement("div","application");
-
-  const heading = createElement("h4",null,data.service||"सेवा आवेदन");
-
-  const status = createElement(
-   "span",
-   "status "+statusClass(data.status),
-   data.status||"Pending"
-  );
-
-  const trackingLabel = createElement("p",null,"Tracking ID: ");
-  const tracking = createElement(
-   "span","tracking",data.trackingId||"उपलब्ध नहीं"
-  );
-  trackingLabel.appendChild(tracking);
-
-  const date = createElement(
-   "p",null,"आवेदन दिनांक: "+formatDate(data.createdAt)
-  );
-
-  const village = createElement(
-   "p",null,"गाँव: "+safeText(data.village||"उपलब्ध नहीं")
-  );
-
-  const details = createElement(
-   "p",null,"विवरण: "+safeText(data.details||"कोई विवरण नहीं")
-  );
-
-  const trackLink = createElement("a","btn","स्थिति देखें");
-  trackLink.href = "track.html";
-
+ docs.forEach(d=>{
+  const card=el("div","application");
   card.append(
-   heading,status,trackingLabel,date,village,details,trackLink
+   el("h4",null,d.service||"सेवा आवेदन"),
+   el("span","status "+statusClass(d.status),d.status||"Pending"),
+   el("p","tracking","Tracking ID: "+safeText(d.trackingId)),
+   el("p",null,"आवेदन दिनांक: "+formatDate(d.createdAt)),
+   el("p",null,"गाँव: "+safeText(d.village||"उपलब्ध नहीं")),
+   el("p",null,"विवरण: "+safeText(d.details||"कोई विवरण नहीं"))
   );
-
+  const link=el("a","btn","स्थिति देखें");
+  link.href="track.html";
+  card.appendChild(link);
   list.appendChild(card);
  });
 }
 
-/* PAYMENT CARD */
+async function submitTransaction(data,amount,input,submit,message){
+ const transactionId=input.value.trim();
+ if(!/^[A-Za-z0-9]{8,35}$/.test(transactionId)){
+  message.textContent="कृपया 8 से 35 अक्षरों/अंकों की Transaction ID दर्ज करें।";
+  message.style.display="block";
+  return;
+ }
+ if(!currentUser)return;
 
-function renderPaymentCard(data,paymentInfo){
- const card=createElement("div","application");
+ if(!confirm("क्या आपने ₹"+amount+" का भुगतान वास्तव में कर दिया है और Transaction ID सही है?"))return;
 
- const heading=createElement("h4",null,data.service||"सेवा आवेदन");
- const tracking=createElement(
-  "p","tracking","Tracking ID: "+safeText(data.trackingId||"")
+ submit.disabled=true;
+ submit.textContent="जमा हो रहा है...";
+ message.style.display="none";
+
+ try{
+  const ref=doc(db,"paymentSubmissions",data.trackingId);
+  const old=await getDoc(ref);
+
+  if(old.exists()){
+   if(old.data().paymentStatus!=="Rejected"){
+    throw new Error("इस आवेदन की Transaction ID पहले ही जमा हो चुकी है।");
+   }
+   await updateDoc(ref,{
+    transactionId,
+    submittedAt:serverTimestamp(),
+    paymentStatus:"Submitted"
+   });
+  }else{
+   await setDoc(ref,{
+    transactionId,
+    submittedAt:serverTimestamp()
+   });
+  }
+
+  message.textContent="Transaction ID जमा हो गई। Admin द्वारा सत्यापन की प्रतीक्षा करें।";
+  message.style.color="#176b38";
+  message.style.display="block";
+  input.disabled=true;
+  submit.textContent="जमा हो गया";
+  await loadApplications(currentUser);
+
+ }catch(error){
+  console.error(error);
+  message.textContent="जमा नहीं हुआ: "+error.message;
+  message.style.color="#a51f1f";
+  message.style.display="block";
+  submit.disabled=false;
+  submit.textContent="दोबारा प्रयास करें";
+ }
+}
+
+function renderPaymentCard(data,paymentInfo,submission){
+ const card=el("div","application");
+ card.append(
+  el("h4",null,data.service||"सेवा आवेदन"),
+  el("p","tracking","Tracking ID: "+safeText(data.trackingId))
  );
 
- card.append(heading,tracking);
-
- if(!data.trackingId){
-  card.appendChild(createElement(
-   "p","muted","इस आवेदन में Tracking ID उपलब्ध नहीं है।"
-  ));
-  return card;
- }
-
  if(!paymentInfo){
-  card.appendChild(createElement(
-   "p","muted","अभी इस आवेदन पर शुल्क निर्धारित नहीं किया गया है।"
-  ));
+  card.appendChild(el("p","muted","अभी इस आवेदन पर शुल्क निर्धारित नहीं किया गया है।"));
   return card;
  }
 
  const amount=Number(paymentInfo.amount)||0;
- const paymentStatus=paymentInfo.paymentStatus||"Unpaid";
-
  if(amount<=0){
-  card.appendChild(createElement(
-   "p","muted","भुगतान राशि उपलब्ध नहीं है।"
-  ));
+  card.appendChild(el("p","muted","भुगतान राशि उपलब्ध नहीं है।"));
   return card;
  }
 
- const box=createElement("div","payment-box");
-
- box.appendChild(createElement("h5",null,"भुगतान विवरण"));
-
- box.appendChild(createElement(
-  "div","payment-amount",money(amount)
- ));
-
- box.appendChild(createElement(
-  "p","muted","कुल भुगतान राशि"
- ));
-
- const statusClassName=
-  paymentStatus==="Paid"?"paid":
-  paymentStatus==="Rejected"?"rejected":"pending";
-
- box.appendChild(createElement(
-  "span","status "+statusClassName,
-  paymentStatus==="Paid"?"भुगतान सफल":
-  paymentStatus==="Rejected"?"भुगतान अस्वीकृत":
-  "भुगतान बाकी"
- ));
-
- if(paymentStatus==="Paid"){
-  box.appendChild(createElement(
-   "p","payment-message","आपका भुगतान सत्यापित हो गया है। धन्यवाद!"
-  ));
-  card.appendChild(box);
-  return card;
- }
-
- if(paymentStatus==="Rejected"){
-  box.appendChild(createElement(
-   "p","payment-message",
-   "आपका भुगतान सत्यापित नहीं हुआ। कृपया सहायता के लिए WhatsApp पर संपर्क करें।"
-  ));
-  card.appendChild(box);
-  return card;
- }
-
- /* QR CODE */
-
- const qrWrap=createElement("div","qr-wrap");
-
- const qrImage=createElement("img","qr-image");
-
-/* UPDATED QR IMAGE FILE PATH */
- qrImage.src="assets/Screenshot_20261122-095937_PhonePe.jpg";
-
- qrImage.alt="RAHUL COMPUTER'S UPI QR Code";
-
- qrImage.onerror=()=>{
-  qrImage.style.display="none";
-  qrWrap.appendChild(createElement(
-   "p","payment-message",
-   "QR कोड अभी उपलब्ध नहीं है। आप UPI ID से भुगतान कर सकते हैं।"
-  ));
- };
-
- qrWrap.appendChild(qrImage);
- box.appendChild(qrWrap);
-
- box.appendChild(createElement(
-  "p","muted","QR स्कैन करके ऊपर दिखाई गई कुल राशि का भुगतान करें।"
- ));
-
- box.appendChild(createElement(
-  "div","upi-id",UPI_ID
- ));
-
- const copyBtn=createElement("button","copy-btn","UPI ID कॉपी करें");
- copyBtn.type="button";
-
- copyBtn.addEventListener("click",async()=>{
-  try{
-   await navigator.clipboard.writeText(UPI_ID);
-   copyBtn.textContent="कॉपी हो गया ✓";
-  }catch(error){
-   alert("UPI ID कॉपी नहीं हो सका। इसे स्वयं कॉपी करें: "+UPI_ID);
-  }
- });
-
- box.appendChild(copyBtn);
-
- /* UPI PAYMENT LINK */
-
- const upiLink=document.createElement("a");
- upiLink.className="btn pay-button";
- upiLink.href=
-  "upi://pay?pa="+encodeURIComponent(UPI_ID)+
-  "&pn="+encodeURIComponent(UPI_NAME)+
-  "&am="+encodeURIComponent(amount.toFixed(2))+
-  "&cu=INR"+
-  "&tn="+encodeURIComponent("RAHUL COMPUTER "+data.trackingId);
-
- upiLink.textContent="UPI App से भुगतान करें";
- box.appendChild(upiLink);
-
- /* TRANSACTION ID FORM */
-
- const form=createElement("form","payment-form");
-
- const label=createElement(
-  "label",null,"भुगतान के बाद Transaction ID दर्ज करें"
+ const box=el("div","payment-box");
+ box.append(
+  el("h5",null,"भुगतान विवरण"),
+  el("div","payment-amount",money(amount)),
+  el("p","muted","कुल भुगतान राशि")
  );
 
+ const ps=paymentInfo.paymentStatus||"Unpaid";
+ const ss=submission?.paymentStatus||"";
+ const displayStatus=ps==="Paid"?"Paid":ps==="Rejected"?"Rejected":ss==="Submitted"?"Submitted":"Unpaid";
+
+ box.appendChild(el("span","status "+statusClass(displayStatus),
+  displayStatus==="Paid"?"भुगतान सफल":
+  displayStatus==="Rejected"?"भुगतान अस्वीकृत":
+  displayStatus==="Submitted"?"जाँच की प्रतीक्षा":"भुगतान बाकी"
+ ));
+
+ if(submission){
+  box.append(
+   el("p",null,"Transaction ID: "+safeText(submission.transactionId)),
+   el("p","muted","जमा दिनांक: "+formatDate(submission.submittedAt))
+  );
+  if(submission.reviewedAt){
+   box.appendChild(el("p","muted","Admin जाँच दिनांक: "+formatDate(submission.reviewedAt)));
+  }
+ }
+
+ if(ps==="Paid"){
+  box.appendChild(el("p","payment-message","आपका भुगतान सत्यापित हो गया है। धन्यवाद!"));
+  card.appendChild(box);
+  return card;
+ }
+
+ if(ss==="Submitted"){
+  box.appendChild(el("p","payment-message","आपकी Transaction ID प्राप्त हो गई है। Admin द्वारा जाँच जारी है।"));
+  card.appendChild(box);
+  return card;
+ }
+
+ if(ps==="Rejected"){
+  box.appendChild(el("p","payment-message","आपका पिछला भुगतान अस्वीकृत हुआ है। सही भुगतान विवरण के साथ दोबारा जमा कर सकते हैं।"));
+ }
+
+ const qrWrap=el("div","qr-wrap");
+ const img=el("img","qr-image");
+ img.src="assets/Screenshot_20261122-095937_PhonePe.jpg";
+ img.alt="RAHUL COMPUTER'S UPI QR Code";
+ img.onerror=()=>{img.style.display="none";qrWrap.appendChild(el("p","payment-message","QR कोड उपलब्ध नहीं है। UPI ID से भुगतान करें।"));};
+ qrWrap.appendChild(img);
+ box.append(
+  qrWrap,
+  el("p","muted","QR स्कैन करके ऊपर दिखाई गई कुल राशि का भुगतान करें।"),
+  el("div","upi-id",UPI_ID)
+ );
+
+ const copy=el("button","copy-btn","UPI ID कॉपी करें");
+ copy.type="button";
+ copy.onclick=async()=>{
+  try{await navigator.clipboard.writeText(UPI_ID);copy.textContent="कॉपी हो गया ✓";}
+  catch(e){alert("UPI ID: "+UPI_ID);}
+ };
+ box.appendChild(copy);
+
+ const upi=document.createElement("a");
+ upi.className="btn pay-button";
+ upi.href="upi://pay?pa="+encodeURIComponent(UPI_ID)+
+  "&pn="+encodeURIComponent(UPI_NAME)+
+  "&am="+encodeURIComponent(amount.toFixed(2))+
+  "&cu=INR&tn="+encodeURIComponent("RAHUL COMPUTER "+data.trackingId);
+ upi.textContent="UPI App से भुगतान करें";
+ box.appendChild(upi);
+
+ const form=el("form","payment-form");
+ const label=el("label",null,"भुगतान के बाद Transaction ID दर्ज करें");
  const input=document.createElement("input");
  input.type="text";
  input.maxLength=35;
@@ -448,182 +346,77 @@ function renderPaymentCard(data,paymentInfo){
  input.placeholder="जैसे 123456789ABC";
  input.pattern="[A-Za-z0-9]{8,35}";
 
- const submit=createElement(
-  "button","btn pay-button","Transaction ID जमा करें"
- );
+ const submit=el("button","btn pay-button",ps==="Rejected"?"नई Transaction ID जमा करें":"Transaction ID जमा करें");
  submit.type="submit";
-
- const note=createElement(
-  "p","payment-note",
-  "ध्यान दें: भुगतान करने के बाद ही Transaction ID जमा करें। Admin द्वारा जाँच के बाद भुगतान Paid होगा। गलत Transaction ID जमा न करें।"
- );
-
- const message=createElement("p","payment-message","");
+ const note=el("p","payment-note","केवल वास्तविक भुगतान करने के बाद ही Transaction ID जमा करें। Admin जाँच के बाद भुगतान Paid होगा।");
+ const message=el("p","payment-message","");
  message.style.display="none";
 
  form.append(label,input,submit,note,message);
-
- form.addEventListener("submit",async e=>{
+ form.addEventListener("submit",e=>{
   e.preventDefault();
-
-  const transactionId=input.value.trim();
-
-  if(!/^[A-Za-z0-9]{8,35}$/.test(transactionId)){
-   message.textContent="कृपया 8 से 35 अक्षरों/अंकों की सही Transaction ID दर्ज करें।";
-   message.style.display="block";
-   return;
-  }
-
-  if(!currentUser){
-   message.textContent="कृपया दोबारा Login करें।";
-   message.style.display="block";
-   return;
-  }
-
-  if(!confirm("क्या आपने ₹"+amount+" का भुगतान कर दिया है और Transaction ID सही है?")){
-   return;
-  }
-
-  submit.disabled=true;
-  submit.textContent="जमा हो रहा है...";
-  message.style.display="none";
-
-  try{
-   await setDoc(
-    doc(db,"paymentSubmissions",data.trackingId),
-    {
-     transactionId,
-     submittedAt:serverTimestamp()
-    }
-   );
-
-   message.textContent=
-    "Transaction ID सफलतापूर्वक जमा हो गई। Admin द्वारा सत्यापन की प्रतीक्षा करें।";
-
-   message.style.display="block";
-   message.style.color="#176b38";
-
-   input.disabled=true;
-   submit.textContent="जमा हो गया";
-
-  }catch(error){
-   console.error(error);
-   message.textContent=
-    "Transaction ID जमा नहीं हुई। संभव है कि इस आवेदन पर पहले ही Transaction ID जमा हो चुकी हो। सहायता के लिए WhatsApp करें।";
-   message.style.display="block";
-   message.style.color="#a51f1f";
-   submit.disabled=false;
-   submit.textContent="दोबारा प्रयास करें";
-  }
+  submitTransaction(data,amount,input,submit,message);
  });
-
  box.appendChild(form);
  card.appendChild(box);
-
  return card;
 }
 
-/* LOAD APPLICATIONS AND PAYMENT DATA */
-
 async function loadApplications(user){
- $("applicationsList").textContent="आपके आवेदन लोड हो रहे हैं...";
- $("paymentsList").textContent="भुगतान की जानकारी लोड हो रही है...";
+ $("applicationsList").textContent="आवेदन लोड हो रहे हैं...";
+ $("paymentsList").textContent="भुगतान लोड हो रहे हैं...";
 
  try{
-  const applicationsQuery=query(
-   collection(db,"applications"),
-   where("ownerUid","==",user.uid)
-  );
+  const q=query(collection(db,"applications"),where("ownerUid","==",user.uid));
+  const snap=await getDocs(q);
+  const apps=snap.docs.map(x=>x.data());
+  apps.sort((a,b)=>(b.createdAt?.toMillis?.()||0)-(a.createdAt?.toMillis?.()||0));
+  renderApplications(apps);
 
-  const result=await getDocs(applicationsQuery);
-
-  applicationsData=result.docs.map(item=>item.data());
-
-  applicationsData.sort((a,b)=>{
-   const x=a.createdAt?.toMillis?.()||0;
-   const y=b.createdAt?.toMillis?.()||0;
-   return y-x;
-  });
-
-  renderApplications(applicationsData);
-
-  const paymentsList=$("paymentsList");
-  paymentsList.innerHTML="";
-
-  if(applicationsData.length===0){
-   paymentsList.appendChild(createElement(
-    "div","empty","अभी कोई भुगतान रिकॉर्ड उपलब्ध नहीं है।"
-   ));
+  const payments=$("paymentsList");
+  payments.innerHTML="";
+  if(!apps.length){
+   payments.appendChild(el("div","empty","अभी कोई भुगतान रिकॉर्ड उपलब्ध नहीं है।"));
    return;
   }
 
-  for(const data of applicationsData){
-   let paymentInfo=null;
+  for(const data of apps){
+   if(!data.trackingId)continue;
+   let info=null,submission=null;
 
-   if(data.trackingId){
-    try{
-     const paymentDoc=await getDoc(
-      doc(db,"paymentInfo",data.trackingId)
-     );
+   const results=await Promise.all([
+    getDoc(doc(db,"paymentInfo",data.trackingId)),
+    getDoc(doc(db,"paymentSubmissions",data.trackingId))
+   ]);
 
-     if(paymentDoc.exists()){
-      paymentInfo=paymentDoc.data();
-     }
-    }catch(error){
-     console.error("Payment information error:",error);
-    }
-   }
+   if(results[0].exists())info=results[0].data();
+   if(results[1].exists())submission=results[1].data();
 
-   paymentsList.appendChild(
-    renderPaymentCard(data,paymentInfo)
-   );
+   payments.appendChild(renderPaymentCard(data,info,submission));
   }
-
  }catch(error){
   console.error(error);
-
-  $("applicationsList").textContent=
-   "आवेदन लोड नहीं हो सके। Internet या Firestore Rules जाँचें।";
-
-  $("paymentsList").textContent=
-   "भुगतान जानकारी लोड नहीं हो सकी।";
+  $("applicationsList").textContent="आवेदन लोड नहीं हुए: "+error.message;
+  $("paymentsList").textContent="भुगतान जानकारी लोड नहीं हुई: "+error.message;
  }
 }
 
-/* LOGOUT */
-
 $("logoutBtn").addEventListener("click",async()=>{
  if(!confirm("क्या आप Logout करना चाहते हैं?"))return;
-
- try{
-  await signOut(auth);
-  location.replace("login.html");
- }catch(error){
-  showMessage("Logout नहीं हो सका: "+error.message);
- }
+ try{await signOut(auth);location.replace("login.html");}
+ catch(e){showMessage("Logout नहीं हुआ: "+e.message);}
 });
 
-/* AUTH */
-
 onAuthStateChanged(auth,async user=>{
- if(!user){
-  location.replace("login.html");
-  return;
- }
-
+ if(!user){location.replace("login.html");return;}
  currentUser=user;
-
  const name=user.displayName||"ग्राहक";
-
  $("customerName").textContent=name;
  $("profileName").textContent=name;
  $("profileEmail").textContent=user.email||"उपलब्ध नहीं";
  $("profileUid").textContent=user.uid;
-
  await loadApplications(user);
 });
-
 </script>
-
 </body>
- </html>
+</html>
