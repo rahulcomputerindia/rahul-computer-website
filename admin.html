@@ -58,19 +58,62 @@ display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0
 .status-submitted{background:#dbeafe;color:#1e40af}
 .empty-row{text-align:center;color:#64748b;padding:20px!important}
 .customer-table{min-width:750px}
+
+/* VIEW DETAILS */
+.details-btn{
+background:#dbeafe;color:#1e40af;padding:8px 11px;
+border:0;border-radius:7px;cursor:pointer;font-weight:700;
+white-space:nowrap
+}
+.details-modal{
+position:fixed;inset:0;z-index:9999;
+background:rgba(15,23,42,.65);
+display:flex;align-items:center;justify-content:center;padding:15px
+}
+.details-content{
+background:#fff;width:100%;max-width:700px;max-height:90vh;
+overflow-y:auto;border-radius:15px;padding:20px;
+box-shadow:0 15px 50px rgba(0,0,0,.25)
+}
+.details-header{
+display:flex;justify-content:space-between;align-items:center;
+gap:10px;border-bottom:1px solid #e2e8f0;
+padding-bottom:12px;margin-bottom:15px
+}
+.details-header h2{margin:0;font-size:20px}
+.details-close{
+border:0;background:#fee2e2;color:#991b1b;
+border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer
+}
+.details-grid{
+display:grid;grid-template-columns:1fr 1fr;gap:10px
+}
+.detail-item{
+background:#f8fafc;border:1px solid #e2e8f0;
+padding:11px;border-radius:9px;min-width:0;overflow-wrap:anywhere
+}
+.detail-item small{display:block;color:#64748b;margin-bottom:5px}
+.detail-item strong{
+display:block;color:#102b52;font-size:14px;
+white-space:pre-wrap;overflow-wrap:anywhere
+}
 @media(max-width:800px){
- .admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
- .filter-grid{grid-template-columns:1fr}
+.admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.filter-grid{grid-template-columns:1fr}
 }
 @media(max-width:600px){
- .admin-box{padding:12px}
- .admin-form{display:block}
- .admin-form .field{margin-bottom:12px}
- .admin-form button{width:100%}
- .admin-stats{gap:8px}
- .stat-card{padding:11px}
- .stat-card strong{font-size:21px}
- .toolbar .btn{width:100%}
+.admin-box{padding:12px}
+.admin-form{display:block}
+.admin-form .field{margin-bottom:12px}
+.admin-form button{width:100%}
+.admin-stats{gap:8px}
+.stat-card{padding:11px}
+.stat-card strong{font-size:21px}
+.toolbar .btn{width:100%}
+}
+@media(max-width:500px){
+.details-grid{grid-template-columns:1fr}
+.details-content{padding:14px}
 }
 </style>
 </head>
@@ -134,38 +177,14 @@ display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0
 
 <!-- SUMMARY CARDS -->
 <div class="admin-stats">
- <div class="stat-card">
-  <small>कुल आवेदन</small>
-  <strong id="statApplications">0</strong>
- </div>
- <div class="stat-card">
-  <small>कुल ग्राहक</small>
-  <strong id="statCustomers">0</strong>
- </div>
- <div class="stat-card">
-  <small>Pending आवेदन</small>
-  <strong id="statPending">0</strong>
- </div>
- <div class="stat-card">
-  <small>Processing आवेदन</small>
-  <strong id="statProcessing">0</strong>
- </div>
- <div class="stat-card">
-  <small>Completed आवेदन</small>
-  <strong id="statCompleted">0</strong>
- </div>
- <div class="stat-card">
-  <small>Rejected आवेदन</small>
-  <strong id="statRejected">0</strong>
- </div>
- <div class="stat-card">
-  <small>Unpaid भुगतान</small>
-  <strong id="statUnpaid">0</strong>
- </div>
- <div class="stat-card">
-  <small>Paid भुगतान</small>
-  <strong id="statPaid">0</strong>
- </div>
+ <div class="stat-card"><small>कुल आवेदन</small><strong id="statApplications">0</strong></div>
+ <div class="stat-card"><small>कुल ग्राहक</small><strong id="statCustomers">0</strong></div>
+ <div class="stat-card"><small>Pending आवेदन</small><strong id="statPending">0</strong></div>
+ <div class="stat-card"><small>Processing आवेदन</small><strong id="statProcessing">0</strong></div>
+ <div class="stat-card"><small>Completed आवेदन</small><strong id="statCompleted">0</strong></div>
+ <div class="stat-card"><small>Rejected आवेदन</small><strong id="statRejected">0</strong></div>
+ <div class="stat-card"><small>Unpaid भुगतान</small><strong id="statUnpaid">0</strong></div>
+ <div class="stat-card"><small>Paid भुगतान</small><strong id="statPaid">0</strong></div>
 </div>
 
 <!-- SERVICE CHARGES -->
@@ -203,11 +222,8 @@ display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0
    <table class="admin-table">
     <thead>
      <tr>
-      <th>सेवा</th>
-      <th>सरकारी शुल्क</th>
-      <th>सर्विस चार्ज</th>
-      <th>कुल शुल्क</th>
-      <th>स्थिति</th>
+      <th>सेवा</th><th>सरकारी शुल्क</th><th>सर्विस चार्ज</th>
+      <th>कुल शुल्क</th><th>स्थिति</th>
      </tr>
     </thead>
     <tbody id="chargeRows">
@@ -227,11 +243,8 @@ display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0
    <table class="admin-table customer-table">
     <thead>
      <tr>
-      <th>ग्राहक का नाम</th>
-      <th>मोबाइल नंबर</th>
-      <th>गाँव</th>
-      <th>कुल आवेदन</th>
-      <th>Customer UID</th>
+      <th>ग्राहक का नाम</th><th>मोबाइल नंबर</th><th>गाँव</th>
+      <th>कुल आवेदन</th><th>Customer UID</th>
      </tr>
     </thead>
     <tbody id="customerRows">
@@ -281,6 +294,7 @@ display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0
    <table class="admin-table">
     <thead>
      <tr>
+      <th>पूरी जानकारी</th>
       <th>नाम / मोबाइल</th>
       <th>सेवा / गाँव</th>
       <th>Tracking ID</th>
@@ -293,10 +307,21 @@ display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0
      </tr>
     </thead>
     <tbody id="rows">
-     <tr><td colspan="9">लोड हो रहा है...</td></tr>
+     <tr><td colspan="10">लोड हो रहा है...</td></tr>
     </tbody>
    </table>
   </div>
+ </div>
+</div>
+
+<!-- APPLICATION DETAILS MODAL -->
+<div id="detailsModal" class="details-modal hide">
+ <div class="details-content">
+  <div class="details-header">
+   <h2>📋 आवेदन की पूरी जानकारी</h2>
+   <button type="button" class="details-close" id="closeDetails">✕ बंद करें</button>
+  </div>
+  <div id="detailsContent" class="details-grid"></div>
  </div>
 </div>
 
@@ -308,21 +333,11 @@ display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin:15px 0
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';
 
 import {
- getAuth,
- signInWithEmailAndPassword,
- onAuthStateChanged,
- signOut
+ getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut
 } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js';
 
 import {
- getFirestore,
- collection,
- getDocs,
- doc,
- getDoc,
- updateDoc,
- setDoc,
- serverTimestamp
+ getFirestore,collection,getDocs,doc,getDoc,updateDoc,setDoc,serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
 
 const firebaseConfig={
@@ -373,17 +388,12 @@ function statusClass(status){
 }
 
 /* LOGIN */
-
 $('loginForm').addEventListener('submit',async e=>{
  e.preventDefault();
  $('loginMsg').textContent='लॉगिन हो रहा है...';
 
  try{
-  await signInWithEmailAndPassword(
-   auth,
-   $('email').value.trim(),
-   $('password').value
-  );
+  await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);
  }catch(err){
   $('loginMsg').textContent='Login असफल: '+err.message;
  }
@@ -393,12 +403,12 @@ $('logout').addEventListener('click',()=>signOut(auth));
 
 onAuthStateChanged(auth,user=>{
  if(user && user.uid===ADMIN_UID){
-  loginBox.classList.add('hide');
-  dashboard.classList.remove('hide');
+  $('loginBox').classList.add('hide');
+  $('dashboard').classList.remove('hide');
   loadAll();
  }else{
-  dashboard.classList.add('hide');
-  loginBox.classList.remove('hide');
+  $('dashboard').classList.add('hide');
+  $('loginBox').classList.remove('hide');
 
   if(user){
    signOut(auth);
@@ -408,7 +418,6 @@ onAuthStateChanged(auth,user=>{
 });
 
 /* TOTAL PREVIEW */
-
 function updateChargePreview(){
  const govt=Number($('governmentFee').value)||0;
  const service=Number($('serviceFee').value)||0;
@@ -419,10 +428,8 @@ $('governmentFee').addEventListener('input',updateChargePreview);
 $('serviceFee').addEventListener('input',updateChargePreview);
 
 /* LOAD SERVICE CHARGES */
-
 async function loadCharges(){
  serviceCharges={};
-
  const snap=await getDocs(collection(db,'services'));
  const body=$('chargeRows');
  body.innerHTML='';
@@ -439,11 +446,7 @@ async function loadCharges(){
   const total=govt+service;
 
   if(d.serviceName){
-   serviceCharges[d.serviceName]={
-    governmentFee:govt,
-    serviceFee:service,
-    total
-   };
+   serviceCharges[d.serviceName]={governmentFee:govt,serviceFee:service,total};
   }
 
   const tr=document.createElement('tr');
@@ -457,7 +460,6 @@ async function loadCharges(){
 }
 
 /* SAVE SERVICE CHARGE */
-
 $('chargeForm').addEventListener('submit',async e=>{
  e.preventDefault();
 
@@ -471,8 +473,7 @@ $('chargeForm').addEventListener('submit',async e=>{
   return;
  }
 
- if(!Number.isFinite(govt)||govt<0||
-    !Number.isFinite(service)||service<0||total<=0){
+ if(!Number.isFinite(govt)||govt<0||!Number.isFinite(service)||service<0||total<=0){
   $('chargeMsg').textContent='कृपया सही शुल्क दर्ज करें। कुल शुल्क शून्य से अधिक होना चाहिए।';
   return;
  }
@@ -481,11 +482,7 @@ $('chargeForm').addEventListener('submit',async e=>{
 
  try{
   await setDoc(doc(db,'services',serviceDocId(serviceName)),{
-   serviceName,
-   governmentFee:govt,
-   serviceFee:service,
-   amount:total,
-   updatedAt:serverTimestamp()
+   serviceName,governmentFee:govt,serviceFee:service,amount:total,updatedAt:serverTimestamp()
   });
 
   $('chargeMsg').textContent='सेवा शुल्क सफलतापूर्वक सेव हो गया।';
@@ -500,7 +497,6 @@ $('chargeForm').addEventListener('submit',async e=>{
 });
 
 /* LOAD APPLICATIONS AND PAYMENT DETAILS */
-
 async function loadApplications(){
  const snap=await getDocs(collection(db,'applications'));
  const records=[];
@@ -517,22 +513,14 @@ async function loadApplications(){
      getDoc(doc(db,'paymentInfo',trackingId)),
      getDoc(doc(db,'paymentSubmissions',trackingId))
     ]);
-
     paymentInfo=results[0].exists()?results[0].data():null;
     paymentSubmission=results[1].exists()?results[1].data():null;
-
    }catch(err){
     console.error('Payment data error:',trackingId,err);
    }
   }
 
-  records.push({
-   id:item.id,
-   data:d,
-   trackingId,
-   paymentInfo,
-   paymentSubmission
-  });
+  records.push({id:item.id,data:d,trackingId,paymentInfo,paymentSubmission});
  }
 
  records.sort((a,b)=>{
@@ -545,11 +533,9 @@ async function loadApplications(){
 }
 
 /* CUSTOMER DIRECTORY */
-
 function renderCustomers(){
  const body=$('customerRows');
  body.innerHTML='';
-
  const customers=new Map();
 
  applicationRecords.forEach(record=>{
@@ -558,19 +544,14 @@ function renderCustomers(){
 
   if(!customers.has(key)){
    customers.set(key,{
-    name:d.customerName||'',
-    mobile:d.mobile||'',
-    village:d.village||'',
-    uid:d.ownerUid||'',
-    count:0
+    name:d.customerName||'',mobile:d.mobile||'',village:d.village||'',
+    uid:d.ownerUid||'',count:0
    });
   }
-
   customers.get(key).count++;
  });
 
- customerRecords=Array.from(customers.values())
-  .sort((a,b)=>a.name.localeCompare(b.name));
+ customerRecords=Array.from(customers.values()).sort((a,b)=>a.name.localeCompare(b.name));
 
  if(!customerRecords.length){
   body.innerHTML='<tr><td colspan="5" class="empty-row">अभी कोई ग्राहक रिकॉर्ड नहीं है।</td></tr>';
@@ -589,21 +570,12 @@ function renderCustomers(){
 }
 
 /* DASHBOARD COUNTS */
-
 function renderStats(){
  const total=applicationRecords.length;
- const uniqueCustomers=new Set(
-  applicationRecords.map(r=>r.data.ownerUid||r.data.mobile||r.id)
- );
+ const uniqueCustomers=new Set(applicationRecords.map(r=>r.data.ownerUid||r.data.mobile||r.id));
 
- const countStatus=status=>
-  applicationRecords.filter(r=>(r.data.status||'Pending')===status).length;
-
- const countPayment=status=>
-  applicationRecords.filter(r=>{
-   const p=r.paymentInfo?.paymentStatus||'शुल्क तय नहीं';
-   return p===status;
-  }).length;
+ const countStatus=status=>applicationRecords.filter(r=>(r.data.status||'Pending')===status).length;
+ const countPayment=status=>applicationRecords.filter(r=>(r.paymentInfo?.paymentStatus||'शुल्क तय नहीं')===status).length;
 
  $('statApplications').textContent=total;
  $('statCustomers').textContent=uniqueCustomers.size;
@@ -613,12 +585,97 @@ function renderStats(){
  $('statRejected').textContent=countStatus('Rejected');
  $('statUnpaid').textContent=countPayment('Unpaid');
  $('statPaid').textContent=countPayment('Paid');
-
  $('summary').textContent='कुल '+total+' आवेदन और '+uniqueCustomers.size+' ग्राहक';
 }
 
-/* RENDER APPLICATION TABLE */
+/* DETAILS MODAL */
+function formatDetailValue(value){
+ if(value===null||value===undefined||value==='')return 'उपलब्ध नहीं';
 
+ if(typeof value==='object'&&typeof value.toDate==='function'){
+  return value.toDate().toLocaleString('en-IN');
+ }
+
+ if(value instanceof Date)return value.toLocaleString('en-IN');
+
+ if(typeof value==='object')return JSON.stringify(value,null,2);
+
+ return String(value);
+}
+
+function addDetailItem(container,label,value){
+ const item=document.createElement('div');
+ item.className='detail-item';
+
+ const small=document.createElement('small');
+ small.textContent=label;
+
+ const strong=document.createElement('strong');
+ strong.textContent=formatDetailValue(value);
+
+ item.append(small,strong);
+ container.appendChild(item);
+}
+
+function showApplicationDetails(record){
+ const content=$('detailsContent');
+ content.innerHTML='';
+
+ const d=record.data||{};
+ const payment=record.paymentInfo||{};
+ const submission=record.paymentSubmission||{};
+
+ const basicDetails=[
+  ['Tracking ID',record.trackingId],
+  ['आवेदन संख्या',record.id],
+  ['ग्राहक का नाम',d.customerName],
+  ['मोबाइल नंबर',d.mobile],
+  ['गाँव',d.village],
+  ['सेवा का नाम',d.service],
+  ['आवेदन स्थिति',d.status||'Pending'],
+  ['Customer UID',d.ownerUid],
+  ['आवेदन की तारीख',d.createdAt],
+  ['अंतिम अपडेट',d.updatedAt]
+ ];
+
+ basicDetails.forEach(([label,value])=>addDetailItem(content,label,value));
+
+ const ignored=[
+  'customerName','mobile','village','service','trackingId',
+  'status','ownerUid','createdAt','updatedAt'
+ ];
+
+ Object.keys(d).forEach(key=>{
+  if(!ignored.includes(key)){
+   addDetailItem(content,key,d[key]);
+  }
+ });
+
+ addDetailItem(content,'सरकारी शुल्क (₹)',payment.governmentFee);
+ addDetailItem(content,'सर्विस चार्ज (₹)',payment.serviceFee);
+ addDetailItem(content,'कुल भुगतान राशि (₹)',payment.amount);
+ addDetailItem(content,'भुगतान स्थिति',payment.paymentStatus||'शुल्क तय नहीं');
+ addDetailItem(content,'Transaction ID',submission.transactionId);
+ addDetailItem(content,'भुगतान जाँच स्थिति',submission.paymentStatus);
+ addDetailItem(content,'भुगतान जमा करने की तारीख',submission.submittedAt);
+ addDetailItem(content,'भुगतान जाँच की तारीख',submission.reviewedAt);
+
+ $('detailsModal').classList.remove('hide');
+}
+
+$('closeDetails').addEventListener('click',()=>{
+ $('detailsModal').classList.add('hide');
+});
+
+$('detailsModal').addEventListener('click',e=>{
+ if(e.target===$('detailsModal'))$('detailsModal').classList.add('hide');
+});
+
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape')$('detailsModal').classList.add('hide');
+});
+
+/* RENDER APPLICATION TABLE */
 function renderApplications(){
  const body=$('rows');
  body.innerHTML='';
@@ -632,25 +689,34 @@ function renderApplications(){
   const paymentStatus=record.paymentInfo?.paymentStatus||'शुल्क तय नहीं';
 
   const searchText=[
-   d.customerName,d.mobile,d.service,d.village,
-   record.trackingId,d.ownerUid
+   d.customerName,d.mobile,d.service,d.village,record.trackingId,d.ownerUid
   ].join(' ').toLowerCase();
 
-  return (!search||searchText.includes(search)) &&
-   (!statusValue||(d.status||'Pending')===statusValue) &&
+  return (!search||searchText.includes(search))&&
+   (!statusValue||(d.status||'Pending')===statusValue)&&
    (!paymentValue||paymentStatus===paymentValue);
  });
 
  $('filterCount').textContent='दिखाए जा रहे हैं: '+filtered.length+' / '+applicationRecords.length;
 
  if(!filtered.length){
-  body.innerHTML='<tr><td colspan="9" class="empty-row">कोई मिलान करता हुआ आवेदन नहीं मिला।</td></tr>';
+  body.innerHTML='<tr><td colspan="10" class="empty-row">कोई मिलान करता हुआ आवेदन नहीं मिला।</td></tr>';
   return;
  }
 
  filtered.forEach(record=>{
   const {id,data:d,trackingId,paymentInfo,paymentSubmission}=record;
   const tr=document.createElement('tr');
+
+  /* VIEW DETAILS */
+  const detailsCell=document.createElement('td');
+  const detailsBtn=document.createElement('button');
+  detailsBtn.type='button';
+  detailsBtn.className='details-btn';
+  detailsBtn.textContent='👁 View Details';
+  detailsBtn.addEventListener('click',()=>showApplicationDetails(record));
+  detailsCell.appendChild(detailsBtn);
+  tr.appendChild(detailsCell);
 
   /* CUSTOMER */
   addCell(tr,(d.customerName||'')+' / '+(d.mobile||''));
@@ -672,6 +738,7 @@ function renderApplications(){
    option.selected=(d.status||'Pending')===x;
    sel.appendChild(option);
   });
+
   td4.appendChild(sel);
   tr.appendChild(td4);
 
@@ -682,20 +749,20 @@ function renderApplications(){
   statusBtn.textContent='Save';
 
   statusBtn.onclick=async()=>{
+   if(sel.value==='Completed'&&paymentInfo?.paymentStatus!=='Paid'){
+    alert('इस आवेदन को Completed करने से पहले भुगतान Paid होना जरूरी है।');
+    return;
+   }
+
    statusBtn.disabled=true;
    statusBtn.textContent='Saving...';
 
    try{
-    await updateDoc(doc(db,'applications',id),{
-     status:sel.value
-    });
+    await updateDoc(doc(db,'applications',id),{status:sel.value});
 
     if(trackingId){
      await setDoc(doc(db,'tracking',trackingId),{
-      trackingId,
-      status:sel.value,
-      service:d.service,
-      updatedAt:serverTimestamp()
+      trackingId,status:sel.value,service:d.service,updatedAt:serverTimestamp()
      },{merge:true});
     }
 
@@ -717,9 +784,7 @@ function renderApplications(){
   const feeWrap=document.createElement('div');
   feeWrap.className='fee-inputs';
 
-  const config=serviceCharges[d.service]||{
-   governmentFee:0,serviceFee:0,total:0
-  };
+  const config=serviceCharges[d.service]||{governmentFee:0,serviceFee:0,total:0};
 
   let govtDefault=config.governmentFee;
   let serviceDefault=config.serviceFee;
@@ -785,8 +850,7 @@ function renderApplications(){
     return;
    }
 
-   if(!Number.isFinite(govt)||govt<0||
-      !Number.isFinite(service)||service<0||amount<=0){
+   if(!Number.isFinite(govt)||govt<0||!Number.isFinite(service)||service<0||amount<=0){
     alert('कृपया सही शुल्क दर्ज करें। कुल शुल्क शून्य से अधिक होना चाहिए।');
     return;
    }
@@ -806,9 +870,7 @@ function renderApplications(){
 
    try{
     await setDoc(doc(db,'paymentInfo',trackingId),{
-     amount,
-     paymentStatus:'Unpaid',
-     updatedAt:serverTimestamp()
+     amount,paymentStatus:'Unpaid',updatedAt:serverTimestamp()
     });
 
     alert('कुल '+money(amount)+' शुल्क आवेदन पर लागू हो गया।');
@@ -858,19 +920,15 @@ function renderApplications(){
 
     paidBtn.onclick=async()=>{
      if(!confirm('क्या आपने Transaction ID और भुगतान की जाँच कर ली है? क्या इसे Paid करना चाहते हैं?'))return;
-
      paidBtn.disabled=true;
 
      try{
       await setDoc(doc(db,'paymentInfo',trackingId),{
-       amount:Number(paymentInfo.amount),
-       paymentStatus:'Paid',
-       updatedAt:serverTimestamp()
+       amount:Number(paymentInfo.amount),paymentStatus:'Paid',updatedAt:serverTimestamp()
       });
 
       await setDoc(doc(db,'paymentSubmissions',trackingId),{
-       paymentStatus:'Paid',
-       reviewedAt:serverTimestamp()
+       paymentStatus:'Paid',reviewedAt:serverTimestamp()
       },{merge:true});
 
       alert('भुगतान Paid मार्क हो गया।');
@@ -888,19 +946,15 @@ function renderApplications(){
 
     rejectBtn.onclick=async()=>{
      if(!confirm('क्या आप इस Transaction ID को Reject करना चाहते हैं?'))return;
-
      rejectBtn.disabled=true;
 
      try{
       await setDoc(doc(db,'paymentInfo',trackingId),{
-       amount:Number(paymentInfo.amount),
-       paymentStatus:'Rejected',
-       updatedAt:serverTimestamp()
+       amount:Number(paymentInfo.amount),paymentStatus:'Rejected',updatedAt:serverTimestamp()
       });
 
       await setDoc(doc(db,'paymentSubmissions',trackingId),{
-       paymentStatus:'Rejected',
-       reviewedAt:serverTimestamp()
+       paymentStatus:'Rejected',reviewedAt:serverTimestamp()
       },{merge:true});
 
       alert('भुगतान Rejected मार्क हो गया।');
@@ -914,7 +968,6 @@ function renderApplications(){
 
     actions.append(paidBtn,rejectBtn);
    }
-
   }else if(!paymentInfo){
    actions.textContent='पहले शुल्क लागू करें';
   }else{
@@ -928,10 +981,9 @@ function renderApplications(){
 }
 
 /* LOAD ALL DATA */
-
 async function loadAll(){
  $('summary').textContent='डेटा लोड हो रहा है...';
- $('rows').innerHTML='<tr><td colspan="9" class="empty-row">लोड हो रहा है...</td></tr>';
+ $('rows').innerHTML='<tr><td colspan="10" class="empty-row">लोड हो रहा है...</td></tr>';
 
  try{
   await loadCharges();
@@ -939,15 +991,13 @@ async function loadAll(){
   renderStats();
   renderCustomers();
   renderApplications();
-
  }catch(err){
   $('summary').textContent='डेटा लोड नहीं हुआ: '+err.message;
-  $('rows').innerHTML='<tr><td colspan="9" class="empty-row">डेटा लोड करने में समस्या: '+err.message+'</td></tr>';
+  $('rows').innerHTML='<tr><td colspan="10" class="empty-row">डेटा लोड करने में समस्या: '+err.message+'</td></tr>';
  }
 }
 
 /* FILTERS */
-
 $('searchInput').addEventListener('input',renderApplications);
 $('statusFilter').addEventListener('change',renderApplications);
 $('paymentFilter').addEventListener('change',renderApplications);
@@ -961,7 +1011,6 @@ $('refreshBtn').addEventListener('click',async()=>{
 });
 
 /* CSV EXPORT */
-
 $('exportBtn').addEventListener('click',()=>{
  if(!applicationRecords.length){
   alert('डाउनलोड करने के लिए कोई आवेदन नहीं है।');
@@ -981,25 +1030,14 @@ $('exportBtn').addEventListener('click',()=>{
   const total=Number(info.amount)||0;
 
   return [
-   d.customerName||'',
-   d.mobile||'',
-   d.service||'',
-   d.village||'',
-   record.trackingId,
-   d.status||'Pending',
-   '',
-   '',
-   total,
-   info.paymentStatus||'शुल्क तय नहीं',
-   submission.transactionId||'',
-   d.ownerUid||''
+   d.customerName||'',d.mobile||'',d.service||'',d.village||'',
+   record.trackingId,d.status||'Pending','','',total,
+   info.paymentStatus||'शुल्क तय नहीं',submission.transactionId||'',d.ownerUid||''
   ];
  });
 
  const escapeCSV=value=>'"'+String(value??'').replace(/"/g,'""')+'"';
- const csv='\uFEFF'+[headers,...rows]
-  .map(row=>row.map(escapeCSV).join(','))
-  .join('\r\n');
+ const csv='\uFEFF'+[headers,...rows].map(row=>row.map(escapeCSV).join(',')).join('\r\n');
 
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
  const url=URL.createObjectURL(blob);
