@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102b52">
+<title>My Account | RAHUL COMPUTER'S</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f1f5f9;color:#172b4d;font-family:Arial,sans-serif}
+header{background:linear-gradient(110deg,#102b52,#087ac2);color:white;padding:17px 20px}
+.header-inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header h2{margin:0;font-size:21px}
+header p{margin:5px 0 0;font-size:13px}
+button,a{cursor:pointer}
+.btn{display:inline-block;border:0;border-radius:8px;padding:11px 15px;background:#1769d2;color:white;text-decoration:none;font-size:14px;font-weight:bold}
+.btn-light{background:white;color:#102b52}
+.btn-red{background:#d93636}
+.container{max-width:1100px;margin:25px auto;padding:0 15px}
+.welcome{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 15px #102b5210;margin-bottom:20px}
+.welcome h2{margin:0 0 7px;font-size:22px}
+.muted{color:#667085;font-size:13px;overflow-wrap:anywhere}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:white;padding:18px;border-radius:12px;box-shadow:0 3px 12px #102b520d}
+.stat span{display:block;color:#667085;font-size:13px}
+.stat strong{display:block;font-size:25px;margin-top:8px;color:#1769d2}
+.section{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 15px #102b5210;margin-bottom:20px}
+.section h3{margin:0 0 16px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.profile-item{background:#f7f9fc;padding:13px;border-radius:9px}
+.profile-item span{display:block;color:#667085;font-size:12px;margin-bottom:6px}
+.profile-item strong{overflow-wrap:anywhere;font-size:14px}
+.application{border:1px solid #e1e7ef;border-radius:11px;padding:16px;margin:12px 0}
+.application h4{margin:0 0 9px;font-size:16px}
+.application p{font-size:13px;margin:7px 0;overflow-wrap:anywhere}
+.status{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#fff3cd;color:#805b00}
+.status.completed{background:#d8f5e3;color:#176b38}
+.status.processing{background:#dcecff;color:#1554a0}
+.status.rejected{background:#ffe0e0;color:#a51f1f}
+.status.pending{background:#fff3cd;color:#805b00}
+.tracking{font-weight:bold;letter-spacing:.5px;color:#1769d2}
+.empty{text-align:center;padding:30px 10px;color:#667085}
+.message{padding:12px;background:#fff3cd;border-radius:8px;color:#805b00;font-size:13px;display:none;margin-bottom:15px}
+footer{text-align:center;padding:22px;color:#667085;font-size:12px}
+.loading{text-align:center;padding:25px;color:#667085}
+@media(max-width:700px){
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .profile-grid{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+ .header-inner{align-items:flex-start}
+ .stats{gap:9px}
+ .stat{padding:13px}
+ .stat strong{font-size:22px}
+ .section{padding:15px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="header-inner">
+ <div>
+  <h2>RAHUL COMPUTER'S</h2>
+  <p>Customer Dashboard</p>
+ </div>
+ <button id="logoutBtn" class="btn btn-red" type="button">Logout</button>
+</div>
+</header>
+
+<main class="container">
+
+<div id="pageMessage" class="message"></div>
+
+<section class="welcome">
+ <h2>नमस्ते, <span id="customerName">ग्राहक</span> जी! 👋</h2>
+ <div class="muted">आपके Customer Account में आपका स्वागत है।</div>
+</section>
+
+<section class="stats">
+ <div class="stat">
+  <span>कुल आवेदन</span>
+  <strong id="totalCount">0</strong>
+ </div>
+ <div class="stat">
+  <span>Pending</span>
+  <strong id="pendingCount">0</strong>
+ </div>
+ <div class="stat">
+  <span>Processing</span>
+  <strong id="processingCount">0</strong>
+ </div>
+ <div class="stat">
+  <span>Completed</span>
+  <strong id="completedCount">0</strong>
+ </div>
+</section>
+
+<section class="section">
+ <h3>मेरी सेवाएँ</h3>
+ <div class="actions">
+  <a class="btn" href="services.html">सभी सेवाएँ देखें</a>
+  <a class="btn" href="apply.html">नया आवेदन करें</a>
+  <a class="btn btn-light" href="track.html">Application Track करें</a>
+ </div>
+</section>
+
+<section class="section">
+ <h3>मेरा प्रोफाइल</h3>
+ <div class="profile-grid">
+  <div class="profile-item">
+   <span>पूरा नाम</span>
+   <strong id="profileName">लोड हो रहा है...</strong>
+  </div>
+  <div class="profile-item">
+   <span>Email Address</span>
+   <strong id="profileEmail">लोड हो रहा है...</strong>
+  </div>
+  <div class="profile-item">
+   <span>Account UID</span>
+   <strong id="profileUid">लोड हो रहा है...</strong>
+  </div>
+ </div>
+</section>
+
+<section class="section">
+ <h3>मेरे आवेदन और हिस्ट्री</h3>
+ <div id="applicationsList" class="loading">आपके आवेदन लोड हो रहे हैं...</div>
+</section>
+
+</main>
+
+<footer>
+RAHUL COMPUTER'S · अमिलिया, मैहर, मध्यप्रदेश
+<br>सहायता के लिए WhatsApp:
+<a href="https://wa.me/919752039020">9752039020</a>
+</footer>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+
+import {
+ getAuth,
+ onAuthStateChanged,
+ signOut
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+
+import {
+ getFirestore,
+ collection,
+ query,
+ where,
+ getDocs
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain: "rahul-computer-s.firebaseapp.com",
+ projectId: "rahul-computer-s",
+ storageBucket: "rahul-computer-s.firebasestorage.app",
+ messagingSenderId: "969449083821",
+ appId: "1:969449083821:web:4696bc1253fa97ea304724"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = id => document.getElementById(id);
+
+let currentUser = null;
+
+function showMessage(text){
+ const box = $("pageMessage");
+ box.textContent = text;
+ box.style.display = "block";
+}
+
+function safeText(value){
+ return String(value ?? "");
+}
+
+function statusClass(status){
+ const value = safeText(status).toLowerCase();
+ if(value === "completed") return "completed";
+ if(value === "processing") return "processing";
+ if(value === "rejected") return "rejected";
+ return "pending";
+}
+
+function formatDate(timestamp){
+ if(!timestamp || typeof timestamp.toDate !== "function"){
+  return "उपलब्ध नहीं";
+ }
+ return timestamp.toDate().toLocaleString("hi-IN");
+}
+
+function renderApplications(docs){
+ const list = $("applicationsList");
+
+ $("totalCount").textContent = docs.length;
+ $("pendingCount").textContent =
+  docs.filter(d => d.status === "Pending").length;
+ $("processingCount").textContent =
+  docs.filter(d => d.status === "Processing").length;
+ $("completedCount").textContent =
+  docs.filter(d => d.status === "Completed").length;
+
+ if(docs.length === 0){
+  list.innerHTML = '<div class="empty">अभी तक आपने कोई आवेदन नहीं किया है।<br><br><a class="btn" href="services.html">सेवाएँ देखें</a></div>';
+  return;
+ }
+
+ list.innerHTML = "";
+
+ docs.sort((a,b) => {
+  const x = a.createdAt?.toMillis?.() || 0;
+  const y = b.createdAt?.toMillis?.() || 0;
+  return y-x;
+ });
+
+ docs.forEach(data => {
+  const card = document.createElement("div");
+  card.className = "application";
+
+  const heading = document.createElement("h4");
+  heading.textContent = safeText(data.service || "सेवा आवेदन");
+
+  const status = document.createElement("span");
+  status.className = "status " + statusClass(data.status);
+  status.textContent = safeText(data.status || "Pending");
+
+  const trackingLabel = document.createElement("p");
+  trackingLabel.textContent = "Tracking ID: ";
+
+  const tracking = document.createElement("span");
+  tracking.className = "tracking";
+  tracking.textContent = safeText(data.trackingId || "उपलब्ध नहीं");
+  trackingLabel.appendChild(tracking);
+
+  const date = document.createElement("p");
+  date.textContent = "आवेदन दिनांक: " + formatDate(data.createdAt);
+
+  const village = document.createElement("p");
+  village.textContent = "गाँव: " + safeText(data.village || "उपलब्ध नहीं");
+
+  const details = document.createElement("p");
+  details.textContent = "विवरण: " + safeText(data.details || "कोई विवरण नहीं");
+
+  const trackLink = document.createElement("a");
+  trackLink.className = "btn";
+  trackLink.href = "track.html";
+  trackLink.textContent = "स्थिति देखें";
+
+  card.append(
+   heading,
+   status,
+   trackingLabel,
+   date,
+   village,
+   details,
+   trackLink
+  );
+
+  list.appendChild(card);
+ });
+}
+
+async function loadApplications(user){
+ $("applicationsList").textContent = "आपके आवेदन लोड हो रहे हैं...";
+
+ try{
+  const applicationsQuery = query(
+   collection(db,"applications"),
+   where("ownerUid","==",user.uid)
+  );
+
+  const result = await getDocs(applicationsQuery);
+  const docs = result.docs.map(doc => doc.data());
+
+  renderApplications(docs);
+
+ }catch(error){
+  console.error(error);
+  $("applicationsList").textContent =
+   "आवेदन लोड नहीं हो सके। Internet या Firestore Rules जाँचें।";
+ }
+}
+
+$("logoutBtn").addEventListener("click",async()=>{
+ if(!confirm("क्या आप Logout करना चाहते हैं?")) return;
+
+ try{
+  await signOut(auth);
+  location.replace("login.html");
+ }catch(error){
+  showMessage("Logout नहीं हो सका: " + error.message);
+ }
+});
+
+onAuthStateChanged(auth,async user=>{
+ if(!user){
+  location.replace("login.html");
+  return;
+ }
+
+ currentUser = user;
+
+ const name = user.displayName || "ग्राहक";
+ $("customerName").textContent = name;
+ $("profileName").textContent = name;
+ $("profileEmail").textContent = user.email || "उपलब्ध नहीं";
+ $("profileUid").textContent = user.uid;
+
+ await loadApplications(user);
+});
+
+</script>
+
+</body>
+</html>
