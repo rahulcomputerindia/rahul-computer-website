@@ -11,13 +11,14 @@
 .admin-box{background:#fff;border:1px solid #dce4ef;border-radius:14px;padding:18px;margin-bottom:18px}
 .admin-box h2{margin-top:0}
 .admin-form{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
-.admin-form .field{flex:1;min-width:180px}
+.admin-form .field{flex:1;min-width:160px}
 .admin-form input{width:100%;padding:11px;border:1px solid #ccd5e2;border-radius:8px}
 .admin-table-wrap{overflow-x:auto}
-.admin-table{width:100%;min-width:850px;border-collapse:collapse}
+.admin-table{width:100%;min-width:1050px;border-collapse:collapse}
 .admin-table th,.admin-table td{padding:11px;border-bottom:1px solid #e4eaf2;text-align:left;vertical-align:middle}
 .admin-table th{background:#f1f5fa}
 .admin-table select,.admin-table input{padding:8px;border:1px solid #ccd5e2;border-radius:7px}
+.admin-table input{width:90px}
 .pay-status{font-weight:700}
 .pay-actions{display:flex;gap:6px;flex-wrap:wrap}
 .small-btn{padding:7px 10px;border:0;border-radius:7px;cursor:pointer;font-weight:600}
@@ -25,7 +26,16 @@
 .reject-btn{background:#fee2e2;color:#991b1b}
 .muted{color:#64748b;font-size:13px}
 .hide{display:none!important}
-@media(max-width:600px){.admin-box{padding:12px}.admin-form{display:block}.admin-form .field{margin-bottom:12px}.admin-form button{width:100%}}
+.total-fee{font-weight:700;color:#075985;margin:7px 0}
+.fee-inputs{display:flex;gap:6px;flex-wrap:wrap}
+.fee-inputs label{font-size:11px;color:#64748b;display:block}
+.fee-inputs input{display:block}
+@media(max-width:600px){
+ .admin-box{padding:12px}
+ .admin-form{display:block}
+ .admin-form .field{margin-bottom:12px}
+ .admin-form button{width:100%}
+}
 </style>
 </head>
 <body>
@@ -84,19 +94,31 @@
 <div class="admin-section">
  <div class="admin-box">
   <h2>💰 सेवा शुल्क प्रबंधन</h2>
-  <p class="muted">सेवा का नाम और शुल्क दर्ज करके सेव करें। सेवा का नाम आवेदन में दर्ज नाम से बिल्कुल मेल खाना चाहिए।</p>
+  <p class="muted">
+   प्रत्येक सेवा का सरकारी शुल्क और अपना सर्विस चार्ज अलग-अलग दर्ज करें।
+   ग्राहक को दोनों का कुल शुल्क दिखाया जाएगा।
+  </p>
 
   <form id="chargeForm" class="admin-form">
    <div class="field">
     <label>सेवा का नाम</label>
     <input id="chargeService" type="text" placeholder="जैसे PAN Card" required>
    </div>
+
    <div class="field">
-    <label>सेवा शुल्क (₹)</label>
-    <input id="chargeAmount" type="number" min="1" step="1" placeholder="जैसे 100" required>
+    <label>सरकारी शुल्क (₹)</label>
+    <input id="governmentFee" type="number" min="0" step="1" value="0" required>
    </div>
+
+   <div class="field">
+    <label>अपना सर्विस चार्ज (₹)</label>
+    <input id="serviceFee" type="number" min="0" step="1" placeholder="जैसे 100" required>
+   </div>
+
    <button class="btn" type="submit">शुल्क सेव करें</button>
   </form>
+
+  <p id="chargeTotal" class="total-fee">कुल शुल्क: ₹0</p>
   <p id="chargeMsg" class="help"></p>
  </div>
 
@@ -105,10 +127,16 @@
   <div class="admin-table-wrap">
    <table class="admin-table">
     <thead>
-     <tr><th>सेवा</th><th>शुल्क</th><th>स्थिति</th></tr>
+     <tr>
+      <th>सेवा</th>
+      <th>सरकारी शुल्क</th>
+      <th>सर्विस चार्ज</th>
+      <th>कुल शुल्क</th>
+      <th>स्थिति</th>
+     </tr>
     </thead>
     <tbody id="chargeRows">
-     <tr><td colspan="3">लोड हो रहा है...</td></tr>
+     <tr><td colspan="5">लोड हो रहा है...</td></tr>
     </tbody>
    </table>
   </div>
@@ -119,7 +147,10 @@
 <div class="admin-section">
  <div class="admin-box">
   <h2>📋 ग्राहक आवेदन और भुगतान</h2>
-  <p class="muted">यहाँ आवेदन की स्थिति, शुल्क और ग्राहक द्वारा जमा की गई Transaction ID देख सकते हैं।</p>
+  <p class="muted">
+   आवेदन की स्थिति, सरकारी शुल्क, अपना सर्विस चार्ज,
+   कुल शुल्क और ग्राहक की Transaction ID यहाँ देख सकते हैं।
+  </p>
 
   <div class="admin-table-wrap">
    <table class="admin-table">
@@ -130,7 +161,7 @@
       <th>Tracking ID</th>
       <th>आवेदन स्थिति</th>
       <th>अपडेट</th>
-      <th>शुल्क ₹</th>
+      <th>शुल्क विवरण</th>
       <th>भुगतान स्थिति</th>
       <th>Transaction ID</th>
       <th>Verification</th>
@@ -166,7 +197,6 @@ import {
  getDoc,
  updateDoc,
  setDoc,
- deleteDoc,
  serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
 
@@ -184,7 +214,6 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 const ADMIN_UID='Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3';
-
 const $=id=>document.getElementById(id);
 
 const loginBox=$('loginBox');
@@ -195,6 +224,12 @@ let serviceCharges={};
 function serviceDocId(name){
  return encodeURIComponent(name.trim());
 }
+
+function money(value){
+ return '₹'+(Number(value)||0);
+}
+
+/* LOGIN */
 
 $('loginForm').addEventListener('submit',async e=>{
  e.preventDefault();
@@ -229,6 +264,17 @@ onAuthStateChanged(auth,user=>{
  }
 });
 
+/* TOTAL PREVIEW */
+
+function updateChargePreview(){
+ const govt=Number($('governmentFee').value)||0;
+ const service=Number($('serviceFee').value)||0;
+ $('chargeTotal').textContent='कुल शुल्क: '+money(govt+service);
+}
+
+$('governmentFee').addEventListener('input',updateChargePreview);
+$('serviceFee').addEventListener('input',updateChargePreview);
+
 /* LOAD SERVICE CHARGES */
 
 async function loadCharges(){
@@ -239,29 +285,46 @@ async function loadCharges(){
  body.innerHTML='';
 
  if(snap.empty){
-  body.innerHTML='<tr><td colspan="3">अभी कोई सेवा शुल्क सेव नहीं है।</td></tr>';
+  body.innerHTML='<tr><td colspan="5">अभी कोई सेवा शुल्क सेव नहीं है।</td></tr>';
   return;
  }
 
  snap.forEach(item=>{
   const d=item.data();
 
+  const govt=Number(d.governmentFee)||0;
+
+  // पुराने शुल्क रिकॉर्ड के लिए compatibility
+  const service=Number(
+   d.serviceFee!==undefined ? d.serviceFee : d.amount
+  )||0;
+
+  const total=govt+service;
+
   if(d.serviceName){
-   serviceCharges[d.serviceName]=Number(d.amount)||0;
+   serviceCharges[d.serviceName]={
+    governmentFee:govt,
+    serviceFee:service,
+    total
+   };
   }
 
   const tr=document.createElement('tr');
 
-  const name=document.createElement('td');
-  name.textContent=d.serviceName||item.id;
+  const values=[
+   d.serviceName||item.id,
+   money(govt),
+   money(service),
+   money(total),
+   'सक्रिय'
+  ];
 
-  const amount=document.createElement('td');
-  amount.textContent='₹'+(Number(d.amount)||0);
+  values.forEach(value=>{
+   const td=document.createElement('td');
+   td.textContent=value;
+   tr.appendChild(td);
+  });
 
-  const status=document.createElement('td');
-  status.textContent='सक्रिय';
-
-  tr.append(name,amount,status);
   body.appendChild(tr);
  });
 }
@@ -272,15 +335,18 @@ $('chargeForm').addEventListener('submit',async e=>{
  e.preventDefault();
 
  const serviceName=$('chargeService').value.trim();
- const amount=Number($('chargeAmount').value);
+ const govt=Number($('governmentFee').value);
+ const service=Number($('serviceFee').value);
+ const total=govt+service;
 
  if(!serviceName){
   $('chargeMsg').textContent='सेवा का नाम लिखें।';
   return;
  }
 
- if(!Number.isFinite(amount)||amount<=0){
-  $('chargeMsg').textContent='शुल्क 1 रुपये या उससे अधिक होना चाहिए।';
+ if(!Number.isFinite(govt)||govt<0||
+    !Number.isFinite(service)||service<0||total<=0){
+  $('chargeMsg').textContent='कृपया दोनों शुल्क की सही राशि दर्ज करें। कुल शुल्क शून्य से अधिक होना चाहिए।';
   return;
  }
 
@@ -291,13 +357,18 @@ $('chargeForm').addEventListener('submit',async e=>{
    doc(db,'services',serviceDocId(serviceName)),
    {
     serviceName,
-    amount,
+    governmentFee:govt,
+    serviceFee:service,
+    amount:total,
     updatedAt:serverTimestamp()
    }
   );
 
   $('chargeMsg').textContent='सेवा शुल्क सफलतापूर्वक सेव हो गया।';
   $('chargeForm').reset();
+  $('governmentFee').value='0';
+  updateChargePreview();
+
   await loadCharges();
 
  }catch(err){
@@ -345,18 +416,22 @@ async function loadApplications(){
   const tr=document.createElement('tr');
 
   /* CUSTOMER */
+
   const td1=document.createElement('td');
   td1.textContent=(d.customerName||'')+' / '+(d.mobile||'');
 
   /* SERVICE */
+
   const td2=document.createElement('td');
   td2.textContent=(d.service||'')+' / '+(d.village||'');
 
   /* TRACKING */
+
   const td3=document.createElement('td');
   td3.textContent=trackingId;
 
   /* APPLICATION STATUS */
+
   const td4=document.createElement('td');
   const sel=document.createElement('select');
 
@@ -371,6 +446,7 @@ async function loadApplications(){
   td4.appendChild(sel);
 
   /* STATUS SAVE */
+
   const td5=document.createElement('td');
   const statusBtn=document.createElement('button');
   statusBtn.className='btn';
@@ -407,35 +483,99 @@ async function loadApplications(){
 
   td5.appendChild(statusBtn);
 
-  /* SERVICE AMOUNT */
+  /* APPLICATION FEE DETAILS */
+
   const td6=document.createElement('td');
-  const amountInput=document.createElement('input');
-  amountInput.type='number';
-  amountInput.min='1';
-  amountInput.step='1';
-  amountInput.style.width='85px';
 
-  const defaultAmount=paymentInfo?.amount||
-   serviceCharges[d.service]||'';
+  const feeWrap=document.createElement('div');
+  feeWrap.className='fee-inputs';
 
-  amountInput.value=defaultAmount;
+  const config=serviceCharges[d.service]||{
+   governmentFee:0,
+   serviceFee:0,
+   total:0
+  };
+
+  let govtDefault=config.governmentFee;
+  let serviceDefault=config.serviceFee;
+
+  // पहले से लागू कुल शुल्क हो तो पुराने रिकॉर्ड को भी संभालें
+  if(paymentInfo && Number(paymentInfo.amount)>0){
+   const oldTotal=Number(paymentInfo.amount);
+   const configuredTotal=config.total;
+
+   if(configuredTotal===oldTotal){
+    govtDefault=config.governmentFee;
+    serviceDefault=config.serviceFee;
+   }else if(configuredTotal===0){
+    govtDefault=0;
+    serviceDefault=oldTotal;
+   }
+  }
+
+  const govtLabel=document.createElement('label');
+  govtLabel.textContent='सरकारी ₹';
+
+  const govtInput=document.createElement('input');
+  govtInput.type='number';
+  govtInput.min='0';
+  govtInput.step='1';
+  govtInput.value=govtDefault;
+
+  const serviceLabel=document.createElement('label');
+  serviceLabel.textContent='सर्विस ₹';
+
+  const serviceInput=document.createElement('input');
+  serviceInput.type='number';
+  serviceInput.min='0';
+  serviceInput.step='1';
+  serviceInput.value=serviceDefault;
+
+  const totalDisplay=document.createElement('div');
+  totalDisplay.className='total-fee';
+
+  function calculateTotal(){
+   const g=Number(govtInput.value)||0;
+   const s=Number(serviceInput.value)||0;
+   totalDisplay.textContent='कुल: '+money(g+s);
+  }
+
+  govtInput.addEventListener('input',calculateTotal);
+  serviceInput.addEventListener('input',calculateTotal);
+  calculateTotal();
+
+  const govtBox=document.createElement('div');
+  govtBox.append(govtLabel,govtInput);
+
+  const serviceBox=document.createElement('div');
+  serviceBox.append(serviceLabel,serviceInput);
+
+  feeWrap.append(govtBox,serviceBox);
 
   const applyChargeBtn=document.createElement('button');
   applyChargeBtn.className='small-btn';
-  applyChargeBtn.style.marginTop='5px';
-  applyChargeBtn.textContent='शुल्क लागू करें';
+  applyChargeBtn.style.marginTop='8px';
+  applyChargeBtn.textContent='कुल शुल्क लागू करें';
 
   applyChargeBtn.onclick=async()=>{
-   const amount=Number(amountInput.value);
+   const govt=Number(govtInput.value);
+   const service=Number(serviceInput.value);
+   const amount=govt+service;
 
    if(!trackingId){
     alert('इस आवेदन में Tracking ID उपलब्ध नहीं है।');
     return;
    }
 
-   if(!Number.isFinite(amount)||amount<=0){
-    alert('कृपया सही शुल्क दर्ज करें।');
+   if(!Number.isFinite(govt)||govt<0||
+      !Number.isFinite(service)||service<0||amount<=0){
+    alert('कृपया दोनों शुल्क की सही राशि दर्ज करें। कुल शुल्क शून्य से अधिक होना चाहिए।');
     return;
+   }
+
+   if(paymentInfo?.paymentStatus==='Paid'){
+    const ok=confirm('यह भुगतान पहले से Paid है। नया शुल्क लागू करने पर भुगतान स्थिति Unpaid हो जाएगी। क्या आप जारी रखना चाहते हैं?');
+    if(!ok)return;
    }
 
    applyChargeBtn.disabled=true;
@@ -450,8 +590,8 @@ async function loadApplications(){
      }
     );
 
-    applyChargeBtn.textContent='लागू हो गया';
-    alert('आवेदन पर ₹'+amount+' शुल्क लागू हो गया।');
+    alert('कुल ₹'+amount+' शुल्क आवेदन पर लागू हो गया।');
+    await loadAll();
 
    }catch(err){
     alert('शुल्क लागू नहीं हुआ: '+err.message);
@@ -459,20 +599,22 @@ async function loadApplications(){
    }
   };
 
-  td6.append(amountInput,document.createElement('br'),applyChargeBtn);
+  td6.append(feeWrap,totalDisplay,applyChargeBtn);
 
   /* PAYMENT STATUS */
+
   const td7=document.createElement('td');
   const paymentStatus=paymentInfo?.paymentStatus||'शुल्क तय नहीं';
-
   td7.className='pay-status';
   td7.textContent=paymentStatus;
 
   /* TRANSACTION ID */
+
   const td8=document.createElement('td');
   td8.textContent=paymentSubmission?.transactionId||'अभी जमा नहीं';
 
   /* PAYMENT VERIFICATION */
+
   const td9=document.createElement('td');
   const actions=document.createElement('div');
   actions.className='pay-actions';
@@ -565,6 +707,8 @@ async function loadApplications(){
  }
 }
 
+/* LOAD ALL DATA */
+
 async function loadAll(){
  $('summary').textContent='डेटा लोड हो रहा है...';
 
@@ -575,6 +719,8 @@ async function loadAll(){
   $('summary').textContent='डेटा लोड नहीं हुआ: '+err.message;
  }
 }
+
+updateChargePreview();
 </script>
 </body>
-</html>
+ </html>
