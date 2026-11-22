@@ -25,11 +25,12 @@ textarea{min-height:100px;resize:vertical}
 .docs{background:#f8fafc;padding:12px;border-radius:9px;font-size:13px;line-height:1.7}
 .check{display:flex;gap:9px;align-items:flex-start;font-size:13px;margin:15px 0}
 .check input{width:auto;margin-top:2px}
-button{width:100%;padding:14px;border:0;border-radius:9px;background:#087ac2;color:white;font-size:16px;font-weight:bold}
-button:disabled{opacity:.6}
+button{width:100%;padding:14px;border:0;border-radius:9px;background:#087ac2;color:white;font-size:16px;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
 #result{display:none;margin-top:16px;padding:15px;border-radius:10px;background:#ecfdf5;color:#065f46;line-height:1.8;overflow-wrap:anywhere}
 .side{margin-top:15px;background:#fff7ed;padding:14px;border-radius:10px;color:#9a3412;font-size:13px;line-height:1.7}
 footer{text-align:center;padding:20px;background:#073b75;color:white;font-size:13px;margin-top:25px}
+.auth-note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:13px;border-radius:10px;margin:14px 0;font-size:13px;line-height:1.6}
 @media(max-width:600px){.grid{grid-template-columns:1fr}.panel{padding:16px}}
 </style>
 </head>
@@ -41,6 +42,7 @@ footer{text-align:center;padding:20px;background:#073b75;color:white;font-size:1
 <a href="index.html">होम</a>
 <a href="services.html">सभी सेवाएँ</a>
 <a href="track.html">आवेदन ट्रैक करें</a>
+<a href="account.html">मेरा अकाउंट</a>
 </nav>
 </div>
 </header>
@@ -57,7 +59,11 @@ footer{text-align:center;padding:20px;background:#073b75;color:white;font-size:1
 <h2 style="margin-top:0">आवेदन फॉर्म</h2>
 <p style="color:#64748b;font-size:13px">* वाले सभी विवरण भरना जरूरी है।</p>
 
-<form id="applyForm">
+<div class="auth-note" id="authMessage">
+आपका Login जाँचा जा रहा है। कृपया प्रतीक्षा करें...
+</div>
+
+<form id="applyForm" style="display:none">
 <div class="grid">
 
 <div class="full">
@@ -150,9 +156,14 @@ RAHUL COMPUTER'S<br>
 
 <script type="module">
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';
+
 import {
- getFirestore,collection,addDoc,doc,setDoc,serverTimestamp
+ getFirestore,collection,doc,writeBatch,serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
+
+import {
+ getAuth,onAuthStateChanged
+} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js';
 
 const firebaseConfig={
  apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
@@ -165,6 +176,7 @@ const firebaseConfig={
 
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
+const auth=getAuth(app);
 
 const services={
 "Aadhaar सहायता":{
@@ -349,6 +361,10 @@ const service=document.getElementById("service");
 const workType=document.getElementById("workType");
 const info=document.getElementById("serviceInfo");
 const documents=document.getElementById("documents");
+const form=document.getElementById("applyForm");
+const result=document.getElementById("result");
+const authMessage=document.getElementById("authMessage");
+const submitButton=document.getElementById("send");
 
 Object.keys(services).forEach(name=>{
  const option=document.createElement("option");
@@ -360,18 +376,22 @@ Object.keys(services).forEach(name=>{
 function updateService(){
  const selected=service.value;
  workType.innerHTML='<option value="">काम चुनें</option>';
+
  if(!services[selected]){
   info.textContent="सेवा चुनने पर उसकी जानकारी यहाँ दिखाई देगी।";
   documents.textContent="सेवा चुनने के बाद जरूरी दस्तावेजों की जानकारी दिखाई देगी।";
   return;
  }
+
  const item=services[selected];
+
  item.work.forEach(work=>{
   const option=document.createElement("option");
   option.value=work;
   option.textContent=work;
   workType.appendChild(option);
  });
+
  info.textContent="सेवा: "+selected+" | शुल्क: संपर्क करके पुष्टि करें।";
  documents.textContent=item.docs;
 }
@@ -380,18 +400,41 @@ service.addEventListener("change",updateService);
 
 const params=new URLSearchParams(location.search);
 const requested=params.get("service");
+
 if(requested&&services[requested]){
  service.value=requested;
  updateService();
 }
 
-const form=document.getElementById("applyForm");
-const result=document.getElementById("result");
+/* Login जाँच */
+onAuthStateChanged(auth,user=>{
+ if(!user){
+  authMessage.textContent="आवेदन करने के लिए पहले अपने ग्राहक अकाउंट में Login करें। आपको Login पेज पर भेजा जा रहा है...";
+  const next=location.pathname.split("/").pop()+location.search;
+  location.replace("login.html?next="+encodeURIComponent(next));
+  return;
+ }
+
+ authMessage.textContent="Login सफल है। अब आप अपना आवेदन भर सकते हैं।";
+ form.style.display="block";
+
+ const nameField=document.getElementById("name");
+ if(!nameField.value.trim()&&user.displayName){
+  nameField.value=user.displayName;
+ }
+});
 
 form.addEventListener("submit",async event=>{
  event.preventDefault();
 
- const btn=document.getElementById("send");
+ const user=auth.currentUser;
+
+ if(!user){
+  alert("आवेदन भेजने के लिए पहले Login करें।");
+  location.href="login.html";
+  return;
+ }
+
  const mobile=document.getElementById("mobile").value.trim();
  const selectedService=service.value;
  const selectedWork=workType.value;
@@ -406,8 +449,13 @@ form.addEventListener("submit",async event=>{
   return;
  }
 
- btn.disabled=true;
- btn.textContent="आवेदन भेजा जा रहा है...";
+ if(!document.getElementById("consent").checked){
+  alert("कृपया सहमति वाले बॉक्स पर टिक करें।");
+  return;
+ }
+
+ submitButton.disabled=true;
+ submitButton.textContent="आवेदन भेजा जा रहा है...";
  result.style.display="none";
 
  const trackingId=Array.from(
@@ -420,10 +468,10 @@ form.addEventListener("submit",async event=>{
  const extra=document.getElementById("details").value.trim();
 
  const details=
- "कार्य: "+selectedWork+
- " | जिला: "+district+
- " | दस्तावेज जानकारी: "+services[selectedService].docs+
- " | अतिरिक्त जानकारी: "+extra;
+  "कार्य: "+selectedWork+
+  " | जिला: "+district+
+  " | दस्तावेज जानकारी: "+services[selectedService].docs+
+  " | अतिरिक्त जानकारी: "+extra;
 
  const data={
   customerName:name,
@@ -433,43 +481,81 @@ form.addEventListener("submit",async event=>{
   details:details,
   trackingId:trackingId,
   status:"Pending",
-  createdAt:serverTimestamp()
+  createdAt:serverTimestamp(),
+  ownerUid:user.uid,
+  customerEmail:user.email||""
  };
 
  try{
-  await addDoc(collection(db,"applications"),data);
+  /* आवेदन और Tracking एक साथ सेव होंगे */
+  const batch=writeBatch(db);
 
-  try{
-   await setDoc(doc(db,"tracking",trackingId),{
-    trackingId:trackingId,
-    status:"Pending",
-    service:data.service,
-    createdAt:serverTimestamp()
-   });
-  }catch(trackError){
-   console.warn("Tracking index not written",trackError);
-  }
+  const applicationRef=doc(collection(db,"applications"));
+  const trackingRef=doc(db,"tracking",trackingId);
+
+  batch.set(applicationRef,data);
+
+  batch.set(trackingRef,{
+   trackingId:trackingId,
+   status:"Pending",
+   service:data.service,
+   createdAt:serverTimestamp()
+  });
+
+  await batch.commit();
 
   result.replaceChildren();
+
   const heading=document.createElement("strong");
   heading.textContent="आवेदन सफलतापूर्वक दर्ज हुआ!";
+
   const line=document.createElement("p");
   line.textContent="आपका Tracking ID: "+trackingId;
+
+  const copyButton=document.createElement("button");
+  copyButton.type="button";
+  copyButton.textContent="Tracking ID कॉपी करें";
+  copyButton.style.marginBottom="10px";
+
+  copyButton.addEventListener("click",async()=>{
+   try{
+    await navigator.clipboard.writeText(trackingId);
+    copyButton.textContent="कॉपी हो गया ✓";
+   }catch(error){
+    alert("Tracking ID: "+trackingId);
+   }
+  });
+
   const link=document.createElement("a");
   link.href="track.html";
   link.textContent="आवेदन ट्रैक करें →";
   link.style.fontWeight="bold";
   link.style.textDecoration="underline";
-  result.append(heading,line,link);
+
+  const accountLink=document.createElement("a");
+  accountLink.href="account.html";
+  accountLink.textContent="मेरा अकाउंट देखें →";
+  accountLink.style.display="block";
+  accountLink.style.marginTop="10px";
+  accountLink.style.fontWeight="bold";
+  accountLink.style.textDecoration="underline";
+
+  result.append(heading,line,copyButton,link,accountLink);
   result.style.display="block";
+
   form.reset();
   updateService();
 
  }catch(error){
-  console.error(error);
-  result.textContent="आवेदन ऑनलाइन सेव नहीं हो पाया। कृपया WhatsApp से संपर्क करें।";
-  result.style.display="block";
-  const message=
+  console.error("Application submission error:",error);
+
+  result.replaceChildren();
+
+  const message=document.createElement("p");
+  message.textContent="आवेदन ऑनलाइन सेव नहीं हो पाया। कृपया दोबारा प्रयास करें या WhatsApp से संपर्क करें।";
+  result.appendChild(message);
+
+  const whatsappMessage=
    "नमस्ते, मुझे "+selectedService+
    " के लिए "+selectedWork+
    " का आवेदन करना है। नाम: "+name+
@@ -477,17 +563,22 @@ form.addEventListener("submit",async event=>{
    " गाँव: "+village+
    " जिला: "+district+
    " जानकारी: "+extra;
+
   const link=document.createElement("a");
-  link.href="https://wa.me/919752039020?text="+encodeURIComponent(message);
+  link.href="https://wa.me/919752039020?text="+encodeURIComponent(whatsappMessage);
   link.target="_blank";
-  link.rel="noopener";
-  link.textContent="WhatsApp पर भेजें";
+  link.rel="noopener noreferrer";
+  link.textContent="WhatsApp पर संपर्क करें";
   link.style.display="block";
   link.style.marginTop="10px";
+  link.style.fontWeight="bold";
+
   result.appendChild(link);
+  result.style.display="block";
+
  }finally{
-  btn.disabled=false;
-  btn.textContent="आवेदन भेजें →";
+  submitButton.disabled=false;
+  submitButton.textContent="आवेदन भेजें →";
  }
 });
 </script>
