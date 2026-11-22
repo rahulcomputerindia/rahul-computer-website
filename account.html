@@ -15,7 +15,7 @@ header h2{margin:0;font-size:21px}
 header p{margin:5px 0 0;font-size:13px}
 button,a{cursor:pointer}
 .btn{display:inline-block;border:0;border-radius:8px;padding:11px 15px;background:#1769d2;color:white;text-decoration:none;font-size:14px;font-weight:bold}
-.btn-light{background:white;color:#102b52}
+.btn-light{background:white;color:#102b52;border:1px solid #dce4ef}
 .btn-red{background:#d93636}
 .container{max-width:1100px;margin:25px auto;padding:0 15px}
 .welcome{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 15px #102b5210;margin-bottom:20px}
@@ -32,11 +32,11 @@ button,a{cursor:pointer}
 .profile-item{background:#f7f9fc;padding:13px;border-radius:9px}
 .profile-item span{display:block;color:#667085;font-size:12px;margin-bottom:6px}
 .profile-item strong{overflow-wrap:anywhere;font-size:14px}
-.application{border:1px solid #e1e7ef;border-radius:11px;padding:16px;margin:12px 0}
+.application{border:1px solid #e1e7ef;border-radius:11px;padding:16px;margin:12px 0;background:#fff}
 .application h4{margin:0 0 9px;font-size:16px}
 .application p{font-size:13px;margin:7px 0;overflow-wrap:anywhere}
 .status{display:inline-block;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;background:#fff3cd;color:#805b00}
-.status.completed{background:#d8f5e3;color:#176b38}
+.status.completed,.status.paid{background:#d8f5e3;color:#176b38}
 .status.processing{background:#dcecff;color:#1554a0}
 .status.rejected{background:#ffe0e0;color:#a51f1f}
 .status.pending{background:#fff3cd;color:#805b00}
@@ -45,6 +45,19 @@ button,a{cursor:pointer}
 .message{padding:12px;background:#fff3cd;border-radius:8px;color:#805b00;font-size:13px;display:none;margin-bottom:15px}
 footer{text-align:center;padding:22px;color:#667085;font-size:12px}
 .loading{text-align:center;padding:25px;color:#667085}
+.payment-box{margin-top:15px;padding:15px;background:#f7f9fc;border:1px solid #dce4ef;border-radius:10px}
+.payment-box h5{font-size:16px;margin:0 0 12px}
+.payment-amount{font-size:27px;color:#087ac2;font-weight:bold;margin:8px 0}
+.qr-wrap{text-align:center;margin:15px auto}
+.qr-image{width:100%;max-width:260px;height:auto;background:white;border:1px solid #e1e7ef;border-radius:10px;padding:8px}
+.upi-id{display:block;background:white;padding:11px;border:1px dashed #087ac2;border-radius:8px;text-align:center;font-weight:bold;overflow-wrap:anywhere;margin:10px 0}
+.payment-form{margin-top:15px}
+.payment-form label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
+.payment-form input{width:100%;padding:12px;border:1px solid #ccd5e2;border-radius:8px;font-size:15px;margin-bottom:10px}
+.payment-note{font-size:12px;color:#667085;line-height:1.6}
+.payment-message{font-size:13px;margin-top:10px;overflow-wrap:anywhere}
+.copy-btn{background:#e5efff;color:#174e91;border:0;padding:9px 12px;border-radius:7px;font-weight:bold}
+.pay-button{width:100%;margin-top:8px}
 @media(max-width:700px){
  .stats{grid-template-columns:repeat(2,1fr)}
  .profile-grid{grid-template-columns:1fr}
@@ -127,6 +140,12 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
 </section>
 
 <section class="section">
+ <h3>💳 मेरे भुगतान और हिस्ट्री</h3>
+ <p class="muted">आपके आवेदन पर लागू कुल भुगतान राशि और भुगतान की स्थिति यहाँ दिखाई देगी।</p>
+ <div id="paymentsList" class="loading">भुगतान की जानकारी लोड हो रही है...</div>
+</section>
+
+<section class="section">
  <h3>मेरे आवेदन और हिस्ट्री</h3>
  <div id="applicationsList" class="loading">आपके आवेदन लोड हो रहे हैं...</div>
 </section>
@@ -154,7 +173,11 @@ import {
  collection,
  query,
  where,
- getDocs
+ getDocs,
+ doc,
+ getDoc,
+ setDoc,
+ serverTimestamp
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -172,7 +195,11 @@ const db = getFirestore(app);
 
 const $ = id => document.getElementById(id);
 
+const UPI_ID = "7489098704-2@ybl";
+const UPI_NAME = "RAHUL SEN";
+
 let currentUser = null;
+let applicationsData = [];
 
 function showMessage(text){
  const box = $("pageMessage");
@@ -182,6 +209,10 @@ function showMessage(text){
 
 function safeText(value){
  return String(value ?? "");
+}
+
+function money(value){
+ return "₹"+(Number(value)||0);
 }
 
 function statusClass(status){
@@ -198,6 +229,15 @@ function formatDate(timestamp){
  }
  return timestamp.toDate().toLocaleString("hi-IN");
 }
+
+function createElement(tag,className,text){
+ const el=document.createElement(tag);
+ if(className)el.className=className;
+ if(text!==undefined)el.textContent=text;
+ return el;
+}
+
+/* APPLICATION LIST */
 
 function renderApplications(docs){
  const list = $("applicationsList");
@@ -217,90 +257,350 @@ function renderApplications(docs){
 
  list.innerHTML = "";
 
- docs.sort((a,b) => {
-  const x = a.createdAt?.toMillis?.() || 0;
-  const y = b.createdAt?.toMillis?.() || 0;
-  return y-x;
- });
-
  docs.forEach(data => {
-  const card = document.createElement("div");
-  card.className = "application";
+  const card = createElement("div","application");
 
-  const heading = document.createElement("h4");
-  heading.textContent = safeText(data.service || "सेवा आवेदन");
+  const heading = createElement("h4",null,data.service||"सेवा आवेदन");
 
-  const status = document.createElement("span");
-  status.className = "status " + statusClass(data.status);
-  status.textContent = safeText(data.status || "Pending");
+  const status = createElement(
+   "span",
+   "status "+statusClass(data.status),
+   data.status||"Pending"
+  );
 
-  const trackingLabel = document.createElement("p");
-  trackingLabel.textContent = "Tracking ID: ";
-
-  const tracking = document.createElement("span");
-  tracking.className = "tracking";
-  tracking.textContent = safeText(data.trackingId || "उपलब्ध नहीं");
+  const trackingLabel = createElement("p",null,"Tracking ID: ");
+  const tracking = createElement(
+   "span","tracking",data.trackingId||"उपलब्ध नहीं"
+  );
   trackingLabel.appendChild(tracking);
 
-  const date = document.createElement("p");
-  date.textContent = "आवेदन दिनांक: " + formatDate(data.createdAt);
+  const date = createElement(
+   "p",null,"आवेदन दिनांक: "+formatDate(data.createdAt)
+  );
 
-  const village = document.createElement("p");
-  village.textContent = "गाँव: " + safeText(data.village || "उपलब्ध नहीं");
+  const village = createElement(
+   "p",null,"गाँव: "+safeText(data.village||"उपलब्ध नहीं")
+  );
 
-  const details = document.createElement("p");
-  details.textContent = "विवरण: " + safeText(data.details || "कोई विवरण नहीं");
+  const details = createElement(
+   "p",null,"विवरण: "+safeText(data.details||"कोई विवरण नहीं")
+  );
 
-  const trackLink = document.createElement("a");
-  trackLink.className = "btn";
+  const trackLink = createElement("a","btn","स्थिति देखें");
   trackLink.href = "track.html";
-  trackLink.textContent = "स्थिति देखें";
 
   card.append(
-   heading,
-   status,
-   trackingLabel,
-   date,
-   village,
-   details,
-   trackLink
+   heading,status,trackingLabel,date,village,details,trackLink
   );
 
   list.appendChild(card);
  });
 }
 
+/* PAYMENT CARD */
+
+function renderPaymentCard(data,paymentInfo){
+ const card=createElement("div","application");
+
+ const heading=createElement("h4",null,data.service||"सेवा आवेदन");
+ const tracking=createElement(
+  "p","tracking","Tracking ID: "+safeText(data.trackingId||"")
+ );
+
+ card.append(heading,tracking);
+
+ if(!data.trackingId){
+  card.appendChild(createElement(
+   "p","muted","इस आवेदन में Tracking ID उपलब्ध नहीं है।"
+  ));
+  return card;
+ }
+
+ if(!paymentInfo){
+  card.appendChild(createElement(
+   "p","muted","अभी इस आवेदन पर शुल्क निर्धारित नहीं किया गया है।"
+  ));
+  return card;
+ }
+
+ const amount=Number(paymentInfo.amount)||0;
+ const paymentStatus=paymentInfo.paymentStatus||"Unpaid";
+
+ if(amount<=0){
+  card.appendChild(createElement(
+   "p","muted","भुगतान राशि उपलब्ध नहीं है।"
+  ));
+  return card;
+ }
+
+ const box=createElement("div","payment-box");
+
+ box.appendChild(createElement("h5",null,"भुगतान विवरण"));
+
+ box.appendChild(createElement(
+  "div","payment-amount",money(amount)
+ ));
+
+ box.appendChild(createElement(
+  "p","muted","कुल भुगतान राशि"
+ ));
+
+ const statusClassName=
+  paymentStatus==="Paid"?"paid":
+  paymentStatus==="Rejected"?"rejected":"pending";
+
+ box.appendChild(createElement(
+  "span","status "+statusClassName,
+  paymentStatus==="Paid"?"भुगतान सफल":
+  paymentStatus==="Rejected"?"भुगतान अस्वीकृत":
+  "भुगतान बाकी"
+ ));
+
+ if(paymentStatus==="Paid"){
+  box.appendChild(createElement(
+   "p","payment-message","आपका भुगतान सत्यापित हो गया है। धन्यवाद!"
+  ));
+  card.appendChild(box);
+  return card;
+ }
+
+ if(paymentStatus==="Rejected"){
+  box.appendChild(createElement(
+   "p","payment-message",
+   "आपका भुगतान सत्यापित नहीं हुआ। कृपया सहायता के लिए WhatsApp पर संपर्क करें।"
+  ));
+  card.appendChild(box);
+  return card;
+ }
+
+ /* QR CODE */
+
+ const qrWrap=createElement("div","qr-wrap");
+
+ const qrImage=createElement("img","qr-image");
+ qrImage.src="assets/upi-qr.jpg";
+ qrImage.alt="RAHUL COMPUTER'S UPI QR Code";
+
+ qrImage.onerror=()=>{
+  qrImage.style.display="none";
+  qrWrap.appendChild(createElement(
+   "p","payment-message",
+   "QR कोड अभी उपलब्ध नहीं है। आप UPI ID से भुगतान कर सकते हैं।"
+  ));
+ };
+
+ qrWrap.appendChild(qrImage);
+ box.appendChild(qrWrap);
+
+ box.appendChild(createElement(
+  "p","muted","QR स्कैन करके ऊपर दिखाई गई कुल राशि का भुगतान करें।"
+ ));
+
+ box.appendChild(createElement(
+  "div","upi-id",UPI_ID
+ ));
+
+ const copyBtn=createElement("button","copy-btn","UPI ID कॉपी करें");
+ copyBtn.type="button";
+
+ copyBtn.addEventListener("click",async()=>{
+  try{
+   await navigator.clipboard.writeText(UPI_ID);
+   copyBtn.textContent="कॉपी हो गया ✓";
+  }catch(error){
+   alert("UPI ID कॉपी नहीं हो सका। इसे स्वयं कॉपी करें: "+UPI_ID);
+  }
+ });
+
+ box.appendChild(copyBtn);
+
+ /* UPI PAYMENT LINK */
+
+ const upiLink=document.createElement("a");
+ upiLink.className="btn pay-button";
+ upiLink.href=
+  "upi://pay?pa="+encodeURIComponent(UPI_ID)+
+  "&pn="+encodeURIComponent(UPI_NAME)+
+  "&am="+encodeURIComponent(amount.toFixed(2))+
+  "&cu=INR"+
+  "&tn="+encodeURIComponent("RAHUL COMPUTER "+data.trackingId);
+
+ upiLink.textContent="UPI App से भुगतान करें";
+ box.appendChild(upiLink);
+
+ /* TRANSACTION ID FORM */
+
+ const form=createElement("form","payment-form");
+
+ const label=createElement(
+  "label",null,"भुगतान के बाद Transaction ID दर्ज करें"
+ );
+
+ const input=document.createElement("input");
+ input.type="text";
+ input.maxLength=35;
+ input.minLength=8;
+ input.required=true;
+ input.autocomplete="off";
+ input.placeholder="जैसे 123456789ABC";
+ input.pattern="[A-Za-z0-9]{8,35}";
+
+ const submit=createElement(
+  "button","btn pay-button","Transaction ID जमा करें"
+ );
+ submit.type="submit";
+
+ const note=createElement(
+  "p","payment-note",
+  "ध्यान दें: भुगतान करने के बाद ही Transaction ID जमा करें। Admin द्वारा जाँच के बाद भुगतान Paid होगा। गलत Transaction ID जमा न करें।"
+ );
+
+ const message=createElement("p","payment-message","");
+ message.style.display="none";
+
+ form.append(label,input,submit,note,message);
+
+ form.addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  const transactionId=input.value.trim();
+
+  if(!/^[A-Za-z0-9]{8,35}$/.test(transactionId)){
+   message.textContent="कृपया 8 से 35 अक्षरों/अंकों की सही Transaction ID दर्ज करें।";
+   message.style.display="block";
+   return;
+  }
+
+  if(!currentUser){
+   message.textContent="कृपया दोबारा Login करें।";
+   message.style.display="block";
+   return;
+  }
+
+  if(!confirm("क्या आपने ₹"+amount+" का भुगतान कर दिया है और Transaction ID सही है?")){
+   return;
+  }
+
+  submit.disabled=true;
+  submit.textContent="जमा हो रहा है...";
+  message.style.display="none";
+
+  try{
+   await setDoc(
+    doc(db,"paymentSubmissions",data.trackingId),
+    {
+     transactionId,
+     submittedAt:serverTimestamp()
+    }
+   );
+
+   message.textContent=
+    "Transaction ID सफलतापूर्वक जमा हो गई। Admin द्वारा सत्यापन की प्रतीक्षा करें।";
+
+   message.style.display="block";
+   message.style.color="#176b38";
+
+   input.disabled=true;
+   submit.textContent="जमा हो गया";
+
+  }catch(error){
+   console.error(error);
+   message.textContent=
+    "Transaction ID जमा नहीं हुई। संभव है कि इस आवेदन पर पहले ही Transaction ID जमा हो चुकी हो। सहायता के लिए WhatsApp करें।";
+   message.style.display="block";
+   message.style.color="#a51f1f";
+   submit.disabled=false;
+   submit.textContent="दोबारा प्रयास करें";
+  }
+ });
+
+ box.appendChild(form);
+ card.appendChild(box);
+
+ return card;
+}
+
+/* LOAD APPLICATIONS AND PAYMENT DATA */
+
 async function loadApplications(user){
- $("applicationsList").textContent = "आपके आवेदन लोड हो रहे हैं...";
+ $("applicationsList").textContent="आपके आवेदन लोड हो रहे हैं...";
+ $("paymentsList").textContent="भुगतान की जानकारी लोड हो रही है...";
 
  try{
-  const applicationsQuery = query(
+  const applicationsQuery=query(
    collection(db,"applications"),
    where("ownerUid","==",user.uid)
   );
 
-  const result = await getDocs(applicationsQuery);
-  const docs = result.docs.map(doc => doc.data());
+  const result=await getDocs(applicationsQuery);
 
-  renderApplications(docs);
+  applicationsData=result.docs.map(item=>item.data());
+
+  applicationsData.sort((a,b)=>{
+   const x=a.createdAt?.toMillis?.()||0;
+   const y=b.createdAt?.toMillis?.()||0;
+   return y-x;
+  });
+
+  renderApplications(applicationsData);
+
+  const paymentsList=$("paymentsList");
+  paymentsList.innerHTML="";
+
+  if(applicationsData.length===0){
+   paymentsList.appendChild(createElement(
+    "div","empty","अभी कोई भुगतान रिकॉर्ड उपलब्ध नहीं है।"
+   ));
+   return;
+  }
+
+  for(const data of applicationsData){
+   let paymentInfo=null;
+
+   if(data.trackingId){
+    try{
+     const paymentDoc=await getDoc(
+      doc(db,"paymentInfo",data.trackingId)
+     );
+
+     if(paymentDoc.exists()){
+      paymentInfo=paymentDoc.data();
+     }
+    }catch(error){
+     console.error("Payment information error:",error);
+    }
+   }
+
+   paymentsList.appendChild(
+    renderPaymentCard(data,paymentInfo)
+   );
+  }
 
  }catch(error){
   console.error(error);
-  $("applicationsList").textContent =
+
+  $("applicationsList").textContent=
    "आवेदन लोड नहीं हो सके। Internet या Firestore Rules जाँचें।";
+
+  $("paymentsList").textContent=
+   "भुगतान जानकारी लोड नहीं हो सकी।";
  }
 }
 
+/* LOGOUT */
+
 $("logoutBtn").addEventListener("click",async()=>{
- if(!confirm("क्या आप Logout करना चाहते हैं?")) return;
+ if(!confirm("क्या आप Logout करना चाहते हैं?"))return;
 
  try{
   await signOut(auth);
   location.replace("login.html");
  }catch(error){
-  showMessage("Logout नहीं हो सका: " + error.message);
+  showMessage("Logout नहीं हो सका: "+error.message);
  }
 });
+
+/* AUTH */
 
 onAuthStateChanged(auth,async user=>{
  if(!user){
@@ -308,13 +608,14 @@ onAuthStateChanged(auth,async user=>{
   return;
  }
 
- currentUser = user;
+ currentUser=user;
 
- const name = user.displayName || "ग्राहक";
- $("customerName").textContent = name;
- $("profileName").textContent = name;
- $("profileEmail").textContent = user.email || "उपलब्ध नहीं";
- $("profileUid").textContent = user.uid;
+ const name=user.displayName||"ग्राहक";
+
+ $("customerName").textContent=name;
+ $("profileName").textContent=name;
+ $("profileEmail").textContent=user.email||"उपलब्ध नहीं";
+ $("profileUid").textContent=user.uid;
 
  await loadApplications(user);
 });
@@ -322,4 +623,4 @@ onAuthStateChanged(auth,async user=>{
 </script>
 
 </body>
-</html>
+ </html>
