@@ -6,25 +6,19 @@
 <meta name="theme-color" content="#073b75">
 
 <title>ऑनलाइन आवेदन फॉर्म | RAHUL COMPUTER'S Maihar MP</title>
-
-<meta name="description" content="RAHUL COMPUTER'S अमिलिया, मैहर मध्यप्रदेश पर ऑनलाइन डिजिटल सेवाओं के लिए आवेदन करें। PAN Card, Samagra ID, Ayushman Card, प्रमाण-पत्र, सरकारी फॉर्म और अन्य सेवाओं हेतु संपर्क करें।">
-<meta name="keywords" content="RAHUL COMPUTER'S, Rahul Computer Maihar, Online Application Maihar, Digital Services Amiliya, PAN Card, Samagra ID, Ayushman Card, Online Form, Maihar Madhya Pradesh">
+<meta name="description" content="RAHUL COMPUTER'S अमिलिया, मैहर मध्यप्रदेश पर ऑनलाइन डिजिटल सेवाओं के लिए आवेदन करें।">
+<meta name="keywords" content="RAHUL COMPUTER'S, Rahul Computer Maihar, Online Application Maihar, Digital Services Amiliya">
 <meta name="author" content="RAHUL COMPUTER'S">
 <meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
 
 <link rel="canonical" href="https://rahul-computer-s.web.app/apply.html">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="ऑनलाइन आवेदन | RAHUL COMPUTER'S">
-<meta property="og:description" content="RAHUL COMPUTER'S अमिलिया, मैहर MP पर डिजिटल सेवाओं के लिए ऑनलाइन आवेदन करें।">
+<meta property="og:description" content="डिजिटल सेवाओं के लिए ऑनलाइन आवेदन करें।">
 <meta property="og:url" content="https://rahul-computer-s.web.app/apply.html">
 <meta property="og:site_name" content="RAHUL COMPUTER'S">
 <meta property="og:locale" content="hi_IN">
-
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ऑनलाइन आवेदन | RAHUL COMPUTER'S">
-<meta name="twitter:description" content="ऑनलाइन डिजिटल सेवाओं के लिए RAHUL COMPUTER'S पर आवेदन करें।">
 
 <style>
 *{box-sizing:border-box}
@@ -85,19 +79,14 @@ footer{text-align:center;padding:20px;background:#073b75;color:white;font-size:1
 <main class="wrap">
 
 <div class="panel">
-
 <h2 style="margin-top:0">आवेदन फॉर्म</h2>
-
-<p style="color:#64748b;font-size:13px">
-* वाले सभी विवरण भरना जरूरी है।
-</p>
+<p style="color:#64748b;font-size:13px">* वाले सभी विवरण भरना जरूरी है।</p>
 
 <div class="auth-note" id="authMessage">
 आपका Login जाँचा जा रहा है। कृपया प्रतीक्षा करें...
 </div>
 
 <form id="applyForm" style="display:none">
-
 <div class="grid">
 
 <div class="full">
@@ -153,16 +142,14 @@ footer{text-align:center;padding:20px;background:#073b75;color:white;font-size:1
 <div class="full">
 <div class="info">
 <strong>शुल्क:</strong> संपर्क करके पुष्टि करें।<br>
-सरकारी शुल्क और हमारी सेवा फीस अलग-अलग हो सकती हैं। आवेदन से पहले शुल्क बताया जाएगा।
+सरकारी शुल्क और हमारी सेवा फीस अलग-अलग हो सकती हैं।
 </div>
 </div>
 
 <div class="full">
 <label class="check">
 <input type="checkbox" id="consent" required>
-<span>
-मैं सहमत हूँ कि मेरी दी गई जानकारी इस आवेदन के लिए उपयोग की जा सकती है और जरूरत पड़ने पर मुझसे संपर्क किया जा सकता है।
-</span>
+<span>मैं सहमत हूँ कि मेरी दी गई जानकारी इस आवेदन के लिए उपयोग की जा सकती है और जरूरत पड़ने पर मुझसे संपर्क किया जा सकता है।</span>
 </label>
 </div>
 
@@ -196,36 +183,33 @@ RAHUL COMPUTER'S<br>
 
 <script type="module">
 
-import {
- initializeApp
-} from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';
+import {initializeApp,getApps,getApp}
+from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js';
 
 import {
- getFirestore,
- collection,
- doc,
- writeBatch,
- serverTimestamp
+getFirestore,collection,doc,writeBatch,serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
 
 import {
- getAuth,
- onAuthStateChanged
+getAuth,onAuthStateChanged
 } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js';
 
 
 /* FIREBASE CONFIG */
 
 const firebaseConfig={
- apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinVbZOOtEFmjoKI",
- authDomain:"rahul-computer-s.firebaseapp.com",
- projectId:"rahul-computer-s",
- storageBucket:"rahul-computer-s.firebasestorage.app",
- messagingSenderId:"969449083821",
- appId:"1:969449083821:web:4696bc1253fa97ea304724"
+apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinVbZOOtEFmjoKI",
+authDomain:"rahul-computer-s.firebaseapp.com",
+projectId:"rahul-computer-s",
+storageBucket:"rahul-computer-s.firebasestorage.app",
+messagingSenderId:"969449083821",
+appId:"1:969449083821:web:4696bc1253fa97ea304724"
 };
 
-const app=initializeApp(firebaseConfig);
+
+/* INITIALIZE FIREBASE */
+
+const app=getApps().length?getApp():initializeApp(firebaseConfig);
 const db=getFirestore(app);
 const auth=getAuth(app);
 
@@ -457,7 +441,7 @@ docs:"आवेदन या शिकायत से संबंधित ज
 };
 
 
-/* HTML ELEMENTS */
+/* ELEMENTS */
 
 const service=document.getElementById("service");
 const workType=document.getElementById("workType");
@@ -469,17 +453,13 @@ const authMessage=document.getElementById("authMessage");
 const submitButton=document.getElementById("send");
 
 
-/* LOAD SERVICE OPTIONS */
+/* LOAD SERVICES */
 
 Object.keys(services).forEach(name=>{
-
- const option=document.createElement("option");
-
- option.value=name;
- option.textContent=name;
-
- service.appendChild(option);
-
+const option=document.createElement("option");
+option.value=name;
+option.textContent=name;
+service.appendChild(option);
 });
 
 
@@ -487,111 +467,104 @@ Object.keys(services).forEach(name=>{
 
 function updateService(){
 
- const selected=service.value;
+const selected=service.value;
+workType.innerHTML='<option value="">काम चुनें</option>';
 
- workType.innerHTML='<option value="">काम चुनें</option>';
+if(!services[selected]){
+info.textContent="सेवा चुनने पर उसकी जानकारी यहाँ दिखाई देगी।";
+documents.textContent="सेवा चुनने के बाद जरूरी दस्तावेजों की जानकारी दिखाई देगी।";
+return;
+}
 
- if(!services[selected]){
+const item=services[selected];
 
-  info.textContent="सेवा चुनने पर उसकी जानकारी यहाँ दिखाई देगी।";
+item.work.forEach(work=>{
+const option=document.createElement("option");
+option.value=work;
+option.textContent=work;
+workType.appendChild(option);
+});
 
-  documents.textContent="सेवा चुनने के बाद जरूरी दस्तावेजों की जानकारी दिखाई देगी।";
-
-  return;
- }
-
- const item=services[selected];
-
- item.work.forEach(work=>{
-
-  const option=document.createElement("option");
-
-  option.value=work;
-  option.textContent=work;
-
-  workType.appendChild(option);
-
- });
-
- info.textContent="सेवा: "+selected+" | शुल्क: संपर्क करके पुष्टि करें।";
-
- documents.textContent=item.docs;
+info.textContent="सेवा: "+selected+" | शुल्क: संपर्क करके पुष्टि करें।";
+documents.textContent=item.docs;
 
 }
 
 service.addEventListener("change",updateService);
 
 
-/* URL SERVICE AUTO SELECT */
+/* URL SERVICE SELECTION */
 
 const params=new URLSearchParams(location.search);
-
 const requested=params.get("service");
 
 if(requested&&services[requested]){
-
- service.value=requested;
-
- updateService();
-
+service.value=requested;
+updateService();
 }
 
 
-/* LOGIN LINK */
+/* AUTHENTICATION UI */
 
 function showLoginMessage(){
 
- form.style.display="none";
+form.style.display="none";
+authMessage.replaceChildren();
 
- authMessage.replaceChildren();
+const message=document.createElement("div");
+message.textContent="आवेदन करने के लिए पहले अपने ग्राहक अकाउंट में Login करें।";
 
- const message=document.createElement("div");
+const link=document.createElement("a");
+link.href="login.html?next="+encodeURIComponent("apply.html"+location.search);
+link.textContent="यहाँ Login करें";
+link.className="login-link";
 
- message.textContent="आवेदन करने के लिए पहले अपने ग्राहक अकाउंट में Login करें।";
+authMessage.append(message,link);
+authMessage.style.display="block";
 
- const link=document.createElement("a");
+}
 
- link.href="login.html?next="+encodeURIComponent("apply.html"+location.search);
+function showApplicationForm(user){
 
- link.textContent="यहाँ Login करें";
+authMessage.replaceChildren();
+authMessage.textContent="Login सफल है। अब आप अपना आवेदन भर सकते हैं।";
+authMessage.style.background="#ecfdf5";
+authMessage.style.color="#065f46";
+authMessage.style.borderColor="#a7f3d0";
 
- link.className="login-link";
+form.style.display="block";
 
- authMessage.append(message,link);
-
- authMessage.style.display="block";
+const nameField=document.getElementById("name");
+if(!nameField.value.trim()&&user.displayName){
+nameField.value=user.displayName;
+}
 
 }
 
 
-/* LOGIN CHECK - NO AUTOMATIC REDIRECT */
+/* WAIT FOR FIREBASE AUTH STATE */
+
+authMessage.textContent="आपका Login जाँचा जा रहा है। कृपया प्रतीक्षा करें...";
+form.style.display="none";
+
+let authStateResolved=false;
 
 onAuthStateChanged(auth,user=>{
 
- if(!user){
+authStateResolved=true;
 
-  showLoginMessage();
+if(user){
+showApplicationForm(user);
+}else{
+showLoginMessage();
+}
 
-  return;
- }
+},error=>{
 
- authMessage.replaceChildren();
+console.error("Authentication state error:",error);
 
- authMessage.textContent="Login सफल है। अब आप अपना आवेदन भर सकते हैं।";
-
- authMessage.style.background="#ecfdf5";
- authMessage.style.color="#065f46";
- authMessage.style.borderColor="#a7f3d0";
-
- form.style.display="block";
-
- const nameField=document.getElementById("name");
-
- if(!nameField.value.trim()&&user.displayName){
-
-  nameField.value=user.displayName;
-
- }
+authMessage.textContent="Login की जानकारी प्राप्त नहीं हो सकी। इंटरनेट जाँचकर पेज दोबारा खोलें।";
+form.style.display="none";
 
 });
 
@@ -600,342 +573,204 @@ onAuthStateChanged(auth,user=>{
 
 form.addEventListener("submit",async event=>{
 
- event.preventDefault();
+event.preventDefault();
 
- const user=auth.currentUser;
+const user=auth.currentUser;
 
- if(!user){
+if(!authStateResolved||!user){
+showLoginMessage();
+return;
+}
 
-  showLoginMessage();
+const mobile=document.getElementById("mobile").value.trim();
+const selectedService=service.value;
+const selectedWork=workType.value;
 
-  return;
- }
+if(!/^[6-9][0-9]{9}$/.test(mobile)){
+alert("कृपया सही 10 अंकों का मोबाइल नंबर लिखें।");
+return;
+}
 
- const mobile=document.getElementById("mobile").value.trim();
+if(!services[selectedService]||!selectedWork){
+alert("कृपया सेवा और काम दोनों चुनें।");
+return;
+}
 
- const selectedService=service.value;
+if(!document.getElementById("consent").checked){
+alert("कृपया सहमति वाले बॉक्स पर टिक करें।");
+return;
+}
 
- const selectedWork=workType.value;
+if(!form.reportValidity()){
+return;
+}
 
+submitButton.disabled=true;
+submitButton.textContent="आवेदन भेजा जा रहा है...";
+result.style.display="none";
 
- /* VALIDATION */
+let trackingId;
 
- if(!/^[6-9][0-9]{9}$/.test(mobile)){
+try{
 
-  alert("कृपया सही 10 अंकों का मोबाइल नंबर लिखें।");
+const randomBytes=crypto.getRandomValues(new Uint8Array(12));
 
-  return;
- }
+trackingId=Array.from(randomBytes)
+.map(x=>x.toString(16).padStart(2,"0"))
+.join("")
+.toUpperCase();
 
- if(!services[selectedService]||!selectedWork){
+}catch(error){
 
-  alert("कृपया सेवा और काम दोनों चुनें।");
+console.error("Tracking ID generation error:",error);
+alert("सुरक्षित Tracking ID नहीं बन पाई। कृपया दोबारा प्रयास करें।");
 
-  return;
- }
+submitButton.disabled=false;
+submitButton.textContent="आवेदन भेजें →";
+return;
 
- if(!document.getElementById("consent").checked){
+}
 
-  alert("कृपया सहमति वाले बॉक्स पर टिक करें।");
 
-  return;
- }
+/* CUSTOMER DETAILS */
 
- if(!form.reportValidity()){
+const name=document.getElementById("name").value.trim();
+const village=document.getElementById("village").value.trim();
+const district=document.getElementById("district").value.trim();
+const extra=document.getElementById("details").value.trim();
 
-  return;
- }
+const details=
+"कार्य: "+selectedWork+
+" | जिला: "+district+
+" | दस्तावेज जानकारी: "+services[selectedService].docs+
+" | अतिरिक्त जानकारी: "+extra;
 
 
- /* DISABLE BUTTON */
+/* FIRESTORE DATA */
 
- submitButton.disabled=true;
+const data={
 
- submitButton.textContent="आवेदन भेजा जा रहा है...";
+customerName:name,
+mobile:mobile,
+village:village,
+service:selectedService+" - "+selectedWork,
+details:details,
+trackingId:trackingId,
+status:"Pending",
+createdAt:serverTimestamp(),
+ownerUid:user.uid,
+customerEmail:user.email||""
 
- result.style.display="none";
+};
 
+try{
 
- /* GENERATE TRACKING ID */
+const batch=writeBatch(db);
 
- let trackingId;
+const applicationRef=doc(collection(db,"applications"));
+const trackingRef=doc(db,"tracking",trackingId);
+const ownerRef=doc(db,"trackingOwners",trackingId);
 
- try{
+batch.set(applicationRef,data);
 
-  const randomBytes=crypto.getRandomValues(new Uint8Array(12));
+batch.set(trackingRef,{
+trackingId:trackingId,
+status:"Pending",
+service:data.service,
+createdAt:serverTimestamp()
+});
 
-  trackingId=Array.from(randomBytes)
-   .map(x=>x.toString(16).padStart(2,"0"))
-   .join("")
-   .toUpperCase();
+batch.set(ownerRef,{
+ownerUid:user.uid,
+createdAt:serverTimestamp()
+});
 
- }catch(error){
+await batch.commit();
 
-  console.error("Tracking ID generation error:",error);
 
-  alert("आपके मोबाइल में सुरक्षित Tracking ID नहीं बन पाई। कृपया दोबारा प्रयास करें।");
+/* SUCCESS */
 
-  submitButton.disabled=false;
+result.replaceChildren();
 
-  submitButton.textContent="आवेदन भेजें →";
+const heading=document.createElement("strong");
+heading.textContent="आवेदन सफलतापूर्वक दर्ज हुआ!";
 
-  return;
- }
+const line=document.createElement("p");
+line.textContent="आपका Tracking ID: "+trackingId;
 
+const copyButton=document.createElement("button");
+copyButton.type="button";
+copyButton.textContent="Tracking ID कॉपी करें";
+copyButton.style.marginBottom="10px";
 
- /* CUSTOMER DETAILS */
+copyButton.addEventListener("click",async()=>{
 
- const name=document.getElementById("name").value.trim();
+try{
+await navigator.clipboard.writeText(trackingId);
+copyButton.textContent="कॉपी हो गया ✓";
+}catch(error){
+alert("आपकी Tracking ID: "+trackingId);
+}
 
- const village=document.getElementById("village").value.trim();
+});
 
- const district=document.getElementById("district").value.trim();
+const link=document.createElement("a");
+link.href="track.html";
+link.textContent="आवेदन ट्रैक करें →";
+link.style.fontWeight="bold";
+link.style.textDecoration="underline";
 
- const extra=document.getElementById("details").value.trim();
+const accountLink=document.createElement("a");
+accountLink.href="account.html";
+accountLink.textContent="मेरा अकाउंट देखें →";
+accountLink.style.display="block";
+accountLink.style.marginTop="10px";
+accountLink.style.fontWeight="bold";
+accountLink.style.textDecoration="underline";
 
+result.append(heading,line,copyButton,link,accountLink);
+result.style.display="block";
 
- /* APPLICATION DETAILS */
+form.reset();
+updateService();
 
- const details=
-  "कार्य: "+selectedWork+
-  " | जिला: "+district+
-  " | दस्तावेज जानकारी: "+services[selectedService].docs+
-  " | अतिरिक्त जानकारी: "+extra;
+}catch(error){
 
+console.error("Application submission error:",error);
 
- /* FIRESTORE APPLICATION DATA */
+result.replaceChildren();
 
- const data={
+const message=document.createElement("p");
+message.textContent="आवेदन ऑनलाइन सेव नहीं हो पाया। कृपया दोबारा प्रयास करें या WhatsApp से संपर्क करें।";
+result.appendChild(message);
 
-  customerName:name,
+const whatsappMessage=
+"नमस्ते, मुझे "+selectedService+
+" के लिए "+selectedWork+
+" का आवेदन करना है। नाम: "+name+
+" मोबाइल: "+mobile+
+" गाँव: "+village+
+" जिला: "+district+
+" जानकारी: "+extra;
 
-  mobile:mobile,
+const whatsappLink=document.createElement("a");
+whatsappLink.href="https://wa.me/919752039020?text="+encodeURIComponent(whatsappMessage);
+whatsappLink.target="_blank";
+whatsappLink.rel="noopener noreferrer";
+whatsappLink.textContent="WhatsApp पर संपर्क करें";
+whatsappLink.style.display="block";
+whatsappLink.style.marginTop="10px";
+whatsappLink.style.fontWeight="bold";
 
-  village:village,
+result.appendChild(whatsappLink);
+result.style.display="block";
 
-  service:selectedService+" - "+selectedWork,
+}finally{
 
-  details:details,
+submitButton.disabled=false;
+submitButton.textContent="आवेदन भेजें →";
 
-  trackingId:trackingId,
-
-  status:"Pending",
-
-  createdAt:serverTimestamp(),
-
-  ownerUid:user.uid,
-
-  customerEmail:user.email||""
-
- };
-
-
- try{
-
-  /*
-   तीनों रिकॉर्ड एक ही Batch में सेव होंगे।
-   1. applications
-   2. tracking
-   3. trackingOwners
-  */
-
-  const batch=writeBatch(db);
-
-
-  /* APPLICATION DOCUMENT */
-
-  const applicationRef=doc(collection(db,"applications"));
-
-
-  /* TRACKING DOCUMENT */
-
-  const trackingRef=doc(db,"tracking",trackingId);
-
-
-  /* TRACKING OWNER DOCUMENT */
-
-  const ownerRef=doc(db,"trackingOwners",trackingId);
-
-
-  /* SAVE APPLICATION */
-
-  batch.set(applicationRef,data);
-
-
-  /* SAVE TRACKING */
-
-  batch.set(trackingRef,{
-
-   trackingId:trackingId,
-
-   status:"Pending",
-
-   service:data.service,
-
-   createdAt:serverTimestamp()
-
-  });
-
-
-  /* SAVE TRACKING OWNER */
-
-  batch.set(ownerRef,{
-
-   ownerUid:user.uid,
-
-   createdAt:serverTimestamp()
-
-  });
-
-
-  /* SAVE ALL RECORDS */
-
-  await batch.commit();
-
-
-  /* SUCCESS MESSAGE */
-
-  result.replaceChildren();
-
-  const heading=document.createElement("strong");
-
-  heading.textContent="आवेदन सफलतापूर्वक दर्ज हुआ!";
-
-  const line=document.createElement("p");
-
-  line.textContent="आपका Tracking ID: "+trackingId;
-
-
-  /* COPY TRACKING ID BUTTON */
-
-  const copyButton=document.createElement("button");
-
-  copyButton.type="button";
-
-  copyButton.textContent="Tracking ID कॉपी करें";
-
-  copyButton.style.marginBottom="10px";
-
-  copyButton.addEventListener("click",async()=>{
-
-   try{
-
-    await navigator.clipboard.writeText(trackingId);
-
-    copyButton.textContent="कॉपी हो गया ✓";
-
-   }catch(error){
-
-    alert("आपकी Tracking ID: "+trackingId);
-
-   }
-
-  });
-
-
-  /* TRACK APPLICATION LINK */
-
-  const link=document.createElement("a");
-
-  link.href="track.html";
-
-  link.textContent="आवेदन ट्रैक करें →";
-
-  link.style.fontWeight="bold";
-
-  link.style.textDecoration="underline";
-
-
-  /* CUSTOMER ACCOUNT LINK */
-
-  const accountLink=document.createElement("a");
-
-  accountLink.href="account.html";
-
-  accountLink.textContent="मेरा अकाउंट देखें →";
-
-  accountLink.style.display="block";
-
-  accountLink.style.marginTop="10px";
-
-  accountLink.style.fontWeight="bold";
-
-  accountLink.style.textDecoration="underline";
-
-
-  result.append(
-   heading,
-   line,
-   copyButton,
-   link,
-   accountLink
-  );
-
-  result.style.display="block";
-
-
-  /* RESET FORM */
-
-  form.reset();
-
-  updateService();
-
-
- }catch(error){
-
-  console.error("Application submission error:",error);
-
-  result.replaceChildren();
-
-  const message=document.createElement("p");
-
-  message.textContent="आवेदन ऑनलाइन सेव नहीं हो पाया। कृपया दोबारा प्रयास करें या WhatsApp से संपर्क करें।";
-
-  result.appendChild(message);
-
-
-  /* WHATSAPP FALLBACK */
-
-  const whatsappMessage=
-   "नमस्ते, मुझे "+selectedService+
-   " के लिए "+selectedWork+
-   " का आवेदन करना है। नाम: "+name+
-   " मोबाइल: "+mobile+
-   " गाँव: "+village+
-   " जिला: "+district+
-   " जानकारी: "+extra;
-
-
-  const whatsappLink=document.createElement("a");
-
-  whatsappLink.href=
-   "https://wa.me/919752039020?text="+
-   encodeURIComponent(whatsappMessage);
-
-  whatsappLink.target="_blank";
-
-  whatsappLink.rel="noopener noreferrer";
-
-  whatsappLink.textContent="WhatsApp पर संपर्क करें";
-
-  whatsappLink.style.display="block";
-
-  whatsappLink.style.marginTop="10px";
-
-  whatsappLink.style.fontWeight="bold";
-
-  result.appendChild(whatsappLink);
-
-  result.style.display="block";
-
-
- }finally{
-
-  submitButton.disabled=false;
-
-  submitButton.textContent="आवेदन भेजें →";
-
- }
+}
 
 });
 
