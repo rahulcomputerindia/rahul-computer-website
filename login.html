@@ -165,9 +165,8 @@ import {
 
 
 /* FIREBASE CONFIG */
-
 const firebaseConfig={
- apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinVbZOOtEFmjoKI",
+ apiKey:"YOUR_NEW_GOOGLE_CLOUD_API_KEY",
  authDomain:"rahul-computer-s.firebaseapp.com",
  projectId:"rahul-computer-s",
  storageBucket:"rahul-computer-s.firebasestorage.app",
@@ -185,7 +184,6 @@ const auth=getAuth(app);
 /* SAFE RETURN PAGE */
 
 function getSafeNext(){
-
  const params=new URLSearchParams(location.search);
  const next=params.get("next");
 
@@ -206,7 +204,6 @@ function getSafeNext(){
  }catch(error){
   console.warn("Invalid return address:",error);
  }
-
  return "account.html";
 }
 
@@ -291,7 +288,6 @@ onAuthStateChanged(auth,user=>{
 },error=>{
 
  console.error("Authentication state error:",error);
-
  showMessage(
   "Authentication Error: "+(error.code||"unknown")+
   " - "+(error.message||"Unknown error"),
@@ -340,7 +336,6 @@ registerForm.addEventListener("submit",async event=>{
  try{
 
   const credential=await createUserWithEmailAndPassword(auth,email,password);
-
   await updateProfile(credential.user,{displayName:name});
 
   location.replace(nextPage);
@@ -361,6 +356,8 @@ registerForm.addEventListener("submit",async event=>{
    errorText="Internet कनेक्शन जाँचें।";
   }else if(error.code==="auth/operation-not-allowed"){
    errorText="Firebase में Email/Password Login चालू नहीं है।";
+  }else if(error.code==="auth/api-key-not-valid"){
+   errorText="Firebase API Key सही नहीं है।";
   }
 
   showMessage(
@@ -423,6 +420,8 @@ loginForm.addEventListener("submit",async event=>{
    errorText="Firebase में Email/Password Login चालू नहीं है।";
   }else if(error.code==="auth/unauthorized-domain"){
    errorText="यह Website Firebase में Authorized Domain नहीं है।";
+  }else if(error.code==="auth/api-key-not-valid"){
+   errorText="Firebase API Key सही नहीं है।";
   }
 
   showMessage(
