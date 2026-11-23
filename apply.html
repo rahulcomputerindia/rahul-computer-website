@@ -8,9 +8,7 @@
 <title>ऑनलाइन आवेदन फॉर्म | RAHUL COMPUTER'S Maihar MP</title>
 
 <meta name="description" content="RAHUL COMPUTER'S अमिलिया, मैहर मध्यप्रदेश पर ऑनलाइन डिजिटल सेवाओं के लिए आवेदन करें। PAN Card, Samagra ID, Ayushman Card, प्रमाण-पत्र, सरकारी फॉर्म और अन्य सेवाओं हेतु संपर्क करें।">
-
 <meta name="keywords" content="RAHUL COMPUTER'S, Rahul Computer Maihar, Online Application Maihar, Digital Services Amiliya, PAN Card, Samagra ID, Ayushman Card, Online Form, Maihar Madhya Pradesh">
-
 <meta name="author" content="RAHUL COMPUTER'S">
 <meta name="robots" content="index, follow">
 <meta name="googlebot" content="index, follow">
@@ -54,7 +52,8 @@ button:disabled{opacity:.6;cursor:not-allowed}
 #result{display:none;margin-top:16px;padding:15px;border-radius:10px;background:#ecfdf5;color:#065f46;line-height:1.8;overflow-wrap:anywhere}
 .side{margin-top:15px;background:#fff7ed;padding:14px;border-radius:10px;color:#9a3412;font-size:13px;line-height:1.7}
 footer{text-align:center;padding:20px;background:#073b75;color:white;font-size:13px;margin-top:25px}
-.auth-note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:13px;border-radius:10px;margin:14px 0;font-size:13px;line-height:1.6}
+.auth-note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:13px;border-radius:10px;margin:14px 0;font-size:13px;line-height:1.8}
+.login-link{display:inline-block;margin-top:9px;padding:10px 16px;background:#087ac2;color:white;border-radius:8px;font-weight:bold}
 @media(max-width:600px){
  .grid{grid-template-columns:1fr}
  .panel{padding:16px}
@@ -88,6 +87,7 @@ footer{text-align:center;padding:20px;background:#073b75;color:white;font-size:1
 <div class="panel">
 
 <h2 style="margin-top:0">आवेदन फॉर्म</h2>
+
 <p style="color:#64748b;font-size:13px">
 * वाले सभी विवरण भरना जरूरी है।
 </p>
@@ -472,10 +472,14 @@ const submitButton=document.getElementById("send");
 /* LOAD SERVICE OPTIONS */
 
 Object.keys(services).forEach(name=>{
+
  const option=document.createElement("option");
+
  option.value=name;
  option.textContent=name;
+
  service.appendChild(option);
+
 });
 
 
@@ -533,22 +537,51 @@ if(requested&&services[requested]){
 }
 
 
-/* LOGIN CHECK */
+/* LOGIN LINK */
+
+function showLoginMessage(){
+
+ form.style.display="none";
+
+ authMessage.replaceChildren();
+
+ const message=document.createElement("div");
+
+ message.textContent="आवेदन करने के लिए पहले अपने ग्राहक अकाउंट में Login करें।";
+
+ const link=document.createElement("a");
+
+ link.href="login.html?next="+encodeURIComponent("apply.html"+location.search);
+
+ link.textContent="यहाँ Login करें";
+
+ link.className="login-link";
+
+ authMessage.append(message,link);
+
+ authMessage.style.display="block";
+
+}
+
+
+/* LOGIN CHECK - NO AUTOMATIC REDIRECT */
 
 onAuthStateChanged(auth,user=>{
 
  if(!user){
 
-  authMessage.textContent="आवेदन करने के लिए पहले अपने ग्राहक अकाउंट में Login करें। आपको Login पेज पर भेजा जा रहा है...";
-
-  const next=location.pathname.split("/").pop()+location.search;
-
-  location.replace("login.html?next="+encodeURIComponent(next));
+  showLoginMessage();
 
   return;
  }
 
+ authMessage.replaceChildren();
+
  authMessage.textContent="Login सफल है। अब आप अपना आवेदन भर सकते हैं।";
+
+ authMessage.style.background="#ecfdf5";
+ authMessage.style.color="#065f46";
+ authMessage.style.borderColor="#a7f3d0";
 
  form.style.display="block";
 
@@ -573,9 +606,7 @@ form.addEventListener("submit",async event=>{
 
  if(!user){
 
-  alert("आवेदन भेजने के लिए पहले Login करें।");
-
-  location.href="login.html";
+  showLoginMessage();
 
   return;
  }
@@ -757,10 +788,7 @@ form.addEventListener("submit",async event=>{
   });
 
 
-  /*
-   तीनों रिकॉर्ड एक साथ सेव होंगे।
-   किसी एक में भी समस्या आई तो Batch पूरा असफल होगा।
-  */
+  /* SAVE ALL RECORDS */
 
   await batch.commit();
 
@@ -769,11 +797,9 @@ form.addEventListener("submit",async event=>{
 
   result.replaceChildren();
 
-
   const heading=document.createElement("strong");
 
   heading.textContent="आवेदन सफलतापूर्वक दर्ज हुआ!";
-
 
   const line=document.createElement("p");
 
@@ -789,7 +815,6 @@ form.addEventListener("submit",async event=>{
   copyButton.textContent="Tracking ID कॉपी करें";
 
   copyButton.style.marginBottom="10px";
-
 
   copyButton.addEventListener("click",async()=>{
 
@@ -860,9 +885,7 @@ form.addEventListener("submit",async event=>{
 
   console.error("Application submission error:",error);
 
-
   result.replaceChildren();
-
 
   const message=document.createElement("p");
 
@@ -900,7 +923,6 @@ form.addEventListener("submit",async event=>{
   whatsappLink.style.marginTop="10px";
 
   whatsappLink.style.fontWeight="bold";
-
 
   result.appendChild(whatsappLink);
 
