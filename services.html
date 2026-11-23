@@ -3,7 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>सभी सेवाएँ | RAHUL COMPUTER'S</title>
+<meta name="theme-color" content="#102b52">
+
+<title>सभी ऑनलाइन डिजिटल सेवाएँ | RAHUL COMPUTER'S Maihar MP</title>
+
+<meta name="description" content="RAHUL COMPUTER'S अमिलिया, मैहर, मध्यप्रदेश में PAN Card, Ayushman Card, Samagra ID, Farmer ID, प्रमाण-पत्र, सरकारी ऑनलाइन फॉर्म और अन्य डिजिटल सेवाओं में सहायता।">
+
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<meta name="author" content="RAHUL COMPUTER'S">
+
+<link rel="canonical" href="https://rahul-computer-s.web.app/services.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="सभी ऑनलाइन डिजिटल सेवाएँ | RAHUL COMPUTER'S">
+<meta property="og:description" content="अमिलिया, मैहर, मध्यप्रदेश में ऑनलाइन डिजिटल सेवाएँ और आवेदन सहायता।">
+<meta property="og:url" content="https://rahul-computer-s.web.app/services.html">
+<meta property="og:site_name" content="RAHUL COMPUTER'S">
+<meta property="og:locale" content="hi_IN">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="सभी डिजिटल सेवाएँ | RAHUL COMPUTER'S">
+<meta name="twitter:description" content="PAN Card, Ayushman Card, Samagra ID और अन्य ऑनलाइन सेवाओं में सहायता।">
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172554}
@@ -38,6 +60,7 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;font-size:1
 @media(min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 </head>
+
 <body>
 <header>
 <div class="wrap">
@@ -62,7 +85,7 @@ footer{background:#073b75;color:white;text-align:center;padding:20px;font-size:1
 </section>
 
 <main class="wrap">
-<input class="search" id="search" placeholder="🔍 सेवा खोजें...">
+<input class="search" id="search" placeholder="🔍 सेवा खोजें..." aria-label="डिजिटल सेवा खोजें">
 
 <div class="filters" id="filters">
 <button class="chip active" data-cat="all">सभी सेवाएँ</button>
@@ -185,6 +208,7 @@ function render(){
   grid.appendChild(card);
  });
 }
+
 document.querySelectorAll(".chip").forEach(b=>{
  b.addEventListener("click",()=>{
   document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));
@@ -193,6 +217,7 @@ document.querySelectorAll(".chip").forEach(b=>{
   render();
  });
 });
+
 document.getElementById("search").addEventListener("input",render);
 render();
 </script>
