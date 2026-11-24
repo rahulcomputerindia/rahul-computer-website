@@ -5,7 +5,7 @@ RAHUL COMPUTER'S — NEW PROFESSIONAL WEBSITE
 - index.html: नया होमपेज
 - services.html: सेवा सूची और श्रेणी फ़िल्टर
 - apply.html: ग्राहक आवेदन (Firebase Firestore)
-- track.html: ट्रैकिंग नंबर से स्थिति
+- account.html: ट्रैकिंग नंबर से स्थिति
 - admin.html: Admin login और आवेदन स्थिति अपडेट
 - privacy.html, terms.html
 - assets/style.css, assets/app.js
