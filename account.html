@@ -16,6 +16,7 @@ button,a{cursor:pointer}
 .btn{display:inline-block;border:0;border-radius:8px;padding:11px 15px;background:#1769d2;color:white;text-decoration:none;font-size:14px;font-weight:bold}
 .btn-light{background:white;color:#102b52;border:1px solid #dce4ef}
 .btn-red{background:#d93636}
+.btn-small{padding:8px 11px;font-size:12px}
 .container{max-width:1100px;margin:25px auto;padding:0 15px}
 .welcome,.section{background:white;padding:20px;border-radius:13px;box-shadow:0 3px 15px #102b5210;margin-bottom:20px}
 .welcome h2{margin:0 0 7px;font-size:22px}
@@ -37,6 +38,10 @@ button,a{cursor:pointer}
 .status.processing,.status.submitted{background:#dcecff;color:#1554a0}
 .status.rejected{background:#ffe0e0;color:#a51f1f}
 .tracking{font-weight:bold;letter-spacing:.5px;color:#1769d2}
+.tracking-box{background:#f1f7ff;border:1px dashed #9bbde8;padding:12px;border-radius:9px;margin:12px 0}
+.tracking-box strong{display:block;margin:6px 0;overflow-wrap:anywhere;color:#1459a6}
+.tracking-title{font-size:13px;font-weight:bold;color:#344054}
+.status-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
 .empty,.loading{text-align:center;padding:25px 10px;color:#667085}
 .message{padding:12px;background:#fff3cd;border-radius:8px;color:#805b00;font-size:13px;display:none;margin-bottom:15px}
 footer{text-align:center;padding:22px;color:#667085;font-size:12px}
@@ -54,14 +59,20 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
 .copy-btn{background:#e5efff;color:#174e91;border:0;padding:9px 12px;border-radius:7px;font-weight:bold}
 .pay-button{width:100%;margin-top:8px}
 .history-row{background:white;border:1px solid #e1e7ef;padding:12px;border-radius:9px;margin:10px 0}
+.section-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.section-heading h3{margin:0}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.profile-grid{grid-template-columns:1fr}}
 @media(max-width:420px){.header-inner{align-items:flex-start}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}.section{padding:15px}}
 </style>
 </head>
 <body>
+
 <header>
 <div class="header-inner">
- <div><h2>RAHUL COMPUTER'S</h2><p>Customer Dashboard</p></div>
+ <div>
+  <h2>RAHUL COMPUTER'S</h2>
+  <p>Customer Dashboard</p>
+ </div>
  <button id="logoutBtn" class="btn btn-red" type="button">Logout</button>
 </div>
 </header>
@@ -86,7 +97,6 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
  <div class="actions">
   <a class="btn" href="services.html">सभी सेवाएँ देखें</a>
   <a class="btn" href="apply.html">नया आवेदन करें</a>
-  <a class="btn btn-light" href="track.html">Application Track करें</a>
  </div>
 </section>
 
@@ -106,9 +116,14 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
 </section>
 
 <section class="section">
- <h3>मेरे आवेदन और हिस्ट्री</h3>
+ <div class="section-heading">
+  <h3>📋 मेरे आवेदन और Tracking</h3>
+  <button id="refreshBtn" class="btn btn-light btn-small" type="button">↻ Refresh</button>
+ </div>
+ <p class="muted">अपने आवेदन की Tracking ID और वर्तमान स्थिति इसी पेज पर देखें।</p>
  <div id="applicationsList" class="loading">आपके आवेदन लोड हो रहे हैं...</div>
 </section>
+
 </main>
 
 <footer>
@@ -142,6 +157,7 @@ const $=id=>document.getElementById(id);
 const UPI_ID="7489098704-2@ybl";
 const UPI_NAME="RAHUL SEN";
 let currentUser=null;
+let loadingApplications=false;
 
 function safeText(v){return String(v??"")}
 function money(v){return "₹"+(Number(v)||0)}
@@ -167,28 +183,59 @@ function statusClass(s){
 function renderApplications(docs){
  const list=$("applicationsList");
  $("totalCount").textContent=docs.length;
- $("pendingCount").textContent=docs.filter(d=>d.status==="Pending").length;
- $("processingCount").textContent=docs.filter(d=>d.status==="Processing").length;
- $("completedCount").textContent=docs.filter(d=>d.status==="Completed").length;
+ $("pendingCount").textContent=docs.filter(d=>safeText(d.status).toLowerCase()==="pending").length;
+ $("processingCount").textContent=docs.filter(d=>safeText(d.status).toLowerCase()==="processing").length;
+ $("completedCount").textContent=docs.filter(d=>safeText(d.status).toLowerCase()==="completed").length;
 
  list.innerHTML="";
  if(!docs.length){
   list.appendChild(el("div","empty","अभी तक आपने कोई आवेदन नहीं किया है।"));
   return;
  }
+
  docs.forEach(d=>{
   const card=el("div","application");
+  const currentStatus=d.status||"Pending";
+
   card.append(
    el("h4",null,d.service||"सेवा आवेदन"),
-   el("span","status "+statusClass(d.status),d.status||"Pending"),
-   el("p","tracking","Tracking ID: "+safeText(d.trackingId)),
    el("p",null,"आवेदन दिनांक: "+formatDate(d.createdAt)),
    el("p",null,"गाँव: "+safeText(d.village||"उपलब्ध नहीं")),
    el("p",null,"विवरण: "+safeText(d.details||"कोई विवरण नहीं"))
   );
-  const link=el("a","btn","स्थिति देखें");
-  link.href="track.html";
-  card.appendChild(link);
+
+  const trackingBox=el("div","tracking-box");
+  trackingBox.appendChild(el("div","tracking-title","आपकी Application Tracking"));
+
+  const trackingId=el("strong",null,safeText(d.trackingId||"Tracking ID उपलब्ध नहीं"));
+  trackingBox.appendChild(trackingId);
+
+  if(d.trackingId){
+   const copy=el("button","copy-btn btn-small","Tracking ID कॉपी करें");
+   copy.type="button";
+   copy.addEventListener("click",async()=>{
+    try{
+     await navigator.clipboard.writeText(d.trackingId);
+     copy.textContent="कॉपी हो गया ✓";
+    }catch(e){
+     alert("आपकी Tracking ID: "+d.trackingId);
+    }
+   });
+   trackingBox.appendChild(copy);
+  }
+
+  const statusLine=el("div","status-line");
+  statusLine.append(
+   el("span","tracking-title","वर्तमान स्थिति:"),
+   el("span","status "+statusClass(currentStatus),currentStatus)
+  );
+  trackingBox.appendChild(statusLine);
+
+  const note=el("p","muted","आपके आवेदन की स्थिति Admin द्वारा अपडेट होने पर Refresh दबाकर नई स्थिति देखें।");
+  note.style.marginBottom="0";
+  trackingBox.appendChild(note);
+
+  card.appendChild(trackingBox);
   list.appendChild(card);
  });
 }
@@ -310,8 +357,12 @@ function renderPaymentCard(data,paymentInfo,submission){
  const img=el("img","qr-image");
  img.src="assets/Screenshot_20261122-095937_PhonePe.jpg";
  img.alt="RAHUL COMPUTER'S UPI QR Code";
- img.onerror=()=>{img.style.display="none";qrWrap.appendChild(el("p","payment-message","QR कोड उपलब्ध नहीं है। UPI ID से भुगतान करें।"));};
+ img.onerror=()=>{
+  img.style.display="none";
+  qrWrap.appendChild(el("p","payment-message","QR कोड उपलब्ध नहीं है। UPI ID से भुगतान करें।"));
+ };
  qrWrap.appendChild(img);
+
  box.append(
   qrWrap,
   el("p","muted","QR स्कैन करके ऊपर दिखाई गई कुल राशि का भुगतान करें।"),
@@ -321,8 +372,12 @@ function renderPaymentCard(data,paymentInfo,submission){
  const copy=el("button","copy-btn","UPI ID कॉपी करें");
  copy.type="button";
  copy.onclick=async()=>{
-  try{await navigator.clipboard.writeText(UPI_ID);copy.textContent="कॉपी हो गया ✓";}
-  catch(e){alert("UPI ID: "+UPI_ID);}
+  try{
+   await navigator.clipboard.writeText(UPI_ID);
+   copy.textContent="कॉपी हो गया ✓";
+  }catch(e){
+   alert("UPI ID: "+UPI_ID);
+  }
  };
  box.appendChild(copy);
 
@@ -363,18 +418,28 @@ function renderPaymentCard(data,paymentInfo,submission){
 }
 
 async function loadApplications(user){
+ if(loadingApplications)return;
+ loadingApplications=true;
+
  $("applicationsList").textContent="आवेदन लोड हो रहे हैं...";
  $("paymentsList").textContent="भुगतान लोड हो रहे हैं...";
+ $("refreshBtn").disabled=true;
+ $("refreshBtn").textContent="लोड हो रहा है...";
 
  try{
   const q=query(collection(db,"applications"),where("ownerUid","==",user.uid));
   const snap=await getDocs(q);
   const apps=snap.docs.map(x=>x.data());
-  apps.sort((a,b)=>(b.createdAt?.toMillis?.()||0)-(a.createdAt?.toMillis?.()||0));
+
+  apps.sort((a,b)=>
+   (b.createdAt?.toMillis?.()||0)-(a.createdAt?.toMillis?.()||0)
+  );
+
   renderApplications(apps);
 
   const payments=$("paymentsList");
   payments.innerHTML="";
+
   if(!apps.length){
    payments.appendChild(el("div","empty","अभी कोई भुगतान रिकॉर्ड उपलब्ध नहीं है।"));
    return;
@@ -394,29 +459,47 @@ async function loadApplications(user){
 
    payments.appendChild(renderPaymentCard(data,info,submission));
   }
+
  }catch(error){
   console.error(error);
   $("applicationsList").textContent="आवेदन लोड नहीं हुए: "+error.message;
   $("paymentsList").textContent="भुगतान जानकारी लोड नहीं हुई: "+error.message;
+ }finally{
+  loadingApplications=false;
+  $("refreshBtn").disabled=false;
+  $("refreshBtn").textContent="↻ Refresh";
  }
 }
 
+$("refreshBtn").addEventListener("click",()=>{
+ if(currentUser)loadApplications(currentUser);
+});
+
 $("logoutBtn").addEventListener("click",async()=>{
  if(!confirm("क्या आप Logout करना चाहते हैं?"))return;
- try{await signOut(auth);location.replace("login.html");}
- catch(e){showMessage("Logout नहीं हुआ: "+e.message);}
+ try{
+  await signOut(auth);
+  location.replace("login.html");
+ }catch(e){
+  showMessage("Logout नहीं हुआ: "+e.message);
+ }
 });
 
 onAuthStateChanged(auth,async user=>{
- if(!user){location.replace("login.html");return;}
+ if(!user){
+  location.replace("login.html");
+  return;
+ }
+
  currentUser=user;
  const name=user.displayName||"ग्राहक";
  $("customerName").textContent=name;
  $("profileName").textContent=name;
  $("profileEmail").textContent=user.email||"उपलब्ध नहीं";
  $("profileUid").textContent=user.uid;
+
  await loadApplications(user);
 });
 </script>
 </body>
-</html>
+ </html>
