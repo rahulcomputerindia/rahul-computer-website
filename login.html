@@ -57,10 +57,6 @@ button:disabled{opacity:.6;cursor:not-allowed}
  margin-top:18px;padding:13px;border-radius:9px;
  background:#eff6ff;color:#1e40af;font-size:13px;line-height:1.6;
 }
-.next-link{
- display:inline-block;margin-top:10px;padding:11px 16px;
- background:#087ac2;color:white;border-radius:8px;font-weight:bold;
-}
 footer{background:#073b75;color:white;text-align:center;padding:18px;font-size:13px}
 </style>
 </head>
@@ -164,7 +160,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
 
-/* FIREBASE CONFIG */
 const firebaseConfig={
  apiKey:"AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
  authDomain:"rahul-computer-s.firebaseapp.com",
@@ -173,9 +168,6 @@ const firebaseConfig={
  messagingSenderId:"969449083821",
  appId:"1:969449083821:web:4696bc1253fa97ea304724"
 };
-
-
-/* INITIALIZE FIREBASE */
 
 const app=getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth=getAuth(app);
@@ -204,6 +196,7 @@ function getSafeNext(){
  }catch(error){
   console.warn("Invalid return address:",error);
  }
+
  return "account.html";
 }
 
@@ -221,28 +214,10 @@ const loginButton=document.getElementById("loginButton");
 const registerButton=document.getElementById("registerButton");
 
 
-/* MESSAGE */
-
 function showMessage(text,type){
  message.replaceChildren();
  message.textContent=text;
  message.className=type;
- message.style.display="block";
-}
-
-function showNextLink(){
- message.replaceChildren();
-
- const text=document.createElement("div");
- text.textContent="आप पहले से Login हैं। आगे जाने के लिए नीचे बटन दबाएँ।";
-
- const link=document.createElement("a");
- link.href=nextPage;
- link.textContent="आगे बढ़ें →";
- link.className="next-link";
-
- message.append(text,link);
- message.className="success";
  message.style.display="block";
 }
 
@@ -275,19 +250,25 @@ loginTab.addEventListener("click",showLogin);
 registerTab.addEventListener("click",showRegister);
 
 
-/* AUTH STATE */
+/* AUTH STATE - FIXED REDIRECT */
+
+let redirecting=false;
 
 onAuthStateChanged(auth,user=>{
 
- if(user){
-  showNextLink();
- }else{
-  clearMessage();
+ if(user && !redirecting){
+
+  redirecting=true;
+
+  // पहले से Login ग्राहक सीधे अपने माँगे गए पेज पर जाएगा।
+  location.replace(nextPage);
+
  }
 
 },error=>{
 
  console.error("Authentication state error:",error);
+
  showMessage(
   "Authentication Error: "+(error.code||"unknown")+
   " - "+(error.message||"Unknown error"),
@@ -336,6 +317,7 @@ registerForm.addEventListener("submit",async event=>{
  try{
 
   const credential=await createUserWithEmailAndPassword(auth,email,password);
+
   await updateProfile(credential.user,{displayName:name});
 
   location.replace(nextPage);
@@ -375,7 +357,7 @@ registerForm.addEventListener("submit",async event=>{
 });
 
 
-/* EXISTING ACCOUNT LOGIN */
+/* LOGIN */
 
 loginForm.addEventListener("submit",async event=>{
 
