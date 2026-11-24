@@ -1,307 +1,449 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#073b75">
-  <title>Track Application | RAHUL COMPUTER'S</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#073b75">
 
-  <style>
-    * { box-sizing: border-box; }
+<title>Track Application | RAHUL COMPUTER'S</title>
 
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #f1f5f9;
-      color: #1e293b;
-    }
+<style>
+*{box-sizing:border-box}
 
-    .container {
-      max-width: 480px;
-      margin: 35px auto;
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 5px 22px rgba(0,0,0,.08);
-    }
+body{
+ margin:0;
+ padding:20px;
+ font-family:Arial,sans-serif;
+ background:#f1f5f9;
+ color:#1e293b;
+}
 
-    h2 {
-      text-align: center;
-      color: #073b75;
-      margin-top: 0;
-    }
+.container{
+ max-width:480px;
+ margin:35px auto;
+ background:white;
+ padding:25px;
+ border-radius:15px;
+ box-shadow:0 5px 22px rgba(0,0,0,.08);
+}
 
-    .subtitle {
-      text-align: center;
-      color: #64748b;
-      font-size: 14px;
-      margin-bottom: 22px;
-    }
+h2{
+ text-align:center;
+ color:#073b75;
+ margin-top:0;
+}
 
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 15px;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-    }
+.subtitle{
+ text-align:center;
+ color:#64748b;
+ font-size:14px;
+ line-height:1.6;
+ margin-bottom:22px;
+}
 
-    button {
-      width: 100%;
-      padding: 14px;
-      border: 0;
-      border-radius: 8px;
-      background: #087ac2;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+input{
+ width:100%;
+ padding:14px;
+ border:1px solid #cbd5e1;
+ border-radius:8px;
+ font-size:15px;
+ margin-bottom:14px;
+ text-transform:uppercase;
+}
 
-    button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
+button,.login-link{
+ display:block;
+ width:100%;
+ padding:14px;
+ border:0;
+ border-radius:8px;
+ background:#087ac2;
+ color:white;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer;
+ text-align:center;
+ text-decoration:none;
+}
 
-    #message {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 14px;
-      display: none;
-      overflow-wrap: anywhere;
-    }
+button:disabled{
+ opacity:.6;
+ cursor:not-allowed;
+}
 
-    .error {
-      display: block !important;
-      background: #fee2e2;
-      color: #991b1b;
-    }
+#loginSection{
+ display:none;
+ margin-top:15px;
+}
 
-    .success {
-      display: block !important;
-      background: #dcfce7;
-      color: #166534;
-    }
+#message{
+ display:none;
+ margin-top:16px;
+ padding:12px;
+ border-radius:8px;
+ font-size:14px;
+ line-height:1.5;
+ overflow-wrap:anywhere;
+}
 
-    .result {
-      display: none;
-      margin-top: 22px;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 16px;
-    }
+.error{
+ display:block!important;
+ background:#fee2e2;
+ color:#991b1b;
+}
 
-    .result p {
-      margin: 12px 0;
-      font-size: 15px;
-      overflow-wrap: anywhere;
-    }
+.success{
+ display:block!important;
+ background:#dcfce7;
+ color:#166534;
+}
 
-    .status {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 20px;
-      background: #dbeafe;
-      color: #1d4ed8;
-      font-weight: bold;
-    }
+.result{
+ display:none;
+ margin-top:22px;
+ border:1px solid #e2e8f0;
+ border-radius:10px;
+ padding:16px;
+}
 
-    .back {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #087ac2;
-      text-decoration: none;
-    }
+.result p{
+ margin:12px 0;
+ font-size:15px;
+ overflow-wrap:anywhere;
+}
 
-    .footer {
-      text-align: center;
-      color: #64748b;
-      font-size: 12px;
-      margin-top: 20px;
-    }
-  </style>
+.status{
+ display:inline-block;
+ padding:6px 12px;
+ border-radius:20px;
+ background:#dbeafe;
+ color:#1d4ed8;
+ font-weight:bold;
+}
+
+.back{
+ display:block;
+ text-align:center;
+ margin-top:20px;
+ color:#087ac2;
+ text-decoration:none;
+}
+
+.footer{
+ text-align:center;
+ color:#64748b;
+ font-size:12px;
+ margin-top:20px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <h2>RAHUL COMPUTER'S</h2>
-  <p class="subtitle">आवेदन की स्थिति जानें</p>
+<h2>🔷 RAHUL COMPUTER'S</h2>
 
-  <input
-    type="text"
-    id="trackingId"
-    maxlength="24"
-    placeholder="अपना 24 अक्षर का Tracking ID डालें"
-    autocomplete="off"
-  >
+<p class="subtitle">
+अपने आवेदन की स्थिति जानने के लिए Tracking ID दर्ज करें।
+</p>
 
-  <button id="trackBtn" disabled>
-    Login जाँचा जा रहा है...
-  </button>
+<div id="loginSection">
 
-  <div id="message"></div>
+<p>आवेदन देखने के लिए पहले अपने ग्राहक अकाउंट में Login करें।</p>
 
-  <div class="result" id="result">
-    <h3>आवेदन विवरण</h3>
+<a class="login-link" id="loginLink"
+ href="login.html?next=track.html">
+Customer Login करें →
+</a>
 
-    <p><b>Tracking ID:</b> <span id="showId"></span></p>
-    <p><b>सेवा:</b> <span id="showService"></span></p>
-    <p><b>आवेदन स्थिति:</b> <span class="status" id="showStatus"></span></p>
-  </div>
+</div>
 
-  <a class="back" href="account.html">Customer Dashboard पर जाएँ</a>
+<div id="trackingSection" style="display:none">
 
-  <div class="footer">
-    © RAHUL COMPUTER'S
-  </div>
+<input
+ type="text"
+ id="trackingId"
+ maxlength="24"
+ placeholder="24 अक्षर का Tracking ID डालें"
+ autocomplete="off"
+>
+
+<button id="trackBtn">
+आवेदन की स्थिति देखें
+</button>
+
+</div>
+
+<div id="message"></div>
+
+<div class="result" id="result">
+
+<h3>आवेदन विवरण</h3>
+
+<p><b>Tracking ID:</b> <span id="showId"></span></p>
+
+<p><b>सेवा:</b> <span id="showService"></span></p>
+
+<p><b>आवेदन स्थिति:</b>
+<span class="status" id="showStatus"></span></p>
+
+</div>
+
+<a class="back" href="account.html">
+Customer Dashboard पर जाएँ
+</a>
+
+<div class="footer">
+© 2026 RAHUL COMPUTER'S
+</div>
 
 </div>
 
 <script type="module">
-  import { initializeApp, getApps, getApp }
-    from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
 
-  import {
-    getAuth,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+import {
+ initializeApp,
+ getApps,
+ getApp
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
 
-  import {
-    getFirestore,
-    doc,
-    getDoc
-  } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import {
+ getAuth,
+ onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
-  // अपने पुराने track.html से Firebase Config की
-  // सभी असली values यहाँ कॉपी करें।
-  const firebaseConfig = {
-    apiKey: "PASTE_YOUR_EXISTING_API_KEY",
-    authDomain: "PASTE_YOUR_EXISTING_AUTH_DOMAIN",
-    projectId: "rahul-computer-s",
-    storageBucket: "PASTE_YOUR_EXISTING_STORAGE_BUCKET",
-    messagingSenderId: "PASTE_YOUR_EXISTING_MESSAGING_SENDER_ID",
-    appId: "1:969449083821:web:4696bc1253fa97ea304724"
-  };
+import {
+ getFirestore,
+ doc,
+ getDoc
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-  const ADMIN_UID = "Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3";
 
-  const app = getApps().length
-    ? getApp()
-    : initializeApp(firebaseConfig);
+/* FIREBASE CONFIG - SAME AS LOGIN.HTML */
 
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const firebaseConfig = {
+ apiKey: "AIzaSyCkpdMXGe1jIsTglSHGinBvZOOtEFmjoKI",
+ authDomain: "rahul-computer-s.firebaseapp.com",
+ projectId: "rahul-computer-s",
+ storageBucket: "rahul-computer-s.firebasestorage.app",
+ messagingSenderId: "969449083821",
+ appId: "1:969449083821:web:4696bc1253fa97ea304724"
+};
 
-  const trackingInput = document.getElementById("trackingId");
-  const trackBtn = document.getElementById("trackBtn");
-  const message = document.getElementById("message");
-  const result = document.getElementById("result");
 
-  let currentUser = null;
-  let authReady = false;
+/* FIREBASE INITIALIZATION */
 
-  function showMessage(text, type = "error") {
-    message.textContent = text;
-    message.className = type;
+const app = getApps().length
+ ? getApp()
+ : initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+/* ADMIN UID */
+
+const ADMIN_UID = "Fe7XhLLbCGdJ0d9KtqSkqiCNTQG3";
+
+
+/* ELEMENTS */
+
+const loginSection =
+ document.getElementById("loginSection");
+
+const trackingSection =
+ document.getElementById("trackingSection");
+
+const loginLink =
+ document.getElementById("loginLink");
+
+const trackingInput =
+ document.getElementById("trackingId");
+
+const trackBtn =
+ document.getElementById("trackBtn");
+
+const message =
+ document.getElementById("message");
+
+const result =
+ document.getElementById("result");
+
+
+/* AUTH STATE */
+
+let currentUser = null;
+let authReady = false;
+
+
+function showMessage(text,type="error") {
+ message.textContent = text;
+ message.className = type;
+ message.style.display = "block";
+}
+
+function clearMessage() {
+ message.textContent = "";
+ message.className = "";
+ message.style.display = "none";
+}
+
+function clearResult() {
+ result.style.display = "none";
+}
+
+
+/* CHECK LOGIN WITHOUT AUTOMATIC REDIRECT */
+
+onAuthStateChanged(auth, user => {
+
+ authReady = true;
+ currentUser = user;
+
+ clearMessage();
+ clearResult();
+
+ if(user){
+
+  loginSection.style.display = "none";
+  trackingSection.style.display = "block";
+
+ }else{
+
+  trackingSection.style.display = "none";
+  loginSection.style.display = "block";
+
+ }
+
+}, error => {
+
+ console.error("Auth Error:",error);
+
+ authReady = true;
+ currentUser = null;
+
+ trackingSection.style.display = "none";
+ loginSection.style.display = "block";
+
+ showMessage(
+  "Login की स्थिति जाँची नहीं जा सकी। Internet जाँचकर पेज दोबारा खोलें।"
+ );
+
+});
+
+
+/* TRACK APPLICATION */
+
+trackBtn.addEventListener("click", async () => {
+
+ clearMessage();
+ clearResult();
+
+ if(!authReady){
+  showMessage("कृपया कुछ सेकंड प्रतीक्षा करें।");
+  return;
+ }
+
+ if(!currentUser){
+  showMessage("पहले Customer Login करें।");
+  return;
+ }
+
+ const trackingId =
+  trackingInput.value.trim().toUpperCase();
+
+ if(!/^[A-F0-9]{24}$/.test(trackingId)){
+  showMessage("कृपया सही 24 अक्षर का Tracking ID डालें।");
+  return;
+ }
+
+ trackBtn.disabled = true;
+ trackBtn.textContent = "जाँच हो रही है...";
+
+ try{
+
+  /* FIRST CHECK OWNER */
+
+  const ownerRef =
+   doc(db,"trackingOwners",trackingId);
+
+  const ownerSnap =
+   await getDoc(ownerRef);
+
+  if(!ownerSnap.exists()){
+   throw new Error(
+    "यह Tracking ID आपके खाते से संबंधित नहीं है।"
+   );
   }
 
-  function clearResult() {
-    result.style.display = "none";
-    message.style.display = "block";
+  const ownerUid = ownerSnap.data().ownerUid;
+
+  const isAdmin =
+   currentUser.uid === ADMIN_UID;
+
+  if(!isAdmin && ownerUid !== currentUser.uid){
+   throw new Error(
+    "आप इस आवेदन को देखने के अधिकृत नहीं हैं।"
+   );
   }
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      location.replace("login.html?next=track.html");
-      return;
-    }
 
-    currentUser = user;
-    authReady = true;
-    trackBtn.disabled = false;
-    trackBtn.textContent = "आवेदन की स्थिति देखें";
-  });
+  /* THEN READ TRACKING */
 
-  trackBtn.addEventListener("click", async () => {
-    if (!authReady || !currentUser) {
-      showMessage("कृपया पहले Login करें।");
-      return;
-    }
+  const trackingRef =
+   doc(db,"tracking",trackingId);
 
-    const trackingId = trackingInput.value.trim().toUpperCase();
+  const trackingSnap =
+   await getDoc(trackingRef);
 
-    if (!/^[A-F0-9]{24}$/.test(trackingId)) {
-      clearResult();
-      showMessage("कृपया सही 24 अक्षर का Tracking ID डालें।");
-      return;
-    }
+  if(!trackingSnap.exists()){
+   throw new Error(
+    "इस Tracking ID का आवेदन रिकॉर्ड नहीं मिला।"
+   );
+  }
 
-    trackBtn.disabled = true;
-    trackBtn.textContent = "जाँच हो रही है...";
-    result.style.display = "none";
-    message.style.display = "none";
+  const data = trackingSnap.data();
 
-    try {
-      // पहले ग्राहक का मालिकाना हक जाँचें।
-      const ownerRef = doc(db, "trackingOwners", trackingId);
-      const ownerSnap = await getDoc(ownerRef);
+  document.getElementById("showId").textContent =
+   data.trackingId || trackingId;
 
-      if (!ownerSnap.exists()) {
-        throw new Error("यह Tracking ID आपके खाते से संबंधित नहीं है।");
-      }
+  document.getElementById("showService").textContent =
+   data.service || "उपलब्ध नहीं";
 
-      const ownerUid = ownerSnap.data().ownerUid;
-      const isAdmin = currentUser.uid === ADMIN_UID;
+  document.getElementById("showStatus").textContent =
+   data.status || "Pending";
 
-      if (!isAdmin && ownerUid !== currentUser.uid) {
-        throw new Error("आप इस आवेदन को देखने के अधिकृत नहीं हैं।");
-      }
+  result.style.display = "block";
 
-      // मालिकाना हक सत्यापित होने के बाद Tracking पढ़ें।
-      const trackingRef = doc(db, "tracking", trackingId);
-      const trackingSnap = await getDoc(trackingRef);
+  showMessage(
+   "आपका आवेदन रिकॉर्ड सफलतापूर्वक मिल गया है।",
+   "success"
+  );
 
-      if (!trackingSnap.exists()) {
-        throw new Error("इस Tracking ID का आवेदन रिकॉर्ड नहीं मिला।");
-      }
+ }catch(error){
 
-      const data = trackingSnap.data();
+  console.error("Tracking Error:",error);
 
-      document.getElementById("showId").textContent =
-        data.trackingId || trackingId;
+  let errorText =
+   error.message || "जानकारी प्राप्त नहीं हो सकी।";
 
-      document.getElementById("showService").textContent =
-        data.service || "उपलब्ध नहीं";
+  if(error.code === "permission-denied"){
+   errorText =
+    "Permission Denied: Firestore Rules में अनुमति नहीं मिली।";
+  }
 
-      document.getElementById("showStatus").textContent =
-        data.status || "Pending";
+  showMessage(errorText,"error");
 
-      result.style.display = "block";
-      showMessage("आपका आवेदन रिकॉर्ड मिल गया है।", "success");
+ }finally{
 
-    } catch (error) {
-      console.error("Tracking Error:", error);
+  trackBtn.disabled = false;
+  trackBtn.textContent = "आवेदन की स्थिति देखें";
 
-      let errorText = error.message || "जानकारी प्राप्त नहीं हो सकी।";
+ }
 
-      if (error.code === "permission-denied") {
-        errorText = "आपको यह जानकारी देखने की अनुमति नहीं है।";
-      }
+});
 
-      showMessage(errorText, "error");
-
-    } finally {
-      trackBtn.disabled = false;
-      trackBtn.textContent = "आवेदन की स्थिति देखें";
-    }
-  });
 </script>
 
 </body>
