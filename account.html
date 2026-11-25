@@ -59,6 +59,9 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
 .copy-btn{background:#e5efff;color:#174e91;border:0;padding:9px 12px;border-radius:7px;font-weight:bold}
 .pay-button{width:100%;margin-top:8px}
 .history-row{background:white;border:1px solid #e1e7ef;padding:12px;border-radius:9px;margin:10px 0}
+.history-event{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.history-event strong{color:#102b52}
+.history-meta{font-size:12px;color:#667085;margin-top:6px;overflow-wrap:anywhere}
 .section-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .section-heading h3{margin:0}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.profile-grid{grid-template-columns:1fr}}
@@ -113,6 +116,9 @@ footer{text-align:center;padding:22px;color:#667085;font-size:12px}
  <h3>💳 मेरे भुगतान और हिस्ट्री</h3>
  <p class="muted">हर आवेदन की फीस, Transaction ID और भुगतान सत्यापन की स्थिति यहाँ देखें।</p>
  <div id="paymentsList" class="loading">भुगतान की जानकारी लोड हो रही है...</div>
+ <h4 style="margin:20px 0 8px">भुगतान सत्यापन का इतिहास</h4>
+ <p class="muted">यहाँ Admin द्वारा Paid या Rejected किए गए आपके भुगतानों की अलग हिस्ट्री दिखाई जाएगी।</p>
+ <div id="paymentHistoryList" class="loading">Payment History लोड हो रही है...</div>
 </section>
 
 <section class="section">
@@ -417,6 +423,52 @@ function renderPaymentCard(data,paymentInfo,submission){
  return card;
 }
 
+
+function renderCustomerPaymentHistory(items){
+ const list=$("paymentHistoryList");
+ list.innerHTML="";
+ if(!items.length){
+  list.appendChild(el("div","empty","अभी आपके भुगतान सत्यापन का कोई इतिहास उपलब्ध नहीं है।"));
+  return;
+ }
+ items.forEach(item=>{
+  const card=el("div","history-row");
+  const head=el("div","history-event");
+  const title=el("strong",null,item.service||"सेवा भुगतान");
+  const badge=el("span","status "+statusClass(item.paymentStatus||""),item.paymentStatus||"अपडेट");
+  head.append(title,badge);
+  card.appendChild(head);
+  card.append(
+   el("p",null,"Tracking ID: "+safeText(item.trackingId||"—")),
+   el("p",null,"Transaction ID: "+safeText(item.transactionId||"—")),
+   el("p",null,"राशि: "+money(item.amount))
+  );
+  const eventLabel=item.eventType==="Admin Verified"?"Admin द्वारा भुगतान सत्यापित":
+   item.eventType==="Admin Rejected"?"Admin द्वारा भुगतान अस्वीकृत":safeText(item.eventType||"भुगतान अपडेट");
+  card.appendChild(el("div","history-meta",eventLabel+" · "+formatDate(item.createdAt)));
+  list.appendChild(card);
+ });
+}
+
+async function loadCustomerPaymentHistory(user){
+ const list=$("paymentHistoryList");
+ list.textContent="Payment History लोड हो रही है...";
+ try{
+  // Firestore Rules के अनुसार ग्राहक केवल अपने ownerUid वाले दस्तावेज पढ़ सकता है।
+  const historyQuery=query(
+   collection(db,"paymentHistory"),
+   where("ownerUid","==",user.uid)
+  );
+  const snap=await getDocs(historyQuery);
+  const items=snap.docs.map(x=>x.data());
+  items.sort((a,b)=>(b.createdAt?.toMillis?.()||0)-(a.createdAt?.toMillis?.()||0));
+  renderCustomerPaymentHistory(items);
+ }catch(error){
+  console.error("Customer payment history:",error);
+  list.textContent="Payment History लोड नहीं हुई: "+error.message;
+ }
+}
+
 async function loadApplications(user){
  if(loadingApplications)return;
  loadingApplications=true;
@@ -472,7 +524,10 @@ async function loadApplications(user){
 }
 
 $("refreshBtn").addEventListener("click",()=>{
- if(currentUser)loadApplications(currentUser);
+ if(currentUser){
+  loadApplications(currentUser);
+  loadCustomerPaymentHistory(currentUser);
+ }
 });
 
 $("logoutBtn").addEventListener("click",async()=>{
@@ -499,6 +554,7 @@ onAuthStateChanged(auth,async user=>{
  $("profileUid").textContent=user.uid;
 
  await loadApplications(user);
+ await loadCustomerPaymentHistory(user);
 });
 </script>
 </body>

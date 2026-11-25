@@ -115,6 +115,21 @@ white-space:pre-wrap;overflow-wrap:anywhere
 .details-grid{grid-template-columns:1fr}
 .details-content{padding:14px}
 }
+
+/* Admin accordion design */
+.admin-accordion{margin:18px 0;border:1px solid #d8e3f0;border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 5px 18px rgba(16,43,82,.05)}
+.admin-accordion>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 18px;font-weight:800;color:#102b52;background:linear-gradient(110deg,#eff6ff,#f8fbff)}
+.admin-accordion>summary::-webkit-details-marker{display:none}
+.admin-accordion>summary:after{content:'＋';margin-left:auto;font-size:20px;color:#087ac2}
+.admin-accordion[open]>summary:after{content:'−'}
+.accordion-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#dbeafe;font-size:23px;flex:none}
+.accordion-title small{display:block;font-weight:500;color:#64748b;margin-top:3px}
+.admin-accordion-body{padding:4px 16px 16px}
+.admin-accordion .admin-section{margin:0}
+.history-table{min-width:1050px}
+.history-note{padding:12px;border-radius:10px;background:#eff6ff;color:#1e40af;font-size:13px;margin:12px 0}
+@media(max-width:600px){.admin-accordion>summary{padding:13px}.admin-accordion-body{padding:3px 10px 12px}}
+
 </style>
 </head>
 
@@ -187,6 +202,7 @@ white-space:pre-wrap;overflow-wrap:anywhere
  <div class="stat-card"><small>Paid भुगतान</small><strong id="statPaid">0</strong></div>
 </div>
 
+<details class="admin-accordion"><summary><span class="accordion-icon">💰</span><span class="accordion-title">Service Charges<small>सरकारी शुल्क और सर्विस चार्ज प्रबंधित करें</small></span></summary><div class="admin-accordion-body">
 <!-- SERVICE CHARGES -->
 <div class="admin-section">
  <div class="admin-box">
@@ -232,8 +248,9 @@ white-space:pre-wrap;overflow-wrap:anywhere
    </table>
   </div>
  </div>
-</div>
+</div></div></div></details>
 
+<details class="admin-accordion"><summary><span class="accordion-icon">👥</span><span class="accordion-title">Customer Records<small>ग्राहकों की सूची और आवेदन रिकॉर्ड देखें</small></span></summary><div class="admin-accordion-body">
 <!-- CUSTOMER DIRECTORY -->
 <div class="admin-section">
  <div class="admin-box">
@@ -253,7 +270,26 @@ white-space:pre-wrap;overflow-wrap:anywhere
    </table>
   </div>
  </div>
-</div>
+</div></div></div></details>
+
+<details class="admin-accordion" open><summary><span class="accordion-icon">📋</span><span class="accordion-title">Applications & Payment Verification<small>आवेदन खोजें, स्थिति अपडेट करें और भुगतान सत्यापित करें</small></span></summary><div class="admin-accordion-body">
+
+<details class="admin-accordion">
+ <summary><span class="accordion-icon">💳</span><span class="accordion-title">Payment History<small>भुगतान जमा और Admin द्वारा की गई जाँच का इतिहास</small></span></summary>
+ <div class="admin-accordion-body">
+  <div class="admin-box">
+   <div class="toolbar" style="justify-content:space-between">
+    <div><h2 style="margin:0">💳 Payment History</h2><p class="muted">हर भुगतान सत्यापन की अलग एंट्री यहाँ दिखाई जाएगी।</p></div>
+    <button class="btn outline" id="refreshPaymentHistory" type="button">↻ Refresh History</button>
+   </div>
+   <div class="history-note">यह इतिहास नए Admin payment verification actions से रिकॉर्ड होगा। पुराने भुगतान अपने-आप इतिहास में नहीं जुड़ेंगे।</div>
+   <div class="admin-table-wrap"><table class="admin-table history-table">
+    <thead><tr><th>तारीख</th><th>Tracking ID</th><th>ग्राहक</th><th>सेवा</th><th>Transaction ID</th><th>राशि</th><th>स्थिति</th><th>Event</th></tr></thead>
+    <tbody id="paymentHistoryRows"><tr><td colspan="8" class="empty-row">लोड हो रहा है...</td></tr></tbody>
+   </table></div>
+  </div>
+ </div>
+</details>
 
 <!-- APPLICATIONS -->
 <div class="admin-section">
@@ -312,7 +348,7 @@ white-space:pre-wrap;overflow-wrap:anywhere
    </table>
   </div>
  </div>
-</div>
+</div></div></div></details>
 
 <!-- APPLICATION DETAILS MODAL -->
 <div id="detailsModal" class="details-modal hide">
@@ -337,7 +373,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js';
 
 import {
- getFirestore,collection,getDocs,doc,getDoc,updateDoc,setDoc,serverTimestamp
+ getFirestore,collection,getDocs,doc,getDoc,updateDoc,setDoc,addDoc,serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js';
 
 const firebaseConfig={
@@ -359,6 +395,7 @@ const $=id=>document.getElementById(id);
 let serviceCharges={};
 let applicationRecords=[];
 let customerRecords=[];
+let paymentHistoryRecords=[];
 
 function serviceDocId(name){
  return encodeURIComponent(name.trim());
@@ -386,6 +423,15 @@ function statusClass(status){
  if(status==='Submitted')return 'status-pill status-submitted';
  return 'status-pill';
 }
+
+/* एक समय में एक accordion section खुला रखें */
+document.querySelectorAll('.admin-accordion').forEach(item=>{
+ item.addEventListener('toggle',()=>{
+  if(item.open) document.querySelectorAll('.admin-accordion').forEach(other=>{
+   if(other!==item) other.open=false;
+  });
+ });
+});
 
 /* LOGIN */
 $('loginForm').addEventListener('submit',async e=>{
@@ -948,7 +994,12 @@ function renderApplications(){
       reviewedAt:serverTimestamp()
      },{merge:true});
 
-     alert('भुगतान Paid मार्क हो गया।');
+     try{
+      await recordPaymentHistory(record,'Admin Verified','Paid');
+      alert('भुगतान Paid मार्क हो गया और Payment History में दर्ज हो गया।');
+     }catch(historyError){
+      alert('भुगतान Paid हो गया, लेकिन Payment History सेव नहीं हुई: '+historyError.message);
+     }
      await loadAll();
 
     }catch(err){
@@ -978,7 +1029,12 @@ function renderApplications(){
       reviewedAt:serverTimestamp()
      },{merge:true});
 
-     alert('भुगतान Rejected मार्क हो गया।');
+     try{
+      await recordPaymentHistory(record,'Admin Rejected','Rejected');
+      alert('भुगतान Rejected मार्क हो गया और Payment History में दर्ज हो गया।');
+     }catch(historyError){
+      alert('भुगतान Rejected हो गया, लेकिन Payment History सेव नहीं हुई: '+historyError.message);
+     }
      await loadAll();
 
     }catch(err){
@@ -1022,6 +1078,46 @@ function renderApplications(){
  });
 }
 
+
+/* PAYMENT HISTORY */
+async function loadPaymentHistory(){
+ const body=$('paymentHistoryRows');
+ body.innerHTML='<tr><td colspan="8" class="empty-row">लोड हो रहा है...</td></tr>';
+ try{
+  const snap=await getDocs(collection(db,'paymentHistory'));
+  paymentHistoryRecords=snap.docs.map(x=>({id:x.id,...x.data()}));
+  paymentHistoryRecords.sort((a,b)=>(b.createdAt?.toMillis?.()||0)-(a.createdAt?.toMillis?.()||0));
+  body.innerHTML='';
+  if(!paymentHistoryRecords.length){
+   body.innerHTML='<tr><td colspan="8" class="empty-row">अभी Payment History उपलब्ध नहीं है।</td></tr>';return;
+  }
+  paymentHistoryRecords.forEach(item=>{
+   const tr=document.createElement('tr');
+   addCell(tr,item.createdAt?.toDate?item.createdAt.toDate().toLocaleString('en-IN'):'—');
+   addCell(tr,item.trackingId||'');
+   addCell(tr,(item.customerName||'')+(item.mobile?' / '+item.mobile:''));
+   addCell(tr,item.service||'');
+   addCell(tr,item.transactionId||'—');
+   addCell(tr,money(item.amount));
+   const td=addCell(tr,'');const badge=document.createElement('span');
+   badge.className=statusClass(item.paymentStatus||'');badge.textContent=item.paymentStatus||'—';td.appendChild(badge);
+   addCell(tr,item.eventType||'');body.appendChild(tr);
+  });
+ }catch(err){
+  body.innerHTML='<tr><td colspan="8" class="empty-row">इतिहास लोड नहीं हुआ: '+safeText(err.message)+'</td></tr>';
+ }
+}
+async function recordPaymentHistory(record,eventType,paymentStatus){
+ const d=record.data||{},sub=record.paymentSubmission||{};
+ await addDoc(collection(db,'paymentHistory'),{
+  trackingId:record.trackingId||'',ownerUid:d.ownerUid||'',
+  customerName:d.customerName||'',mobile:d.mobile||'',service:d.service||'',
+  transactionId:sub.transactionId||'',amount:Number(record.paymentInfo?.amount)||0,
+  paymentStatus,eventType,createdAt:serverTimestamp(),reviewedBy:auth.currentUser?.uid||''
+ });
+}
+$('refreshPaymentHistory').addEventListener('click',loadPaymentHistory);
+
 /* LOAD ALL DATA */
 async function loadAll(){
  $('summary').textContent='डेटा लोड हो रहा है...';
@@ -1030,6 +1126,7 @@ async function loadAll(){
  try{
   await loadCharges();
   await loadApplications();
+  await loadPaymentHistory();
   renderStats();
   renderCustomers();
   renderApplications();
