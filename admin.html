@@ -271,12 +271,12 @@ white-space:pre-wrap;overflow-wrap:anywhere
   </div>
  </div>
 </div></div></div></details>
-
-<details class="admin-accordion" open><summary><span class="accordion-icon">📋</span><span class="accordion-title">Applications & Payment Verification<small>आवेदन खोजें, स्थिति अपडेट करें और भुगतान सत्यापित करें</small></span></summary><div class="admin-accordion-body">
-
+<details class="admin-accordion" open>
+<summary><span class="accordion-icon">A</span><span class="accordion-title">Applications & Payment Verification<small>Search applications, update status and verify payments</small></span></summary>
+<div class="admin-accordion-body">
 <details class="admin-accordion">
- <summary><span class="accordion-icon">💳</span><span class="accordion-title">Payment History<small>भुगतान जमा और Admin द्वारा की गई जाँच का इतिहास</small></span></summary>
- <div class="admin-accordion-body">
+<summary><span class="accordion-icon">P</span><span class="accordion-title">Payment History<small>Payment records and verification history</small></span></summary>
+<div class="admin-accordion-body">
   <div class="admin-box">
    <div class="toolbar" style="justify-content:space-between">
     <div><h2 style="margin:0">💳 Payment History</h2><p class="muted">हर भुगतान सत्यापन की अलग एंट्री यहाँ दिखाई जाएगी।</p></div>
@@ -424,11 +424,16 @@ function statusClass(status){
  return 'status-pill';
 }
 
-/* एक समय में एक accordion section खुला रखें */
+/* Accordion: केवल समान स्तर वाले sections बंद करें */
 document.querySelectorAll('.admin-accordion').forEach(item=>{
  item.addEventListener('toggle',()=>{
-  if(item.open) document.querySelectorAll('.admin-accordion').forEach(other=>{
-   if(other!==item) other.open=false;
+  if(!item.open) return;
+
+  const siblings = Array.from(item.parentElement.children)
+    .filter(other => other.matches('.admin-accordion'));
+
+  siblings.forEach(other=>{
+   if(other !== item) other.open = false;
   });
  });
 });
